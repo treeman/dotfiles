@@ -19,7 +19,7 @@ void Rect::SetAnchors( float _x1, float _y1, float _x2, float _y2 )
     x2 = _x2; y2 = _y2;
 }
 
-bool Rect::IsOver( const Vec2D &pos ) const
+bool Rect::IsOver( const Tree::Vec2f &pos ) const
 {
     return IsOver( pos.x, pos.y );
 }
@@ -39,7 +39,7 @@ bool Rect::Intersects( const Rect &rect ) const
     return min_x < max_x && min_y < max_y;
 }
 
-Vec2D Rect::GetCenter() const
+Tree::Vec2f Rect::GetCenter() const
 {
-    return Vec2D( x1 + ( x2 - x1 ) / 2, y1 + ( y2 - y1 ) / 2 );
+    return Vec2f( x1 + ( x2 - x1 ) / 2, y1 + ( y2 - y1 ) / 2 );
 }

@@ -94,9 +94,10 @@ bool SpriteLoader::LoadSprite( lua_State *L, boost::shared_ptr<Sprite> spr )
 
         luah::get_bool( L, "smoothen", smoothen );
 
-        if( luah::get_num<float>( L, "w", w ) &&
-            luah::get_num<float>( L, "h", h ) &&
-            luah::get_string( L, "path", path ) )
+        luah::get_num<float>( L, "w", w );
+        luah::get_num<float>( L, "h", h )
+
+        if( luah::get_string( L, "path", path ) )
         {
             boost::shared_ptr<sf::Image> img = Tree::GetButler()->GetImage( path );
 
@@ -105,7 +106,9 @@ bool SpriteLoader::LoadSprite( lua_State *L, boost::shared_ptr<Sprite> spr )
 
                 img->SetSmooth( smoothen );
                 simple->spr.SetImage( *img );
-                simple->spr.SetSubRect( sf::IntRect( x, y, w, h ) );
+                if( w & h ) {
+                    simple->spr.SetSubRect( sf::IntRect( x, y, w, h ) );
+                }
                 simple->spr.SetCenter( hot_x, hot_y );
 
                 simple->x_off = x_off; simple->y_off = y_off;
