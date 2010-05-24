@@ -1,0 +1,13 @@
+*.o
+*.depend
+*.layout
+*.cbp
+misc/
+*_log.txt
+*.out
+*.exe
+*/bin/gfx
+*/bin/sound
+*/bin/fnt
+*.dll
+
