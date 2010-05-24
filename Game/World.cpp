@@ -1,6 +1,9 @@
-#include "World.hpp"
 #include "Tree/Tweaks.hpp"
-#include "Tree/Utils.hpp"
+#include "Tree/Util.hpp"
+#include "Tree/Log.hpp"
+
+#include "World.hpp"
+#include "Floor.hpp"
 
 World::World()
 {
@@ -9,6 +12,18 @@ World::World()
         int columns = Tree::GetWindowWidth() / tile_size;
         int rows = Tree::GetWindowHeight() / tile_size;
         grid.Set( 0, tile_size, columns, 0, tile_size, rows );
+    }
+
+    for( size_t x = 0; x < grid.GetColumns(); ++x ) {
+        Tiles column;
+        for( size_t y = 0; y < grid.GetRows(); ++y ) {
+            TilePtr tile;
+            tile.reset( new Floor( grid.ConvertToScreen( GridPos( x, y ))));
+            Tree::Vec2i pos = grid.ConvertToScreen( GridPos( x, y ) );
+            //L_ << "np: " << pos;
+            column.push_back( tile );
+        }
+        tiles.push_back( column );
     }
 }
 World::~World()

@@ -9,6 +9,7 @@
 
 Game::Game()
 {
+    Tree::GetButler()->LoadSprites( "sprites.lua" );
     Tree::GetTweaks()->Load( "magic_numbers.lua" );
 
     background.SetImage( *Tree::GetButler()->GetImage( "gfx/dude.png" ) );

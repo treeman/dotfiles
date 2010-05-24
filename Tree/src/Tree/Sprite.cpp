@@ -86,6 +86,9 @@ bool SpriteLoader::LoadSprite( lua_State *L, boost::shared_ptr<Sprite> spr )
         luah::get_num<float>( L, "x", x );
         luah::get_num<float>( L, "y", y );
 
+        luah::get_num<float>( L, "w", w );
+        luah::get_num<float>( L, "h", h );
+
         luah::get_num<float>( L, "x_off", x_off );
         luah::get_num<float>( L, "y_off", y_off );
 
@@ -93,9 +96,6 @@ bool SpriteLoader::LoadSprite( lua_State *L, boost::shared_ptr<Sprite> spr )
         luah::get_num<float>( L, "hotspot_y", hot_y );
 
         luah::get_bool( L, "smoothen", smoothen );
-
-        luah::get_num<float>( L, "w", w );
-        luah::get_num<float>( L, "h", h )
 
         if( luah::get_string( L, "path", path ) )
         {
@@ -106,7 +106,7 @@ bool SpriteLoader::LoadSprite( lua_State *L, boost::shared_ptr<Sprite> spr )
 
                 img->SetSmooth( smoothen );
                 simple->spr.SetImage( *img );
-                if( w & h ) {
+                if( w && h ) {
                     simple->spr.SetSubRect( sf::IntRect( x, y, w, h ) );
                 }
                 simple->spr.SetCenter( hot_x, hot_y );

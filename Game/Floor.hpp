@@ -5,10 +5,10 @@
 
 class Floor : public Tile {
 public:
-    Floor();
+    Floor( Tree::Vec2i pos );
 
     void Draw();
 private:
-    boost::shared_ptr<Sprite> spr;
+    boost::shared_ptr<Tree::Sprite> spr;
 };
 

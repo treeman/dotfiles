@@ -1,3 +1,4 @@
 -- random magic numbers
 
-boxes = 45
+tile_size = 32
+

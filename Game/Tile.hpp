@@ -15,7 +15,6 @@ public:
     { }
     virtual ~Tile() { }
 
-    void SetPos( Tree::Vec2i p ) { pos = p; }
     Tree::Vec2i GetPos() const { return pos; }
 
     virtual void Update( float dt ) { }

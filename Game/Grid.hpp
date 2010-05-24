@@ -16,6 +16,9 @@ struct GridPos {
 
 class Grid {
 public:
+    Grid() : x(0), y(0), box_w(0), box_h(0), columns(0), rows(0)
+    { }
+
     Grid( int x, int box_w, int columns, int y, int box_h, int rows );
 
     void Set( int x, int box_w, int columns, int y, int box_h, int rows );
