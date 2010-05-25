@@ -9,6 +9,10 @@
 World::World() : curr_lvl( 0 )
 {
     lvl_loader.LoadLevelFile( "levels.lua" );
+    if( !lvl_loader.IsThereALevel() ) {
+        throw( Error::logic_error( "There isn't a level present. Jumping ship." ));
+    }
+
     lvl_str.SetFont( *Tree::GetButler()->GetFont( "fnt/consola.ttf", 10 ) );
     lvl_str.SetSize( 10 );
     lvl_str.SetPosition( 500, 10 );

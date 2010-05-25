@@ -6,7 +6,6 @@
 #include "Tree/Shufflebag.hpp"
 
 #include "World.hpp"
-#include "Tree/Dator.hpp"
 
 class Game : public Tree::GameState {
 public:

@@ -22,19 +22,19 @@ Game::Game()
 
     boost::shared_ptr<Tree::SilentDator> next_lvl( new Tree::SilentDator( boost::bind(
         &World::NextLevel, world.get())));
-    Tree::GetSettings()->RegisterPermVariable( "next_lvl", next_lvl );
+    Tree::GetSettings()->RegisterPermVariable( "lvl_next", next_lvl );
 
     boost::shared_ptr<Tree::SilentDator> prev_lvl( new Tree::SilentDator( boost::bind(
         &World::PreviousLevel, world.get())));
-    Tree::GetSettings()->RegisterPermVariable( "prev_lvl", prev_lvl );
+    Tree::GetSettings()->RegisterPermVariable( "lvl_prev", prev_lvl );
 
     boost::shared_ptr<Tree::SilentDator> first_lvl( new Tree::SilentDator( boost::bind(
         &World::SetFirstLevel, world.get())));
-    Tree::GetSettings()->RegisterPermVariable( "first_lvl", first_lvl );
+    Tree::GetSettings()->RegisterPermVariable( "lvl_first", first_lvl );
 
     boost::shared_ptr<Tree::SilentDator> reset_lvl( new Tree::SilentDator( boost::bind(
         &World::ResetLevel, world.get())));
-    Tree::GetSettings()->RegisterPermVariable( "reset_lvl", reset_lvl );
+    Tree::GetSettings()->RegisterPermVariable( "lvl_reset", reset_lvl );
 }
 
 bool Game::HandleEvent( sf::Event &e )

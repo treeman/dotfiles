@@ -11,6 +11,7 @@ class LevelLoader {
 public:
     LevelLoader();
 
+    bool IsThereALevel();
     Level &GetFirstLevel();
 
     TileGrid CreateTiles( Level &lvl );

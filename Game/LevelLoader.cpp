@@ -13,6 +13,10 @@ LevelLoader::LevelLoader() : lvls( 0 )
 
 }
 
+bool LevelLoader::IsThereALevel()
+{
+    return lvls != 0;
+}
 Level &LevelLoader::GetFirstLevel()
 {
     return *lvls;
