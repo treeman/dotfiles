@@ -1,47 +1,46 @@
 #include "Tree/Tweaks.hpp"
 #include "Tree/Util.hpp"
+#include "Tree/Butler.hpp"
 #include "Tree/Log.hpp"
 
 #include "World.hpp"
 #include "Floor.hpp"
 
-World::World()
+World::World() : curr_lvl( 0 )
 {
-    size_t tile_size = (int)Tree::GetTweaks()->GetDouble( "tile_size" );
-    if( tile_size ) {
-        size_t columns = Tree::GetWindowWidth() / tile_size;
-        size_t rows = Tree::GetWindowHeight() / tile_size;
-        grid.Set( 0, tile_size, columns, 0, tile_size, rows );
-    }
+    lvl_loader.LoadLevelFile( "levels.lua" );
+    lvl_str.SetFont( *Tree::GetButler()->GetFont( "fnt/consola.ttf", 10 ) );
+    lvl_str.SetSize( 10 );
+    lvl_str.SetPosition( 500, 10 );
+    lvl_str.SetColor( sf::Color( 0, 0, 0 ) );
 
-    for( size_t x = 0; x < grid.GetColumns(); ++x ) {
-        Tiles column;
-        for( size_t y = 0; y < grid.GetRows(); ++y ) {
-            TilePtr tile;
-            Tree::Vec2i pos = grid.ConvertToScreen( GridPos( x, y ) );
-            tile.reset( new Floor( pos ) );
-            column.push_back( tile );
-        }
-        tiles.push_back( column );
-    }
+    SetFirstLevel();
 }
 World::~World()
 {
 
 }
 
-void World::Reset()
+void World::SetFirstLevel()
 {
-
+    LoadLevel( lvl_loader.GetFirstLevel() );
 }
-void World::Start()
+void World::NextLevel()
 {
-
+    if( !curr_lvl->IsLast() ) {
+        LoadLevel( curr_lvl->GetNext() );
+    }
 }
-//void World::LoadLevel( Level &lvl )
-//{
-//
-//}
+void World::PreviousLevel()
+{
+    if( !curr_lvl->IsFirst() ) {
+        LoadLevel( curr_lvl->GetPrevious() );
+    }
+}
+void World::ResetLevel()
+{
+    LoadLevel( *curr_lvl );
+}
 
 void World::Update( float dt )
 {
@@ -59,5 +58,14 @@ void World::Draw()
             tiles[x][y]->Draw();
         }
     }
+    Tree::Draw( lvl_str );
+}
+
+void World::LoadLevel( Level &lvl )
+{
+    tiles = lvl_loader.CreateTiles( lvl );
+    lvl_str.SetText( lvl.GetName() );
+
+    curr_lvl = &lvl;
 }
 

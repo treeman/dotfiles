@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vec2D.hpp"
+#include "Vec2.hpp"
 
 namespace Tree
 {

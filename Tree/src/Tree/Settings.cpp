@@ -50,6 +50,14 @@ void Settings::RegisterVariable( std::string name, boost::weak_ptr<BaseDator> da
         dator_map.insert( std::make_pair( name, dator ) );
     }
 }
+
+void Settings::RegisterPermVariable( std::string name, boost::shared_ptr<BaseDator> dator )
+{
+    my_dators.push_back( dator );
+
+    RegisterVariable( name, dator );
+}
+
 void Settings::Unregister( std::string name )
 {
     dator_map.erase( name );

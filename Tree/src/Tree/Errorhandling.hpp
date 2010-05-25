@@ -52,5 +52,17 @@ namespace Error
     private:
         const char *s;
     };
+
+    class logic_error : public std::exception {
+    public:
+        logic_error( const char *err ) {
+            s = err;
+        }
+        virtual const char *what() const throw() {
+            return s;
+        }
+    private:
+        const char *s;
+    };
 }
 

@@ -24,6 +24,20 @@ namespace Tree
         boost::function<std::string()> call_func;
     };
 
+    class SilentDator : public BaseDator {
+    public:
+        SilentDator( boost::function<void()> func ) :
+            call_func( func ) { }
+
+        std::string Get() { return ""; }
+        std::string Set( const std::string ) {
+            call_func();
+            return "";
+        }
+    private:
+        boost::function<void()> call_func;
+    };
+
     template<typename T>
     class Dator : public BaseDator {
     public:

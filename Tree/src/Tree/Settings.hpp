@@ -36,6 +36,7 @@ namespace Tree
         template<typename T>
         void Register( std::string name, T val );
         void RegisterVariable( std::string name, boost::weak_ptr<BaseDator> dator );
+        void RegisterPermVariable( std::string name, boost::shared_ptr<BaseDator> dator );
         void Unregister( std::string name );
 
         template<typename T>
