@@ -11,12 +11,7 @@ MovingObject::MovingObject() :
 
 void MovingObject::MoveLeft()
 {
-    if( WantsRight() ) {
-        vel.x = -GetSpeed(); vel.y = 0;
-        stop_pos.Set( stop_pos.x - size, pos.y );
-        FaceLeft();
-    }
-    else if( !IsMoving() ) {
+    if( !IsMoving() ) {
         vel.x = -GetSpeed(); vel.y = 0;
         stop_pos.Set( pos.x - size, pos.y );
         FaceLeft();
@@ -27,12 +22,7 @@ void MovingObject::MoveLeft()
 }
 void MovingObject::MoveRight()
 {
-    if( WantsLeft() ) {
-        vel.x = GetSpeed(); vel.y = 0;
-        stop_pos.Set( stop_pos.x +  size, pos.y );
-        FaceLeft();
-    }
-    else if( !IsMoving() ) {
+    if( !IsMoving() ) {
         vel.x = GetSpeed(); vel.y = 0;
         stop_pos.Set( pos.x + size, pos.y );
         FaceRight();
@@ -118,20 +108,10 @@ void MovingObject::UpdateMovement( float dt )
     //if we're moving past our stop point, stop there
     if( IsMoving() ) {
         if( WantsLeft() && pos.x < stop_pos.x ) {
-            if( next_move == Vec2f::left ) {
-                stop_pos.x = stop_pos.x - size;
-            }
-            else {
-                ForceStop();
-            }
+            ForceStop();
         }
         else if( WantsRight() && pos.x > stop_pos.x ) {
-            if( next_move == Vec2f::right ) {
-                stop_pos.x = stop_pos.x + size;
-            }
-            else {
-                ForceStop();
-            }
+            ForceStop();
         }
         else if( WantsUp() && pos.y < stop_pos.y ) {
             ForceStop();
