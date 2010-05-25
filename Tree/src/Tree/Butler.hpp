@@ -30,7 +30,7 @@ namespace Tree
         boost::shared_ptr<sf::Image> GetImage( std::string path )
             throw( Error::file_not_found );
 
-        boost::shared_ptr<Sprite> GetSprite( std::string name );
+        Sprite GetSprite( std::string name );
     private:
         typedef std::multimap<std::string, boost::shared_ptr<sf::Font> > FontMap;
         FontMap font_map;

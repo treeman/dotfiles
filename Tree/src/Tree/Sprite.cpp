@@ -1,6 +1,8 @@
-#include "Sprite.hpp"
 #include "Tree/Log.hpp"
 #include "Tree/Butler.hpp"
+#include "Tree/Vec2.hpp"
+
+#include "Sprite.hpp"
 
 #include <boost/foreach.hpp>
 
@@ -13,17 +15,26 @@ Sprite::Sprite()
 
 }
 
-void Sprite::Draw()
+Tree::Vec2f Sprite::GetPos() const
 {
-    BOOST_FOREACH( boost::shared_ptr<SimpleSprite> s, sprites ) {
-        Tree::Draw( s->spr );
+    return pos;
+}
+void Sprite::SetPos( float x, float y )
+{
+    SetPos( Tree::Vec2f( x, y ) );
+}
+void Sprite::SetPos( Tree::Vec2f p )
+{
+    pos = p;
+    BOOST_FOREACH( SimpleSprite &s, sprites ) {
+        s.spr.SetPosition( pos.x + s.x_off, pos.y + s.y_off );
     }
 }
 
-void Sprite::Render( sf::RenderTarget &target ) const
+void Sprite::Draw()
 {
-    BOOST_FOREACH( boost::shared_ptr<SimpleSprite> s, sprites ) {
-        target.Draw( s->spr );
+    BOOST_FOREACH( SimpleSprite &s, sprites ) {
+        Tree::Draw( s.spr );
     }
 }
 
@@ -44,7 +55,7 @@ void SpriteLoader::Load( std::string lua_file ) throw( Error::lua_error & )
     for( lua_pushnil( L ); lua_next( L, -2 ); lua_pop( L, 1 ) )
     {
         if( lua_istable( L, -1 ) ) {
-            boost::shared_ptr<Sprite> sprite( new Sprite() );
+            Sprite sprite;
 
             std::string name = lua_tostring( L, -2 );
             if( !LoadSprite( L, sprite ) ) {
@@ -55,14 +66,14 @@ void SpriteLoader::Load( std::string lua_file ) throw( Error::lua_error & )
                 }
             }
 
-            if( sprite->sprites.size() ) {
+            if( sprite.sprites.size() ) {
                 sprite_map.insert( std::make_pair( name, sprite ) );
             }
         }
     }
 }
 
-boost::shared_ptr<Sprite> SpriteLoader::Get( std::string name )
+Sprite SpriteLoader::Get( std::string name )
 {
     SpriteMap::iterator it = sprite_map.find( name );
     if( it == sprite_map.end() ) {
@@ -71,7 +82,7 @@ boost::shared_ptr<Sprite> SpriteLoader::Get( std::string name )
     else { return it->second; }
 }
 
-bool SpriteLoader::LoadSprite( lua_State *L, boost::shared_ptr<Sprite> spr )
+bool SpriteLoader::LoadSprite( lua_State *L, Sprite &spr )
 {
     if( lua_istable( L, -1 ) ) {
 
@@ -102,18 +113,18 @@ bool SpriteLoader::LoadSprite( lua_State *L, boost::shared_ptr<Sprite> spr )
             boost::shared_ptr<sf::Image> img = Tree::GetButler()->GetImage( path );
 
             if( img ) {
-                boost::shared_ptr<SimpleSprite> simple( new SimpleSprite() );
+                SimpleSprite simple;
 
                 img->SetSmooth( smoothen );
-                simple->spr.SetImage( *img );
+                simple.spr.SetImage( *img );
                 if( w && h ) {
-                    simple->spr.SetSubRect( sf::IntRect( x, y, w, h ) );
+                    simple.spr.SetSubRect( sf::IntRect( x, y, w, h ) );
                 }
-                simple->spr.SetCenter( hot_x, hot_y );
+                simple.spr.SetCenter( hot_x, hot_y );
 
-                simple->x_off = x_off; simple->y_off = y_off;
+                simple.x_off = x_off; simple.y_off = y_off;
 
-                spr->sprites.push_back( simple );
+                spr.sprites.push_back( simple );
 
                 return true;
             }

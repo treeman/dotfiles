@@ -5,13 +5,11 @@
 Floor::Floor( Tree::Vec2i pos ) : Tile( pos )
 {
     spr = Tree::GetButler()->GetSprite( "floor" );
+    spr.SetPos( pos.x, pos.y );
 }
 
 void Floor::Draw()
 {
-    //L_ << "drawing: " << pos;
-    //spr->SetPosition( 40, 40 );
-    spr->SetColor( sf::Color( 100, 100, 100, 100 ) );
-    spr->SetPosition( 500, 500 );
-    spr->Draw();
+    spr.Draw();
 }
+

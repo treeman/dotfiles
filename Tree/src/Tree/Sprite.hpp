@@ -8,6 +8,7 @@
 #include "Lua/Lua.hpp"
 #include "Tree/Errorhandling.hpp"
 #include "Tree/Graphics.hpp"
+#include "Tree/Vec2.hpp"
 
 namespace Tree
 {
@@ -20,18 +21,22 @@ namespace Tree
         float x_off, y_off;
     };
 
-    class Sprite : public sf::Drawable {
+    class Sprite {
     public:
+        Sprite();
+
+        Tree::Vec2f GetPos() const;
+        void SetPos( float x, float y );
+        void SetPos( Tree::Vec2f p );
+
         void Draw();
     private:
-        Sprite();
         friend class SpriteLoader;
 
-        void Render( sf::RenderTarget &target ) const;
-
-        typedef std::vector<boost::shared_ptr<SimpleSprite> > Sprites;
-
+        typedef std::vector<SimpleSprite> Sprites;
         Sprites sprites;
+
+        Tree::Vec2f pos;
     };
 
     class SpriteLoader {
@@ -40,13 +45,13 @@ namespace Tree
 
         void Load( std::string lua_file ) throw( Error::lua_error & );
 
-        boost::shared_ptr<Sprite> Get( std::string name );
+        Sprite Get( std::string name );
     private:
-        typedef std::map<std::string, boost::shared_ptr<Sprite> > SpriteMap;
+        typedef std::map<std::string, Sprite> SpriteMap;
         SpriteMap sprite_map;
 
         //lua helper to load a sprite
-        bool LoadSprite( lua_State *L, boost::shared_ptr<Sprite> spr );
+        bool LoadSprite( lua_State *L, Sprite &spr );
     };
 }
 

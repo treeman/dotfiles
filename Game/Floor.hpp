@@ -9,6 +9,6 @@ public:
 
     void Draw();
 private:
-    boost::shared_ptr<Tree::Sprite> spr;
+    Tree::Sprite spr;
 };
 

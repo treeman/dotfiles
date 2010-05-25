@@ -70,7 +70,7 @@ boost::shared_ptr<sf::Image> Butler::GetImage( std::string path )
     }
 }
 
-boost::shared_ptr<Tree::Sprite> Butler::GetSprite( std::string name )
+Tree::Sprite Butler::GetSprite( std::string name )
 {
     return spr_loader.Get( name );
 }

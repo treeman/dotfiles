@@ -7,10 +7,10 @@
 
 World::World()
 {
-    int tile_size = (int)Tree::GetTweaks()->GetDouble( "tile_size" );
+    size_t tile_size = (int)Tree::GetTweaks()->GetDouble( "tile_size" );
     if( tile_size ) {
-        int columns = Tree::GetWindowWidth() / tile_size;
-        int rows = Tree::GetWindowHeight() / tile_size;
+        size_t columns = Tree::GetWindowWidth() / tile_size;
+        size_t rows = Tree::GetWindowHeight() / tile_size;
         grid.Set( 0, tile_size, columns, 0, tile_size, rows );
     }
 
@@ -18,9 +18,8 @@ World::World()
         Tiles column;
         for( size_t y = 0; y < grid.GetRows(); ++y ) {
             TilePtr tile;
-            tile.reset( new Floor( grid.ConvertToScreen( GridPos( x, y ))));
             Tree::Vec2i pos = grid.ConvertToScreen( GridPos( x, y ) );
-            //L_ << "np: " << pos;
+            tile.reset( new Floor( pos ) );
             column.push_back( tile );
         }
         tiles.push_back( column );
