@@ -43,7 +43,7 @@ double Tweaks::GetDouble( std::string s )
     if( it != doubles.end() ) { return it->second; }
     else {
         throw( Error::setting_not_found( ("The double " + s +
-            " wasn't found in tweaks.lua").c_str() ) );
+            " wasn't found in magic_numbers").c_str() ) );
     }
 }
 
@@ -53,7 +53,7 @@ std::string Tweaks::GetString( std::string s )
     if( it != strings.end() ) { return it->second; }
     else {
         throw( Error::setting_not_found( ("The string " + s +
-            " wasn't found in tweaks.lua").c_str() ) );
+            " wasn't found in magic_numbers").c_str() ) );
     }
 }
 

@@ -8,5 +8,9 @@ sprites =
         x = 32, y = 32,
         w = 32, h = 32,
     },
+
+    girl = {
+        path = "gfx/girl.png",
+    },
 }
 

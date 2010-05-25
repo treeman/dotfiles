@@ -7,6 +7,7 @@
 #include "LevelLoader.hpp"
 #include "Grid.hpp"
 #include "Tile.hpp"
+#include "TileTypes.hpp"
 
 LevelLoader::LevelLoader() : lvls( 0 )
 {
@@ -36,19 +37,25 @@ TileGrid LevelLoader::CreateTiles( Level &lvl )
     TileGrid tiles;
 
     //the layout has lines
-    for( int x = 0; x < lvl.layout.size(); ++x ) {
+    for( int y = 0; y < lvl.layout.size(); ++y ) {
         Tiles column;
 
         //the lines has chars
-        for( int y = 0; y < lvl.layout[x].size(); ++y ) {
-            Tree::Vec2i pos = grid.ConvertToScreen( GridPos( x, y ) );
+        for( int x = 0; x < lvl.layout[y].size(); ++x ) {
+            Tree::Vec2i pos = grid.ConvertToScreen( GridPos( x, y ));
 
             //we make tiles according to chars! yay!
-            if( lvl.layout[x][y] == 'x' ) {
+            if( lvl.layout[y][x] == ' ' ) {
 
                 //might make this scriptable which should respond to what?
                 Tree::Sprite spr = Tree::GetButler()->GetSprite( "floor" );
                 TilePtr tile( new SpriteTile( pos, spr ) );
+                column.push_back( tile );
+            }
+            else {
+                //insert a "nothing" tile
+                //so it can check for not passable more easily in world
+                TilePtr tile( new BlockTile( pos ) );
                 column.push_back( tile );
             }
         }

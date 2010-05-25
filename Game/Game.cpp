@@ -9,16 +9,16 @@
 #include "Tree/Tweaks.hpp"
 #include "Tree/Vec2.hpp"
 #include "Game.hpp"
+#include "GirlController.hpp"
 
 Game::Game()
 {
     Tree::GetButler()->LoadSprites( "sprites.lua" );
     Tree::GetTweaks()->Load( "magic_numbers.lua" );
 
-    background.SetImage( *Tree::GetButler()->GetImage( "gfx/dude.png" ) );
-    background.SetPosition( 0, 0 );
-
     world.reset( new World() );
+
+    girl_controller.reset( new GirlController( world->GetGirl() ) );
 
     boost::shared_ptr<Tree::SilentDator> next_lvl( new Tree::SilentDator( boost::bind(
         &World::NextLevel, world.get())));
@@ -39,6 +39,8 @@ Game::Game()
 
 bool Game::HandleEvent( sf::Event &e )
 {
+    girl_controller->HandleEvent( e );
+
     if( e.Type == sf::Event::KeyPressed ) {
         switch( e.Key.Code ) {
             case sf::Key::N:
@@ -62,12 +64,11 @@ bool Game::HandleEvent( sf::Event &e )
 
 void Game::Update( float dt )
 {
+    girl_controller->Update( dt );
     world->Update( dt );
 }
 void Game::Draw()
 {
-    Tree::Draw( background );
-
     world->Draw();
 }
 

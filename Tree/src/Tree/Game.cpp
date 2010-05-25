@@ -65,7 +65,7 @@ void Game::Init( int width, int height, bool windowed, std::string title,
     window_manager.reset( new Tree::WindowManager() );
     window = window_manager->GetWindow();
 
-    window->SetFramerateLimit( 500 );
+    //window->SetFramerateLimit( 500 );
 
     //sound_manager.reset( new Tree::SoundManager() );
 

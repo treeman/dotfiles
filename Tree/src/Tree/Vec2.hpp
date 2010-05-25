@@ -14,6 +14,8 @@ namespace Tree
     class Vec2 {
     public:
         Vec2( const T _x = 0, const T _y = 0 ) : x(_x), y(_y) { }
+        template<typename S>
+        Vec2( const Vec2<S> &v ) { x = v.x; y = v.y; }
         Vec2( const Vec2 &v ) { x = v.x; y = v.y; }
         Vec2( const b2Vec2 &v ) { x = v.x; y = v.y; }
         Vec2( const sf::Vector2<T> &v ) { x = v.x; y = v.y; }
@@ -55,7 +57,16 @@ namespace Tree
         b2Vec2 b2Vec() const { return b2Vec2( x, y ); }
         sf::Vector2<T> sfVec() const { return sf::Vector2<T>( x, y ); }
 
+        void Set( T _x, T _y ) { x = _x; y = _y; }
+
         float x, y;
+
+        //names for common vectors
+        static const Vec2 zero;
+        static const Vec2 right;
+        static const Vec2 left;
+        static const Vec2 up;
+        static const Vec2 down;
     };
 
     typedef Vec2<float> Vec2f;
@@ -71,5 +82,17 @@ template<typename T>
 inline std::ostream &operator << ( std::ostream &o, const Tree::Vec2<T> &v ) {
     return o << "(" << v.x << "," << v.y << ")";
 }
+
+//looking lovely today aren't we eh static template declarations?
+template<typename T>
+const Tree::Vec2<T> Tree::Vec2<T>::zero( 0, 0 );
+template<typename T>
+const Tree::Vec2<T> Tree::Vec2<T>::left( -1, 0 );
+template<typename T>
+const Tree::Vec2<T> Tree::Vec2<T>::right( 1, 0 );
+template<typename T>
+const Tree::Vec2<T> Tree::Vec2<T>::up( 0, -1 );
+template<typename T>
+const Tree::Vec2<T> Tree::Vec2<T>::down( 0, 1 );
 
 #endif

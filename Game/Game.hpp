@@ -6,6 +6,7 @@
 #include "Tree/Shufflebag.hpp"
 
 #include "World.hpp"
+#include "Controller.hpp"
 
 class Game : public Tree::GameState {
 public:
@@ -16,8 +17,7 @@ public:
     void Update( float dt );
     void Draw();
 private:
-    sf::Sprite background;
-
     boost::shared_ptr<World> world;
+    boost::shared_ptr<Controller> girl_controller;
 };
 

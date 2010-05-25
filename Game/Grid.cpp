@@ -20,11 +20,11 @@ float Grid::ConvertYToScreen( int y_pos ) const
     return y + y_pos * box_h;
 }
 
-Tree::Vec2i Grid::ConvertToScreen( GridPos p ) const
+Tree::Vec2f Grid::ConvertToScreen( GridPos p ) const
 {
-    return Tree::Vec2i( x + p.x * box_w, y + p.y * box_h );
+    return Tree::Vec2f( x + p.x * box_w, y + p.y * box_h );
 }
-GridPos Grid::ConvertToGrid( Tree::Vec2i p ) const
+GridPos Grid::ConvertToGrid( Tree::Vec2f p ) const
 {
     return GridPos(
         math::clip( (int)(( p.x - x ) / box_w), 0, columns - 1 ),

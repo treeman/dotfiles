@@ -17,11 +17,18 @@ World::World() : curr_lvl( 0 )
     lvl_str.SetPosition( 500, 10 );
     lvl_str.SetColor( sf::Color( 0, 0, 0 ) );
 
+    girl.reset( new Girl() );
+
     SetFirstLevel();
 }
 World::~World()
 {
 
+}
+
+boost::shared_ptr<Girl> World::GetGirl()
+{
+    return girl;
 }
 
 void World::SetFirstLevel()
@@ -52,6 +59,7 @@ void World::Update( float dt )
             tiles[x][y]->Update( dt );
         }
     }
+    girl->Update( dt );
 }
 
 void World::Draw()
@@ -62,6 +70,8 @@ void World::Draw()
         }
     }
     Tree::Draw( lvl_str );
+
+    girl->Draw();
 }
 
 void World::LoadLevel( Level &lvl )
@@ -70,5 +80,23 @@ void World::LoadLevel( Level &lvl )
     lvl_str.SetText( lvl.GetName() );
 
     curr_lvl = &lvl;
+    girl->SetPos( grid.ConvertToScreen( GridPos( 5, 5 ) ) );
+}
+
+bool World::IsWalkable( int x, int y )
+{
+    if( !IsValid( x, y ) ) return false;
+    else return tiles[x][y]->IsWalkable();
+}
+bool World::IsSeeThrough( int x, int y )
+{
+    if( !IsValid( x, y ) ) return false;
+    else {
+        return tiles[x][y]->IsSeeThrough();
+    }
+}
+bool World::IsValid( int x, int y )
+{
+    return x >= 0 && x < grid.GetColumns() && y >= 0 && y < grid.GetRows();
 }
 

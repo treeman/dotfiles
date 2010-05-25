@@ -26,8 +26,8 @@ public:
     float ConvertXToScreen( int x_pos ) const;
     float ConvertYToScreen( int y_pos ) const;
 
-    Tree::Vec2i ConvertToScreen( GridPos p ) const;
-    GridPos ConvertToGrid( Tree::Vec2i p ) const;
+    Tree::Vec2f ConvertToScreen( GridPos p ) const;
+    GridPos ConvertToGrid( Tree::Vec2f p ) const;
 
     int GetColumns() const { return columns; }
     int GetRows() const { return rows; }
