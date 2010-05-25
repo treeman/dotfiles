@@ -1,12 +1,12 @@
 #include "Tree/Util.hpp"
 #include "Tree/Log.hpp"
 #include "Tree/Tweaks.hpp"
+#include "Tree/Butler.hpp"
 #include "Lua/Lua.hpp"
 
 #include "LevelLoader.hpp"
 #include "Grid.hpp"
 #include "Tile.hpp"
-#include "Floor.hpp"
 
 LevelLoader::LevelLoader() : lvls( 0 )
 {
@@ -35,13 +35,22 @@ TileGrid LevelLoader::CreateTiles( Level &lvl )
 
     TileGrid tiles;
 
-    for( int x = 0; x < grid.GetColumns(); ++x ) {
+    //the layout has lines
+    for( int x = 0; x < lvl.layout.size(); ++x ) {
         Tiles column;
-        for( int y = 0; y < grid.GetRows(); ++y ) {
-            TilePtr tile;
+
+        //the lines has chars
+        for( int y = 0; y < lvl.layout[x].size(); ++y ) {
             Tree::Vec2i pos = grid.ConvertToScreen( GridPos( x, y ) );
-            tile.reset( new Floor( pos ) );
-            column.push_back( tile );
+
+            //we make tiles according to chars! yay!
+            if( lvl.layout[x][y] == 'x' ) {
+
+                //might make this scriptable which should respond to what?
+                Tree::Sprite spr = Tree::GetButler()->GetSprite( "floor" );
+                TilePtr tile( new SpriteTile( pos, spr ) );
+                column.push_back( tile );
+            }
         }
         tiles.push_back( column );
     }

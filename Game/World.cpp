@@ -4,7 +4,6 @@
 #include "Tree/Log.hpp"
 
 #include "World.hpp"
-#include "Floor.hpp"
 
 World::World() : curr_lvl( 0 )
 {
