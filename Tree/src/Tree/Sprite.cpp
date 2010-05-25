@@ -118,7 +118,8 @@ bool SpriteLoader::LoadSprite( lua_State *L, Sprite &spr )
                 img->SetSmooth( smoothen );
                 simple.spr.SetImage( *img );
                 if( w && h ) {
-                    simple.spr.SetSubRect( sf::IntRect( x, y, w, h ) );
+                    L_ << "setting rect: " << x << y << w << h;
+                    simple.spr.SetSubRect( sf::IntRect( x, y, x + w, y + h ) );
                 }
                 simple.spr.SetCenter( hot_x, hot_y );
 

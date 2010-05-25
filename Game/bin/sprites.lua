@@ -4,7 +4,9 @@
 sprites =
 {
     floor = {
-        path = "gfx/floor.png",
+        path = "gfx/floors.png",
+        x = 32, y = 32,
+        w = 32, h = 32,
     },
 }
 
