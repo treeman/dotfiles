@@ -23,7 +23,7 @@ public:
     virtual bool IsSeeThrough() { return true; }
 
     virtual void Update( float dt ) { }
-    virtual void Draw() = 0;
+    virtual void Draw( Tree::Vec2i p ) = 0;
 protected:
     Tree::Vec2i pos;
 };

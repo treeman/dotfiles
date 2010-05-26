@@ -46,8 +46,8 @@ void Girl::Update( float dt )
     s.str("");
 }
 
-void Girl::Draw()
+void Girl::Draw( Tree::Vec2i p )
 {
-    spr.SetPos( pos );
+    spr.SetPos( p );
     spr.Draw();
 }

@@ -12,7 +12,8 @@ public:
     }
     virtual ~SpriteTile() { }
 
-    virtual void Draw() {
+    virtual void Draw( Tree::Vec2i p ) {
+        spr.SetPos( p.x, p.y );
         spr.Draw();
     }
 protected:
@@ -28,6 +29,6 @@ public:
     bool IsWalkable() { return false; }
     bool IsSeeThrough() { return false; }
 
-    void Draw() { }
+    void Draw( Tree::Vec2i ) { }
 };
 

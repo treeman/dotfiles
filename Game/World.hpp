@@ -46,9 +46,13 @@ private:
 
     void UpdateCollisions( MovingObject &o );
 
-    Tree::Vec2f ConvertToScreen( Tree::Vec2i grid_pos );
+    Tree::Vec2f ConvertToWorld( Tree::Vec2i grid_pos );
     Tree::Vec2i ConvertToGrid( Tree::Vec2f screen_pos );
 
     const int tile_size;
+
+    void CenterCam( Tree::Vec2i world_pos );
+    Tree::Vec2f ConvertToScreen( Tree::Vec2f world_pos );
+    Tree::Vec2i cam_pos;
 };
 

@@ -60,11 +60,13 @@ void World::Update( float dt )
     girl->Update( dt );
     UpdateCollisions( *girl );
 
+    CenterCam( girl->GetPos() );
+
     const sf::Input *input = &Tree::GetInput();
 
     const Tree::Vec2f mpos( input->GetMouseX(), input->GetMouseY() );
-
     const Tree::Vec2i grid_pos = ConvertToGrid( mpos );
+
     std::stringstream ss;
     ss << "Tile: " << grid_pos;
 
@@ -82,17 +84,21 @@ void World::Update( float dt )
     }
     Tree::Debug( ss.str() );
     Tree::Debug( curr_lvl->GetName() );
+
+    ss.str("");
+    ss << "cam_pos: " << cam_pos;
+    Tree::Debug( ss.str() );
 }
 
 void World::Draw()
 {
     for( size_t x = 0; x < tiles.size(); ++x ) {
         for( size_t y = 0; y < tiles[x].size(); ++y ) {
-            tiles[x][y]->Draw();
+            tiles[x][y]->Draw( ConvertToScreen( tiles[x][y]->GetPos() ) );
         }
     }
 
-    girl->Draw();
+    girl->Draw( ConvertToScreen( girl->GetPos() ) );
 }
 
 void World::LoadLevel( Level &lvl )
@@ -127,12 +133,12 @@ void World::UpdateCollisions( MovingObject &o )
     const Tree::Vec2f pos = o.GetPos();
     const Tree::Vec2f center( pos.x + tile_size / 2, pos.y + tile_size / 2 );
     const Tree::Vec2i grid_pos = ConvertToGrid( center );
-    const Tree::Vec2f screen_pos = ConvertToScreen( grid_pos );
+    const Tree::Vec2f screen_pos = ConvertToWorld( grid_pos );
     const Tree::Rect bounds( pos, tile_size, tile_size );
 
     //check the left
     if( !IsWalkable( grid_pos.x - 1, grid_pos.y ) ) {
-        const float x_limit = ConvertToScreen( grid_pos ).x;
+        const float x_limit = ConvertToWorld( grid_pos ).x;
         if( pos.x < x_limit ) {
             Tree::Vec2f new_pos( x_limit, pos.y );
             o.SetPos( new_pos );
@@ -141,7 +147,7 @@ void World::UpdateCollisions( MovingObject &o )
     }
     //check the right
     if( !IsWalkable( grid_pos.x + 1, grid_pos.y ) ) {
-        const float x_limit = ConvertToScreen( grid_pos ).x;
+        const float x_limit = ConvertToWorld( grid_pos ).x;
         if( pos.x > x_limit ) {
             Tree::Vec2f new_pos( x_limit, pos.y );
             o.SetPos( new_pos );
@@ -150,7 +156,7 @@ void World::UpdateCollisions( MovingObject &o )
     }
     //check above
     if( !IsWalkable( grid_pos.x, grid_pos.y - 1 ) ) {
-        const float y_limit = ConvertToScreen( grid_pos ).y;
+        const float y_limit = ConvertToWorld( grid_pos ).y;
         if( pos.y < y_limit ) {
             Tree::Vec2f new_pos( pos.x, y_limit );
             o.SetPos( new_pos );
@@ -159,7 +165,7 @@ void World::UpdateCollisions( MovingObject &o )
     }
     //check down
     if( !IsWalkable( grid_pos.x, grid_pos.y + 1 ) ) {
-        const float y_limit = ConvertToScreen( grid_pos ).y;
+        const float y_limit = ConvertToWorld( grid_pos ).y;
         if( pos.y > y_limit ) {
             Tree::Vec2f new_pos( pos.x, y_limit );
             o.SetPos( new_pos );
@@ -186,7 +192,7 @@ void World::UpdateCollisions( MovingObject &o )
     s.str("");
 }
 
-Tree::Vec2f World::ConvertToScreen( Tree::Vec2i grid_pos )
+Tree::Vec2f World::ConvertToWorld( Tree::Vec2i grid_pos )
 {
     return Tree::Vec2f( grid_pos.x * tile_size, grid_pos.y * tile_size );
 }
@@ -197,3 +203,14 @@ Tree::Vec2i World::ConvertToGrid( Tree::Vec2f screen_pos )
         (int)( screen_pos.y / tile_size ) );
 }
 
+void World::CenterCam( Tree::Vec2i world_pos )
+{
+    cam_pos = world_pos;
+}
+Tree::Vec2f World::ConvertToScreen( Tree::Vec2f world_pos )
+{
+    const Tree::Vec2f p = world_pos - cam_pos;
+    const int cx = Tree::GetWindowWidth() / 2;
+    const int cy = Tree::GetWindowHeight() / 2;
+    return Tree::Vec2f( p.x + cx, p.y + cy );
+}

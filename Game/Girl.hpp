@@ -11,7 +11,7 @@ public:
     float GetSpeed();
 
     void Update( float dt );
-    void Draw();
+    void Draw( Tree::Vec2i pos );
 private:
     Tree::Sprite spr;
 };
