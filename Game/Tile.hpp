@@ -22,10 +22,6 @@ public:
     virtual bool IsWalkable() { return true; }
     virtual bool IsSeeThrough() { return true; }
 
-    virtual Tree::Rect Bounds() const {
-        return Tree::Rect( pos.x, pos.y, 30, 30 );
-    }
-
     virtual void Update( float dt ) { }
     virtual void Draw() = 0;
 protected:

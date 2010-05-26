@@ -16,7 +16,7 @@ namespace Tree
         Tweaks();
 
         void Load( std::string path );
-        double GetDouble( std::string s );
+        double GetNum( std::string s );
         std::string GetString( std::string s );
     private:
         typedef std::map<std::string, double> DoubleMap;

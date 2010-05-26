@@ -4,7 +4,7 @@
 using Tree::Vec2f;
 
 MovingObject::MovingObject() :
-    size( (int)Tree::GetTweaks()->GetDouble( "tile_size" ) )
+    size( (int)Tree::GetTweaks()->GetNum( "tile_size" ) )
 {
     SetFaceDown();
 }

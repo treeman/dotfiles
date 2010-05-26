@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Tree/ErrorHandling.hpp"
+#include "LevelResources.hpp"
 #include "Level.hpp"
 #include "Tile.hpp"
 
@@ -14,7 +15,7 @@ public:
     bool IsThereALevel();
     Level &GetFirstLevel();
 
-    TileGrid CreateTiles( Level &lvl );
+    LevelResources CreateResources( Level &lvl );
 
     void LoadLevelFile( std::string file ) throw( Error::lua_error & );
 private:

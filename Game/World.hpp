@@ -2,7 +2,6 @@
 
 #include "Tree/Graphics.hpp"
 
-#include "Grid.hpp"
 #include "Tile.hpp"
 #include "Level.hpp"
 #include "LevelLoader.hpp"
@@ -25,10 +24,7 @@ public:
     void Update( float dt );
     void Draw();
 private:
-    Grid grid;
     TileGrid tiles;
-
-    sf::String lvl_str;
 
     void LoadLevel( Level &lvl );
     LevelLoader lvl_loader;
@@ -36,13 +32,23 @@ private:
 
     boost::shared_ptr<Girl> girl;
 
-    bool IsWalkable( GridPos p ) { return IsWalkable( p.x, p.y ); }
+    bool IsValid( Tree::Vec2i p ) { return IsValid( p.x, p.y ); }
+    bool IsValid( size_t x, size_t y );
+
+    bool IsWalkable( Tree::Vec2i p ) { return IsWalkable( p.x, p.y ); }
     bool IsWalkable( int x, int y );
 
-    bool IsSeeThrough( GridPos p ) { return IsSeeThrough( p.x, p.y ); }
+    bool IsCollision( Tree::Vec2i p, Tree::Rect bounds ) { return IsCollision( p.x, p.y ); }
+    bool IsCollision( int x, int y, Tree::Rect bounds );
+
+    bool IsSeeThrough( Tree::Vec2i p ) { return IsSeeThrough( p.x, p.y ); }
     bool IsSeeThrough( int x, int y );
 
-    bool IsValid( GridPos p ) { return IsValid( p.x, p.y ); }
-    bool IsValid( int x, int y );
+    void UpdateCollisions( MovingObject &o );
+
+    Tree::Vec2f ConvertToScreen( Tree::Vec2i grid_pos );
+    Tree::Vec2i ConvertToGrid( Tree::Vec2f screen_pos );
+
+    const int tile_size;
 };
 

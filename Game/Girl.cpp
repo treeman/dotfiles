@@ -17,7 +17,7 @@ Girl::~Girl()
 
 float Girl::GetSpeed()
 {
-    return (float)Tree::GetTweaks()->GetDouble( "girl_speed" );
+    return (float)Tree::GetTweaks()->GetNum( "girl_speed" );
 }
 
 void Girl::Update( float dt )

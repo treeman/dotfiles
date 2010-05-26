@@ -102,7 +102,8 @@ void Game::Start()
         while( window->GetEvent( event ) )
         {
             //pass down events in a chain
-            if( input_chain->HandleEvent( event ) ) {
+            if( console->HandleEvent( event ) ) {
+            //if( input_chain->HandleEvent( event ) ) {
                 curr_state->HandleEvent( event );
             }
 
@@ -113,7 +114,9 @@ void Game::Start()
             }
         }
 
-        curr_state->Update( dt );
+        if( !console->IsActive() ) {
+            curr_state->Update( dt );
+        }
         console->Update( dt );
         game_debug->Update( dt );
 
@@ -137,6 +140,7 @@ void Game::Start()
         //necessary to call it here so we can log rendering stuff too
         //this will simply reset the one time frame log
         log_helper->EndofLoop();
+
         visual_debug->EndofLoop();
     }
 }

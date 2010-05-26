@@ -32,6 +32,8 @@ namespace Tree
         std::string ShowCommands();
         std::string ShowCommandsValues();
 
+        bool IsActive() { return is_active; }
+
         void Update( float dt );
         void Render();
 

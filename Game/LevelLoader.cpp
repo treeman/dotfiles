@@ -4,8 +4,8 @@
 #include "Tree/Butler.hpp"
 #include "Lua/Lua.hpp"
 
+#include "LevelResources.hpp"
 #include "LevelLoader.hpp"
-#include "Grid.hpp"
 #include "Tile.hpp"
 #include "TileTypes.hpp"
 
@@ -23,46 +23,48 @@ Level &LevelLoader::GetFirstLevel()
     return *lvls;
 }
 
-TileGrid LevelLoader::CreateTiles( Level &lvl )
+LevelResources LevelLoader::CreateResources( Level &lvl )
 {
-    Grid grid;
+    LevelResources resources;
 
-    int tile_size = (int)Tree::GetTweaks()->GetDouble( "tile_size" );
-    if( tile_size ) {
-        int columns = Tree::GetWindowWidth() / tile_size;
-        int rows = Tree::GetWindowHeight() / tile_size;
-        grid.Set( 0, tile_size, columns, 0, tile_size, rows );
-    }
+    int tile_size = (int)Tree::GetTweaks()->GetNum( "tile_size" );
 
-    TileGrid tiles;
+    //this is flipping the array, columns becomes lines
+    //and lines becomes columns
+    //doing it here because it will make for easier lua parsing
+    //levels must be square!
 
-    //the layout has lines
-    for( int y = 0; y < lvl.layout.size(); ++y ) {
+    //the layout has columns
+    for( size_t x = 0; x < lvl.layout[0].size(); ++x ) {
         Tiles column;
 
-        //the lines has chars
-        for( int x = 0; x < lvl.layout[y].size(); ++x ) {
-            Tree::Vec2i pos = grid.ConvertToScreen( GridPos( x, y ));
+        //the columns has a string (with chars)
+        for( size_t y = 0; y < lvl.layout.size(); ++y ) {
+            Tree::Vec2i pos( x * tile_size, y * tile_size );
 
             //we make tiles according to chars! yay!
-            if( lvl.layout[y][x] == ' ' ) {
+            char ch = lvl.layout[y][x];
 
-                //might make this scriptable which should respond to what?
-                Tree::Sprite spr = Tree::GetButler()->GetSprite( "floor" );
-                TilePtr tile( new SpriteTile( pos, spr ) );
-                column.push_back( tile );
-            }
-            else {
+            if( ch == 'o' ) {
                 //insert a "nothing" tile
                 //so it can check for not passable more easily in world
                 TilePtr tile( new BlockTile( pos ) );
                 column.push_back( tile );
             }
-        }
-        tiles.push_back( column );
-    }
+            else {
+                //might make this scriptable which should respond to what?
+                Tree::Sprite spr = Tree::GetButler()->GetSprite( "floor" );
+                TilePtr tile( new SpriteTile( pos, spr ) );
+                column.push_back( tile );
+            }
 
-    return tiles;
+            if( ch == 'G' ) {
+                resources.girl_pos = pos;
+            }
+        }
+        resources.tiles.push_back( column );
+    }
+    return resources;
 }
 
 void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )

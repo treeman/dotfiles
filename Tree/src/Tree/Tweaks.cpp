@@ -37,12 +37,12 @@ void Tweaks::Load( std::string path )
     }
 }
 
-double Tweaks::GetDouble( std::string s )
+double Tweaks::GetNum( std::string s )
 {
     DoubleMap::iterator it = doubles.find( s );
     if( it != doubles.end() ) { return it->second; }
     else {
-        throw( Error::setting_not_found( ("The double " + s +
+        throw( Error::setting_not_found( ("The number " + s +
             " wasn't found in magic_numbers").c_str() ) );
     }
 }

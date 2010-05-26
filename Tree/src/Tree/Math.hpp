@@ -69,6 +69,11 @@ namespace math
         if( zero_to_one == 0 ) return 0;
         else return zero_to_one / 1.0f * 255;
     }
+
+    inline float round( float num )
+    {
+        return std::floor( num + 0.5 );
+    }
 }
 
 namespace fastmath

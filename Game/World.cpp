@@ -2,20 +2,18 @@
 #include "Tree/Util.hpp"
 #include "Tree/Butler.hpp"
 #include "Tree/Log.hpp"
+#include "Tree/Math.hpp"
+#include "Tree/VisualDebug.hpp"
 
 #include "World.hpp"
 
-World::World() : curr_lvl( 0 )
+World::World() : curr_lvl( 0 ),
+    tile_size( (int)Tree::GetTweaks()->GetNum( "tile_size" ) )
 {
     lvl_loader.LoadLevelFile( "levels.lua" );
     if( !lvl_loader.IsThereALevel() ) {
         throw( Error::logic_error( "There isn't a level present. Jumping ship." ));
     }
-
-    lvl_str.SetFont( *Tree::GetButler()->GetFont( "fnt/consola.ttf", 10 ) );
-    lvl_str.SetSize( 10 );
-    lvl_str.SetPosition( 500, 10 );
-    lvl_str.SetColor( sf::Color( 0, 0, 0 ) );
 
     girl.reset( new Girl() );
 
@@ -60,6 +58,30 @@ void World::Update( float dt )
         }
     }
     girl->Update( dt );
+    UpdateCollisions( *girl );
+
+    const sf::Input *input = &Tree::GetInput();
+
+    const Tree::Vec2f mpos( input->GetMouseX(), input->GetMouseY() );
+
+    const Tree::Vec2i grid_pos = ConvertToGrid( mpos );
+    std::stringstream ss;
+    ss << "Tile: " << grid_pos;
+
+    if( !IsValid( grid_pos ) ) {
+        ss << "Not valid";
+    }
+    else if( !IsWalkable( grid_pos ) ) {
+        ss << "Not walkable";
+    }
+    else if( !IsSeeThrough( grid_pos ) ) {
+        ss << "Not see through either!";
+    }
+    else {
+        ss << "It's see through and walkable =)";
+    }
+    Tree::Debug( ss.str() );
+    Tree::Debug( curr_lvl->GetName() );
 }
 
 void World::Draw()
@@ -69,18 +91,18 @@ void World::Draw()
             tiles[x][y]->Draw();
         }
     }
-    Tree::Draw( lvl_str );
 
     girl->Draw();
 }
 
 void World::LoadLevel( Level &lvl )
 {
-    tiles = lvl_loader.CreateTiles( lvl );
-    lvl_str.SetText( lvl.GetName() );
+    LevelResources resources = lvl_loader.CreateResources( lvl );
+
+    tiles = resources.tiles;
+    girl->SetPos( resources.girl_pos );
 
     curr_lvl = &lvl;
-    girl->SetPos( Tree::Vec2f( 64, 64 ) );
 }
 
 bool World::IsWalkable( int x, int y )
@@ -95,8 +117,83 @@ bool World::IsSeeThrough( int x, int y )
         return tiles[x][y]->IsSeeThrough();
     }
 }
-bool World::IsValid( int x, int y )
+bool World::IsValid( size_t x, size_t y )
 {
-    return x >= 0 && x < grid.GetColumns() && y >= 0 && y < grid.GetRows();
+    return x >= 0 && x < tiles.size() && y >= 0 && y < tiles[x].size();
+}
+
+void World::UpdateCollisions( MovingObject &o )
+{
+    const Tree::Vec2f pos = o.GetPos();
+    const Tree::Vec2f center( pos.x + tile_size / 2, pos.y + tile_size / 2 );
+    const Tree::Vec2i grid_pos = ConvertToGrid( center );
+    const Tree::Vec2f screen_pos = ConvertToScreen( grid_pos );
+    const Tree::Rect bounds( pos, tile_size, tile_size );
+
+    //check the left
+    if( !IsWalkable( grid_pos.x - 1, grid_pos.y ) ) {
+        const float x_limit = ConvertToScreen( grid_pos ).x;
+        if( pos.x < x_limit ) {
+            Tree::Vec2f new_pos( x_limit, pos.y );
+            o.SetPos( new_pos );
+            o.SetVel( Tree::Vec2f::zero );
+        }
+    }
+    //check the right
+    if( !IsWalkable( grid_pos.x + 1, grid_pos.y ) ) {
+        const float x_limit = ConvertToScreen( grid_pos ).x;
+        if( pos.x > x_limit ) {
+            Tree::Vec2f new_pos( x_limit, pos.y );
+            o.SetPos( new_pos );
+            o.SetVel( Tree::Vec2f::zero );
+        }
+    }
+    //check above
+    if( !IsWalkable( grid_pos.x, grid_pos.y - 1 ) ) {
+        const float y_limit = ConvertToScreen( grid_pos ).y;
+        if( pos.y < y_limit ) {
+            Tree::Vec2f new_pos( pos.x, y_limit );
+            o.SetPos( new_pos );
+            o.SetVel( Tree::Vec2f::zero );
+        }
+    }
+    //check down
+    if( !IsWalkable( grid_pos.x, grid_pos.y + 1 ) ) {
+        const float y_limit = ConvertToScreen( grid_pos ).y;
+        if( pos.y > y_limit ) {
+            Tree::Vec2f new_pos( pos.x, y_limit );
+            o.SetPos( new_pos );
+            o.SetVel( Tree::Vec2f::zero );
+        }
+    }
+
+    std::stringstream s;
+
+    s << "orig: " << pos.x << " " << pos.y;
+    Tree::Debug( s.str() );
+    s.str("");
+
+    s << "center " << center.x << " " << center.y;
+    Tree::Debug( s.str() );
+    s.str("");
+
+    s << "grid_pos " << grid_pos.x << " " << grid_pos.y;
+    Tree::Debug( s.str() );
+    s.str("");
+
+    s << "screen " << screen_pos.x << " " << screen_pos.y;
+    Tree::Debug( s.str() );
+    s.str("");
+}
+
+Tree::Vec2f World::ConvertToScreen( Tree::Vec2i grid_pos )
+{
+    return Tree::Vec2f( grid_pos.x * tile_size, grid_pos.y * tile_size );
+}
+Tree::Vec2i World::ConvertToGrid( Tree::Vec2f screen_pos )
+{
+    return Tree::Vec2i(
+        (int)( screen_pos.x / tile_size ),
+        (int)( screen_pos.y / tile_size ) );
 }
 

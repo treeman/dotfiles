@@ -25,6 +25,9 @@ public:
     BlockTile( Tree::Vec2i pos ) : Tile ( pos )
     { }
 
+    bool IsWalkable() { return false; }
+    bool IsSeeThrough() { return false; }
+
     void Draw() { }
 };
 

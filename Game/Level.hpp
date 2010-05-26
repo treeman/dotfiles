@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 
+#include "Tree/Vec2.hpp"
+
 class LevelLoader;
 
 class Level {
@@ -13,6 +15,8 @@ public:
 
     bool IsLast();
     bool IsFirst();
+
+    Tree::Vec2i GetGirlPos() { return girl_pos; }
 
     Level &GetNext();
     Level &GetPrevious();
@@ -28,5 +32,7 @@ private:
 
     typedef std::vector<std::string> Layout;
     Layout layout;
+
+    Tree::Vec2i girl_pos;
 };
 

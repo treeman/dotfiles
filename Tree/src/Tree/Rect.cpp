@@ -2,16 +2,36 @@
 
 using Tree::Rect;
 
+Rect::Rect( Tree::Vec2f pos, float width, float height, bool is_centered )
+{
+    Set( pos.x, pos.y, width, height, is_centered );
+}
 Rect::Rect( float x, float y, float width, float height, bool is_centered )
 {
     Set( x, y, width, height, is_centered );
 }
 
+void Rect::SetSquare( Tree::Vec2f pos, float size, bool is_centered )
+{
+    Set( pos.x, pos.y, size, size, is_centered );
+}
+void Rect::SetSquare( float x, float y, float size, bool is_centered )
+{
+    Set( x, y, size, size, is_centered );
+}
 void Rect::Set( float x, float y, float width, float height, bool is_centered )
 {
-    x1 = x; y1 = y;
-    x2 = x + width;
-    y2 = y + height;
+    if( !is_centered ) {
+        x1 = x; y1 = y;
+        x2 = x + width;
+        y2 = y + height;
+    }
+    else {
+        x1 = x - width / 2;
+        y1 = y - height / 2;
+        x2 = x + width / 2;
+        y2 = y + width / 2;
+    }
 }
 void Rect::SetAnchors( float _x1, float _y1, float _x2, float _y2 )
 {
