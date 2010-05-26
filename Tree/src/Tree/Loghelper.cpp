@@ -1,4 +1,5 @@
 #include "Tree/Loghelper.hpp"
+
 #include "Tree/Game.hpp"
 
 using Tree::LogHelper;
@@ -9,7 +10,8 @@ boost::shared_ptr<LogHelper> Tree::GetLogHelper()
 }
 
 LogHelper::LogHelper() : shall_log( false ), one_iteration_key( 0 )
-{ }
+{
+}
 
 bool LogHelper::ShallLog() const
 {
@@ -34,4 +36,3 @@ void LogHelper::EndofLoop()
 {
     shall_log = false;
 }
-

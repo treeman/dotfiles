@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Tree/Log.hpp"
 #include "Tree/InputHandler.hpp"
+#include "Tree/Log.hpp"
 
 namespace Tree
 {

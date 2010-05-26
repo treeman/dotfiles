@@ -16,6 +16,10 @@ void MovingObject::MoveLeft()
         stop_pos.Set( pos.x - size, pos.y );
         FaceLeft();
     }
+    else if( WantsRight() ) {
+        vel.x = -GetSpeed();
+        stop_pos.x -= size;
+    }
     else {
         next_move = Vec2f::left;
     }
@@ -27,16 +31,24 @@ void MovingObject::MoveRight()
         stop_pos.Set( pos.x + size, pos.y );
         FaceRight();
     }
+    else if( WantsLeft() ) {
+        vel.x = GetSpeed();
+        stop_pos.x += size;
+    }
     else {
         next_move = Vec2f::right;
     }
 }
 void MovingObject::MoveUp()
 {
-    if( !IsMoving() || vel.x != 0 ) {
+    if( !IsMoving() ) {
         vel.x = 0; vel.y = -GetSpeed();
         stop_pos.Set( pos.x, pos.y - size );
         FaceUp();
+    }
+    else if( WantsDown() ) {
+        vel.y = -GetSpeed();
+        stop_pos.y -= size;
     }
     else {
         next_move = Vec2f::up;
@@ -44,10 +56,14 @@ void MovingObject::MoveUp()
 }
 void MovingObject::MoveDown()
 {
-    if( !IsMoving() || vel.x != 0 ) {
+    if( !IsMoving() ) {
         vel.x = 0; vel.y = GetSpeed();
         stop_pos.Set( pos.x, pos.y + size );
         FaceDown();
+    }
+    else if( WantsUp() ) {
+        vel.y = GetSpeed();
+        stop_pos.y += size;
     }
     else {
         next_move = Vec2f::down;

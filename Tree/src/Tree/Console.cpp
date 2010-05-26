@@ -90,7 +90,7 @@ bool Console::HandleEvent( sf::Event &e )
     }
     else if( e.Type == sf::Event::KeyPressed && e.Key.Code == sf::Key::F1 ) {
         Deactivate();
-        return true;
+        return false;
     }
 
     if( e.Type == sf::Event::KeyPressed )
@@ -180,9 +180,7 @@ bool Console::HandleEvent( sf::Event &e )
 
         blink_timer.Restart();
     }
-    else {
-        return true;
-    }
+
     return false;
 }
 

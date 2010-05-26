@@ -80,7 +80,7 @@ void World::LoadLevel( Level &lvl )
     lvl_str.SetText( lvl.GetName() );
 
     curr_lvl = &lvl;
-    girl->SetPos( grid.ConvertToScreen( GridPos( 5, 5 ) ) );
+    girl->SetPos( Tree::Vec2f( 64, 64 ) );
 }
 
 bool World::IsWalkable( int x, int y )

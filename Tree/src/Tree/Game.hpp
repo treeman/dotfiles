@@ -15,6 +15,7 @@
 #include "Tree/Butler.hpp"
 #include "Tree/Tweaks.hpp"
 #include "Tree/LogHelper.hpp"
+#include "Tree/VisualDebug.hpp"
 
 #define GAME Tree::Game::Instance()
 
@@ -77,11 +78,16 @@ namespace Tree
             return log_helper;
         }
 
+        void VisualDebug( std::string str ) {
+            visual_debug->Push( str );
+        }
+
     private:
         boost::shared_ptr<Settings> settings;
         boost::shared_ptr<Tweaks> tweaks;
         boost::shared_ptr<Butler> butler;
         boost::shared_ptr<LogHelper> log_helper;
+        boost::shared_ptr<Tree::VisualDebug> visual_debug;
     };
 }
 

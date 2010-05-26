@@ -83,6 +83,7 @@ void Game::Init( int width, int height, bool windowed, std::string title,
     );
 
     game_debug.reset( new Tree::GameDebug() );
+    visual_debug.reset( new Tree::VisualDebug() );
 }
 
 void Game::Start()
@@ -128,6 +129,7 @@ void Game::Start()
         curr_state->Draw();
         console->Render();
         game_debug->Draw();
+        visual_debug->Draw();
 
         //actually draw everything
         window->Display();
@@ -135,6 +137,7 @@ void Game::Start()
         //necessary to call it here so we can log rendering stuff too
         //this will simply reset the one time frame log
         log_helper->EndofLoop();
+        visual_debug->EndofLoop();
     }
 }
 
