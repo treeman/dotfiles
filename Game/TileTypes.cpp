@@ -10,7 +10,8 @@ float light_func( float light )
 
 Floor::Floor( Tree::Vec2i pos ) : Tile( pos )
 {
-    spr.SetImage( *Tree::GetButler()->GetImage( "gfx/floor.png" ) );
+    spr.SetImage( *Tree::GetButler()->GetImage( "gfx/bigfloor.png" ) );
+    spr.SetSubRect( sf::IntRect( 1, 1, 33, 33 ) );
 }
 
 void Floor::Draw( Tree::Vec2i p )
@@ -19,4 +20,3 @@ void Floor::Draw( Tree::Vec2i p )
     spr.SetPosition( p.x, p.y );
     Tree::Draw( spr );
 }
-
