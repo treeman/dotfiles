@@ -23,6 +23,7 @@ float Girl::GetSpeed()
 void Girl::Update( float dt )
 {
     UpdateMovement( dt );
+    light.Update( dt );
 
     std::stringstream s;
     s << "pos: " << pos.x << " " << pos.y;

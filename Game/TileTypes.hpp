@@ -12,7 +12,6 @@ public:
     SpriteTile( Tree::Vec2i pos, Tree::Sprite _spr ) : Tile( pos ), spr( _spr )
     {
         spr.SetPos( pos.x, pos.y );
-        SetLight( 0.9 );
     }
     virtual ~SpriteTile() { }
 
@@ -42,7 +41,6 @@ public:
 
     void Draw( Tree::Vec2i p );
 private:
-    typedef std::vector<Tree::Sprite> Sprites;
-    Sprites sprites;
+    sf::Sprite spr;
 };
 

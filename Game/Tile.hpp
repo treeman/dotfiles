@@ -19,6 +19,9 @@ public:
     { }
     virtual ~Tile() { }
 
+    float GetLight() const { return light; }
+    void SetLight( float f ) { light = f; }
+
     Tree::Vec2i GetPos() const { return pos; }
 
     virtual bool IsWalkable() { return true; }
@@ -28,4 +31,5 @@ public:
     virtual void Draw( Tree::Vec2i p ) = 0;
 protected:
     Tree::Vec2i pos;
+    float light;
 };

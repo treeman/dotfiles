@@ -21,6 +21,10 @@ World::World() : curr_lvl( 0 ),
     SetFirstLevel();
 
     Tree::GetSettings()->Register<bool>( "fow", true );
+
+    girl->GetLight().SetLight( 0.6 );
+    girl->GetLight().SetLightDecline( 0.01 );
+    girl->GetLight().SetFlicker( true );
 }
 World::~World()
 {
@@ -73,7 +77,8 @@ void World::Update( float dt )
     const Tree::Vec2f pos = girl->GetPos();
     const Tree::Vec2f center( pos.x + tile_size / 2, pos.y + tile_size / 2 );
 
-    UpdateLight( ConvertToGridByCenter( girl->GetPos() ), 0.6 );
+    UpdateLight( ConvertToGridByCenter( girl->GetPos() ),
+        girl->GetLight().GetLight() );
 
     CenterCam( center );
 
@@ -239,15 +244,23 @@ Tree::Vec2f World::ConvertToScreen( Tree::Vec2f world_pos )
 void World::UpdateLight( Tree::Vec2i grid_pos, float power )
 {
     IncrLight( grid_pos, power );
-    IncrLight( grid_pos.x - 1, grid_pos.y, power );
-    IncrLight( grid_pos.x + 1, grid_pos.y, power );
-    IncrLight( grid_pos.x, grid_pos.y - 1, power );
-    IncrLight( grid_pos.x, grid_pos.y + 1, power );
+    Tree::Vec2i check_pos;
 
-    IncrLight( grid_pos.x - 1, grid_pos.y - 1, power / 2 );
-    IncrLight( grid_pos.x + 1, grid_pos.y - 1, power / 2 );
-    IncrLight( grid_pos.x + 1, grid_pos.y + 1, power / 2 );
-    IncrLight( grid_pos.x - 1, grid_pos.y + 1, power / 2 );
+    UpdateLight( grid_pos.x - 1, grid_pos.y, grid_pos, power );
+    UpdateLight( grid_pos.x + 1, grid_pos.y, grid_pos, power );
+    UpdateLight( grid_pos.x, grid_pos.y - 1, grid_pos, power );
+    UpdateLight( grid_pos.x, grid_pos.y + 1, grid_pos, power );
+
+    UpdateLight( grid_pos.x - 1, grid_pos.y - 1, grid_pos, power );
+    UpdateLight( grid_pos.x + 1, grid_pos.y - 1, grid_pos, power );
+    UpdateLight( grid_pos.x + 1, grid_pos.y + 1, grid_pos, power );
+    UpdateLight( grid_pos.x - 1, grid_pos.y + 1, grid_pos, power );
+}
+void World::UpdateLight( Tree::Vec2i grid_pos, Tree::Vec2i origin, float source_power )
+{
+    const Tree::Vec2i dist = grid_pos - origin;
+    int walk_dist = std::abs( dist.x ) + std::abs( dist.y );
+    IncrLight( grid_pos, source_power / walk_dist );
 }
 void World::IncrLight( int x, int y, float power )
 {

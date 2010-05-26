@@ -2,26 +2,21 @@
 #include "Tree/Butler.hpp"
 #include "TileTypes.hpp"
 
+float light_func( float light )
+{
+    const int byte = light * 255;
+    return byte;
+}
+
 Floor::Floor( Tree::Vec2i pos ) : Tile( pos )
 {
-    sprites.push_back( Tree::GetButler()->GetSprite( "floor0" ) );
-    sprites.push_back( Tree::GetButler()->GetSprite( "floor1" ) );
-    sprites.push_back( Tree::GetButler()->GetSprite( "floor2" ) );
-    sprites.push_back( Tree::GetButler()->GetSprite( "floor3" ) );
-    sprites.push_back( Tree::GetButler()->GetSprite( "floor4" ) );
-    sprites.push_back( Tree::GetButler()->GetSprite( "floor5" ) );
-    sprites.push_back( Tree::GetButler()->GetSprite( "floor6" ) );
-    sprites.push_back( Tree::GetButler()->GetSprite( "floor7" ) );
-    sprites.push_back( Tree::GetButler()->GetSprite( "floor8" ) );
-    sprites.push_back( Tree::GetButler()->GetSprite( "floor9" ) );
+    spr.SetImage( *Tree::GetButler()->GetImage( "gfx/floor.png" ) );
 }
 
 void Floor::Draw( Tree::Vec2i p )
 {
-    int floor_type = math::clip( (int)(light * 10), 0, 10 );
-    if( floor_type != 0 ) {
-        sprites[floor_type - 1].SetPos( p );
-        sprites[floor_type - 1].Draw();
-    }
+    spr.SetColor( sf::Color( 51, 51, 51, light_func( light ) ) );
+    spr.SetPosition( p.x, p.y );
+    Tree::Draw( spr );
 }
 
