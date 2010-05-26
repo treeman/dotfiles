@@ -52,9 +52,7 @@ LevelResources LevelLoader::CreateResources( Level &lvl )
                 column.push_back( tile );
             }
             else {
-                //might make this scriptable which should respond to what?
-                Tree::Sprite spr = Tree::GetButler()->GetSprite( "floor" );
-                TilePtr tile( new SpriteTile( pos, spr ) );
+                TilePtr tile( new Floor( pos ) );
                 column.push_back( tile );
             }
 

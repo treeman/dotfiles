@@ -48,11 +48,20 @@ private:
 
     Tree::Vec2f ConvertToWorld( Tree::Vec2i grid_pos );
     Tree::Vec2i ConvertToGrid( Tree::Vec2f screen_pos );
+    Tree::Vec2i ConvertToGridByCenter( Tree::Vec2f screen_pos );
 
     const int tile_size;
 
     void CenterCam( Tree::Vec2i world_pos );
     Tree::Vec2f ConvertToScreen( Tree::Vec2f world_pos );
     Tree::Vec2i cam_pos;
+
+    void UpdateLight( Tree::Vec2i grid_pos, float power );
+    void IncrLight( Tree::Vec2i grid_pos, float power ) {
+        IncrLight( grid_pos.x, grid_pos.y, power );
+    }
+    void IncrLight( int x, int y, float power );
+    void IncrLight( TilePtr tile, float power );
+
 };
 

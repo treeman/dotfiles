@@ -4,6 +4,7 @@
 #include "Tree/Log.hpp"
 #include "Tree/Math.hpp"
 #include "Tree/VisualDebug.hpp"
+#include "Tree/Settings.hpp"
 
 #include "World.hpp"
 
@@ -18,6 +19,8 @@ World::World() : curr_lvl( 0 ),
     girl.reset( new Girl() );
 
     SetFirstLevel();
+
+    Tree::GetSettings()->Register<bool>( "fow", true );
 }
 World::~World()
 {
@@ -52,15 +55,27 @@ void World::ResetLevel()
 
 void World::Update( float dt )
 {
+    const bool use_fow = Tree::GetSettings()->GetValue<bool>( "fow" );
     for( size_t x = 0; x < tiles.size(); ++x ) {
         for( size_t y = 0; y < tiles[x].size(); ++y ) {
             tiles[x][y]->Update( dt );
+            if( use_fow ) {
+                tiles[x][y]->SetLight( 0 );
+            }
+            else {
+                tiles[x][y]->SetLight( 0.9 );
+            }
         }
     }
     girl->Update( dt );
     UpdateCollisions( *girl );
 
-    CenterCam( girl->GetPos() );
+    const Tree::Vec2f pos = girl->GetPos();
+    const Tree::Vec2f center( pos.x + tile_size / 2, pos.y + tile_size / 2 );
+
+    UpdateLight( ConvertToGridByCenter( girl->GetPos() ), 0.6 );
+
+    CenterCam( center );
 
     const sf::Input *input = &Tree::GetInput();
 
@@ -202,6 +217,12 @@ Tree::Vec2i World::ConvertToGrid( Tree::Vec2f screen_pos )
         (int)( screen_pos.x / tile_size ),
         (int)( screen_pos.y / tile_size ) );
 }
+Tree::Vec2i World::ConvertToGridByCenter( Tree::Vec2f screen_pos )
+{
+    const Tree::Vec2f center( screen_pos.x + tile_size / 2,
+        screen_pos.y + tile_size / 2 );
+    return ConvertToGrid( center );
+}
 
 void World::CenterCam( Tree::Vec2i world_pos )
 {
@@ -213,4 +234,28 @@ Tree::Vec2f World::ConvertToScreen( Tree::Vec2f world_pos )
     const int cx = Tree::GetWindowWidth() / 2;
     const int cy = Tree::GetWindowHeight() / 2;
     return Tree::Vec2f( p.x + cx, p.y + cy );
+}
+
+void World::UpdateLight( Tree::Vec2i grid_pos, float power )
+{
+    IncrLight( grid_pos, power );
+    IncrLight( grid_pos.x - 1, grid_pos.y, power );
+    IncrLight( grid_pos.x + 1, grid_pos.y, power );
+    IncrLight( grid_pos.x, grid_pos.y - 1, power );
+    IncrLight( grid_pos.x, grid_pos.y + 1, power );
+
+    IncrLight( grid_pos.x - 1, grid_pos.y - 1, power / 2 );
+    IncrLight( grid_pos.x + 1, grid_pos.y - 1, power / 2 );
+    IncrLight( grid_pos.x + 1, grid_pos.y + 1, power / 2 );
+    IncrLight( grid_pos.x - 1, grid_pos.y + 1, power / 2 );
+}
+void World::IncrLight( int x, int y, float power )
+{
+    if( IsValid( x, y ) ) {
+        IncrLight( tiles[x][y], power );
+    }
+}
+void World::IncrLight( TilePtr tile, float power )
+{
+    tile->SetLight( power + tile->GetLight() );
 }

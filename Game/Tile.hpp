@@ -5,13 +5,15 @@
 #include "Tree/Sprite.hpp"
 #include "Tree/Rect.hpp"
 
+#include "Drawable.hpp"
+
 class Tile;
 
 typedef boost::shared_ptr<Tile> TilePtr;
 typedef std::vector<TilePtr> Tiles;
 typedef std::vector<Tiles> TileGrid;
 
-class Tile {
+class Tile : public Drawable {
 public:
     Tile( Tree::Vec2i _pos ) : pos( _pos )
     { }

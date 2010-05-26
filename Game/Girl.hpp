@@ -2,8 +2,9 @@
 
 #include "Tree/Sprite.hpp"
 #include "MovingObject.hpp"
+#include "Drawable.hpp"
 
-class Girl : public MovingObject {
+class Girl : public MovingObject, public Drawable {
 public:
     Girl();
     ~Girl();
