@@ -22,9 +22,10 @@ World::World() : curr_lvl( 0 ),
 
     Tree::GetSettings()->Register<bool>( "fow", true );
 
-    girl->GetLight().SetLight( 0.6 );
-    girl->GetLight().SetLightDecline( 0.01 );
-    girl->GetLight().SetFlicker( true );
+    girl->GetLightSource().SetLightPower( 0.6 );
+    girl->GetLightSource().SetLightDecline( 0.01 );
+    girl->GetLightSource().SetLightSpread( 1 );
+    girl->GetLightSource().SetFlicker( true );
 }
 World::~World()
 {
@@ -59,6 +60,7 @@ void World::ResetLevel()
 
 void World::Update( float dt )
 {
+    //update tiles and reset lights
     const bool use_fow = Tree::GetSettings()->GetValue<bool>( "fow" );
     for( size_t x = 0; x < tiles.size(); ++x ) {
         for( size_t y = 0; y < tiles[x].size(); ++y ) {
@@ -74,11 +76,30 @@ void World::Update( float dt )
     girl->Update( dt );
     UpdateCollisions( *girl );
 
+    //set light from light sources
     const Tree::Vec2f pos = girl->GetPos();
     const Tree::Vec2f center( pos.x + tile_size / 2, pos.y + tile_size / 2 );
 
-    UpdateLight( ConvertToGridByCenter( girl->GetPos() ),
-        girl->GetLight().GetLight() );
+    if( girl->GetLightSource().GetLightPower() > 0 ) {
+        UpdateLight( ConvertToGridByCenter( girl->GetPos() ),
+            girl->GetLightSource().GetLightPower(),
+            girl->GetLightSource().GetLightSpread() );
+    }
+    for( size_t x = 0; x < tiles.size(); ++x ) {
+        for( size_t y = 0; y < tiles[x].size(); ++y ) {
+            boost::shared_ptr<TileObject> o = tiles[x][y]->GetAttachment();
+            if( o ) {
+                Light light = o->GetLightSource();
+                if( light.GetLightPower() > 0 ) {
+                    std::stringstream ss;
+                    ss << "l: " << x << "," << y << " " << light.GetLightPower();
+                    Tree::Debug( ss.str() );
+                    UpdateLight( Tree::Vec2i( x, y ), light.GetLightPower(),
+                        light.GetLightSpread() );
+                }
+            }
+        }
+    }
 
     CenterCam( center );
 
@@ -241,34 +262,59 @@ Tree::Vec2f World::ConvertToScreen( Tree::Vec2f world_pos )
     return Tree::Vec2f( p.x + cx, p.y + cy );
 }
 
-void World::UpdateLight( Tree::Vec2i grid_pos, float power )
+void World::UpdateLight( Tree::Vec2i grid_pos, float power, int spread )
 {
     IncrLight( grid_pos, power );
     Tree::Vec2i check_pos;
 
-    UpdateLight( grid_pos.x - 1, grid_pos.y, grid_pos, power );
-    UpdateLight( grid_pos.x + 1, grid_pos.y, grid_pos, power );
-    UpdateLight( grid_pos.x, grid_pos.y - 1, grid_pos, power );
-    UpdateLight( grid_pos.x, grid_pos.y + 1, grid_pos, power );
+    for( int y = -spread; y < spread + 1; ++y ) {
+        for( int x = -spread; x < spread + 1; ++x ) {
+            UpdateLightTile( Tree::Vec2i( grid_pos.x + x, grid_pos.y + y ),
+                grid_pos, power );
+        }
+    }
 
-    UpdateLight( grid_pos.x - 1, grid_pos.y - 1, grid_pos, power );
-    UpdateLight( grid_pos.x + 1, grid_pos.y - 1, grid_pos, power );
-    UpdateLight( grid_pos.x + 1, grid_pos.y + 1, grid_pos, power );
-    UpdateLight( grid_pos.x - 1, grid_pos.y + 1, grid_pos, power );
+    IncrLight( grid_pos.x, grid_pos.y, power );
+
+    /*if( IsValid( grid_pos ) ) {
+        tiles[grid_pos.x][grid_pos.y]->SetLight( power );
+    }*/
 }
-void World::UpdateLight( Tree::Vec2i grid_pos, Tree::Vec2i origin, float source_power )
+void World::UpdateLightTile( Tree::Vec2i grid_pos, Tree::Vec2i origin,
+    float source_power )
 {
-    const Tree::Vec2i dist = grid_pos - origin;
-    int walk_dist = std::abs( dist.x ) + std::abs( dist.y );
-    IncrLight( grid_pos, source_power / walk_dist );
+    if( IsVisiblePathClear( grid_pos, origin ) ) {
+        if( grid_pos == origin ) {
+            IncrLight( grid_pos, source_power );
+        }
+        else {
+            const Tree::Vec2i dist = grid_pos - origin;
+            IncrLight( grid_pos, source_power / dist.MagnitudeSq() );
+        }
+    }
 }
 void World::IncrLight( int x, int y, float power )
 {
     if( IsValid( x, y ) ) {
-        IncrLight( tiles[x][y], power );
+        TilePtr tile = tiles[x][y];
+        //prevent overruns and flickering between black (invalid)
+        tile->SetLight( math::clip<float>( power + tile->GetLight(), 0, 1 ) );
     }
 }
-void World::IncrLight( TilePtr tile, float power )
+
+bool World::IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 )
 {
-    tile->SetLight( power + tile->GetLight() );
+    /*const Tree::Vec2i dist = p1 - p2;
+    const int x_size = std::abs( dist.x );
+    const int y_size = std::abs( dist.y );
+
+    typedef std::vector<std::vector<Tree::Vec2i> > Points;
+    Points points( x_size );
+
+    for( int x = 0; x < points.size(); ++x ) {
+
+    }*/
+
+    return true;
 }
+

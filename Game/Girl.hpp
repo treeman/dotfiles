@@ -11,7 +11,7 @@ public:
     ~Girl();
 
     float GetSpeed();
-    Light &GetLight() { return light; }
+    Light &GetLightSource() { return light; }
 
     void Update( float dt );
     void Draw( Tree::Vec2i pos );

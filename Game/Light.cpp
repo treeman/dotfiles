@@ -1,23 +1,32 @@
 #include "Tree/Math.hpp"
 #include "Tree/VisualDebug.hpp"
 #include "Tree/Log.hpp"
+#include "Tree/Tweaks.hpp"
 #include "Light.hpp"
 
 #include <boost/lexical_cast.hpp>
 
-Light::Light() : power(0), vel(0), length(0), curr(0),
+Light::Light() : power(0), vel(0), length(0), curr(0), spread(2),
     decline_vel(0), use_flicker( false )
 {
     Reset();
 }
 
-void Light::SetLight( float f )
+void Light::SetLightPower( float f )
 {
     power = f;
 }
-float Light::GetLight()
+float Light::GetLightPower()
 {
     return math::clip<float>( power + curr, 0, 1 );
+}
+int Light::GetLightSpread()
+{
+    return spread;
+}
+void Light::SetLightSpread( int tiles )
+{
+    spread = tiles;
 }
 void Light::SetLightDecline( float vel )
 {
@@ -30,6 +39,7 @@ float Light::GetLightDecline()
 void Light::Update( float dt )
 {
     power -= decline_vel * dt;
+    if( power < 0 ) power = 0;
 
     if( use_flicker ) {
         UpdateFlicker( dt );
@@ -40,13 +50,18 @@ void Light::Reset()
 {
     vel = 0;
     curr = 0;
-    last_flicker.Start();
-    pause = math::frandom( 0, 3 );
+    last_flicker.Restart();
+    const float max_pause = Tree::GetTweaks()->GetNum( "light_flicker_pause_limit" );
+    pause = math::frandom( 0, max_pause );
 }
 void Light::Start()
 {
-    length = math::frandom( - power / 2, power / 2 );
-    vel = math::frandom( power / 2, 2 * power );
+    //const float l = ( power * 1 ) / 2;
+    const float l = power * Tree::GetTweaks()->GetNum( "light_flicker_length" );
+    length = math::frandom( - l, l );
+    const float min_vel = Tree::GetTweaks()->GetNum( "light_flicker_min_vel" );
+    const float max_vel = Tree::GetTweaks()->GetNum( "light_flicker_max_vel" );
+    vel = math::frandom( power * min_vel, power * max_vel );
     curr = 0;
 }
 

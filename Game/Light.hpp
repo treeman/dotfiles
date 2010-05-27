@@ -8,8 +8,11 @@ public:
     Light();
 
     void SetFlicker( bool flicker ) { use_flicker = flicker; }
-    void SetLight( float power );
-    float GetLight();
+    void SetLightPower( float power );
+    float GetLightPower();
+
+    int GetLightSpread();
+    void SetLightSpread( int tiles );
 
     void SetLightDecline( float vel );
     float GetLightDecline();
@@ -24,6 +27,7 @@ private:
     float vel;
     float length;
     float curr;
+    int spread;
 
     Tree::Timer last_flicker;
     float pause;

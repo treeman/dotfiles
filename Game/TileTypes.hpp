@@ -32,6 +32,8 @@ public:
     bool IsWalkable() { return false; }
     bool IsSeeThrough() { return false; }
 
+    bool CanAttach() { return false; }
+
     void Draw( Tree::Vec2i ) { }
 };
 

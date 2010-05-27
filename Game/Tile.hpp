@@ -6,6 +6,7 @@
 #include "Tree/Rect.hpp"
 
 #include "Drawable.hpp"
+#include "TileObject.hpp"
 
 class Tile;
 
@@ -24,12 +25,29 @@ public:
 
     Tree::Vec2i GetPos() const { return pos; }
 
-    virtual bool IsWalkable() { return true; }
-    virtual bool IsSeeThrough() { return true; }
+    virtual bool IsWalkable() {
+        if( attachment ) return attachment->IsWalkable();
+        else return true;
+    }
+    virtual bool IsSeeThrough() {
+        if( attachment ) return attachment->IsSeeThrough();
+        else return true;
+    }
 
-    virtual void Update( float dt ) { }
+    boost::shared_ptr<TileObject> GetAttachment() { return attachment; }
+    virtual bool CanAttach() { return true; }
+    void Attach( boost::shared_ptr<TileObject> o ) {
+        if( CanAttach() ) attachment = o;
+    }
+    void Detach() { attachment.reset(); }
+
+    virtual void Update( float dt ) {
+        if( attachment ) attachment->Update( dt );
+    }
     virtual void Draw( Tree::Vec2i p ) = 0;
 protected:
     Tree::Vec2i pos;
     float light;
+    boost::shared_ptr<TileObject> attachment;
 };
+

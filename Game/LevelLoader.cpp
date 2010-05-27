@@ -8,6 +8,7 @@
 #include "LevelLoader.hpp"
 #include "Tile.hpp"
 #include "TileTypes.hpp"
+#include "Objects.hpp"
 
 LevelLoader::LevelLoader() : lvls( 0 )
 {
@@ -45,20 +46,25 @@ LevelResources LevelLoader::CreateResources( Level &lvl )
             //we make tiles according to chars! yay!
             char ch = lvl.layout[y][x];
 
+            TilePtr tile;
             if( ch == 'o' ) {
                 //insert a "nothing" tile
                 //so it can check for not passable more easily in world
-                TilePtr tile( new BlockTile( pos ) );
-                column.push_back( tile );
+                tile.reset( new BlockTile( pos ) );
             }
             else {
-                TilePtr tile( new Floor( pos ) );
-                column.push_back( tile );
+                tile.reset( new Floor( pos ) );
             }
 
             if( ch == 'G' ) {
                 resources.girl_pos = pos;
             }
+            else if( ch == 'l' ) {
+                boost::shared_ptr<TileObject> o( new LightObject() );
+                tile->Attach( o );
+            }
+
+            column.push_back( tile );
         }
         resources.tiles.push_back( column );
     }

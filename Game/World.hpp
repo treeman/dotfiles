@@ -56,16 +56,15 @@ private:
     Tree::Vec2f ConvertToScreen( Tree::Vec2f world_pos );
     Tree::Vec2i cam_pos;
 
-    void UpdateLight( Tree::Vec2i grid_pos, float power );
-    void UpdateLight( float x, float y, Tree::Vec2i origin, float source_power ) {
-        UpdateLight( Tree::Vec2i( x, y ), origin, source_power );
-    }
-    void UpdateLight( Tree::Vec2i grid_pos, Tree::Vec2i origin, float source_power );
+    void UpdateLight( Tree::Vec2i grid_pos, float power, int spread );
+    void UpdateLightTile( Tree::Vec2i grid_pos, Tree::Vec2i origin,
+        float source_power );
 
     void IncrLight( Tree::Vec2i grid_pos, float power ) {
         IncrLight( grid_pos.x, grid_pos.y, power );
     }
     void IncrLight( int x, int y, float power );
-    void IncrLight( TilePtr tile, float power );
+
+    bool IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 );
 };
 
