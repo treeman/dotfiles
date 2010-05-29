@@ -67,12 +67,30 @@ LevelResources LevelLoader::CreateResources( Level &lvl )
                 boost::shared_ptr<Candle> o( new Candle() );
                 tile->Attach( o );
             }
+            else if( ch == 't' ) {
+                boost::shared_ptr<Teddy> o( new Teddy() );
+                tile->Attach( o );
+            }
 
             column.push_back( tile );
         }
         resources.tiles.push_back( column );
     }
     return resources;
+}
+int LevelLoader::CalculateNumGoals( TileGrid &grid )
+{
+    int n = 0;
+    for( size_t x = 0; x < grid.size(); ++x ) {
+        for( size_t y = 0; y < grid[x].size(); ++y ) {
+            boost::shared_ptr<TileObject> o = grid[x][y]->GetAttachment();
+            if( o ) {
+                ObjectMod mod = o->GetMod();
+                if( mod.is_goal) ++n;
+            }
+        }
+    }
+    return n;
 }
 
 void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )

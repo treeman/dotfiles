@@ -18,5 +18,10 @@ sprites =
         x = 0, y = 32,
         w = 32, h = 32,
     },
+    teddy = {
+        path = "gfx/objects.png",
+        x = 32, y = 32,
+        w = 32, h = 32,
+    },
 }
 

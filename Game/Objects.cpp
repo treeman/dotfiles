@@ -17,12 +17,25 @@ LightObject::LightObject()
 
 Candle::Candle()
 {
+    spr = Tree::GetButler()->GetSprite( "candle" );
     mod.new_candle = true;
     mod.can_remove = true;
-    spr = Tree::GetButler()->GetSprite( "candle" );
 }
 
 void Candle::Draw( Tree::Vec2i pos )
+{
+    spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
+    spr.SetPos( pos );
+    spr.Draw();
+}
+
+Teddy::Teddy()
+{
+    spr = Tree::GetButler()->GetSprite( "teddy" );
+    mod.can_remove = true;
+    mod.is_goal = true;
+}
+void Teddy::Draw( Tree::Vec2i pos )
 {
     spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
     spr.SetPos( pos );

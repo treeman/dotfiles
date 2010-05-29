@@ -4,11 +4,12 @@
 #include "Light.hpp"
 
 struct ObjectMod {
-    ObjectMod() : new_candle( false ), can_remove( false )
+    ObjectMod() : new_candle( false ), can_remove( false ), is_goal( false )
     { }
 
     bool new_candle;
     bool can_remove;
+    bool is_goal;
 };
 
 class TileObject {

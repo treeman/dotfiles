@@ -11,8 +11,6 @@ Light::Light() : power(0), vel(0), length(0), curr(0), spread(2),
     decline_vel(0), use_flicker( false )
 {
     Reset();
-
-    Tree::GetSettings()->Register<bool>( "debug_light", false );
 }
 
 void Light::SetLightPower( float f )
@@ -118,3 +116,4 @@ void Light::UpdateFlicker( float dt )
         ss.str("");
     }
 }
+

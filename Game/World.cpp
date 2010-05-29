@@ -29,9 +29,11 @@ World::World() : curr_lvl( 0 ),
     AddCandle();
     SwitchCandle();
 
-    Tree::GetSettings()->Register<bool>( "debug_tile", false );
+    Tree::GetSettings()->Register<bool>( "debug_world", false );
     Tree::GetSettings()->Register<bool>( "debug_cam", false );
     Tree::GetSettings()->Register<bool>( "debug_candles", false );
+    Tree::GetSettings()->Register<bool>( "debug_light", false );
+    Tree::GetSettings()->Register<bool>( "debug_moving_object", false );
 }
 World::~World()
 {
@@ -100,6 +102,9 @@ void World::Update( float dt )
                     if( mod.can_remove ) {
                         tiles[x][y]->Detach();
                     }
+                    if( mod.is_goal ) {
+                        GoalAccomplished();
+                    }
                 }
             }
         }
@@ -127,11 +132,14 @@ void World::Update( float dt )
             if( o ) {
                 Light light = o->GetLightSource();
                 if( light.GetLightPower() > 0 ) {
-                    std::stringstream ss;
-                    ss << "l: " << x << "," << y << " " << light.GetLightPower();
-                    Tree::Debug( ss.str() );
                     UpdateLight( Tree::Vec2i( x, y ), light.GetLightPower(),
                         light.GetLightSpread() );
+
+                    if( Tree::GetSettings()->GetValue<bool>( "debug_light" ) ) {
+                        std::stringstream ss;
+                        ss << "l: " << x << "," << y << " " << light.GetLightPower();
+                        Tree::Debug( ss.str() );
+                    }
                 }
             }
         }
@@ -140,7 +148,7 @@ void World::Update( float dt )
     CenterCam( Tree::Vec2i( girl_pos.x + tile_size / 2, girl_pos.y + tile_size / 2 ) );
 
     std::stringstream ss;
-    if( Tree::GetSettings()->GetValue<bool>( "debug_tile" ) ) {
+    if( Tree::GetSettings()->GetValue<bool>( "debug_world" ) ) {
         const sf::Input *input = &Tree::GetInput();
 
         const Tree::Vec2f mpos( input->GetMouseX(), input->GetMouseY() );
@@ -177,6 +185,10 @@ void World::Update( float dt )
             Tree::Debug( ss.str() );
         }
     }
+
+    ss.str("");
+    ss << "goals: " << achieved_goals << "/" << num_goals;
+    Tree::Debug( ss.str() );
 }
 
 void World::Draw()
@@ -201,6 +213,9 @@ void World::LoadLevel( Level &lvl )
 
     tiles = resources.tiles;
     girl->SetPos( resources.girl_pos );
+
+    num_goals = lvl_loader.CalculateNumGoals( tiles );
+    achieved_goals = 0;
 
     curr_lvl = &lvl;
 }
@@ -267,23 +282,24 @@ void World::UpdateCollisions( MovingObject &o )
         }
     }
 
-    std::stringstream s;
+    if( Tree::GetSettings()->GetValue<bool>( "debug_moving_object" ) ) {
+        std::stringstream s;
+        s << "orig: " << pos.x << " " << pos.y;
+        Tree::Debug( s.str() );
+        s.str("");
 
-    s << "orig: " << pos.x << " " << pos.y;
-    Tree::Debug( s.str() );
-    s.str("");
+        s << "center " << center.x << " " << center.y;
+        Tree::Debug( s.str() );
+        s.str("");
 
-    s << "center " << center.x << " " << center.y;
-    Tree::Debug( s.str() );
-    s.str("");
+        s << "grid_pos " << grid_pos.x << " " << grid_pos.y;
+        Tree::Debug( s.str() );
+        s.str("");
 
-    s << "grid_pos " << grid_pos.x << " " << grid_pos.y;
-    Tree::Debug( s.str() );
-    s.str("");
-
-    s << "screen " << screen_pos.x << " " << screen_pos.y;
-    Tree::Debug( s.str() );
-    s.str("");
+        s << "screen " << screen_pos.x << " " << screen_pos.y;
+        Tree::Debug( s.str() );
+        s.str("");
+    }
 }
 
 Tree::Vec2f World::ConvertToWorld( Tree::Vec2i grid_pos )
@@ -387,5 +403,13 @@ void World::SwitchCandle()
     }
 
     girl->GetLightSource().SetLightPower( candles[curr_candle] );
+}
+
+void World::GoalAccomplished()
+{
+    ++achieved_goals;
+    if( achieved_goals == num_goals ) {
+        NextLevel();
+    }
 }
 

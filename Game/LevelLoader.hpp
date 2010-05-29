@@ -16,6 +16,7 @@ public:
     Level &GetFirstLevel();
 
     LevelResources CreateResources( Level &lvl );
+    int CalculateNumGoals( TileGrid &grid );
 
     void LoadLevelFile( std::string file ) throw( Error::lua_error & );
 private:

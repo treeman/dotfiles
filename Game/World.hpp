@@ -73,5 +73,9 @@ private:
 
     void AddCandle();
     void SwitchCandle();
+
+    void GoalAccomplished();
+    int num_goals;
+    int achieved_goals;
 };
 

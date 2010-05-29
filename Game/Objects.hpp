@@ -16,3 +16,11 @@ private:
     Tree::Sprite spr;
 };
 
+class Teddy : public TileObject {
+public:
+    Teddy();
+    void Draw( Tree::Vec2i pos );
+private:
+    Tree::Sprite spr;
+};
+
