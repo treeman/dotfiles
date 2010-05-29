@@ -60,7 +60,10 @@ void World::ResetLevel()
 
 void World::Update( float dt )
 {
-    //update tiles and reset lights
+    const Tree::Vec2f girl_pos = girl->GetPos();
+    const Tree::Vec2i girl_gpos = ConvertToGridByCenter( girl_pos );
+
+    //update tiles, attachments and reset lights which we'll compute later
     const bool use_fow = Tree::GetSettings()->GetValue<bool>( "fow" );
     for( size_t x = 0; x < tiles.size(); ++x ) {
         for( size_t y = 0; y < tiles[x].size(); ++y ) {
@@ -71,17 +74,36 @@ void World::Update( float dt )
             else {
                 tiles[x][y]->SetLight( 0.9 );
             }
+
+            boost::shared_ptr<TileObject> o = tiles[x][y]->GetAttachment();
+            if( o ) {
+                o->Update( dt );
+
+                if( use_fow ) {
+                    o->SetLight( 0 );
+                }
+                else {
+                    o->SetLight( 0.9 );
+                }
+
+                if( girl_gpos == Tree::Vec2i( x, y ) ) {
+                    ObjectMod mod = o->GetMod();
+                    if( mod.new_candle ) {
+
+                    }
+                    if( mod.can_remove ) {
+                        tiles[x][y]->Detach();
+                    }
+                }
+            }
         }
     }
     girl->Update( dt );
     UpdateCollisions( *girl );
 
     //set light from light sources
-    const Tree::Vec2f pos = girl->GetPos();
-    const Tree::Vec2f center( pos.x + tile_size / 2, pos.y + tile_size / 2 );
-
     if( girl->GetLightSource().GetLightPower() > 0 ) {
-        UpdateLight( ConvertToGridByCenter( girl->GetPos() ),
+        UpdateLight( girl_gpos,
             girl->GetLightSource().GetLightPower(),
             girl->GetLightSource().GetLightSpread() );
     }
@@ -101,7 +123,7 @@ void World::Update( float dt )
         }
     }
 
-    CenterCam( center );
+    CenterCam( Tree::Vec2i( girl_pos.x + tile_size / 2, girl_pos.y + tile_size / 2 ) );
 
     const sf::Input *input = &Tree::GetInput();
 
@@ -135,7 +157,12 @@ void World::Draw()
 {
     for( size_t x = 0; x < tiles.size(); ++x ) {
         for( size_t y = 0; y < tiles[x].size(); ++y ) {
-            tiles[x][y]->Draw( ConvertToScreen( tiles[x][y]->GetPos() ) );
+            Tree::Vec2f pos = ConvertToScreen( tiles[x][y]->GetPos() );
+            tiles[x][y]->Draw( pos );
+            boost::shared_ptr<TileObject> o = tiles[x][y]->GetAttachment();
+            if( o ) {
+                o->Draw( pos );
+            }
         }
     }
 
@@ -299,6 +326,10 @@ void World::IncrLight( int x, int y, float power )
         TilePtr tile = tiles[x][y];
         //prevent overruns and flickering between black (invalid)
         tile->SetLight( math::clip<float>( power + tile->GetLight(), 0, 1 ) );
+        boost::shared_ptr<TileObject> o = tile->GetAttachment();
+        if( o ) {
+            o->SetLight( math::clip<float>( power + o->GetLight(), 0, 1 ) );
+        }
     }
 }
 

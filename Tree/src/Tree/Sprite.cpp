@@ -31,6 +31,13 @@ void Sprite::SetPos( Tree::Vec2f p )
     }
 }
 
+void Sprite::SetColor( sf::Color col )
+{
+    BOOST_FOREACH( SimpleSprite &s, sprites ) {
+        s.spr.SetColor( col );
+    }
+}
+
 void Sprite::Draw()
 {
     BOOST_FOREACH( SimpleSprite &s, sprites ) {

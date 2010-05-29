@@ -63,6 +63,10 @@ LevelResources LevelLoader::CreateResources( Level &lvl )
                 boost::shared_ptr<TileObject> o( new LightObject() );
                 tile->Attach( o );
             }
+            else if( ch == 'c' ) {
+                boost::shared_ptr<Candle> o( new Candle() );
+                tile->Attach( o );
+            }
 
             column.push_back( tile );
         }

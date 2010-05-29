@@ -43,6 +43,6 @@ public:
 
     void Draw( Tree::Vec2i p );
 private:
-    sf::Sprite spr;
+    Tree::Sprite spr;
 };
 

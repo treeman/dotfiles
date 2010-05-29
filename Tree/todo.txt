@@ -1,0 +1,6 @@
+Completely replace sf::Sprite with Tree::Sprite
+    Rotations etc
+    Animations,
+    Choose what simplesprites to color
+
+Make one file to include and you'll get all Tree:: stuff

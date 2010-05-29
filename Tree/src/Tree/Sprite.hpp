@@ -29,6 +29,8 @@ namespace Tree
         void SetPos( float x, float y );
         void SetPos( Tree::Vec2f p );
 
+        void SetColor( sf::Color col );
+
         void Draw();
     private:
         friend class SpriteLoader;

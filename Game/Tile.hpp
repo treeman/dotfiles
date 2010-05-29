@@ -41,9 +41,7 @@ public:
     }
     void Detach() { attachment.reset(); }
 
-    virtual void Update( float dt ) {
-        if( attachment ) attachment->Update( dt );
-    }
+    virtual void Update( float dt ) { }
     virtual void Draw( Tree::Vec2i p ) = 0;
 protected:
     Tree::Vec2i pos;
