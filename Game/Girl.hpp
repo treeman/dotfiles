@@ -13,10 +13,14 @@ public:
     float GetSpeed();
     Light &GetLightSource() { return light; }
 
+    void ChangeCandle();
+    bool WantsCandleChange();
+
     void Update( float dt );
     void Draw( Tree::Vec2i pos );
 private:
     Tree::Sprite spr;
     Light light;
+    bool change_candle;
 };
 

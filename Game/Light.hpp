@@ -10,6 +10,7 @@ public:
     void SetFlicker( bool flicker ) { use_flicker = flicker; }
     void SetLightPower( float power );
     float GetLightPower();
+    float GetRealLightPower();
 
     int GetLightSpread();
     void SetLightSpread( int tiles );

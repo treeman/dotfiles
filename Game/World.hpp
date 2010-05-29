@@ -66,5 +66,12 @@ private:
     void IncrLight( int x, int y, float power );
 
     bool IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 );
+
+    typedef std::vector<float> Candles;
+    Candles candles;
+    size_t curr_candle;
+
+    void AddCandle();
+    void SwitchCandle();
 };
 

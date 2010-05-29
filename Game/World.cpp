@@ -22,10 +22,16 @@ World::World() : curr_lvl( 0 ),
 
     Tree::GetSettings()->Register<bool>( "fow", true );
 
-    girl->GetLightSource().SetLightPower( 0.6 );
     girl->GetLightSource().SetLightDecline( 0.01 );
     girl->GetLightSource().SetLightSpread( 1 );
     girl->GetLightSource().SetFlicker( true );
+
+    AddCandle();
+    SwitchCandle();
+
+    Tree::GetSettings()->Register<bool>( "debug_tile", false );
+    Tree::GetSettings()->Register<bool>( "debug_cam", false );
+    Tree::GetSettings()->Register<bool>( "debug_candles", false );
 }
 World::~World()
 {
@@ -89,7 +95,7 @@ void World::Update( float dt )
                 if( girl_gpos == Tree::Vec2i( x, y ) ) {
                     ObjectMod mod = o->GetMod();
                     if( mod.new_candle ) {
-
+                        AddCandle();
                     }
                     if( mod.can_remove ) {
                         tiles[x][y]->Detach();
@@ -98,8 +104,16 @@ void World::Update( float dt )
             }
         }
     }
+
+    if( girl->WantsCandleChange() ) {
+        SwitchCandle();
+    }
+
     girl->Update( dt );
     UpdateCollisions( *girl );
+
+    //update current candle
+    candles[curr_candle] = girl->GetLightSource().GetRealLightPower();
 
     //set light from light sources
     if( girl->GetLightSource().GetLightPower() > 0 ) {
@@ -125,32 +139,44 @@ void World::Update( float dt )
 
     CenterCam( Tree::Vec2i( girl_pos.x + tile_size / 2, girl_pos.y + tile_size / 2 ) );
 
-    const sf::Input *input = &Tree::GetInput();
-
-    const Tree::Vec2f mpos( input->GetMouseX(), input->GetMouseY() );
-    const Tree::Vec2i grid_pos = ConvertToGrid( mpos );
-
     std::stringstream ss;
-    ss << "Tile: " << grid_pos;
+    if( Tree::GetSettings()->GetValue<bool>( "debug_tile" ) ) {
+        const sf::Input *input = &Tree::GetInput();
 
-    if( !IsValid( grid_pos ) ) {
-        ss << "Not valid";
-    }
-    else if( !IsWalkable( grid_pos ) ) {
-        ss << "Not walkable";
-    }
-    else if( !IsSeeThrough( grid_pos ) ) {
-        ss << "Not see through either!";
-    }
-    else {
-        ss << "It's see through and walkable =)";
-    }
-    Tree::Debug( ss.str() );
-    Tree::Debug( curr_lvl->GetName() );
+        const Tree::Vec2f mpos( input->GetMouseX(), input->GetMouseY() );
+        const Tree::Vec2i grid_pos = ConvertToGrid( mpos );
 
-    ss.str("");
-    ss << "cam_pos: " << cam_pos;
-    Tree::Debug( ss.str() );
+        ss << "Tile: " << grid_pos;
+
+        if( !IsValid( grid_pos ) ) {
+            ss << "Not valid";
+        }
+        else if( !IsWalkable( grid_pos ) ) {
+            ss << "Not walkable";
+        }
+        else if( !IsSeeThrough( grid_pos ) ) {
+            ss << "Not see through either!";
+        }
+        else {
+            ss << "It's see through and walkable =)";
+        }
+        Tree::Debug( ss.str() );
+        Tree::Debug( curr_lvl->GetName() );
+    }
+
+    if( Tree::GetSettings()->GetValue<bool>( "debug_cam" ) ) {
+        ss.str("");
+        ss << "cam_pos: " << cam_pos;
+        Tree::Debug( ss.str() );
+    }
+
+    if( Tree::GetSettings()->GetValue<bool>( "debug_candles" ) ) {
+        for( size_t i = 0; i < candles.size(); ++i ) {
+            ss.str("");
+            ss << "c: " << candles[i];
+            Tree::Debug( ss.str() );
+        }
+    }
 }
 
 void World::Draw()
@@ -347,5 +373,19 @@ bool World::IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 )
     }*/
 
     return true;
+}
+
+void World::AddCandle()
+{
+    candles.push_back( 0.6 );
+}
+void World::SwitchCandle()
+{
+    ++curr_candle;
+    if( curr_candle >= candles.size() ) {
+        curr_candle = 0;
+    }
+
+    girl->GetLightSource().SetLightPower( candles[curr_candle] );
 }
 
