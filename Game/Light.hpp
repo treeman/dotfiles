@@ -18,6 +18,9 @@ public:
     void SetLightDecline( float vel );
     float GetLightDecline();
 
+    bool IsLit();
+    void SetLit( bool is_lit );
+
     void Update( float dt );
 private:
     void Reset();
@@ -35,5 +38,6 @@ private:
 
     float decline_vel;
     bool use_flicker;
+    bool is_lit;
 };
 

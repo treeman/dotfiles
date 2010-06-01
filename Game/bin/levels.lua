@@ -6,7 +6,7 @@ levels = {
             "T        ooo o o",
             "o  ooo ooo o o  ",
             "G so   o   o o o",
-            "oooo   o        ",
+            "oooo   ol       ",
             " C     oooo  o  ",
             "     S    x  o c",
         },

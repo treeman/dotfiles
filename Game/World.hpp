@@ -74,6 +74,8 @@ private:
 
     void AddCandle( float power );
     void SwitchCandle();
+    void BlowCandle();
+    void LightCandle();
 
     void GoalAccomplished();
     int num_goals;

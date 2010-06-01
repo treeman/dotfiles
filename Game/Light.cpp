@@ -8,7 +8,7 @@
 #include <boost/lexical_cast.hpp>
 
 Light::Light() : power(0), vel(0), length(0), curr(0), spread(2),
-    decline_vel(0), use_flicker( false )
+    decline_vel(0), use_flicker( false ), is_lit( true )
 {
     Reset();
 }
@@ -19,7 +19,8 @@ void Light::SetLightPower( float f )
 }
 float Light::GetLightPower()
 {
-    return math::clip<float>( power + curr, 0, 1 );
+    if( is_lit ) return math::clip<float>( power + curr, 0, 1 );
+    else return 0;
 }
 float Light::GetRealLightPower()
 {
@@ -41,10 +42,21 @@ float Light::GetLightDecline()
 {
     return decline_vel;
 }
+
+bool Light::IsLit()
+{
+    return is_lit;
+}
+void Light::SetLit( bool lit )
+{
+    is_lit = lit;
+}
 void Light::Update( float dt )
 {
-    power -= decline_vel * dt;
-    if( power < 0 ) power = 0;
+    if( is_lit ) {
+        power -= decline_vel * dt;
+        if( power < 0 ) power = 0;
+    }
 
     if( use_flicker ) {
         UpdateFlicker( dt );

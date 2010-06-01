@@ -24,6 +24,7 @@ World::World() : curr_lvl( 0 ),
 
     Tree::GetSettings()->Register<bool>( "fow", true );
 
+    curr_candle = 0;
     AddCandle( Tree::GetTweaks()->GetNum( "candle_power" ) );
     SwitchCandle();
 
@@ -93,6 +94,10 @@ void World::Update( float dt )
                 }
 
                 if( girl_gpos == Tree::Vec2i( x, y ) ) {
+                    if( o->CanLit() ) {
+                        LightCandle();
+                    }
+
                     ObjectMod mod = o->GetMod();
                     if( mod.new_candle ) {
                         AddCandle( mod.candle_power );
@@ -126,6 +131,10 @@ void World::Update( float dt )
 
         const Tree::Vec2i gpos = ConvertToGridByCenter( ghost->GetPos() );
 
+        if( girl_gpos == gpos ) {
+            BlowCandle();
+        }
+
         if( IsWalkable( gpos.x - 1, gpos.y ) ) free_paths.push_back( Tree::Vec2i::left );
         if( IsWalkable( gpos.x + 1, gpos.y ) ) free_paths.push_back( Tree::Vec2i::right );
         if( IsWalkable( gpos.x, gpos.y - 1 ) ) free_paths.push_back( Tree::Vec2i::up );
@@ -147,6 +156,7 @@ void World::Update( float dt )
         for( size_t y = 0; y < tiles[x].size(); ++y ) {
             boost::shared_ptr<TileObject> o = tiles[x][y]->GetAttachment();
             if( o ) {
+
                 Light light = o->GetLightSource();
                 if( light.GetLightPower() > 0 ) {
                     UpdateLight( Tree::Vec2i( x, y ), light.GetLightPower(),
@@ -403,7 +413,7 @@ void World::IncrLight( int x, int y, float power )
 
 bool World::IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 )
 {
-    /*if( p1 == p2 ) {
+    if( p1 == p2 ) {
         return true;
     }
     else if( p1.x == p2.x ) {
@@ -437,8 +447,7 @@ bool World::IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 )
             );
         }
         return result;
-    }*/
-    return true;
+    }
 }
 
 void World::AddCandle( float power )
@@ -453,6 +462,14 @@ void World::SwitchCandle()
     }
 
     girl->GetLightSource().SetLightPower( candles[curr_candle] );
+}
+void World::BlowCandle()
+{
+    girl->GetLightSource().SetLit( false );
+}
+void World::LightCandle()
+{
+    girl->GetLightSource().SetLit( true );
 }
 
 void World::GoalAccomplished()

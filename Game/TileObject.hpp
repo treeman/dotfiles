@@ -27,6 +27,7 @@ public:
     Tree::Vec2i GetPos() const { return pos; }
 
     Light &GetLightSource() { return light; }
+    virtual bool CanLit() { return light.GetLightPower() > 0; }
 
     float GetLight() { return lighted; }
     void SetLight( float l ) { lighted = l; }
