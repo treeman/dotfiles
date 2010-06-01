@@ -2,13 +2,13 @@
 levels = {
     beginning = {
         layout = {
-            "                ",
-            "                ",
-            "       G     c  ",
-            "                ",
-            "  l             ",
-            "            l   ",
-            "       t        ",
+            "o cocooo   t o T",
+            "T        ooo o o",
+            "o  ooo ooo o o  ",
+            "G so   o   o o o",
+            "oooo   o        ",
+            " C     oooo  o  ",
+            "     S    x  o c",
         },
     },
 

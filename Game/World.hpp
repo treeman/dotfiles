@@ -6,6 +6,7 @@
 #include "Level.hpp"
 #include "LevelLoader.hpp"
 #include "Girl.hpp"
+#include "GhostController.hpp"
 
 class World {
 public:
@@ -71,11 +72,15 @@ private:
     Candles candles;
     size_t curr_candle;
 
-    void AddCandle();
+    void AddCandle( float power );
     void SwitchCandle();
 
     void GoalAccomplished();
     int num_goals;
     int achieved_goals;
+
+    GhostController ghost_controller;
+    typedef std::vector<boost::shared_ptr<Ghost> > Ghosts;
+    Ghosts ghosts;
 };
 

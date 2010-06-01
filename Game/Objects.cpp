@@ -15,11 +15,24 @@ LightObject::LightObject()
     light.SetFlicker( true );
 }
 
-Candle::Candle()
+Candle::Candle( int size, bool is_lighted )
 {
-    spr = Tree::GetButler()->GetSprite( "candle" );
     mod.new_candle = true;
+    if( size ) {
+        spr = Tree::GetButler()->GetSprite( "candle" );
+        mod.candle_power = Tree::GetTweaks()->GetNum( "candle_power" );
+    }
+    else {
+        spr = Tree::GetButler()->GetSprite( "small_candle" );
+        mod.candle_power = Tree::GetTweaks()->GetNum( "small_candle_power" );
+    }
     mod.can_remove = true;
+
+    if( is_lighted ) {
+        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
+        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
+        light.SetFlicker( true );
+    }
 }
 
 void Candle::Draw( Tree::Vec2i pos )
@@ -29,11 +42,17 @@ void Candle::Draw( Tree::Vec2i pos )
     spr.Draw();
 }
 
-Teddy::Teddy()
+Teddy::Teddy( bool is_lighted )
 {
     spr = Tree::GetButler()->GetSprite( "teddy" );
     mod.can_remove = true;
     mod.is_goal = true;
+
+    if( is_lighted ) {
+        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
+        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
+        light.SetFlicker( true );
+    }
 }
 void Teddy::Draw( Tree::Vec2i pos )
 {

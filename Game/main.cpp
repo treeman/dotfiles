@@ -12,7 +12,9 @@ int main( int argc, char *argv[] )
     //init the boost logs
     Tree::init_logs();
 
+#ifndef NDEBUG
     try {
+#endif
         //create the game
         Tree::Game::Instance()->Init(
               800 //width
@@ -32,6 +34,7 @@ int main( int argc, char *argv[] )
 
         //start the main game loop
         Tree::Game::Instance()->Start();
+#ifndef NDEBUG
     }
     catch( std::exception &e )
     {
@@ -41,6 +44,7 @@ int main( int argc, char *argv[] )
     {
         L_ << "Fatal unknown exception caught!";
     }
+#endif
 
     //destroy the game
     Tree::Game::Instance()->Destroy();

@@ -4,10 +4,12 @@
 #include "Light.hpp"
 
 struct ObjectMod {
-    ObjectMod() : new_candle( false ), can_remove( false ), is_goal( false )
+    ObjectMod() : new_candle( false ), candle_power( 0 ),
+        can_remove( false ), is_goal( false )
     { }
 
     bool new_candle;
+    float candle_power;
     bool can_remove;
     bool is_goal;
 };

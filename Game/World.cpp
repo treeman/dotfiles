@@ -1,3 +1,5 @@
+#include <boost/foreach.hpp>
+
 #include "Tree/Tweaks.hpp"
 #include "Tree/Util.hpp"
 #include "Tree/Butler.hpp"
@@ -22,11 +24,7 @@ World::World() : curr_lvl( 0 ),
 
     Tree::GetSettings()->Register<bool>( "fow", true );
 
-    girl->GetLightSource().SetLightDecline( 0.01 );
-    girl->GetLightSource().SetLightSpread( 1 );
-    girl->GetLightSource().SetFlicker( true );
-
-    AddCandle();
+    AddCandle( Tree::GetTweaks()->GetNum( "candle_power" ) );
     SwitchCandle();
 
     Tree::GetSettings()->Register<bool>( "debug_world", false );
@@ -97,7 +95,7 @@ void World::Update( float dt )
                 if( girl_gpos == Tree::Vec2i( x, y ) ) {
                     ObjectMod mod = o->GetMod();
                     if( mod.new_candle ) {
-                        AddCandle();
+                        AddCandle( mod.candle_power );
                     }
                     if( mod.can_remove ) {
                         tiles[x][y]->Detach();
@@ -116,6 +114,25 @@ void World::Update( float dt )
 
     girl->Update( dt );
     UpdateCollisions( *girl );
+
+    ghost_controller.Update( dt );
+
+    BOOST_FOREACH( boost::shared_ptr<Ghost> ghost, ghosts ) {
+        ghost->Update( dt );
+        UpdateCollisions( *ghost );
+
+        typedef std::vector<Tree::Vec2i> FreePaths;
+        FreePaths free_paths;
+
+        const Tree::Vec2i gpos = ConvertToGridByCenter( ghost->GetPos() );
+
+        if( IsWalkable( gpos.x - 1, gpos.y ) ) free_paths.push_back( Tree::Vec2i::left );
+        if( IsWalkable( gpos.x + 1, gpos.y ) ) free_paths.push_back( Tree::Vec2i::right );
+        if( IsWalkable( gpos.x, gpos.y - 1 ) ) free_paths.push_back( Tree::Vec2i::up );
+        if( IsWalkable( gpos.x, gpos.y + 1 ) ) free_paths.push_back( Tree::Vec2i::down );
+
+        ghost->SetValidDirections( free_paths );
+    }
 
     //update current candle
     candles[curr_candle] = girl->GetLightSource().GetRealLightPower();
@@ -203,6 +220,9 @@ void World::Draw()
             }
         }
     }
+    BOOST_FOREACH( boost::shared_ptr<Ghost> ghost, ghosts ) {
+        ghost->Draw( ConvertToScreen( ghost->GetPos() ) );
+    }
 
     girl->Draw( ConvertToScreen( girl->GetPos() ) );
 }
@@ -216,6 +236,12 @@ void World::LoadLevel( Level &lvl )
 
     num_goals = lvl_loader.CalculateNumGoals( tiles );
     achieved_goals = 0;
+
+    ghost_controller.Clear();
+    ghosts = resources.ghosts;
+    BOOST_FOREACH( boost::shared_ptr<Ghost> ghost, ghosts ) {
+        ghost_controller.Attach( ghost );
+    }
 
     curr_lvl = &lvl;
 }
@@ -377,23 +403,46 @@ void World::IncrLight( int x, int y, float power )
 
 bool World::IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 )
 {
-    /*const Tree::Vec2i dist = p1 - p2;
-    const int x_size = std::abs( dist.x );
-    const int y_size = std::abs( dist.y );
+    if( p1 == p2 ) {
+        return true;
+    }
+    else if( p1.x == p2.x ) {
+        const int y_min = std::min( p1.y, p2.y );
+        const int y_max = std::max( p1.y, p2.y );
 
-    typedef std::vector<std::vector<Tree::Vec2i> > Points;
-    Points points( x_size );
+        for( int y = y_min; y <= y_max; ++y ) {
+            if( !IsWalkable( p1.x, y ) ) return false;
+        }
+        return true;
+    }
+    else if( p1.y == p2.y ) {
+        const int x_min = std::min( p1.x, p2.x );
+        const int x_max = std::max( p1.x, p2.x );
 
-    for( int x = 0; x < points.size(); ++x ) {
+        for( int x = x_min; x <= x_max; ++x ) {
+            if( !IsWalkable( x, p1.y ) ) return false;
+        }
+        return true;
+    }
+    else {
+        const int x_min = std::min( p1.x, p2.x );
+        const int x_max = std::max( p1.x, p2.x );
+        const int y_min = std::min( p1.y, p2.y );
+        const int y_max = std::max( p1.y, p2.y );
 
-    }*/
-
-    return true;
+        bool result = true;
+        for( int x = x_min; x <= x_max; ++x ) {
+            result = result && IsVisiblePathClear(
+                Tree::Vec2i( x, y_min ), Tree::Vec2i( x, y_max )
+            );
+        }
+        return result;
+    }
 }
 
-void World::AddCandle()
+void World::AddCandle( float power )
 {
-    candles.push_back( 0.6 );
+    candles.push_back( power );
 }
 void World::SwitchCandle()
 {

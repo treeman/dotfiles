@@ -9,6 +9,7 @@
 #include "Tile.hpp"
 #include "TileTypes.hpp"
 #include "Objects.hpp"
+#include "Ghost.hpp"
 
 LevelLoader::LevelLoader() : lvls( 0 )
 {
@@ -59,12 +60,33 @@ LevelResources LevelLoader::CreateResources( Level &lvl )
             if( ch == 'G' ) {
                 resources.girl_pos = pos;
             }
+            else if( ch == 'x' ) {
+                boost::shared_ptr<Ghost> ghost( new Ghost() );
+                ghost->SetPos( pos );
+                resources.ghosts.push_back( ghost );
+            }
             else if( ch == 'l' ) {
                 boost::shared_ptr<TileObject> o( new LightObject() );
                 tile->Attach( o );
             }
+            else if( ch == 'C' ) {
+                boost::shared_ptr<Candle> o( new Candle( 1, true ) );
+                tile->Attach( o );
+            }
             else if( ch == 'c' ) {
-                boost::shared_ptr<Candle> o( new Candle() );
+                boost::shared_ptr<Candle> o( new Candle( 1 ) );
+                tile->Attach( o );
+            }
+            else if( ch == 'S' ) {
+                boost::shared_ptr<Candle> o( new Candle( 0, true ) );
+                tile->Attach( o );
+            }
+            else if( ch == 's' ) {
+                boost::shared_ptr<Candle> o( new Candle( 0 ) );
+                tile->Attach( o );
+            }
+            else if( ch == 'T' ) {
+                boost::shared_ptr<Teddy> o( new Teddy( true ) );
                 tile->Attach( o );
             }
             else if( ch == 't' ) {

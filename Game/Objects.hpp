@@ -10,7 +10,7 @@ public:
 
 class Candle : public TileObject {
 public:
-    Candle();
+    Candle( int size, bool is_lighted = false );
     void Draw( Tree::Vec2i pos );
 private:
     Tree::Sprite spr;
@@ -18,7 +18,7 @@ private:
 
 class Teddy : public TileObject {
 public:
-    Teddy();
+    Teddy( bool is_lighted = false );
     void Draw( Tree::Vec2i pos );
 private:
     Tree::Sprite spr;
