@@ -35,7 +35,7 @@ void VisualDebug::Draw()
     const float y = 5;
     const float h = 10;
 
-    for( int i = 0; i < strings.size(); ++i ) {
+    for( size_t i = 0; i < strings.size(); ++i ) {
         str.SetText( strings[i] );
         str.SetPosition( x, y + i * h );
         Tree::Draw( str );

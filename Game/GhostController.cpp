@@ -44,12 +44,14 @@ void GhostController::UpdateGhost( GhostPtr ghost, float dt )
         else {
             typedef std::vector<Tree::Vec2i> Dirs;
             Dirs valid_dirs = ghost->GetValidDirections();
-            Tree::Vec2i dir = *math::random( valid_dirs.begin(), valid_dirs.end() );
+            if( valid_dirs.size() ) {
+                Tree::Vec2i dir = *math::random( valid_dirs.begin(), valid_dirs.end() );
 
-            if( dir == Tree::Vec2i::left ) { ghost->MoveLeft(); }
-            else if( dir == Tree::Vec2i::right ) { ghost->MoveRight(); }
-            else if( dir == Tree::Vec2i::down ) { ghost->MoveDown(); }
-            else if( dir == Tree::Vec2i::up ) { ghost->MoveUp(); }
+                if( dir == Tree::Vec2i::left ) { ghost->MoveLeft(); }
+                else if( dir == Tree::Vec2i::right ) { ghost->MoveRight(); }
+                else if( dir == Tree::Vec2i::down ) { ghost->MoveDown(); }
+                else if( dir == Tree::Vec2i::up ) { ghost->MoveUp(); }
+            }
         }
     }
 }

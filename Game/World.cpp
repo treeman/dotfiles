@@ -403,7 +403,7 @@ void World::IncrLight( int x, int y, float power )
 
 bool World::IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 )
 {
-    if( p1 == p2 ) {
+    /*if( p1 == p2 ) {
         return true;
     }
     else if( p1.x == p2.x ) {
@@ -437,7 +437,8 @@ bool World::IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 )
             );
         }
         return result;
-    }
+    }*/
+    return true;
 }
 
 void World::AddCandle( float power )
