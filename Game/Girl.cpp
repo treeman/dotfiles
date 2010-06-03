@@ -5,7 +5,7 @@
 
 #include "Girl.hpp"
 
-Girl::Girl() : change_candle( false )
+Girl::Girl() : do_action( false )
 {
     spr = Tree::GetButler()->GetSprite( "girl" );
     Tree::GetSettings()->Register<bool>( "debug_girl", false );
@@ -25,18 +25,18 @@ float Girl::GetSpeed()
     return (float)Tree::GetTweaks()->GetNum( "girl_speed" );
 }
 
-void Girl::ChangeCandle()
+void Girl::DoAction()
 {
-    change_candle = true;
+    do_action = true;
 }
-bool Girl::WantsCandleChange()
+bool Girl::WantsAction()
 {
-    return change_candle;
+    return do_action;
 }
 
 void Girl::Update( float dt )
 {
-    change_candle = false;
+    do_action = false;
 
     UpdateMovement( dt );
     light.Update( dt );

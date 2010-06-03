@@ -32,6 +32,8 @@ World::World() : curr_lvl( 0 ),
     message_str.SetSize( 12 );
     message_str.SetColor( sf::Color( 255, 255, 255 ) );
 
+    matches = 0;
+
     Tree::GetSettings()->Register<bool>( "debug_world", false );
     Tree::GetSettings()->Register<bool>( "debug_cam", false );
     Tree::GetSettings()->Register<bool>( "debug_candles", false );
@@ -119,6 +121,9 @@ void World::Update( float dt )
                     if( mod.is_key ) {
                         ++keys;
                     }
+                    if( mod.is_match ) {
+                        ++matches;
+                    }
 
                     if( o->IsDoor() ) {
                         --keys;
@@ -135,8 +140,19 @@ void World::Update( float dt )
         }
     }
 
-    if( girl->WantsCandleChange() ) {
-        SwitchCandle();
+    if( girl->WantsAction() ) {
+        Light light = girl->GetLightSource();
+        L_ << "action wanted! " << light.IsLit() << " " << light.GetRealLightPower();
+        if( !light.IsLit() && ( light.GetRealLightPower() > 0 ) ) {
+            if( matches > 0 ) {
+                L_ << "lighting candle";
+                --matches;
+                LightCandle();
+            }
+        }
+        else {
+            SwitchCandle();
+        }
     }
 
     girl->Update( dt );
@@ -241,6 +257,10 @@ void World::Update( float dt )
 
     ss.str("");
     ss << "keys: " << keys;
+    Tree::Debug( ss.str() );
+
+    ss.str("");
+    ss << "matches: " << matches;
     Tree::Debug( ss.str() );
 }
 

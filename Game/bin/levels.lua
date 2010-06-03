@@ -1,3 +1,16 @@
+-- layout codes
+-- G : Girl
+-- x : Ghost
+-- l : Lighted tile
+
+-- uppercase for lighted (visible) and lower for hidden
+-- c : Candle
+-- s : Small candle
+-- t : Teddy
+-- d : Door
+-- k : Key
+-- q : Skeleton
+-- m : Match
 
 levels = {
     Teddy = {
@@ -31,7 +44,7 @@ levels = {
         layout = {
             "oGoo oo ooTo",
             "c oo  o    o",
-            "o           ",
+            "o m   l     ",
             "C oo  o    o",
             "o oo  o s   ",
             "otootoo ooTo",
@@ -40,11 +53,11 @@ levels = {
     },
 
     beginning = {
-        num = 3,
+        num = 0,
         layout = {
             "okcocooq   t o T",
-            "T        ooo o o",
-            "o  ooodooo o o Q",
+            "T m      ooo o o",
+            "o mooodooo o o Q",
             "G so   o   o o o",
             "ooooK  ol       ",
             " C     oooo  o  ",

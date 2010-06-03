@@ -55,7 +55,10 @@ void Light::Update( float dt )
 {
     if( is_lit ) {
         power -= decline_vel * dt;
-        if( power < 0 ) power = 0;
+        if( power < 0 ) {
+            power = 0;
+            is_lit = false;
+        }
     }
 
     if( use_flicker ) {

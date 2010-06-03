@@ -5,7 +5,8 @@
 
 struct ObjectMod {
     ObjectMod() : new_candle( false ), candle_power( 0 ),
-        can_remove( false ), is_goal( false ), is_key( false )
+        can_remove( false ), is_goal( false ), is_key( false ),
+        is_match( false )
     { }
 
     bool new_candle;
@@ -13,6 +14,7 @@ struct ObjectMod {
     bool can_remove;
     bool is_goal;
     bool is_key;
+    bool is_match;
 };
 
 class TileObject {

@@ -119,6 +119,14 @@ LevelResources LevelLoader::CreateResources( Level &lvl )
                 boost::shared_ptr<Skeleton> o( new Skeleton( true ) );
                 tile->Attach( o );
             }
+            else if( ch == 'm' ) {
+                boost::shared_ptr<Match> o( new Match() );
+                tile->Attach( o );
+            }
+            else if( ch == 'M' ) {
+                boost::shared_ptr<Match> o( new Match( true ) );
+                tile->Attach( o );
+            }
 
             column.push_back( tile );
         }
@@ -204,7 +212,6 @@ void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )
                 Levels::iterator it;
                 for( it = levels.begin(); it != levels.end(); ++it ) {
                     if( lvl->lvl_num < (*it)->lvl_num ) break;
-                    L_ << "iterating";
                 }
                 levels.insert( it, lvl );
             }

@@ -64,5 +64,10 @@ sprites =
         x = 128, y = 0,
         w = 32, h = 32,
     },
+    match = {
+        path = "gfx/objects.png",
+        x = 0, y = 64,
+        w = 32, h = 32,
+    },
 }
 

@@ -12,7 +12,7 @@ public:
 
 class SpriteObject : public LightObject {
 public:
-    SpriteObject( bool is_lighted = true );
+    SpriteObject( bool is_lighted );
     virtual ~SpriteObject() { }
 
     virtual void Draw( Tree::Vec2i );
@@ -48,5 +48,10 @@ public:
     Skeleton( bool is_lighted = false );
 
     bool CanBlowOut() { return true; }
+};
+
+class Match : public SpriteObject {
+public:
+    Match( bool is_lighted = false );
 };
 

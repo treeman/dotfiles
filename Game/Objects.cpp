@@ -28,7 +28,7 @@ void SpriteObject::Draw( Tree::Vec2i pos )
     spr.Draw();
 }
 
-Candle::Candle( int size, bool is_lighted )
+Candle::Candle( int size, bool is_lighted ) : SpriteObject( is_lighted )
 {
     mod.new_candle = true;
     if( size ) {
@@ -40,60 +40,37 @@ Candle::Candle( int size, bool is_lighted )
         mod.candle_power = Tree::GetTweaks()->GetNum( "small_candle_power" );
     }
     mod.can_remove = true;
-
-    if( is_lighted ) {
-        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
-        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
-        light.SetFlicker( true );
-    }
 }
 
-Teddy::Teddy( bool is_lighted )
+Teddy::Teddy( bool is_lighted ) : SpriteObject( is_lighted )
 {
     spr = Tree::GetButler()->GetSprite( "teddy" );
     mod.can_remove = true;
     mod.is_goal = true;
-
-    if( is_lighted ) {
-        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
-        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
-        light.SetFlicker( true );
-    }
 }
 
-Door::Door( bool is_lighted )
+Door::Door( bool is_lighted ) : SpriteObject( is_lighted )
 {
     spr = Tree::GetButler()->GetSprite( "door" );
     mod.can_remove = true;
-
-    if( is_lighted ) {
-        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
-        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
-        light.SetFlicker( true );
-    }
 }
 
-Key::Key( bool is_lighted )
+Key::Key( bool is_lighted ) : SpriteObject( is_lighted )
 {
     spr = Tree::GetButler()->GetSprite( "key" );
     mod.can_remove = true;
     mod.is_key = true;
-
-    if( is_lighted ) {
-        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
-        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
-        light.SetFlicker( true );
-    }
 }
 
-Skeleton::Skeleton( bool is_lighted )
+Skeleton::Skeleton( bool is_lighted ) : SpriteObject( is_lighted )
 {
     spr = Tree::GetButler()->GetSprite( "skeleton" );
+}
 
-    if( is_lighted ) {
-        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
-        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
-        light.SetFlicker( true );
-    }
+Match::Match( bool is_lighted ) : SpriteObject( is_lighted )
+{
+    spr = Tree::GetButler()->GetSprite( "match" );
+    mod.can_remove = true;
+    mod.is_match = true;
 }
 

@@ -87,5 +87,7 @@ private:
     int keys;
 
     sf::String message_str;
+
+    int matches;
 };
 
