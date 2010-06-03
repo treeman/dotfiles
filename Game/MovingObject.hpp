@@ -25,6 +25,7 @@ public:
     void MoveDown();
 
     void Stop();
+    void Reset();
 
     bool IsMoving();
 

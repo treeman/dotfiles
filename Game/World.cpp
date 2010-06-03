@@ -71,6 +71,11 @@ void World::ResetLevel()
 
 void World::Update( float dt )
 {
+    if( achieved_goals == num_goals ) {
+        NextLevel();
+    }
+
+
     const Tree::Vec2f girl_pos = girl->GetPos();
     const Tree::Vec2i girl_gpos = ConvertToGridByCenter( girl_pos );
 
@@ -110,7 +115,7 @@ void World::Update( float dt )
                         tiles[x][y]->Detach();
                     }
                     if( mod.is_goal ) {
-                        GoalAccomplished();
+                        ++achieved_goals;
                     }
                     if( mod.is_key ) {
                         ++keys;
@@ -268,6 +273,7 @@ void World::LoadLevel( Level &lvl )
 
     tiles = resources.tiles;
     girl->SetPos( resources.girl_pos );
+    girl->Reset();
 
     num_goals = lvl_loader.CalculateNumGoals( tiles );
     achieved_goals = 0;
@@ -279,7 +285,11 @@ void World::LoadLevel( Level &lvl )
     }
 
     keys = 0;
-    message_str.SetText( resources.message );
+    std::string message;
+    if( lvl.GetName() != "" ) message += lvl.GetName() + ": ";
+    message += resources.message;
+
+    message_str.SetText( message );
 
     curr_lvl = &lvl;
 }
@@ -493,6 +503,10 @@ void World::AddCandle( float power )
 }
 void World::SwitchCandle()
 {
+    if( candles.size() > 1 ) {
+        candles.erase(std::remove(candles.begin(), candles.end(), 0 ));
+    }
+
     ++curr_candle;
     if( curr_candle >= candles.size() ) {
         curr_candle = 0;
@@ -508,12 +522,3 @@ void World::LightCandle()
 {
     girl->GetLightSource().SetLit( true );
 }
-
-void World::GoalAccomplished()
-{
-    ++achieved_goals;
-    if( achieved_goals == num_goals ) {
-        NextLevel();
-    }
-}
-

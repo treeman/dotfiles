@@ -10,7 +10,7 @@ Girl::Girl() : change_candle( false )
     spr = Tree::GetButler()->GetSprite( "girl" );
     Tree::GetSettings()->Register<bool>( "debug_girl", false );
 
-    light.SetLightDecline( 0.01 );
+    light.SetLightDecline( Tree::GetTweaks()->GetNum( "candle_decline" ) );
     light.SetLightSpread( 1 );
     light.SetFlicker( true );
 }

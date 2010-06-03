@@ -10,6 +10,7 @@ light_flicker_pause_limit = 0.3
 ghost_pause_limit = 1
 ghost_move_limit = 4
 
+candle_decline = 0.1
 candle_power = 0.6
 small_candle_power = 0.3
 
@@ -20,3 +21,4 @@ light_flicker_max_vel = 2
 
 small_light_power = 0.2
 small_light_spread = 0
+

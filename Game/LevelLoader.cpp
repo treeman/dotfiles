@@ -152,9 +152,6 @@ void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )
         throw( Error::lua_error( str ) );
     }
 
-    //the last entry in the linked list
-    Level *curr_lvl = 0;
-
     //all levels
     lua_getglobal( L, "levels" );
     for( lua_pushnil( L ); lua_next( L, -2 ); lua_pop( L, 1 ) )
@@ -162,9 +159,18 @@ void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )
         if( lua_istable( L, -1 ) ) {
 
             //get lvl name
-            std::string name = lua_tostring( L, -2 );
+            std::string name;
+            if( lua_isstring( L, -2 ) ) {
+                //lua_tostring( L, -2 );
+            }
+
+            //lvl message
             std::string message;
             luah::get_string( L, "message", message );
+
+            //lvl num (for sorting the levels)
+            int lvl_num = 0;
+            luah::get_num( L, "num", lvl_num );
 
             Level::Layout layout;
 
@@ -193,21 +199,27 @@ void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )
                 lvl->name = name;
                 lvl->layout = layout;
                 lvl->message = message;
+                lvl->lvl_num = lvl_num;
 
-                //if this is the first level
-                if( curr_lvl == 0 ) {
-                    lvls = curr_lvl = lvl.get();
+                Levels::iterator it;
+                for( it = levels.begin(); it != levels.end(); ++it ) {
+                    if( lvl->lvl_num < (*it)->lvl_num ) break;
+                    L_ << "iterating";
                 }
-                //move forward in the list
-                else {
-                    lvl->prev = curr_lvl;
-                    curr_lvl->next = lvl.get();
-                    curr_lvl = lvl.get();
-                }
-
-                levels.push_back( lvl );
+                levels.insert( it, lvl );
             }
         }
+    }
+
+    if( !levels.size() ) throw( Error::lua_error( "No levels loaded!" ) );
+
+    //create a linked list from the levels
+    Level *curr_lvl = lvls = levels.front().get();
+
+    for( Levels::iterator it = levels.begin() + 1; it != levels.end(); ++it ) {
+        (*it)->prev = curr_lvl;
+        curr_lvl->next = it->get();
+        curr_lvl = it->get();
     }
 }
 

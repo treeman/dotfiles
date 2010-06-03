@@ -77,7 +77,6 @@ private:
     void BlowCandle();
     void LightCandle();
 
-    void GoalAccomplished();
     int num_goals;
     int achieved_goals;
 

@@ -35,5 +35,7 @@ private:
     Layout layout;
 
     Tree::Vec2i girl_pos;
+
+    int lvl_num;
 };
 

@@ -1,7 +1,7 @@
 #include "Tree/ErrorHandling.hpp"
 #include "Level.hpp"
 
-Level::Level() : next( 0 ), prev( 0 )
+Level::Level() : next( 0 ), prev( 0 ), lvl_num( 0 )
 {
 
 }
