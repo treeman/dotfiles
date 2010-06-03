@@ -93,6 +93,30 @@ LevelResources LevelLoader::CreateResources( Level &lvl )
                 boost::shared_ptr<Teddy> o( new Teddy() );
                 tile->Attach( o );
             }
+            else if( ch == 'd' ) {
+                boost::shared_ptr<Door> o( new Door() );
+                tile->Attach( o );
+            }
+            else if( ch == 'D' ) {
+                boost::shared_ptr<Door> o( new Door( true ) );
+                tile->Attach( o );
+            }
+            else if( ch == 'k' ) {
+                boost::shared_ptr<Key> o( new Key() );
+                tile->Attach( o );
+            }
+            else if( ch == 'K' ) {
+                boost::shared_ptr<Key> o( new Key( true ) );
+                tile->Attach( o );
+            }
+            else if( ch == 'q' ) {
+                boost::shared_ptr<Skeleton> o( new Skeleton() );
+                tile->Attach( o );
+            }
+            else if( ch == 'Q' ) {
+                boost::shared_ptr<Skeleton> o( new Skeleton( true ) );
+                tile->Attach( o );
+            }
 
             column.push_back( tile );
         }

@@ -6,7 +6,23 @@ sprites =
     girl = {
         path = "gfx/girl.png",
     },
-    ghost = {
+
+    left_ghost = {
+        path = "gfx/objects.png",
+        x = 32, y = 0,
+        w = 32, h = 32,
+    },
+    right_ghost = {
+        path = "gfx/objects.png",
+        x = 96, y = 0,
+        w = 32, h = 32,
+    },
+    up_ghost = {
+        path = "gfx/objects.png",
+        x = 64, y = 0,
+        w = 32, h = 32,
+    },
+    down_ghost = {
         path = "gfx/objects.png",
         x = 0, y = 0,
         w = 32, h = 32,
@@ -31,6 +47,21 @@ sprites =
     teddy = {
         path = "gfx/objects.png",
         x = 32, y = 32,
+        w = 32, h = 32,
+    },
+    key = {
+        path = "gfx/objects.png",
+        x = 96, y = 32,
+        w = 32, h = 32,
+    },
+    door = {
+        path = "gfx/objects.png",
+        x = 128, y = 32,
+        w = 32, h = 32,
+    },
+    skeleton = {
+        path = "gfx/objects.png",
+        x = 128, y = 0,
         w = 32, h = 32,
     },
 }

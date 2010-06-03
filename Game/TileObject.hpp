@@ -5,13 +5,14 @@
 
 struct ObjectMod {
     ObjectMod() : new_candle( false ), candle_power( 0 ),
-        can_remove( false ), is_goal( false )
+        can_remove( false ), is_goal( false ), is_key( false )
     { }
 
     bool new_candle;
     float candle_power;
     bool can_remove;
     bool is_goal;
+    bool is_key;
 };
 
 class TileObject {
@@ -28,6 +29,10 @@ public:
 
     Light &GetLightSource() { return light; }
     virtual bool CanLit() { return light.GetLightPower() > 0; }
+    virtual bool CanBlowOut() { return false; }
+
+    virtual bool IsDoor() { return false; }
+    virtual bool CanUnlock( int ) { return false; }
 
     float GetLight() { return lighted; }
     void SetLight( float l ) { lighted = l; }

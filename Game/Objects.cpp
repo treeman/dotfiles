@@ -61,3 +61,57 @@ void Teddy::Draw( Tree::Vec2i pos )
     spr.Draw();
 }
 
+Door::Door( bool is_lighted )
+{
+    spr = Tree::GetButler()->GetSprite( "door" );
+    mod.can_remove = true;
+
+    if( is_lighted ) {
+        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
+        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
+        light.SetFlicker( true );
+    }
+}
+void Door::Draw( Tree::Vec2i pos )
+{
+    spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
+    spr.SetPos( pos );
+    spr.Draw();
+}
+
+Key::Key( bool is_lighted )
+{
+    spr = Tree::GetButler()->GetSprite( "key" );
+    mod.can_remove = true;
+    mod.is_key = true;
+
+    if( is_lighted ) {
+        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
+        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
+        light.SetFlicker( true );
+    }
+}
+void Key::Draw( Tree::Vec2i pos )
+{
+    spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
+    spr.SetPos( pos );
+    spr.Draw();
+}
+
+Skeleton::Skeleton( bool is_lighted )
+{
+    spr = Tree::GetButler()->GetSprite( "skeleton" );
+
+    if( is_lighted ) {
+        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
+        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
+        light.SetFlicker( true );
+    }
+}
+void Skeleton::Draw( Tree::Vec2i pos )
+{
+    spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
+    spr.SetPos( pos );
+    spr.Draw();
+}
+

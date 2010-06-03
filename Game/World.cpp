@@ -108,6 +108,20 @@ void World::Update( float dt )
                     if( mod.is_goal ) {
                         GoalAccomplished();
                     }
+                    if( mod.is_key ) {
+                        ++keys;
+                    }
+
+                    if( o->IsDoor() ) {
+                        --keys;
+                        if( keys < 0 ) {
+                            L_ << "omgosh keys are less than 0!";
+                            keys = 0;
+                        }
+                    }
+                    if( o->CanBlowOut() ) {
+                        BlowCandle();
+                    }
                 }
             }
         }
@@ -216,6 +230,10 @@ void World::Update( float dt )
     ss.str("");
     ss << "goals: " << achieved_goals << "/" << num_goals;
     Tree::Debug( ss.str() );
+
+    ss.str("");
+    ss << "keys: " << keys;
+    Tree::Debug( ss.str() );
 }
 
 void World::Draw()
@@ -253,13 +271,24 @@ void World::LoadLevel( Level &lvl )
         ghost_controller.Attach( ghost );
     }
 
+    keys = 0;
+
     curr_lvl = &lvl;
 }
 
 bool World::IsWalkable( int x, int y )
 {
-    if( !IsValid( x, y ) ) return false;
-    else return tiles[x][y]->IsWalkable();
+    if( !IsValid( x, y ) || !tiles[x][y]->IsWalkable() ) {
+        return false;
+    }
+
+    boost::shared_ptr<TileObject> o = tiles[x][y]->GetAttachment();
+    if( o && o->IsDoor() ) {
+        return keys > 0;
+    }
+    else {
+        return true;
+    }
 }
 bool World::IsSeeThrough( int x, int y )
 {
@@ -421,7 +450,7 @@ bool World::IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 )
         const int y_max = std::max( p1.y, p2.y );
 
         for( int y = y_min; y <= y_max; ++y ) {
-            if( !IsWalkable( p1.x, y ) ) return false;
+            if( !IsSeeThrough( p1.x, y ) ) return false;
         }
         return true;
     }
@@ -430,7 +459,7 @@ bool World::IsVisiblePathClear( Tree::Vec2i p1, Tree::Vec2i p2 )
         const int x_max = std::max( p1.x, p2.x );
 
         for( int x = x_min; x <= x_max; ++x ) {
-            if( !IsWalkable( x, p1.y ) ) return false;
+            if( !IsSeeThrough( x, p1.y ) ) return false;
         }
         return true;
     }

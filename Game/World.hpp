@@ -84,5 +84,7 @@ private:
     GhostController ghost_controller;
     typedef std::vector<boost::shared_ptr<Ghost> > Ghosts;
     Ghosts ghosts;
+
+    int keys;
 };
 

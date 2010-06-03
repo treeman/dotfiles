@@ -8,7 +8,11 @@
 
 Ghost::Ghost( bool has_light )
 {
-    spr = Tree::GetButler()->GetSprite( "ghost" );
+    lspr = Tree::GetButler()->GetSprite( "left_ghost" );
+    rspr = Tree::GetButler()->GetSprite( "right_ghost" );
+    uspr = Tree::GetButler()->GetSprite( "up_ghost" );
+    dspr = Tree::GetButler()->GetSprite( "down_ghost" );
+
     Tree::GetSettings()->Register<bool>( "debug_ghost", false );
 
     Pause();
@@ -72,7 +76,15 @@ void Ghost::Update( float dt )
 
 void Ghost::Draw( Tree::Vec2i p )
 {
-    spr.SetPos( p );
-    spr.Draw();
+    Tree::Sprite *spr = 0;
+    if( FacesLeft() ) spr = &lspr;
+    else if( FacesRight() ) spr = &rspr;
+    else if( FacesUp() ) spr = &uspr;
+    else if( FacesDown() ) spr = &dspr;
+
+    if( spr ) {
+        spr->SetPos( p );
+        spr->Draw();
+    }
 }
 

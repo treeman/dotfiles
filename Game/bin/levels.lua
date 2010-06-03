@@ -2,14 +2,15 @@
 levels = {
     beginning = {
         layout = {
-            "o cocooo   t o T",
+            "okcocooq   t o T",
             "T        ooo o o",
-            "o  ooo ooo o o  ",
+            "o  ooodooo o o Q",
             "G so   o   o o o",
-            "oooo   ol       ",
+            "ooooK  ol       ",
             " C     oooo  o  ",
             "     S    x  o c",
         },
+        message = "big level holy shit",
     },
 
     intermediate = {

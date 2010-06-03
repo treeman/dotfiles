@@ -28,7 +28,11 @@ public:
     void Update( float dt );
     void Draw( Tree::Vec2i pos );
 private:
-    Tree::Sprite spr;
+    Tree::Sprite lspr;
+    Tree::Sprite rspr;
+    Tree::Sprite uspr;
+    Tree::Sprite dspr;
+
     Light light;
 
     Dirs valid_dirs;
