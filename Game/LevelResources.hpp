@@ -10,5 +10,7 @@ struct LevelResources {
 
     typedef std::vector<boost::shared_ptr<Ghost> > Ghosts;
     Ghosts ghosts;
+
+    std::string message;
 };
 

@@ -32,7 +32,6 @@ public:
     virtual bool CanBlowOut() { return false; }
 
     virtual bool IsDoor() { return false; }
-    virtual bool CanUnlock( int ) { return false; }
 
     float GetLight() { return lighted; }
     void SetLight( float l ) { lighted = l; }

@@ -28,6 +28,10 @@ World::World() : curr_lvl( 0 ),
     AddCandle( Tree::GetTweaks()->GetNum( "candle_power" ) );
     SwitchCandle();
 
+    message_str.SetFont( *Tree::GetButler()->GetFont( "fnt/consola.ttf", 12 ) );
+    message_str.SetSize( 12 );
+    message_str.SetColor( sf::Color( 255, 255, 255 ) );
+
     Tree::GetSettings()->Register<bool>( "debug_world", false );
     Tree::GetSettings()->Register<bool>( "debug_cam", false );
     Tree::GetSettings()->Register<bool>( "debug_candles", false );
@@ -253,6 +257,9 @@ void World::Draw()
     }
 
     girl->Draw( ConvertToScreen( girl->GetPos() ) );
+
+    message_str.SetPosition( 305, 5 );
+    Tree::Draw( message_str );
 }
 
 void World::LoadLevel( Level &lvl )
@@ -272,6 +279,7 @@ void World::LoadLevel( Level &lvl )
     }
 
     keys = 0;
+    message_str.SetText( resources.message );
 
     curr_lvl = &lvl;
 }

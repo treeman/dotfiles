@@ -29,6 +29,8 @@ LevelResources LevelLoader::CreateResources( Level &lvl )
 {
     LevelResources resources;
 
+    resources.message = lvl.message;
+
     int tile_size = (int)Tree::GetTweaks()->GetNum( "tile_size" );
 
     //this is flipping the array, columns becomes lines
@@ -161,6 +163,8 @@ void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )
 
             //get lvl name
             std::string name = lua_tostring( L, -2 );
+            std::string message;
+            luah::get_string( L, "message", message );
 
             Level::Layout layout;
 
@@ -188,6 +192,7 @@ void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )
 
                 lvl->name = name;
                 lvl->layout = layout;
+                lvl->message = message;
 
                 //if this is the first level
                 if( curr_lvl == 0 ) {

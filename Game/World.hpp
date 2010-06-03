@@ -86,5 +86,7 @@ private:
     Ghosts ghosts;
 
     int keys;
+
+    sf::String message_str;
 };
 

@@ -6,7 +6,7 @@ using Tree::Vec2f;
 MovingObject::MovingObject() :
     size( (int)Tree::GetTweaks()->GetNum( "tile_size" ) )
 {
-    SetFaceDown();
+    FaceDown();
 }
 
 void MovingObject::MoveLeft()

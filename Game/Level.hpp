@@ -29,6 +29,7 @@ private:
     Level *prev;
 
     std::string name;
+    std::string message;
 
     typedef std::vector<std::string> Layout;
     Layout layout;
