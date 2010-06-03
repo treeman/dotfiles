@@ -522,3 +522,4 @@ void World::LightCandle()
 {
     girl->GetLightSource().SetLit( true );
 }
+

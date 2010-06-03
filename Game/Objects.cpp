@@ -8,11 +8,24 @@ float lights_func( float light )
     return byte;
 }
 
-LightObject::LightObject()
+LightObject::LightObject( bool is_lighted )
 {
-    light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
-    light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
-    light.SetFlicker( true );
+    if( is_lighted ) {
+        light.SetLightPower( Tree::GetTweaks()->GetNum( "small_light_power" ) );
+        light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
+        light.SetFlicker( true );
+    }
+}
+
+SpriteObject::SpriteObject( bool is_lighted ) :
+    LightObject( is_lighted )
+{ }
+
+void SpriteObject::Draw( Tree::Vec2i pos )
+{
+    spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
+    spr.SetPos( pos );
+    spr.Draw();
 }
 
 Candle::Candle( int size, bool is_lighted )
@@ -35,13 +48,6 @@ Candle::Candle( int size, bool is_lighted )
     }
 }
 
-void Candle::Draw( Tree::Vec2i pos )
-{
-    spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
-    spr.SetPos( pos );
-    spr.Draw();
-}
-
 Teddy::Teddy( bool is_lighted )
 {
     spr = Tree::GetButler()->GetSprite( "teddy" );
@@ -54,12 +60,6 @@ Teddy::Teddy( bool is_lighted )
         light.SetFlicker( true );
     }
 }
-void Teddy::Draw( Tree::Vec2i pos )
-{
-    spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
-    spr.SetPos( pos );
-    spr.Draw();
-}
 
 Door::Door( bool is_lighted )
 {
@@ -71,12 +71,6 @@ Door::Door( bool is_lighted )
         light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
         light.SetFlicker( true );
     }
-}
-void Door::Draw( Tree::Vec2i pos )
-{
-    spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
-    spr.SetPos( pos );
-    spr.Draw();
 }
 
 Key::Key( bool is_lighted )
@@ -91,12 +85,6 @@ Key::Key( bool is_lighted )
         light.SetFlicker( true );
     }
 }
-void Key::Draw( Tree::Vec2i pos )
-{
-    spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
-    spr.SetPos( pos );
-    spr.Draw();
-}
 
 Skeleton::Skeleton( bool is_lighted )
 {
@@ -107,11 +95,5 @@ Skeleton::Skeleton( bool is_lighted )
         light.SetLightSpread( Tree::GetTweaks()->GetNum( "small_light_spread" ) );
         light.SetFlicker( true );
     }
-}
-void Skeleton::Draw( Tree::Vec2i pos )
-{
-    spr.SetColor( sf::Color( 51, 51, 51, lights_func( lighted ) ) );
-    spr.SetPos( pos );
-    spr.Draw();
 }
 

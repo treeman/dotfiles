@@ -4,56 +4,49 @@
 
 class LightObject : public TileObject {
 public:
-    LightObject();
-    void Draw( Tree::Vec2i ) { }
+    LightObject( bool is_lighted = true );
+    virtual ~LightObject() { }
+
+    virtual void Draw( Tree::Vec2i ) { }
 };
 
-class Candle : public TileObject {
+class SpriteObject : public LightObject {
+public:
+    SpriteObject( bool is_lighted = true );
+    virtual ~SpriteObject() { }
+
+    virtual void Draw( Tree::Vec2i );
+protected:
+    Tree::Sprite spr;
+};
+
+class Candle : public SpriteObject {
 public:
     Candle( int size, bool is_lighted = false );
-    void Draw( Tree::Vec2i pos );
-private:
-    Tree::Sprite spr;
 };
 
-class Teddy : public TileObject {
+class Teddy : public SpriteObject {
 public:
     Teddy( bool is_lighted = false );
-    void Draw( Tree::Vec2i pos );
-private:
-    Tree::Sprite spr;
 };
 
-class Door : public TileObject {
+class Door : public SpriteObject {
 public:
     Door( bool is_lighted = false );
 
     bool IsDoor() { return true; }
     bool IsSeeThrough() { return true; }
-
-    void Draw( Tree::Vec2i pos );
-private:
-    Tree::Sprite spr;
-    int key_num;
 };
 
-class Key : public TileObject {
+class Key : public SpriteObject {
 public:
     Key( bool is_lighted = false );
-
-    void Draw( Tree::Vec2i pos );
-private:
-    Tree::Sprite spr;
 };
 
-class Skeleton : public TileObject {
+class Skeleton : public SpriteObject {
 public:
     Skeleton( bool is_lighted = false );
 
     bool CanBlowOut() { return true; }
-
-    void Draw( Tree::Vec2i pos );
-private:
-    Tree::Sprite spr;
 };
 
