@@ -75,7 +75,6 @@ void World::Update( float dt )
         NextLevel();
     }
 
-
     const Tree::Vec2f girl_pos = girl->GetPos();
     const Tree::Vec2i girl_gpos = ConvertToGridByCenter( girl_pos );
 
@@ -503,11 +502,13 @@ void World::AddCandle( float power )
 }
 void World::SwitchCandle()
 {
-    if( candles.size() > 1 ) {
-        candles.erase(std::remove(candles.begin(), candles.end(), 0 ));
+    if( candles.size() > 1 && candles[curr_candle] <= 0 ) {
+        candles.erase( candles.begin() + curr_candle );
+    }
+    else {
+        ++curr_candle;
     }
 
-    ++curr_candle;
     if( curr_candle >= candles.size() ) {
         curr_candle = 0;
     }
