@@ -17,10 +17,12 @@ levels = {
         num = 1,
         layout = {
             "oooooooo",
-            "G t   cT",
+            "G t    T",
             "oooooooo",
         },
         message = "Find the TeddyBears!",
+        help = "Use the arrows to move",
+        candle_decline = 0,
     },
 
     Candle = {
@@ -32,11 +34,11 @@ levels = {
             "o o",
             "C G",
             "o o",
-            "o o",
+            "omo",
             "o o",
             "oto",
         },
-        message = "Switch candles with Space when they're burning out.",
+        message = "Switch candles with Space before they burn out.",
     },
 
     poop = {
@@ -53,7 +55,7 @@ levels = {
     },
 
     beginning = {
-        num = 0,
+        num = 5,
         layout = {
             "okcocooq   t o T",
             "T m      ooo o o",

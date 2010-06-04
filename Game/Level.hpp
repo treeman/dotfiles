@@ -30,6 +30,7 @@ private:
 
     std::string name;
     std::string message;
+    std::string help;
 
     typedef std::vector<std::string> Layout;
     Layout layout;
@@ -37,5 +38,6 @@ private:
     Tree::Vec2i girl_pos;
 
     int lvl_num;
+    float candle_decline;
 };
 

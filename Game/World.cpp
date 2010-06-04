@@ -28,9 +28,9 @@ World::World() : curr_lvl( 0 ),
     AddCandle( Tree::GetTweaks()->GetNum( "candle_power" ) );
     SwitchCandle();
 
-    message_str.SetFont( *Tree::GetButler()->GetFont( "fnt/consola.ttf", 12 ) );
-    message_str.SetSize( 12 );
-    message_str.SetColor( sf::Color( 255, 255, 255 ) );
+    visual_str.SetFont( *Tree::GetButler()->GetFont( "fnt/consola.ttf", 12 ) );
+    visual_str.SetSize( 12 );
+    visual_str.SetColor( sf::Color( 255, 255, 255 ) );
 
     matches = 0;
 
@@ -142,10 +142,9 @@ void World::Update( float dt )
 
     if( girl->WantsAction() ) {
         Light light = girl->GetLightSource();
-        L_ << "action wanted! " << light.IsLit() << " " << light.GetRealLightPower();
+
         if( !light.IsLit() && ( light.GetRealLightPower() > 0 ) ) {
             if( matches > 0 ) {
-                L_ << "lighting candle";
                 --matches;
                 LightCandle();
             }
@@ -282,8 +281,13 @@ void World::Draw()
 
     girl->Draw( ConvertToScreen( girl->GetPos() ) );
 
-    message_str.SetPosition( 305, 5 );
-    Tree::Draw( message_str );
+    visual_str.SetText( lvl_message );
+    visual_str.SetPosition( 305, 5 );
+    Tree::Draw( visual_str );
+
+    visual_str.SetText( help_message );
+    visual_str.SetPosition( 305, 555 );
+    Tree::Draw( visual_str );
 }
 
 void World::LoadLevel( Level &lvl )
@@ -304,11 +308,14 @@ void World::LoadLevel( Level &lvl )
     }
 
     keys = 0;
-    std::string message;
-    if( lvl.GetName() != "" ) message += lvl.GetName() + ": ";
-    message += resources.message;
+    lvl_message = "";
 
-    message_str.SetText( message );
+    girl->GetLightSource().SetLightDecline( resources.candle_decline );
+
+    if( lvl.GetName() != "" ) lvl_message += lvl.GetName() + ": ";
+    lvl_message += resources.message;
+
+    help_message = resources.help;
 
     curr_lvl = &lvl;
 }
@@ -446,10 +453,6 @@ void World::UpdateLight( Tree::Vec2i grid_pos, float power, int spread )
     }
 
     IncrLight( grid_pos.x, grid_pos.y, power );
-
-    /*if( IsValid( grid_pos ) ) {
-        tiles[grid_pos.x][grid_pos.y]->SetLight( power );
-    }*/
 }
 void World::UpdateLightTile( Tree::Vec2i grid_pos, Tree::Vec2i origin,
     float source_power )
@@ -468,6 +471,7 @@ void World::IncrLight( int x, int y, float power )
 {
     if( IsValid( x, y ) ) {
         TilePtr tile = tiles[x][y];
+
         //prevent overruns and flickering between black (invalid)
         tile->SetLight( math::clip<float>( power + tile->GetLight(), 0, 1 ) );
         boost::shared_ptr<TileObject> o = tile->GetAttachment();

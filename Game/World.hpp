@@ -85,9 +85,11 @@ private:
     Ghosts ghosts;
 
     int keys;
-
-    sf::String message_str;
-
     int matches;
+
+    std::string lvl_message;
+    std::string help_message;
+
+    sf::String visual_str;
 };
 

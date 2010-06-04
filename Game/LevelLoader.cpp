@@ -30,6 +30,8 @@ LevelResources LevelLoader::CreateResources( Level &lvl )
     LevelResources resources;
 
     resources.message = lvl.message;
+    resources.help = lvl.help;
+    resources.candle_decline = lvl.candle_decline;
 
     int tile_size = (int)Tree::GetTweaks()->GetNum( "tile_size" );
 
@@ -176,6 +178,14 @@ void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )
             std::string message;
             luah::get_string( L, "message", message );
 
+            //opening help message
+            std::string help;
+            luah::get_string( L, "help", help );
+
+            //candle decline
+            float candle_decline = Tree::GetTweaks()->GetNum( "candle_decline" );
+            luah::get_num( L, "candle_decline", candle_decline );
+
             //lvl num (for sorting the levels)
             int lvl_num = 0;
             luah::get_num( L, "num", lvl_num );
@@ -207,7 +217,9 @@ void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )
                 lvl->name = name;
                 lvl->layout = layout;
                 lvl->message = message;
+                lvl->help = help;
                 lvl->lvl_num = lvl_num;
+                lvl->candle_decline = candle_decline;
 
                 Levels::iterator it;
                 for( it = levels.begin(); it != levels.end(); ++it ) {

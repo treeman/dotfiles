@@ -12,5 +12,8 @@ struct LevelResources {
     Ghosts ghosts;
 
     std::string message;
+    std::string help;
+
+    float candle_decline;
 };
 

@@ -1,7 +1,8 @@
 #include "Tree/ErrorHandling.hpp"
 #include "Level.hpp"
 
-Level::Level() : next( 0 ), prev( 0 ), lvl_num( 0 )
+Level::Level() : next( 0 ), prev( 0 ), lvl_num( 0 ),
+    candle_decline( 0 )
 {
 
 }
