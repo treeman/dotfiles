@@ -3,8 +3,25 @@
 
 sprites =
 {
-    girl = {
-        path = "gfx/girl.png",
+    left_girl = {
+        path = "gfx/objects.png",
+        x = 96, y = 64,
+        w = 32, h = 32,
+    },
+    right_girl = {
+        path = "gfx/objects.png",
+        x = 128, y = 64,
+        w = 32, h = 32,
+    },
+    up_girl = {
+        path = "gfx/objects.png",
+        x = 64, y = 64,
+        w = 32, h = 32,
+    },
+    down_girl = {
+        path = "gfx/objects.png",
+        x = 32, y = 64,
+        w = 32, h = 32,
     },
 
     left_ghost = {

@@ -80,8 +80,17 @@ void World::Update( float dt )
     const Tree::Vec2f girl_pos = girl->GetPos();
     const Tree::Vec2i girl_gpos = ConvertToGridByCenter( girl_pos );
 
-    //update tiles, attachments and reset lights which we'll compute later
     const bool use_fow = Tree::GetSettings()->GetValue<bool>( "fow" );
+
+    //reset the girl's light
+    if( use_fow ) {
+        girl->SetLight( 0 );
+    }
+    else {
+        girl->SetLight( 0.9 );
+    }
+
+    //update tiles, attachments and reset lights which we'll compute later
     for( size_t x = 0; x < tiles.size(); ++x ) {
         for( size_t y = 0; y < tiles[x].size(); ++y ) {
             tiles[x][y]->Update( dt );
@@ -140,6 +149,7 @@ void World::Update( float dt )
         }
     }
 
+    //handle girl actions
     if( girl->WantsAction() ) {
         Light light = girl->GetLightSource();
 
@@ -209,6 +219,10 @@ void World::Update( float dt )
         }
     }
 
+    //set the girl's light
+    girl->SetLight( tiles[girl_gpos.x][girl_gpos.y]->GetLight() );
+
+    //center on girl
     CenterCam( Tree::Vec2i( girl_pos.x + tile_size / 2, girl_pos.y + tile_size / 2 ) );
 
     std::stringstream ss;

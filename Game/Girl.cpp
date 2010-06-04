@@ -5,9 +5,19 @@
 
 #include "Girl.hpp"
 
-Girl::Girl() : do_action( false )
+float l_func( float light )
 {
-    spr = Tree::GetButler()->GetSprite( "girl" );
+    const int byte = light * 255;
+    return byte;
+}
+
+Girl::Girl() : do_action( false ), lighted( 0 )
+{
+    lspr = Tree::GetButler()->GetSprite( "left_girl" );
+    rspr = Tree::GetButler()->GetSprite( "right_girl" );
+    uspr = Tree::GetButler()->GetSprite( "up_girl" );
+    dspr = Tree::GetButler()->GetSprite( "down_girl" );
+
     Tree::GetSettings()->Register<bool>( "debug_girl", false );
 
     light.SetLightDecline( Tree::GetTweaks()->GetNum( "candle_decline" ) );
@@ -67,6 +77,16 @@ void Girl::Update( float dt )
 
 void Girl::Draw( Tree::Vec2i p )
 {
-    spr.SetPos( p );
-    spr.Draw();
+    Tree::Sprite *spr = 0;
+    if( FacesLeft() ) spr = &lspr;
+    else if( FacesRight() ) spr = &rspr;
+    else if( FacesUp() ) spr = &uspr;
+    else if( FacesDown() ) spr = &dspr;
+
+    if( spr ) {
+        spr->SetColor( sf::Color( 51, 51, 51, l_func( lighted ) ) );
+        spr->SetPos( p );
+        spr->Draw();
+    }
 }
+
