@@ -70,8 +70,53 @@ boost::shared_ptr<sf::Image> Butler::GetImage( std::string path )
     }
 }
 
+boost::shared_ptr<sf::Music> Butler::GetMusic( std::string path )
+    throw( Error::file_not_found )
+{
+    MusicMap::iterator it = music_map.find( path );
+    if( it != music_map.end() ) {
+        return it->second;
+    }
+    else {
+        boost::shared_ptr<sf::Music> music( new sf::Music() );
+
+        if( !music->OpenFromFile( path.c_str() ) ) {
+            std::string s = "Unable to load music: '" + path + "'";
+            throw( Error::file_not_found( s.c_str() ) );
+        }
+
+        music_map.insert( std::make_pair( path, music ) );
+        return music;
+    }
+}
+
+boost::shared_ptr<sf::SoundBuffer> Butler::GetSoundBuffer( std::string path )
+    throw( Error::file_not_found )
+{
+    SoundBufferMap::iterator it = soundbuffer_map.find( path );
+    if( it != soundbuffer_map.end() ) {
+        return it->second;
+    }
+    else {
+        boost::shared_ptr<sf::SoundBuffer> soundbuffer( new sf::SoundBuffer() );
+
+        if( !soundbuffer->LoadFromFile( path.c_str() ) ) {
+            std::string s = "Unable to load soundbuffer: '" + path + "'";
+            throw( Error::file_not_found( s.c_str() ) );
+        }
+
+        soundbuffer_map.insert( std::make_pair( path, soundbuffer ) );
+        return soundbuffer;
+    }
+}
+
 Tree::Sprite Butler::GetSprite( std::string name )
 {
     return spr_loader.Get( name );
+}
+
+sf::Sound Butler::GetSound( std::string path )
+{
+    return sf::Sound( *GetSoundBuffer( path ) );
 }
 

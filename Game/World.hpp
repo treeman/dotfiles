@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML/Audio.hpp>
+
 #include "Tree/Graphics.hpp"
 
 #include "Tile.hpp"
@@ -91,5 +93,19 @@ private:
     std::string help_message;
 
     sf::String visual_str;
+
+    boost::shared_ptr<sf::Music> music;
+    sf::Sound clonk_sound;
+    sf::Sound music_box;
+    sf::Sound tear_sound;
+    sf::Sound katjing_sound;
+    sf::Sound fire_sound;
+    sf::Sound ghost_sound;
+    sf::Sound skeleton_sound;
+
+    Tree::Sprite candle;
+    Tree::Sprite key;
+    Tree::Sprite teddy;
+    Tree::Sprite match;
 };
 

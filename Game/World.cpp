@@ -28,17 +28,48 @@ World::World() : curr_lvl( 0 ),
     AddCandle( Tree::GetTweaks()->GetNum( "candle_power" ) );
     SwitchCandle();
 
-    visual_str.SetFont( *Tree::GetButler()->GetFont( "fnt/consola.ttf", 12 ) );
-    visual_str.SetSize( 12 );
+    visual_str.SetFont( *Tree::GetButler()->GetFont( "fnt/shruti.ttf", 16 ) );
+    visual_str.SetSize( 16 );
     visual_str.SetColor( sf::Color( 255, 255, 255 ) );
 
     matches = 0;
+
+    Tree::GetSettings()->Register<bool>( "play_music", true );
+
+    if( Tree::GetSettings()->GetValue<bool>( "play_music" ) ) {
+        music = Tree::GetButler()->GetMusic( "sfx/souls.ogg" );
+        music->Play();
+        music->SetVolume( 40 );
+    }
+
+    clonk_sound = Tree::GetButler()->GetSound( "sfx/clonk.wav" );
+    music_box = Tree::GetButler()->GetSound( "sfx/music_box.wav" );
+    music_box.SetVolume( 20 );
+    tear_sound = Tree::GetButler()->GetSound( "sfx/tear.wav" );
+    katjing_sound = Tree::GetButler()->GetSound( "sfx/katjing.wav" );
+    katjing_sound.SetVolume( 30 );
+    fire_sound = Tree::GetButler()->GetSound( "sfx/fire.wav" );
+    ghost_sound = Tree::GetButler()->GetSound( "sfx/ghost.wav" );
+    skeleton_sound = Tree::GetButler()->GetSound( "sfx/skeleton.wav" );
+
+    candle = Tree::GetButler()->GetSprite( "candle" );
+    teddy = Tree::GetButler()->GetSprite( "teddy" );
+    key = Tree::GetButler()->GetSprite( "key" );
+    match = Tree::GetButler()->GetSprite( "match" );
+
+    const float spr_y = 0;
+
+    candle.SetPos( 60, spr_y );
+    key.SetPos( 120, spr_y );
+    match.SetPos( 170, spr_y );
+    teddy.SetPos( 220, spr_y );
 
     Tree::GetSettings()->Register<bool>( "debug_world", false );
     Tree::GetSettings()->Register<bool>( "debug_cam", false );
     Tree::GetSettings()->Register<bool>( "debug_candles", false );
     Tree::GetSettings()->Register<bool>( "debug_light", false );
     Tree::GetSettings()->Register<bool>( "debug_moving_object", false );
+    Tree::GetSettings()->Register<bool>( "debug_stats", false );
 }
 World::~World()
 {
@@ -120,21 +151,26 @@ void World::Update( float dt )
                     ObjectMod mod = o->GetMod();
                     if( mod.new_candle ) {
                         AddCandle( mod.candle_power );
+                        katjing_sound.Play();
                     }
                     if( mod.can_remove ) {
                         tiles[x][y]->Detach();
                     }
                     if( mod.is_goal ) {
                         ++achieved_goals;
+                        music_box.Play();
                     }
                     if( mod.is_key ) {
                         ++keys;
+                        clonk_sound.Play();
                     }
                     if( mod.is_match ) {
                         ++matches;
+                        katjing_sound.Play();
                     }
 
                     if( o->IsDoor() ) {
+                        tear_sound.Play();
                         --keys;
                         if( keys < 0 ) {
                             L_ << "omgosh keys are less than 0!";
@@ -143,6 +179,7 @@ void World::Update( float dt )
                     }
                     if( o->CanBlowOut() ) {
                         BlowCandle();
+                        skeleton_sound.Play();
                     }
                 }
             }
@@ -180,6 +217,7 @@ void World::Update( float dt )
 
         if( girl_gpos == gpos ) {
             BlowCandle();
+            ghost_sound.Play();
         }
 
         if( IsWalkable( gpos.x - 1, gpos.y ) ) free_paths.push_back( Tree::Vec2i::left );
@@ -188,6 +226,12 @@ void World::Update( float dt )
         if( IsWalkable( gpos.x, gpos.y + 1 ) ) free_paths.push_back( Tree::Vec2i::down );
 
         ghost->SetValidDirections( free_paths );
+    }
+
+    //if the candle burned out update the help message
+    if( candles[curr_candle] > 0
+        && girl->GetLightSource().GetRealLightPower() <= 0 ) {
+        help_message = Tree::GetTweaks()->GetString( "on_burn_out" );
     }
 
     //update current candle
@@ -264,17 +308,19 @@ void World::Update( float dt )
         }
     }
 
-    ss.str("");
-    ss << "goals: " << achieved_goals << "/" << num_goals;
-    Tree::Debug( ss.str() );
+    if( Tree::GetSettings()->GetValue<bool>( "debug_stats" ) ) {
+        ss.str("");
+        ss << "goals: " << achieved_goals << "/" << num_goals;
+        Tree::Debug( ss.str() );
 
-    ss.str("");
-    ss << "keys: " << keys;
-    Tree::Debug( ss.str() );
+        ss.str("");
+        ss << "keys: " << keys;
+        Tree::Debug( ss.str() );
 
-    ss.str("");
-    ss << "matches: " << matches;
-    Tree::Debug( ss.str() );
+        ss.str("");
+        ss << "matches: " << matches;
+        Tree::Debug( ss.str() );
+    }
 }
 
 void World::Draw()
@@ -295,12 +341,56 @@ void World::Draw()
 
     girl->Draw( ConvertToScreen( girl->GetPos() ) );
 
+    const float text_top_y = 7;
+
     visual_str.SetText( lvl_message );
-    visual_str.SetPosition( 305, 5 );
+    visual_str.SetPosition( Tree::GetWindowWidth() / 2 - visual_str.GetRect().GetWidth() / 2, text_top_y );
     Tree::Draw( visual_str );
 
     visual_str.SetText( help_message );
-    visual_str.SetPosition( 305, 555 );
+    visual_str.SetPosition( Tree::GetWindowWidth() / 2 - visual_str.GetRect().GetWidth() / 2, 555 );
+    Tree::Draw( visual_str );
+
+    candle.Draw();
+    key.Draw();
+    match.Draw();
+    teddy.Draw();
+
+    const float off = 30;
+
+    std::stringstream ss;
+    float candle_power = candles[curr_candle];
+    if( candle_power < 0.01 ) {
+        candle_power = 0;
+    }
+    if( candle_power < 0.1 ) {
+        ss.precision(1);
+    }
+    else {
+        ss.precision(2);
+    }
+
+    ss << candle_power;
+    visual_str.SetText( ss.str() );
+    visual_str.SetPosition( candle.GetPos().x + off, text_top_y );
+    Tree::Draw( visual_str );
+
+    ss.str("");
+    ss << keys;
+    visual_str.SetText( ss.str() );
+    visual_str.SetPosition( key.GetPos().x + off, text_top_y );
+    Tree::Draw( visual_str );
+
+    ss.str("");
+    ss << matches;
+    visual_str.SetText( ss.str() );
+    visual_str.SetPosition( match.GetPos().x + off, text_top_y );
+    Tree::Draw( visual_str );
+
+    ss.str("");
+    ss << achieved_goals << "/" << num_goals;
+    visual_str.SetText( ss.str() );
+    visual_str.SetPosition( teddy.GetPos().x + off, text_top_y );
     Tree::Draw( visual_str );
 }
 
@@ -556,9 +646,18 @@ void World::SwitchCandle()
 void World::BlowCandle()
 {
     girl->GetLightSource().SetLit( false );
+    help_message = Tree::GetTweaks()->GetString( "on_blow_out" );
 }
 void World::LightCandle()
 {
+    if( !girl->GetLightSource().IsLit()
+            && girl->GetLightSource().GetRealLightPower() > 0
+            && fire_sound.GetStatus() != sf::Sound::Playing ) {
+        fire_sound.Play();
+    }
     girl->GetLightSource().SetLit( true );
+    if( girl->GetLightSource().GetRealLightPower() > 0 ) {
+        help_message = "";
+    }
 }
 

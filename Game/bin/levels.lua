@@ -29,7 +29,7 @@ levels = {
         num = 2,
         layout = {
             "oto",
-            "C o",
+            "s o",
             "o o",
             "o o",
             "C G",

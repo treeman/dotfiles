@@ -15,6 +15,7 @@ Game::Game()
 {
     Tree::GetButler()->LoadSprites( "sprites.lua" );
     Tree::GetTweaks()->Load( "magic_numbers.lua" );
+    Tree::GetTweaks()->Load( "help_messages.lua" );
 
     world.reset( new World() );
 

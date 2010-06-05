@@ -8,6 +8,7 @@ misc/
 *.exe
 */bin/gfx
 */bin/sound
+*/bin/sfx
 */bin/fnt
 *.dll
 
