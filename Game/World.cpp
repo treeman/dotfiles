@@ -7,8 +7,10 @@
 #include "Tree/Math.hpp"
 #include "Tree/VisualDebug.hpp"
 #include "Tree/Settings.hpp"
+#include "Tree/Game.hpp"
 
 #include "World.hpp"
+#include "Victory.hpp"
 
 World::World() : curr_lvl( 0 ),
     tile_size( (int)Tree::GetTweaks()->GetNum( "tile_size" ) )
@@ -40,6 +42,7 @@ World::World() : curr_lvl( 0 ),
         music = Tree::GetButler()->GetMusic( "sfx/souls.ogg" );
         music->Play();
         music->SetVolume( 40 );
+        music->SetLoop( true );
     }
 
     clonk_sound = Tree::GetButler()->GetSound( "sfx/clonk.wav" );
@@ -51,6 +54,8 @@ World::World() : curr_lvl( 0 ),
     fire_sound = Tree::GetButler()->GetSound( "sfx/fire.wav" );
     ghost_sound = Tree::GetButler()->GetSound( "sfx/ghost.wav" );
     skeleton_sound = Tree::GetButler()->GetSound( "sfx/skeleton.wav" );
+    new_level_sound = Tree::GetButler()->GetSound( "sfx/finished.wav" );
+    new_level_sound.SetVolume( 30 );
 
     candle = Tree::GetButler()->GetSprite( "candle" );
     teddy = Tree::GetButler()->GetSprite( "teddy" );
@@ -89,6 +94,13 @@ void World::NextLevel()
 {
     if( !curr_lvl->IsLast() ) {
         LoadLevel( curr_lvl->GetNext() );
+        new_level_sound.Play();
+    }
+    else {
+        SetFirstLevel();
+
+        boost::shared_ptr<Tree::GameState> state( new Victory() );
+        Tree::Game::Instance()->Push( state );
     }
 }
 void World::PreviousLevel()
@@ -234,6 +246,11 @@ void World::Update( float dt )
         help_message = Tree::GetTweaks()->GetString( "on_burn_out" );
     }
 
+    //if we have no candles left at all (or we have one and it's unusable)
+    if( candles.size() == 1 && candles[curr_candle] <= 0 ) {
+        help_message = Tree::GetTweaks()->GetString( "on_no_candles" );
+    }
+
     //update current candle
     candles[curr_candle] = girl->GetLightSource().GetRealLightPower();
 
@@ -343,8 +360,10 @@ void World::Draw()
 
     const float text_top_y = 7;
 
-    visual_str.SetText( lvl_message );
-    visual_str.SetPosition( Tree::GetWindowWidth() / 2 - visual_str.GetRect().GetWidth() / 2, text_top_y );
+    std::stringstream ss;
+    ss << "Level " << curr_lvl->GetLevelNum() << ": " << lvl_message;
+    visual_str.SetText( ss.str() );
+    visual_str.SetPosition( 300, text_top_y );
     Tree::Draw( visual_str );
 
     visual_str.SetText( help_message );
@@ -358,7 +377,6 @@ void World::Draw()
 
     const float off = 30;
 
-    std::stringstream ss;
     float candle_power = candles[curr_candle];
     if( candle_power < 0.01 ) {
         candle_power = 0;
@@ -370,6 +388,7 @@ void World::Draw()
         ss.precision(2);
     }
 
+    ss.str("");
     ss << candle_power;
     visual_str.SetText( ss.str() );
     visual_str.SetPosition( candle.GetPos().x + off, text_top_y );
@@ -412,8 +431,17 @@ void World::LoadLevel( Level &lvl )
     }
 
     keys = 0;
+    matches = 0;
+
+    candles.clear();
+
+    curr_candle = 0;
+    AddCandle( Tree::GetTweaks()->GetNum( "candle_power" ) );
+    SwitchCandle();
+
     lvl_message = "";
 
+    girl->GetLightSource().SetLit( true );
     girl->GetLightSource().SetLightDecline( resources.candle_decline );
 
     if( lvl.GetName() != "" ) lvl_message += lvl.GetName() + ": ";

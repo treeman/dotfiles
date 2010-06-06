@@ -17,8 +17,6 @@ public:
 
     boost::shared_ptr<Girl> GetGirl();
 
-    //void AddListener( WorldListener *l );
-
     void SetFirstLevel();
     void NextLevel();
     void PreviousLevel();
@@ -102,6 +100,7 @@ private:
     sf::Sound fire_sound;
     sf::Sound ghost_sound;
     sf::Sound skeleton_sound;
+    sf::Sound new_level_sound;
 
     Tree::Sprite candle;
     Tree::Sprite key;

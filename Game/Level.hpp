@@ -21,6 +21,8 @@ public:
     Level &GetNext();
     Level &GetPrevious();
 
+    int GetLevelNum() { return lvl_num; }
+
     std::string GetName() { return name; }
 private:
     friend class LevelLoader;

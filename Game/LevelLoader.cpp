@@ -235,10 +235,15 @@ void LevelLoader::LoadLevelFile( std::string file ) throw( Error::lua_error & )
     //create a linked list from the levels
     Level *curr_lvl = lvls = levels.front().get();
 
-    for( Levels::iterator it = levels.begin() + 1; it != levels.end(); ++it ) {
+    //and set real lvl nums
+    int lvl_num = curr_lvl->lvl_num = 1;
+    ++lvl_num;
+
+    for( Levels::iterator it = levels.begin() + 1; it != levels.end(); ++it, ++lvl_num ) {
         (*it)->prev = curr_lvl;
         curr_lvl->next = it->get();
         curr_lvl = it->get();
+        curr_lvl->lvl_num = lvl_num;
     }
 }
 

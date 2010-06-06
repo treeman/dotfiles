@@ -6,6 +6,7 @@ using Tree::Logo;
 
 Logo::Logo()
 {
+    Tree::GetButler()->GetImage( "gfx/treelogo.png" )->SetSmooth( false );
     logo.SetImage( *Tree::GetButler()->GetImage( "gfx/treelogo.png" ) );
 
     const int w = Tree::GetWindowWidth();
