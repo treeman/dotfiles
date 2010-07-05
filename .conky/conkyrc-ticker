@@ -1,0 +1,33 @@
+#settings
+update_interval 1
+total_run_times 0
+background 0
+
+double_buffer yes
+no_buffers yes
+
+#text settings
+use_xft yes
+xftfont Liberation Sans:size=8
+override_utf8_locale yes
+text_buffer_size 8192
+
+#window
+#own_window_class Conky_Stuff
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+alignment top_middle
+maximum_width 500
+gap_y 35
+gap_x 5
+
+#graphics
+draw_shades no
+
+lua_load /home/tree/.conky/ticker.lua
+
+TEXT
+${lua_parse ticker}

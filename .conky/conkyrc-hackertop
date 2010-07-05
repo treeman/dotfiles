@@ -1,0 +1,35 @@
+#settings
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+background 0
+
+double_buffer yes
+no_buffers yes
+
+#text settings
+use_xft yes
+xftfont Liberation Sans:size=8
+override_utf8_locale yes
+text_buffer_size 2048
+
+#window
+own_window_class Conky
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+alignment bottom_left
+gap_y 5
+gap_x 5
+maximum_width 450
+
+#graphics
+draw_shades no
+
+lua_load /home/tree/.conky/hackertop.lua
+
+TEXT
+${lua_parse hacker_top 5}

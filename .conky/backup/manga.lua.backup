@@ -1,0 +1,116 @@
+dofile("/home/tree/.conky/colors.lua")
+
+onemangas = {
+    "http://www.onemanga.com/One_Piece/",
+    "http://www.onemanga.com/Hajime_no_Ippo/",
+    "http://www.onemanga.com/Naruto/",
+}
+
+mangastreams = {
+    "One Piece",
+    "Naruto",
+}
+
+function conky_manga ()
+    time = os.date("*t")
+    update = time.hour..":"..time.min
+    --str = "${color1}manga ticker at "..update.."\n"
+    str = ""
+
+    infos = {}
+
+    for k, site in pairs(onemangas) do
+        big_site = conky_parse("${curl "..site.."}")
+        if big_site ~= "" then
+            table.insert(infos, extract_onemanga_details(big_site))
+        end
+    end
+
+    mangastream = conky_parse("${curl http://mangastream.com/manga}")
+    if mangastream ~= "" then
+        for k, manga in pairs(mangastreams) do
+            table.insert(infos, extract_mangastream_details(mangastream, manga))
+        end
+    end
+
+    table.sort(infos, function (a,b) return a.time > b.time end)
+
+    curr_time = ""
+    checked_mangas = {}
+    for k, info in pairs(infos) do
+        if not checked_mangas[info.manga] then
+            if info.time ~= curr_time or curr_time == "" then
+                curr_time = info.time
+                str = str .. format_time(curr_time).."\n"
+            end
+            str = str .. format_details(info).."\n"
+            checked_mangas[info.manga] = true
+        end
+    end
+
+    if table.maxn(checked_mangas) > 0 then
+        conky_set_update(interval(15*60))
+    end
+
+    return string.sub(str,0, string.len(str)-1)
+end
+
+function extract_onemanga_details(site)
+    latest = string.match(site, "<tr class=\"bg01\">(.-)</tr>")
+
+    d = {}
+    d.domain = "onemanga"
+    d.manga = string.match(site, "<h1>%s*(.-)%s*Manga.-</h1>")
+    link, d.chapter = string.match(latest, "<a href=\"(.-)\">.-(%d-)</a>")
+    d.link = "http://www." .. d.domain .. link
+    d.scans = string.match(latest, "<td class=\"ch%-scans%-by\">(.-)</td>")
+
+    date_str = string.match(latest, "<td class=\"ch%-date\">(.-)</td>")
+    date = {}
+    date.month, date.day, date.year = string.match(date_str, "(...).-(%d+).-(%d%d%d%d)")
+    date.month = rev_months[date.month]
+    d.time = os.time(date)
+
+    return d
+end
+
+function extract_mangastream_details(site, manga)
+    section = string.match(site, "<th style=\"width:80%%\">"..manga.."</th>(.-)<th style=\"width:80%%\">")
+    latest = string.match(section, "<tr>(.-)</tr>")
+    d = {}
+    d.domain = "mangastream"
+    d.manga = manga
+    link, d.chapter = string.match(latest, "<a href=\"(.-)\">%s*(%d+).-</a>")
+    d.link = "http://www.".. d.domain .. link
+    d.scans = ""
+
+    date_str = string.match(latest, "<em>(.-)</em>")
+    date = {}
+    date.month, date.day, date.year = string.match(date_str, "(...).-(%d+).-(%d%d%d%d)")
+    date.month = rev_months[date.month]
+    d.time = os.time(date)
+
+    return d
+end
+
+function format_details(info)
+    date = os.date("*t", info.time)
+    nice_date = months[date.month].." "..date.day..", "..date.year
+    --return "${color2}"..nice_date.."${color1}\n"
+    --..info.manga.." "..info.chapter.." - "..info.domain
+    return l_color()..info.manga.." "..info.chapter.." - "..info.domain
+end
+
+function format_time(time)
+    date = os.date("*t", time)
+    return h_color()..months[date.month].." "..date.day..", "..date.year
+end
+
+months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+    "Sep", "Okt", "Nov", "Dec", }
+
+rev_months = {}
+for i,v in ipairs(months) do
+    rev_months[v] = i
+end
+

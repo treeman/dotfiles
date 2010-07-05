@@ -1,0 +1,88 @@
+#settings
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+background 0
+
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+
+#text settings
+use_xft yes
+xftfont Liberation Sans:size=8
+override_utf8_locale yes
+text_buffer_size 2048
+
+#window
+own_window_class Conky
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+alignment top_right
+gap_x 20
+gap_y 100
+minimum_size 182 0
+maximum_width 182
+
+default_bar_size 60 8
+
+#graphics
+draw_shades no
+
+default_color D8D8D8
+
+TEXT
+UpTime: ${alignr}$uptime
+Kernel: ${alignr}$kernel $machine
+
+${color light blue}CPU1:${color light grey} ${alignc}${cpu cpu1}% ${alignr}${acpitemp}C
+${color light blue}CPU2:${color light grey} ${alignc}${cpu cpu2}% ${alignr}${acpitemp}C
+${alignc}${cpugraph 15,180 000000 000000}
+${color light blue}Processes:${alignr}${color light grey}$processes
+${color light blue}Running:${alignr}${color light grey}$running_processes
+
+${color light blue}Highest CPU:
+${color red}  ${top name 1}${alignr}${top cpu 1}
+${color light grey}  ${top name 2}${alignr}${top cpu 2}
+${color light grey}  ${top name 3}${alignr}${top cpu 3}
+
+${color light blue}Highest MEM:
+${color red}  ${top_mem name 1}${alignr}${top_mem mem 1}
+${color light grey}  ${top_mem name 2}${alignr}${top_mem mem 2}
+${color light grey}  ${top_mem name 3}${alignr}${top_mem mem 3}
+
+${color light blue}MEM:${color light grey}${alignc}$memperc% ${alignr}$mem/$memmax
+${membar 3,180}
+${color light blue}SWAP:${color light grey}${alignc}$swapperc% ${alignr}$swap/$swapmax
+${swapbar 3,180}
+
+#chunk-o-network
+${if_match "${addrs eth0}" != "0.0.0.0"}${if_match "${addrs wlan0}" != "0.0.0.0"}${color light blue}ETH: ${alignr}${color light grey}${addr eth0}
+${color light blue}WLAN: ${alignr}${color light grey}${addr wlan0}
+${color light blue}EXT: ${alignr}${color light grey}${execi 3600 wget -O - www.whatismyip.com/automation/n09230945.asp | tail}${endif}${endif}${if_match "${addrs eth0}" != "0.0.0.0"}${if_match "${addrs wlan0}" == "0.0.0.0"}${color light blue}ETH: ${alignr}${color light grey}${addr eth0}
+${color light blue}EXT: ${alignr}${color light grey}${execi 3600 wget -O - www.whatismyip.com/automation/n09230945.asp | tail}${endif}${endif}${if_match "${addrs eth0}" == "0.0.0.0"}${if_match "${addrs wlan0}" != "0.0.0.0"}${color light blue}WLAN: ${alignr}${color light grey}${addr wlan0}
+${color light blue}EXT: ${alignr}${color light grey}${execi 3600 wget -O - www.whatismyip.com/automation/n09230945.asp | tail}${endif}${endif}${if_match "${addrs eth0}" == "0.0.0.0"}${if_match "${addrs wlan0}" == "0.0.0.0"}${color light blue}NET: ${alignr}${color light grey}Not Connected${endif}${endif}
+
+${if_match "${addrs eth0}" != "0.0.0.0"}${if_match "${addrs wlan0}" != "0.0.0.0"}${color light blue}UP: ${alignr}${color light grey}${upspeed eth0}
+${alignc}${upspeedgraph eth0 15,180 -l}
+${color light blue}DOWN: ${alignr}${color light grey}${downspeed eth0}
+${alignc}${downspeedgraph eth0 15,180 -l}${endif}${endif}${if_match "${addrs eth0}" != "0.0.0.0"}${if_match "${addrs wlan0}" == "0.0.0.0"}${color light blue}UP: ${alignr}${color light grey}${upspeed eth0}
+${alignc}${upspeedgraph eth0 15,180 -l}
+${color light blue}DOWN: ${alignr}${color light grey}${downspeed eth0}
+${alignc}${downspeedgraph eth0 15,180 -l}${endif}${endif}${if_match "${addrs eth0}" == "0.0.0.0"}${if_match "${addrs wlan0}" != "0.0.0.0"}${color light blue}UP: ${alignr}${color light grey}${upspeed wlan0}
+${alignc}${upspeedgraph wlan0 15,180 -l}
+${color light blue}DOWN: ${alignr}${color light grey}${downspeed wlan0}
+${alignc}${downspeedgraph wlan0 15,180 -l}${endif}${endif}${if_match "${addrs eth0}" == "0.0.0.0"}${if_match "${addrs wlan0}" == "0.0.0.0"}${color light blue}UP: ${alignr}${color light grey}${upspeed eth0}
+${alignc}${upspeedgraph eth0 15,180 -l}
+${color light blue}DOWN: ${alignr}${color light grey}${downspeed eth0}
+${alignc}${downspeedgraph eth0 15,180 -l}${endif}${endif}
+
+${color light blue}ROOT:${alignr}${color light grey}${fs_free /}/${fs_size /}
+${fs_bar 3,180 /}
+${color light blue}HOME:${alignr}${color light grey}${fs_free /home}/${fs_size /home}
+${fs_bar 3,180 /home}
+

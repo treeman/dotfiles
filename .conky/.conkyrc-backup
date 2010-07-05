@@ -1,0 +1,138 @@
+######################
+# - Conky settings - #
+######################
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+background 0
+
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+
+#####################
+# - Text settings - #
+#####################
+use_xft yes
+xftfont Liberation Sans:size=8
+override_utf8_locale yes
+text_buffer_size 2048
+
+#############################
+# - Window specifications - #
+#############################
+own_window_class Conky
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+alignment top_right
+gap_x 20
+gap_y 0
+minimum_size 182 0
+maximum_width 182
+
+default_bar_size 60 8
+
+#########################
+# - Graphics settings - #
+#########################
+draw_shades no
+
+default_color D8D8D8
+
+color0 E6E6E6
+color1 709937
+color2 E6E6E6
+
+TEXT
+ 				  ${color1}${font OpenLogos:size=72}q${font}${color}
+${font Liberation Sans:style=Bold:size=8}SYSTEM $stippled_hr${font}
+##############
+# - SYSTEM - #
+##############
+${color0}${voffset 6}${font OpenLogos:size=19}E${font}${color}${goto 32}${voffset -14}Kernel:  ${alignr}${color2}${kernel}${color}
+${goto 32}Uptime: ${alignr}${color2}${uptime}${color}
+# |--GMAIL
+#${goto 32}Gmail: ${alignr}${font Liberation Sans:style=Bold:size=8}${color0}${execpi 3600 ~/.conkycolors/bin/conkyEmail --servertype=IMAP --servername=imap.googlemail.com -u user -p pass --ssl}${color}${font} New email(s)
+# |--CPU
+${offset 1}${color0}${font Poky:size=16}P${font}${offset -19}${voffset 9}${cpubar cpu0 4,18}${color}${voffset -16}${goto 32}CPU1: ${font Liberation Sans:style=Bold:size=8}${color1}${cpu cpu1}%${color}${font} ${alignr}${color2}${cpugraph cpu1 8,60 CD646B F56F6E}${color}
+${goto 32}CPU2: ${font Liberation Sans:style=Bold:size=8}${color1}${cpu cpu2}%${color}${font} ${alignr}${color2}${cpugraph cpu2 8,60 CD646B F56F6E}${color}
+# |--MEM
+${color0}${font Poky:size=16}M${font}${color}${goto 32}${voffset -7}RAM: ${font Liberation Sans:style=Bold:size=8}${color1}$memperc%${color}${font}
+${offset 1}${voffset 2}${color0}${membar 4,18}${color}${goto 32}${voffset -2}F: ${color2}${memeasyfree}${color} U: ${color2}${mem}${color}
+# |--CPU
+${voffset 2}${color0}${font Poky:size=14}s${font}${color}${voffset -8}${goto 32}SWAP: ${font Liberation Sans:style=Bold:size=8}${color1}${swapperc}%${color}${font}
+${voffset 4}${offset 1}${color2}${swapbar 4,18}${color}${voffset -4}${goto 32}F: ${color2}$swapmax${color} U: ${color2}$swap${color}
+# |--PROC
+${voffset 2}${color0}${font Poky:size=15}a${font}${color}${goto 32}${voffset -10}Processes: ${color2}${alignr 13}CPU${alignr}RAM${color}
+${voffset -1}${goto 42}${color2}${top name 1}${color}${font Liberation Sans:style=Bold:size=8}${color1} ${goto 124}${top cpu 1}${alignr }${top mem 1}${color}${font}
+${voffset -1}${goto 42}${color2}${top name 2}${color}${font Liberation Sans:style=Bold:size=8}${color1} ${goto 124}${top cpu 2}${alignr }${top mem 2}${color}${font}
+${voffset -1}${goto 42}${color2}${top name 3}${color}${font Liberation Sans:style=Bold:size=8}${color1} ${goto 124}${top cpu 3}${alignr }${top mem 3}${color}${font}
+${voffset -1}${goto 42}${color2}${top name 4}${color}${font Liberation Sans:style=Bold:size=8}${color1} ${goto 124}${top cpu 4}${alignr }${top mem 4}${color}${font}
+#############
+# - CLOCK - #
+#############
+${voffset 4}${font Liberation Sans:style=Bold:size=8}DATE $stippled_hr${font}
+#${voffset -10}${alignc 46}${color2}${font Arial Black:size=30}${time %H:%M}${font}${color}
+${alignc}${time %d %B %Y}
+################
+# - CALENDAR - #
+################
+${voffset -2}${color0}${font Poky:size=15}d${font}${color}${voffset -8}${font Liberation Mono:size=8}${execpi 10800 DJS=`date +%-d`; cal | sed 's/^/${goto 32} /' | sed '1d' | sed s/" $DJS "/" "'${font Liberation Mono:style=bold:size=8}${color1}'"$DJS"'${color}${font}${font Liberation Mono:size=8}'" "/}${font}${font}${voffset -14}
+
+#################
+# - AUDACIOUS - #
+#################
+#${voffset 4}${font Liberation Sans:style=Bold:size=8}MUSIC $stippled_hr${font}
+#${voffset 4}${font Webdings:size=14}U${font}  ${exec audtool current-song}
+############
+# - TODO - #
+############
+# Create a file called ToDo.txt in your home
+#${voffset 4}${font Liberation Sans:style=Bold:size=8}TO DO $stippled_hr${font}
+#${voffset 4}${execpi 20 cat ~/ToDo.txt | sed -n '1,12p' | sed 's/^/${voffset -6}${color0}${font Poky:size=14}A${font}${color}${voffset -3}${goto 32}/'}
+##############
+# - NVIDIA - #
+##############
+#${voffset 4}${font Liberation Sans:style=Bold:size=8}NVIDIA $stippled_hr${font}
+#${color0}${voffset -4}${font Poky:size=17}N${font}${color}${goto 32}${voffset -8}GPU Temp:${alignr}${font Liberation Sans:style=Bold:size=8}${color1} ${exec nvidia-settings -q GPUCoreTemp | grep Attribute | cut -d ' ' -f 6 | cut -c 1-2}${font}${color}°C
+#${goto 32}GPU Clock:${alignr}${font Liberation Sans:style=Bold:size=8}${color1} ${exec nvidia-settings -q GPU2DClockFreqs -t}${font}${color} MHz
+#${goto 32}Video RAM:${alignr}${font Liberation Sans:style=Bold:size=8}${color1} ${exec nvidia-settings -q VideoRam -t}${font}${color} KiB
+#${goto 32}Driver Version:${alignr}${font Liberation Sans:style=Bold:size=8}${color1} ${exec nvidia-settings -q NvidiaDriverVersion -t}${font}${color}
+##########
+# - HD - #
+##########
+#${voffset 4}${font Liberation Sans:style=Bold:size=8}HD $stippled_hr${font}
+#${execpi 30 ~/.conkycolors/bin/conkyHD1}
+###############
+# - NETWORK - #
+###############
+${voffset 4}${font Liberation Sans:style=Bold:size=8}NETWORK $stippled_hr${font}
+# |--WLAN0
+${if_up wlan0}
+${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}Up: ${font Liberation Sans:style=Bold:size=8}${color1}${upspeed wlan0}${color}${font} ${alignr}${color2}${upspeedgraph wlan0 8,60 CD646B F56F6E}${color}
+${goto 32}Total: ${color2}${totalup wlan0}${color}
+${voffset -2}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -6}Down: ${font Liberation Sans:style=Bold:size=8}${color1}${downspeed wlan0}${color}${font} ${alignr}${color2}${downspeedgraph wlan0 8,60 CD646B F56F6E}${color}
+${goto 32}Total: ${color2}${totaldown wlan0}${color}
+${voffset -2}${color0}${font Poky:size=14}Y${font}${color}${goto 32} ${voffset -2}Signal: ${font Liberation Sans:style=Bold:size=8}${color1}${wireless_link_qual wlan0}%${color}${font} ${alignr}${color2}${wireless_link_bar 8,60 wlan0}${color}
+${voffset 4}${color0}${font Poky:size=13}w${font}${color}${goto 32}${voffset -8}Local IP: ${alignr}${color2}${addr wlan0}${color}
+${goto 32}Public IP: ${alignr}${color2}${execi 10800 ~/.conkycolors/bin/conkyIp}${color}
+# |--ETH0
+${else}${if_up eth0}
+${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}Up: ${font Liberation Sans:style=Bold:size=8}${color1}${upspeed eth0}${color}${font} ${alignr}${color2}${upspeedgraph eth0 8,60 CD646B F56F6E}${color}
+${goto 32}Total: ${color2}${totalup eth0}${color}
+${voffset -2}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -6}Down: ${font Liberation Sans:style=Bold:size=8}${color1}${downspeed eth0}${color}${font} ${alignr}${color2}${downspeedgraph eth0 8,60 CD646B F56F6E}${color}
+${goto 32}Total: ${color2}${totaldown eth0}${color}
+${voffset -2}${color0}${font Poky:size=13}w${font}${color}${goto 32}${voffset -4}Local IP: ${alignr}${color2}${addr eth0}${color}
+${goto 32}Public IP: ${alignr}${color2}${execi 10800 ~/.conkycolors/bin/conkyIp}${color}
+# |--PPP0
+${endif}${else}${if_up ppp0}
+${voffset -13}${color0}${font VariShapes Solid:size=14}q${font}${color}${goto 32}${voffset -6}Up: ${font Liberation Sans:style=Bold:size=8}${color1}${upspeed ppp0}${color}${font} ${alignr}${color2}${upspeedgraph ppp0 8,60 CD646B F56F6E}${color}
+${goto 32}Total: ${color2}${totalup ppp0}${color}
+${voffset -2}${color0}${font VariShapes Solid:size=14}Q${font}${color}${goto 32}${voffset -6}Down: ${font Liberation Sans:style=Bold:size=8}${color1}${downspeed ppp0}${color}${font} ${alignr}${color2}${downspeedgraph ppp0 8,60 CD646B F56F6E}${color}
+${goto 32}Total: ${color2}${totaldown ppp0}${color}
+${voffset -2}${color0}${font Poky:size=13}w${font}${color}${goto 32}${voffset -4}Local IP: ${alignr}${color2}${addr ppp0}${color}
+${endif}${else}${voffset 4}${color0}${font PizzaDude Bullets:size=12}4${font}${color}${goto 32}Network Unavailable${endif}${endif}
