@@ -71,8 +71,10 @@ set ibind = @mode_bind insert
 set cbind = @mode_bind command
 set ebind = @mode_bind global,-insert
 
-# Mouse middle click will open new tab
-@bind <Button2> = sh 'if [ "\@SELECTED_URI" ]; then echo "event NEW_TAB \@SELECTED_URI" > $4; fi'
+# Mouse events
+@bind  <Button2>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event NEW_TAB \@SELECTED_URI" > $4; fi'
+@bind  <Button8>    = sh 'if [ "\@SELECTED_URI" ]; then echo -n \@SELECTED_URI | xclip -selection clipboard; fi'
+@bind  <Button9>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event INJECT_KEYCMD \@SELECTED_URI" > $4; fi'
 
 # Command editing binds
 @ebind <Return>     = event KEYCMD_EXEC_CURRENT
@@ -81,6 +83,11 @@ set ebind = @mode_bind global,-insert
 @ebind <BackSpace>  = event KEYCMD_BACKSPACE
 @ebind <Delete>     = event KEYCMD_DELETE
 @ebind <Tab>        = event START_COMPLETION
+
+@ebind <Ctrl>iu     = event INJECT_KEYCMD \@uri
+@ebind <Ctrl>it     = event INJECT_KEYCMD \@title
+@ebind <Ctrl>au     = event APPEND_KEYCMD \@uri
+@ebind <Ctrl>at     = event APPEND_KEYCMD \@title
 
 # Enter any command at runtime by prefixing a colon
 @cbind :_ = %s
@@ -111,8 +118,8 @@ set ebind = @mode_bind global,-insert
 
 # Appearance
 @cbind as   = toggle_status
-@cbind at   = sh "if [ \@show_tablist == 0 ]; then echo set show_tablist = 1 > $4; fi; if [ \@show_tablist == 1 ]; then echo set show_tablist = 0 > $4; fi;"
-@cbind aa   = sh "if [ \@show_tablist == 0 ]; then echo set show_tablist = 1 > $4; fi; if [ \@show_tablist == 1 ]; then echo set show_tablist = 0 > $4; fi; echo toggle_status > $4"
+@cbind at   = sh "if [ \@show_tablist == 0 ]; then echo set show_tablist = 1 > $4; else echo set show_tablist = 0 > $4; fi;"
+@cbind aa   = sh "if [ \@show_tablist == 0 ]; then echo set show_tablist = 1 > $4; else echo set show_tablist = 0 > $4; fi; echo toggle_status > $4"
 
 @cbind 1    = set zoom_level = 1.0
 @cbind 2    = set zoom_level = 1.2
@@ -144,7 +151,8 @@ set ebind = @mode_bind global,-insert
 
 # Vimperator style link following
 set javascript_windows = 1
-set follow_hint_keys = 0123456789
+# set follow_hint_keys = 0123456789
+set follow_hint_keys = qwertasdfg12345
 
 @cbind fl* = script @scripts_dir/follow.js '@follow_hint_keys %s'
 # Open link in new tab
@@ -179,16 +187,25 @@ set follow_hint_keys = 0123456789
 @cbind br           = set uri = https://www.google.com/reader
 @cbind btl          = set uri = http://teamliquid.net
 @cbind bm           = set uri = http://madeoftree.net
-@cbind bs           = set uri = http://www.linuxquestions.org/questions/search.php?f=14
+@cbind bs           = set uri = http://www.linuxquestions.org/questions/slackware-14/
 @cbind bvas         = set uri = http://viperassassinsquad.freeforums.org/
 @cbind bG           = set uri = http://github.com
+
+# Yank & Paste
+@cbind yu           = sh 'echo -n $6 | xclip -selection clipboard'
+@cbind yt           = sh 'echo -n $7 | xclip -selection clipboard'
+
+@cbind pc           = sh 'echo "event INJECT_KEYCMD `xclip -o -selection clipboard | sed s/\\\@/%40/g`" > $4'
+@cbind pp           = sh 'echo "event INJECT_KEYCMD `xclip -o -primary   clipboard | sed s/\\\@/%40/g`" > $4'
+@cbind ps           = sh 'echo "event INJECT_KEYCMD `xclip -o -secondary clipboard | sed s/\\\@/%40/g`" > $4'
+
+@ebind <Meta>V      = sh 'echo "event INJECT_KEYCMD `xclip -o -selection clipboard | sed s/\\\@/%40/g`" > $4'
 
 # Mode switching
 @bind <Escape>      = event ESCAPE
 
 @cbind I            = @set_mode insert
 @cbind i            = @toggle_modes command insert
-@bind <Ctrl>i       = @toggle_modes command insert
 
 @bind <Meta>Q       = exit
 
@@ -196,9 +213,12 @@ set follow_hint_keys = 0123456789
 @cbind !dump    = sh "echo dump_config > $4"
 @cbind !reload  = sh "sed '/^# === Post-load misc commands/,$d' $1 | grep '^set ' > $4"
 
+@cbind vs       = sh 'uzbl-browser -u \@uri -c /home/tree/.uzbl/config-viewsource'
+
 # --- Appearance ---
 
-set show_status = 1
+# set show_status = 1
+sh 'if [ \@show_status == 0 ]; then echo "set show_status = 0" > $4; else echo "set show_status = 1" > $4; fi'
 set status_background = #303030
 set status_top = 0
 
@@ -231,6 +251,6 @@ set title_format_short  = \@TITLE - Uzbl
 set switch_to_new_tabs  = 0
 set multiline_tabs      = 0
 set max_title_len       = 10
-set show_tablist        = 1
+sh 'if [ \@show_tablist == 1 ]; then echo "set show_tablist = 1" > $4; fi'
 
 set uri = http://news.ycombinator.net

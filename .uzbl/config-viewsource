@@ -1,0 +1,3 @@
+include /home/tree/.uzbl/config
+
+set view_source = 1

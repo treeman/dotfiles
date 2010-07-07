@@ -121,7 +121,7 @@ ${endif}${endif}
 
 ${color2}/${alignr}${color1}${fs_free /}/${fs_size /}
 ${fs_bar 3,180 /}
-${color2}/home${alignr}${color1}${fs_free /home}/${fs_size /home}
-${fs_bar 3,180 /home}
+${color2}~${alignr}${color1}${fs_free /home/tree}/${fs_size /home/tree}
+${fs_bar 3,180 /home/tree}
 ${color2}/mnt/win${alignr}${color1}${fs_free /mnt/win}/${fs_size /mnt/win}
 ${fs_bar 3,180 /mnt/win}
