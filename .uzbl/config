@@ -77,7 +77,7 @@ set ebind = @mode_bind global,-insert
 # Command editing binds
 @ebind <Return>     = event KEYCMD_EXEC_CURRENT
 @ebind <Left>       = event SET_CURSOR_POS -
-@ebind <Right       = event SET_CURSOR_POS +
+@ebind <Right>      = event SET_CURSOR_POS +
 @ebind <BackSpace>  = event KEYCMD_BACKSPACE
 @ebind <Delete>     = event KEYCMD_DELETE
 @ebind <Tab>        = event START_COMPLETION
@@ -110,7 +110,10 @@ set ebind = @mode_bind global,-insert
 @cbind L    = forward
 
 # Appearance
-@cbind z    = toggle_status
+@cbind as   = toggle_status
+@cbind at   = sh "if [ \@show_tablist == 0 ]; then echo set show_tablist = 1 > $4; fi; if [ \@show_tablist == 1 ]; then echo set show_tablist = 0 > $4; fi;"
+@cbind aa   = sh "if [ \@show_tablist == 0 ]; then echo set show_tablist = 1 > $4; fi; if [ \@show_tablist == 1 ]; then echo set show_tablist = 0 > $4; fi; echo toggle_status > $4"
+
 @cbind 1    = set zoom_level = 1.0
 @cbind 2    = set zoom_level = 1.2
 @cbind zi   = zoom_in
@@ -152,35 +155,33 @@ set follow_hint_keys = 0123456789
 @cbind to<uri:>_        = event NEW_TAB %s
 @cbind tO<uri:\@uri>_   = event NEW_TAB %s
 
-@cbind tq           = exit
-@cbind tQ           = event CLEAN_TABS
+@cbind tq               = exit
+@cbind tQ               = event CLEAN_TABS
 
-@cbind tt           = event NEXT_TAB
-@cbind tT           = event PREV_TAB
-@cbind <Ctrl><Tab>  = event NEXT_TAB
-@cbind <Meta><Tab>  = event PREV_TAB
-@cbind ti<index:>_  = event GOTO_TAB %s
+@cbind tt               = event NEXT_TAB
+@cbind tT               = event PREV_TAB
+@cbind ti<index:>_      = event GOTO_TAB %s
 
 # Article queue
 @cbind qpu          = spawn @scripts_dir/article_queue.py push
 @cbind qpo          = spawn @scripts_dir/article_queue.py pop
 @cbind qp _         = spawn @scripts_dir/article_queue.py pop %s
 @cbind qap          = spawn @scripts_dir/article_queue.py append
-@cbind qsh          = spawn @scripts_dir/article_queue.py shift
+@cbind qs           = spawn @scripts_dir/article_queue.py shift
 @cbind qn           = spawn @scripts_dir/article_queue.py forward
 @cbind qN           = spawn @scripts_dir/article_queue.py back
 @cbind ql           = spawn @scripts_dir/article_queue.py list
 
 # Bookmarks
-@cbind by       = set uri = http://news.ycombinator.net
-@cbind bg       = set uri = https://gmail.com
-@cbind bc       = set uri = https://www.google.com/calendar
-@cbind br       = set uri = https://www.google.com/reader
-@cbind btl      = set uri = http://teamliquid.net
-@cbind bm       = set uri = http://madeoftree.net
-@cbind bs       = set uri = http://www.linuxquestions.org/questions/search.php?f=14
-@cbind bvas     = set uri = http://viperassassinsquad.freeforums.org/
-@cbind bG       = set uri = http://github.com
+@cbind by           = set uri = http://news.ycombinator.net
+@cbind bg           = set uri = https://gmail.com
+@cbind bc           = set uri = https://www.google.com/calendar
+@cbind br           = set uri = https://www.google.com/reader
+@cbind btl          = set uri = http://teamliquid.net
+@cbind bm           = set uri = http://madeoftree.net
+@cbind bs           = set uri = http://www.linuxquestions.org/questions/search.php?f=14
+@cbind bvas         = set uri = http://viperassassinsquad.freeforums.org/
+@cbind bG           = set uri = http://github.com
 
 # Mode switching
 @bind <Escape>      = event ESCAPE
@@ -230,5 +231,6 @@ set title_format_short  = \@TITLE - Uzbl
 set switch_to_new_tabs  = 0
 set multiline_tabs      = 0
 set max_title_len       = 10
+set show_tablist        = 1
 
 set uri = http://news.ycombinator.net
