@@ -32,9 +32,9 @@ set cookie_handler      = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_sock
 @on_event LOAD_START    @set_mode
 
 # Status
-@on_event LOAD_START    @set_status <span foreground="red">wait</span>
-@on_event LOAD_COMMIT   @set_status <span foreground="green">recv</span>
-@on_event LOAD_FINISH   @set_status <span foreground="gold">done</span>
+@on_event LOAD_START    set progress_color = "red"
+@on_event LOAD_COMMIT   set progress_color = "green"
+@on_event LOAD_FINISH   set progress_color = "gold"
 
 # Switch to insert if we click on form, else switch to command
 @on_event FORM_ACTIVE   @set_mode insert
@@ -72,7 +72,7 @@ set cbind = @mode_bind command
 set ebind = @mode_bind global,-insert
 
 # Mouse events
-@bind  <Button2>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event NEW_TAB \@SELECTED_URI" > $4; fi'
+@bind  <Button2>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event NEW_TAB_NEXT \@SELECTED_URI" > $4; fi'
 @bind  <Button8>    = sh 'if [ "\@SELECTED_URI" ]; then echo -n \@SELECTED_URI | xclip -selection clipboard; fi'
 @bind  <Button9>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event INJECT_KEYCMD \@SELECTED_URI" > $4; fi'
 
@@ -159,7 +159,7 @@ set follow_hint_keys = qwertasdfg12345
 @cbind tl* = script @scripts_dir/follownew.js '@follow_hint_keys %s'
 
 # Tabs
-@cbind tn               = event NEW_TAB
+@cbind tn               = event NEW_TAB_NEXT
 @cbind to<uri:>_        = event NEW_TAB %s
 @cbind tO<uri:\@uri>_   = event NEW_TAB %s
 
@@ -217,40 +217,55 @@ set follow_hint_keys = qwertasdfg12345
 
 # --- Appearance ---
 
-# set show_status = 1
+# Status bars settings
 sh 'if [ \@show_status == 0 ]; then echo "set show_status = 0" > $4; else echo "set show_status = 1" > $4; fi'
-set status_background = #303030
-set status_top = 0
+sh 'if [ \@show_tablist == 1 ]; then echo "set show_tablist = 1" > $4; fi'
 
+set status_top          = 0
+set switch_to_new_tabs  = 0
+set multiline_tabs      = 0
+set max_title_len       = 10
+set new_tab_title       = Loading
+
+# Icon
 set icon = @base_dir/uzbl.png
 set icon_path = @icon
 
+# Styling
+set status_background = #303030
+
+# Tabs
+set tab_colours             = foreground = "#888" background = "#303030"
+set tab_text_colours        = foreground = "#bbb"
+set selected_tab            = foreground = "#fff"
+set selected_tab_text       = foreground = "#99FF66"
+set tab_indicate_https      = 1
+set https_colours           = foreground = "#888"
+set https_text_colours      = foreground = "#9c8e2d"
+set selected_https          = foreground = "#fff"
+set selected_https_text     = foreground = "#fffe0a"
+
+# Statusbar
 set modcmd_style        = weight="bold" foreground="red"
 set keycmd_style        = weight="light" foreground="red"
 set prompt_style        = foreground="grey"
 set cursor_style        = underline="single"
 set completion_style    = foreground="green"
 set hint_style          = weight = "bold"
+set progress_color      = "#fff"
 
 set mode_section      = <span background="khaki" foreground="black">[\@[\@mode_indicator]\@]</span>
 set keycmd_section    = [<span \@prompt_style>\@[\@keycmd_prompt]\@</span><span \@modcmd_style>\@modcmd</span><span \@keycmd_style>\@keycmd</span><span \@completion_style>\@completion_list</span>]
-set progress_section  = <span foreground="#606060">\@[\@progress_format]\@</span>
-set scroll_section    = <span foreground="#606060">\@[\@scroll_message]\@</span>
+set progress_section  = <span foreground=\@progress_color>\@[\@progress_format]\@</span>
 set uri_section       = <span foreground="#99FF66">\@[\@uri]\@</span>
-set status_section    = <span foreground="orange">\@status_message</span>
-set selected_section  = <span foreground="#606060">\@[\@SELECTED_URI]\@</span>
+set selected_section  = <span foreground="#fffe0a">\@[\@SELECTED_URI]\@</span>
 
-set status_format     = <span font_family="monospace">@mode_section @keycmd_section @progress_section @uri_section @selected_section @scroll_section</span>
+set status_format     = <span font_family="monospace">@mode_section @keycmd_section @progress_section @uri_section @selected_section</span>
 
+# Title format
 set title_format_long   = \@keycmd_prompt \@raw_modcmd \@raw_keycmd \@TITLE - Uzbl \@SELECTED_URI
 set title_format_short  = \@TITLE - Uzbl
 
 @progress format  = %c
-
-# Tabs
-set switch_to_new_tabs  = 0
-set multiline_tabs      = 0
-set max_title_len       = 10
-sh 'if [ \@show_tablist == 1 ]; then echo "set show_tablist = 1" > $4; fi'
 
 set uri = http://news.ycombinator.net
