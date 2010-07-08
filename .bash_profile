@@ -1,1 +1,3 @@
-PATH=$PATH:~/etc:~/rakudo:/usr/sbin
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi
