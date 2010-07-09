@@ -22,7 +22,8 @@ set set_status      = set status_message =
 set shell_cmd       = sh -c
 
 set base_dir = /home/tree/.uzbl
-set scripts_dir = @base_dir/scripts
+set data_dir = @base_dir/data
+set scripts_dir = @base_dir/scripts:/usr/local/share/uzbl/examples/data/:
 
 # --- Event handling ---
 
@@ -236,7 +237,7 @@ set max_title_len       = 10
 set new_tab_title       = Loading
 
 # Icon
-set icon = @base_dir/uzbl.png
+set icon = @data_dir/uzbl.png
 set icon_path = @icon
 
 # Styling

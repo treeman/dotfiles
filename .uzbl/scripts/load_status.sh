@@ -1,6 +1,6 @@
 #!/bin/sh
 
-file=$HOME/.uzbl/status
+file=$HOME/.uzbl/data/status
 fifo=$4
 
 if [ -r $file ]; then

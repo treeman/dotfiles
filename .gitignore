@@ -62,14 +62,10 @@ RevengeOfTheTitans*
 *~
 .uzbl/history
 .uzbl/plugins
-.uzbl/style.css
-.uzbl/status
 *.png
 .uzbl/*-example
-.uzbl/uzbl_config
-.uzbl/bookmarks
-.uzbl/article_queue
 .uzbl/dforms
+.uzbl/data
 slackware
 stuff
 .screenrc
