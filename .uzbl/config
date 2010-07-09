@@ -64,6 +64,8 @@ set cookie_handler      = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_sock
 @ignore_key <ISO_*>
 @ignore_key <Shift>
 @ignore_key <dead_*>
+@ignore_key <(null)>
+@ignore_key <XF*>
 
 # Different binding styles
 set bind  = @mode_bind global
@@ -76,7 +78,7 @@ set ebind = @mode_bind global,-insert
 @bind  <Button8>    = sh 'if [ "\@SELECTED_URI" ]; then echo -n \@SELECTED_URI | xclip -selection clipboard; fi'
 @bind  <Button9>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event INJECT_KEYCMD \@SELECTED_URI" > $4; fi'
 
-# Command editing binds
+# Command edi(ting binds
 @ebind <Return>     = event KEYCMD_EXEC_CURRENT
 @ebind <Left>       = event SET_CURSOR_POS -
 @ebind <Right>      = event SET_CURSOR_POS +
@@ -93,21 +95,21 @@ set ebind = @mode_bind global,-insert
 @cbind :_ = %s
 
 # Movement
-@cbind j            = scroll vertical 20
-@cbind k            = scroll vertical -20
+@cbind j            = scroll vertical    20
+@cbind k            = scroll vertical   -20
 @cbind h            = scroll horizontal -20
-@cbind l            = scroll horizontal 20
+@cbind l            = scroll horizontal  20
 
-@cbind <Ctrl>j      = scroll vertical 40
-@cbind <Ctrl>k      = scroll vertical -40
+@cbind <Ctrl>j      = scroll vertical    40
+@cbind <Ctrl>k      = scroll vertical   -40
 @cbind <Ctrl>h      = scroll horizontal -40
-@cbind <Ctrl>l      = scroll horizontal 40
+@cbind <Ctrl>l      = scroll horizontal  40
 
-@cbind <Ctrl>b      = scroll vertical -100%
-@cbind <Ctrl>f      = scroll vertical 100%
+@cbind <Ctrl>b      = scroll vertical   -100%
+@cbind <Ctrl>f      = scroll vertical    100%
 
-@cbind gg           = scroll vertical begin
-@cbind G            = scroll vertical end
+@cbind gg           = scroll vertical    begin
+@cbind G            = scroll vertical    end
 
 # Navigation
 @cbind r    = reload
@@ -117,9 +119,14 @@ set ebind = @mode_bind global,-insert
 @cbind L    = forward
 
 # Appearance
-@cbind as   = toggle_status
-@cbind at   = sh "if [ \@show_tablist == 0 ]; then echo set show_tablist = 1 > $4; else echo set show_tablist = 0 > $4; fi;"
-@cbind aa   = sh "if [ \@show_tablist == 0 ]; then echo set show_tablist = 1 > $4; else echo set show_tablist = 0 > $4; fi; echo toggle_status > $4"
+
+# Toggle tab and status bars respectively and save the state
+@cbind as   = spawn @scripts_dir/toggle_bars.sh 0 1
+@cbind at   = spawn @scripts_dir/toggle_bars.sh 1 0
+@cbind aa   = spawn @scripts_dir/toggle_bars.sh 1 1
+
+# Load state of status bars
+sync_spawn @scripts_dir/load_status.sh
 
 @cbind 1    = set zoom_level = 1.0
 @cbind 2    = set zoom_level = 1.2
@@ -218,8 +225,9 @@ set follow_hint_keys = qwertasdfg12345
 # --- Appearance ---
 
 # Status bars settings
-sh 'if [ \@show_status == 0 ]; then echo "set show_status = 0" > $4; else echo "set show_status = 1" > $4; fi'
-sh 'if [ \@show_tablist == 1 ]; then echo "set show_tablist = 1" > $4; fi'
+#sh 'if [ \@show_status == 1 ]; then echo "set show_status = 1" > $4; fi'
+#sh 'if [ \@show_tablist == 1 ]; then echo "set show_tablist = 1" > $4; fi'
+#sh 'if [ -z "\\@show_tablist" ]; then echo "set show_tablist = 1"; fi; echo "show_tablist = \\@show_tablist"'
 
 set status_top          = 0
 set switch_to_new_tabs  = 0

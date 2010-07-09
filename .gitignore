@@ -62,8 +62,8 @@ RevengeOfTheTitans*
 *~
 .uzbl/history
 .uzbl/plugins
-.uzbl/scripts
 .uzbl/style.css
+.uzbl/status
 *.png
 .uzbl/*-example
 .uzbl/uzbl_config
@@ -76,3 +76,4 @@ stuff
 .workrave
 .xchat2
 .xinitrc
+.wine*
