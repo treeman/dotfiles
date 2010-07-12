@@ -1,3 +1,9 @@
 include /home/tree/.uzbl/config
 
 set view_source = 1
+
+@cbind as = toggle_status
+@cbind at =
+@cbind aa = toggle_status
+
+set show_status = 0

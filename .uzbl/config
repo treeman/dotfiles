@@ -18,7 +18,7 @@ set toggle_modes    = request TOGGLE_MODES
 set progress        = request PROGRESS_CONFIG
 
 set set_mode        = set mode =
-set set_status      = set status_message =
+set set_status      = set status =
 set shell_cmd       = sh -c
 
 set base_dir = /home/tree/.uzbl
@@ -48,6 +48,11 @@ set cookie_handler      = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_sock
 @on_event DOWNLOAD_REQUEST  spawn @scripts_dir/download.sh %s \@proxy_url
 
 @on_event ESCAPE set mode =
+
+# Error handling
+@on_event LOAD_START set error =
+@on_event LOAD_ERROR sh 'echo set error = %s > $4'
+@on_event LOAD_ERROR sh 'echo %s'
 
 # --- Keymappings ---
 
@@ -99,7 +104,7 @@ set ebind = @mode_bind global,-insert
 @cbind j            = scroll vertical 20
 @cbind k            = scroll vertical -20
 @cbind h            = scroll horizontal -20
-@cbind l            = scroll horizontal  20
+@cbind l            = scroll horizontal 20
 
 @cbind <Ctrl>j      = scroll vertical 40
 @cbind <Ctrl>k      = scroll vertical -40
@@ -152,6 +157,7 @@ sync_spawn @scripts_dir/load_status.sh
 @cbind sG<Github:>_         = uri http://github.com/search?q=\@<encodeURIComponent(%r)>\@&type=Everything&repo=&langOverride=&start_value=1
 @cbind si<Imdb:>_           = uri http://www.imdb.com/find?s=all&q=\@<encodeURIComponent(%r)>\@
 @cbind ssb<SlackBuild:>_    = uri http://slackbuilds.org/result/?search=\@<encodeURIComponent(%r)>\@&sv=13.1
+@cbind sW<Wine:>_           = uri http://www.winehq.org/search?cx=partner-pub-0971840239976722%3Aw9sqbcsxtyf&cof=FORID%3A10&ie=UTF-8&q=\@<encodeURIComponent(%r)>\@%21&siteurl=www.winehq.org%2F
 
 # Uri opening
 @cbind o<uri:>_      = uri %s
@@ -198,6 +204,8 @@ set follow_hint_keys = qwertasdfg12345
 @cbind bs           = set uri = http://www.linuxquestions.org/questions/slackware-14/
 @cbind bvas         = set uri = http://viperassassinsquad.freeforums.org/
 @cbind bG           = set uri = http://github.com
+@cbind bu           = set uri = http://www.uzbl.org/readme.php
+@cbind bw           = set uri = http://www.winehq.org/
 
 # Yank & Paste
 @cbind yu           = sh 'echo -n $6 | xclip -selection clipboard'
@@ -262,9 +270,10 @@ set mode_section      = <span background="khaki" foreground="black">[\@[\@mode_i
 set keycmd_section    = [<span \@prompt_style>\@[\@keycmd_prompt]\@</span><span \@modcmd_style>\@modcmd</span><span \@keycmd_style>\@keycmd</span><span \@completion_style>\@completion_list</span>]
 set progress_section  = <span foreground=\@progress_color>\@[\@progress_format]\@</span>
 set uri_section       = <span foreground="#99FF66">\@[\@uri]\@</span>
+set error_section     = <span foreground="red">\@[\@error]\@</span>
 set selected_section  = <span foreground="#fffe0a">\@[\@SELECTED_URI]\@</span>
 
-set status_format     = <span font_family="monospace">@mode_section @keycmd_section @progress_section @uri_section @selected_section</span>
+set status_format     = <span font_family="monospace">@mode_section @keycmd_section @progress_section @uri_section @selected_section @error_section</span>
 
 # Title format
 set title_format_long   = \@keycmd_prompt \@raw_modcmd \@raw_keycmd \@TITLE - Uzbl \@SELECTED_URI

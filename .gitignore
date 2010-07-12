@@ -58,6 +58,8 @@ RevengeOfTheTitans*
 .viminfo
 .vimsize
 .xmonad/*.errors
+.xmonad/*.hi
+.xmonad/*linux
 *.o
 *~
 .uzbl/history
