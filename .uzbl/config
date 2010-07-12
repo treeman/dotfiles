@@ -21,9 +21,9 @@ set set_mode        = set mode =
 set set_status      = set status =
 set shell_cmd       = sh -c
 
-set base_dir = /home/tree/.uzbl
-set data_dir = @base_dir/data
-set scripts_dir = @base_dir/scripts:/usr/local/share/uzbl/examples/data/:
+set base_dir =      /home/tree/.uzbl
+set data_dir =      @base_dir/data
+set scripts_dir =   @base_dir/scripts:/usr/local/share/uzbl/examples/data/:
 
 # --- Event handling ---
 
@@ -47,12 +47,12 @@ set cookie_handler      = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_sock
 
 @on_event DOWNLOAD_REQUEST  spawn @scripts_dir/download.sh %s \@proxy_url
 
-@on_event ESCAPE set mode =
+@on_event ESCAPE        set mode =
 
 # Error handling
-@on_event LOAD_START set error =
-@on_event LOAD_ERROR sh 'echo set error = %s > $4'
-@on_event LOAD_ERROR sh 'echo %s'
+@on_event LOAD_START    set error =
+@on_event LOAD_ERROR    sh 'echo set error = %s > $4'
+@on_event LOAD_ERROR    sh 'echo %s'
 
 # --- Keymappings ---
 
@@ -63,9 +63,9 @@ set cookie_handler      = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_sock
 @modmap <dead_circumflex>   ^
 @modmap <dead_tilde>        ~
 
-@modkey_addition <Shift> <Ctrl>  <Meta>
-@modkey_addition <Shift> <Tab>   <Shift-Tab>
-@modkey_addition <Shift> <Insert <Shift-Insert>
+@modkey_addition <Shift> <Ctrl>     <Meta>
+@modkey_addition <Shift> <Tab>      <Shift-Tab>
+@modkey_addition <Shift> <Insert>   <Shift-Insert>
 
 @ignore_key <ISO_*>
 @ignore_key <Shift>
@@ -132,7 +132,7 @@ set ebind = @mode_bind global,-insert
 @cbind aa   = spawn @scripts_dir/toggle_bars.sh 1 1
 
 # Load state of status bars
-sync_spawn @scripts_dir/load_status.sh
+sync_spawn  @scripts_dir/load_status.sh
 
 @cbind 1    = set zoom_level = 1.0
 @cbind 2    = set zoom_level = 1.2
@@ -164,13 +164,11 @@ sync_spawn @scripts_dir/load_status.sh
 @cbind O<uri:\@uri>_ = uri %s
 
 # Vimperator style link following
-set javascript_windows = 1
-# set follow_hint_keys = 0123456789
-set follow_hint_keys = qwertasdfg12345
+set javascript_windows  = 1
+set follow_hint_keys    = qwertasdfg12345
 
-@cbind fl* = script @scripts_dir/follow.js '@follow_hint_keys %s'
-# Open link in new tab
-@cbind tl* = script @scripts_dir/follownew.js '@follow_hint_keys %s'
+@cbind fl*              = script @scripts_dir/follow.js '@follow_hint_keys %s'
+@cbind tl*              = script @scripts_dir/follownew.js '@follow_hint_keys %s'
 
 # Tabs
 @cbind tn               = event NEW_TAB_NEXT
@@ -216,7 +214,7 @@ set follow_hint_keys = qwertasdfg12345
 @cbind ps           = sh 'echo "event INJECT_KEYCMD `xclip -o -secondary clipboard | sed s/\\\@/%40/g`" > $4'
 
 @ebind <Ctrl>v      = sh 'echo "event INJECT_KEYCMD `xclip -o -selection clipboard | sed s/\\\@/%40/g`" > $4'
-@ebind <Alt>v       = sh 'echo "event INJECT_KEYCMD `xclip -o -primary   clipboard | sed s/\\\@/%40/g`" > $4'
+@ebind <Ctrl><Alt>v = sh 'echo "event INJECT_KEYCMD `xclip -o -primary   clipboard | sed s/\\\@/%40/g`" > $4'
 @ebind <Meta>V      = sh 'echo "event INJECT_KEYCMD `xclip -o -secondary clipboard | sed s/\\\@/%40/g`" > $4'
 
 # Mode switching
@@ -228,10 +226,10 @@ set follow_hint_keys = qwertasdfg12345
 @bind <Meta>Q       = exit
 
 # Handy stuff
-@cbind !dump    = sh "echo dump_config > $4"
-@cbind !reload  = sh "sed '/^# === Post-load misc commands/,$d' $1 | grep '^set ' > $4"
+@cbind !dump        = sh "echo dump_config > $4"
+@cbind !reload      = sh "sed '/^# === Post-load misc commands/,$d' $1 | grep '^set ' > $4"
 
-@cbind vs       = sh 'uzbl-browser -u \@uri -c /home/tree/.uzbl/config-viewsource'
+@cbind vs           = sh 'uzbl-browser -u \@uri -c /home/tree/.uzbl/config-viewsource'
 
 # --- Appearance ---
 
@@ -242,11 +240,11 @@ set max_title_len       = 10
 set new_tab_title       = Loading
 
 # Icon
-set icon = @data_dir/uzbl.png
-set icon_path = @icon
+set icon                = @data_dir/uzbl.png
+set icon_path           = @icon
 
 # Styling
-set status_background = #303030
+set status_background   = #303030
 
 # Tabs
 set tab_colours             = foreground = "#888" background = "#303030"
