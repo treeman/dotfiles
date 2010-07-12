@@ -215,7 +215,9 @@ set follow_hint_keys = qwertasdfg12345
 @cbind pp           = sh 'echo "event INJECT_KEYCMD `xclip -o -primary   clipboard | sed s/\\\@/%40/g`" > $4'
 @cbind ps           = sh 'echo "event INJECT_KEYCMD `xclip -o -secondary clipboard | sed s/\\\@/%40/g`" > $4'
 
-@ebind <Meta>V      = sh 'echo "event INJECT_KEYCMD `xclip -o -selection clipboard | sed s/\\\@/%40/g`" > $4'
+@ebind <Ctrl>v      = sh 'echo "event INJECT_KEYCMD `xclip -o -selection clipboard | sed s/\\\@/%40/g`" > $4'
+@ebind <Ctrl><Alt>v = sh 'echo "event INJECT_KEYCMD `xclip -o -primary   clipboard | sed s/\\\@/%40/g`" > $4'
+@ebind <Meta>V      = sh 'echo "event INJECT_KEYCMD `xclip -o -secondary clipboard | sed s/\\\@/%40/g`" > $4'
 
 # Mode switching
 @bind <Escape>      = event ESCAPE
