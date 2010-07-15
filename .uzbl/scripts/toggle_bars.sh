@@ -30,6 +30,3 @@ fi
 echo "$show_tablist,$show_status" > $file
 echo "set show_tablist = $show_tablist" > $fifo
 echo "set show_status = $show_status" > $fifo
-
-echo "set show_tablist = $show_tablist"
-echo "set show_status = $show_status"

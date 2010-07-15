@@ -5,7 +5,7 @@ set guifont=Consolas
 " set lines=85
 set mousehide " hide the cursor when typing
 
-" set guioptions-=m " No menus
+set guioptions-=m " No menus
 set guioptions-=T " No toolbar
 set guioptions-=R " remove right scrollbar
 set guioptions-=L " remove the left
