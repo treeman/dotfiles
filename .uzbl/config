@@ -153,7 +153,7 @@ sync_spawn  @scripts_dir/load_status.sh
 @cbind sd<Duck:>_           = uri https://duckduckgo.com/?q=\@<encodeURIComponent(%r)>\@
 @cbind sw<Wolfram:>_        = uri http://www.wolframalpha.com/input/?i=\@<encodeURIComponent(%r)>\@
 @cbind st<Tyda:>_           = uri http://tyda.se/search?w=\@<encodeURIComponent(%r)>\@
-@cbind sW<Wikipedia:>_      = uri http://en.wikipedia.org/w/index.php?title=Special:Search&search=\@<encodeURIComponent(%r)>\@&go=Go
+@cbind sp<Wikipedia:>_      = uri http://en.wikipedia.org/w/index.php?title=Special:Search&search=\@<encodeURIComponent(%r)>\@&go=Go
 @cbind sG<Github:>_         = uri http://github.com/search?q=\@<encodeURIComponent(%r)>\@&type=Everything&repo=&langOverride=&start_value=1
 @cbind si<Imdb:>_           = uri http://www.imdb.com/find?s=all&q=\@<encodeURIComponent(%r)>\@
 @cbind ssb<SlackBuild:>_    = uri http://slackbuilds.org/result/?search=\@<encodeURIComponent(%r)>\@&sv=13.1
@@ -171,16 +171,16 @@ set follow_hint_keys    = qwertasdfg12345
 @cbind tl*              = script @scripts_dir/follownew.js '@follow_hint_keys %s'
 
 # Tabs
-@cbind tn               = event NEW_TAB_NEXT
-@cbind to<uri:>_        = event NEW_TAB %s
-@cbind tO<uri:\@uri>_   = event NEW_TAB %s
+@cbind tn                   = event NEW_TAB_NEXT
+@cbind to<tab uri:>_        = event NEW_TAB %s
+@cbind tO<tab uri:\@uri>_   = event NEW_TAB %s
 
-@cbind tq               = exit
-@cbind tQ               = event CLEAN_TABS
+@cbind tq                   = exit
+@cbind tQ                   = event CLEAN_TABS
 
-@cbind tt               = event NEXT_TAB
-@cbind tT               = event PREV_TAB
-@cbind ti<index:>_      = event GOTO_TAB %s
+@cbind tt                   = event NEXT_TAB
+@cbind tT                   = event PREV_TAB
+@cbind ti<index:>_          = event GOTO_TAB %s
 
 # Article queue
 @cbind qpu          = spawn @scripts_dir/article_queue.py push
