@@ -35,7 +35,7 @@ set cookie_handler      = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_sock
 # Status
 @on_event LOAD_START    set progress_color = "red"
 @on_event LOAD_COMMIT   set progress_color = "green"
-@on_event LOAD_FINISH   set progress_color = "gold"
+@on_event LOAD_FINISH   set progress_color = "#fff"
 
 # Switch to insert if we click on form, else switch to command
 @on_event FORM_ACTIVE   @set_mode insert
@@ -53,6 +53,9 @@ set cookie_handler      = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_sock
 @on_event LOAD_START    set error =
 @on_event LOAD_ERROR    sh 'echo set error = %s > $4'
 @on_event LOAD_ERROR    sh 'echo %s'
+
+@on_event LOAD_START    set uri_color = "#99FF66"
+@on_event LOAD_COMMIT   spawn @scripts_dir/is_bookmarked.sh
 
 # --- Keymappings ---
 
@@ -193,17 +196,9 @@ set follow_hint_keys    = qwertasdfg12345
 @cbind ql           = spawn @scripts_dir/article_queue.py list
 
 # Bookmarks
-@cbind by           = set uri = http://news.ycombinator.net
-@cbind bg           = set uri = https://gmail.com
-@cbind bc           = set uri = https://www.google.com/calendar
-@cbind br           = set uri = https://www.google.com/reader
-@cbind btl          = set uri = http://teamliquid.net
-@cbind bm           = set uri = http://madeoftree.net
-@cbind bs           = set uri = http://www.linuxquestions.org/questions/slackware-14/
-@cbind bvas         = set uri = http://viperassassinsquad.freeforums.org/
-@cbind bG           = set uri = http://github.com
-@cbind bu           = set uri = http://www.uzbl.org/readme.php
-@cbind bw           = set uri = http://www.winehq.org/
+@cbind B            = spawn @scripts_dir/insert_bookmark.sh
+@cbind bb           = spawn @scripts_dir/load_url_from_bookmarks.sh
+@cbind bR           = spawn @scripts_dir/remove_bookmark.sh
 
 # Yank & Paste
 @cbind yu           = sh 'echo -n $6 | xclip -selection clipboard'
@@ -258,18 +253,19 @@ set selected_https          = foreground = "#fff"
 set selected_https_text     = foreground = "#fffe0a"
 
 # Statusbar
-set modcmd_style        = weight="bold" foreground="red"
+set modcmd_style        = foreground="#DE47C0"
 set keycmd_style        = weight="light" foreground="red"
 set prompt_style        = foreground="grey"
 set cursor_style        = underline="single"
 set completion_style    = foreground="green"
 set hint_style          = weight = "bold"
 set progress_color      = "#fff"
+set uri_color           = "#99FF66"
 
 set mode_section      = <span background="khaki" foreground="black">[\@[\@mode_indicator]\@]</span>
 set keycmd_section    = [<span \@prompt_style>\@[\@keycmd_prompt]\@</span><span \@modcmd_style>\@modcmd</span><span \@keycmd_style>\@keycmd</span><span \@completion_style>\@completion_list</span>]
 set progress_section  = <span foreground=\@progress_color>\@[\@progress_format]\@</span>
-set uri_section       = <span foreground="#99FF66">\@[\@uri]\@</span>
+set uri_section       = <span foreground=\@uri_color>\@[\@uri]\@</span>
 set error_section     = <span foreground="red">\@[\@error]\@</span>
 set selected_section  = <span foreground="#fffe0a">\@[\@SELECTED_URI]\@</span>
 
