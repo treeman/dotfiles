@@ -120,6 +120,9 @@
     " trim trailing spaces and convert tabs to spaces
     map <F5> :silent! %s/\s\+$//<CR>:retab<CR>
 
+    map <F6> :set expandtab<CR>
+    map <F7> :set noexpandtab<CR>
+
     " Remove arrow keys :)
     map <down> <nop>
     map <left> <nop>
@@ -130,6 +133,8 @@
     imap <left> <nop>
     imap <right> <nop>
     imap <up> <nop>
+
+    imap <F6> \t
 
     " fix mswin overriding my visual block mode
     map <C-V> <C-V>

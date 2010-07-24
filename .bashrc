@@ -1,6 +1,8 @@
 PATH=$PATH:~/bin:~/rakudo:/usr/sbin
 ARCH=x86_64
 
+LD_LIBRARY_PATH=/usr/local/lib:/usr/lib
+
 # Make bash civilized :)
 set -o vi
 
