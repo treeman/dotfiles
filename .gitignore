@@ -79,3 +79,7 @@ stuff
 .btpd
 torrents
 .nvidia*
+.adobe
+.dosbox
+.lesshst
+.wireshark
