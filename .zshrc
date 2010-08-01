@@ -11,25 +11,34 @@ HISTSIZE=1000
 SAVEHIST=1000
 setopt appendhistory autocd extendedglob
 
-ARCH=x86_64
+# Used with slackbuilds to set 64bit environment
+export ARCH=x86_64
 
-PATH=$PATH:~/bin:~/rakudo:/usr/sbin
-LD_LIBRARY_PATH=/usr/local/lib:/usr/lib
+export PATH=~/bin:/usr/sbin:$PATH
+export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib
 
 export EDITOR=/usr/local/bin/vim
 export SHELL=/bin/zsh
+export BROWSER=/home/tree/uzbl
 
 autoload -U colors && colors
 
-if [ $(id -u) -eq 0 ]; then # Root
-    PS1=$'\e[1;31m# \e[0m'
-    PS2=$'\e[1;31m> \e[0m'
-    PS4=$'\e[1;31m+ \e[0m'
+# I prefer a simple color-coded prompt for different users
+CLEARCOL=$'\e[0m'
+PCHAR='$'
+
+if [ $(id -u) -eq 0 ]; then
+    COL=$'\e[1;31m'
+    PCHAR='#'
+elif [ $(whoami) = tree ]; then
+    COL=$'\e[1;33m'
 else
-    PS1=$'\e[1;33m$ \e[0m'
-    PS2=$'\e[1;33m> \e[0m'
-    PS4=$'\e[1;33m+ \e[0m'
+    COL=$'\e[1;35m'
 fi
+
+PS1="$COL$PCHAR $CLEARCOL"
+PS2="$COL> $CLEARCOL"
+PS3="$COL+ $CLEARCOL"
 
 # Enable ls color support
 if [ "$TERM" != "dumb" ]; then
@@ -37,11 +46,12 @@ if [ "$TERM" != "dumb" ]; then
     alias ls='ls -h --color'
 fi
 
+alias lsd='ls -d *(-/DN)' # List dirs and symbolic links to dirs
+alias lsa='ls -d .*' # Only list hidden files
+
 alias path='echo -e ${PATH//:/\\n}'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
 alias xterm='xterm -e /bin/zsh'
-alias lsd='ls -d *(-/DN)' # List dirs and symbolic links to dirs
-alias lsa='ls -d .*' # Only list hidden files
 
 # Vim key bindings ty
 bindkey -v
