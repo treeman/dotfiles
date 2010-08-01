@@ -1,0 +1,61 @@
+#ifdef COLOR
+*customization: -color
+#endif
+
+! Blink
+*visualBell: False
+
+XTerm*internalBorder: 0
+XTerm*loginShell: false
+
+XTerm*scrollBar: false
+XTerm*scrollKey: true
+
+XTerm*saveLines: 1000
+XTerm*multiClickTime: 250
+
+XTerm*faceName: Consolas
+XTerm*faceSize: 10
+
+XTerm*background: black
+XTerm*foreground: white
+
+XTerm*pointerColor: red
+XTerm*pointerColorBackground: black
+XTerm*cursorColor: green
+
+!Playing around with different color schemes, but not using them atm
+
+!XTerm*color0:      #000000
+!XTerm*color1:      #9e1828
+!XTerm*color2:      #aece92
+!XTerm*color3:      #ffff55
+!XTerm*color4:      #414171
+!XTerm*color5:      #963c59
+!XTerm*color6:      #418179
+!XTerm*color7:      #bebebe
+!XTerm*color8:      #666666
+!XTerm*color9:      #cf6171
+!XTerm*color10:     #c5f779
+!XTerm*color11:     #fff796
+!XTerm*color12:     #4186be
+!XTerm*color13:     #cf9ebe
+!XTerm*color14:     #71bebe
+!XTerm*color15:     #ffffff
+
+!XTerm*color0:      #000000
+!XTerm*color1:      #aa0000
+!XTerm*color2:      #00aa00
+!XTerm*color3:      #ffff55
+!XTerm*color4:      #0000aa
+!XTerm*color5:      #aa00aa
+!XTerm*color6:      #00aaaa
+!XTerm*color7:      #aaaaaa
+!XTerm*color8:      #555555
+!XTerm*color9:      #ff5555
+!XTerm*color10:     #55ff55
+!XTerm*color11:     #ffff55
+!XTerm*color12:     #5555ff
+!XTerm*color13:     #ff55ff
+!XTerm*color14:     #55ffff
+!XTerm*color15:     #ffffff

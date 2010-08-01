@@ -19,6 +19,8 @@ else # Or not
     PS4='\[\e[1;33m\]+ \[\e[0m\]'
 fi
 
-export LS_OPTIONS='--color=auto'
-eval `dircolors -b`
-alias ls='ls $LS_OPTIONS'
+alias ls='ls -hF --color'
+alias path='echo -e ${PATH//:/\\n}'
+alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
+
+alias xterm='xterm -e /bin/zsh'
