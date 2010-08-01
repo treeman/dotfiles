@@ -129,16 +129,9 @@ set ebind = @mode_bind global,-insert
 @cbind L    = forward
 
 # Appearance
-
-# Toggle tab and status bars respectively and save the state
-@cbind as   = spawn @scripts_dir/toggle_bars.sh 0 1
-@cbind at   = spawn @scripts_dir/toggle_bars.sh 1 0
-@cbind aa   = spawn @scripts_dir/toggle_bars.sh 1 1
-
-@cbind m = @toggle_tablist
-
-# Load state of status bars
-spawn @scripts_dir/load_status.sh
+@cbind as = toggle_status
+@cbind at = @toggle_tablist
+@cbind aa = spawn @scripts_dir/toggle.sh \@show_tablist
 
 @cbind 1    = set zoom_level = 1.0
 @cbind 2    = set zoom_level = 1.2
