@@ -13,8 +13,5 @@ else
     echo "1,1" > $file
 fi
 
-#echo "set show_tablist = $show_tablist" > $fifo
-#echo "set show_status = $show_status" > $fifo
-
-echo "set show_tablist = 0" > $fifo
-echo "set show_status = 0" > $fifo
+echo "set show_tablist = $show_tablist" > $fifo
+echo "set show_status = $show_status" > $fifo
