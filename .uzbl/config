@@ -87,7 +87,7 @@ set ebind = @mode_bind global,-insert
 @bind  <Button8>    = sh 'if [ "\@SELECTED_URI" ]; then echo -n \@SELECTED_URI | xclip -selection clipboard; fi'
 @bind  <Button9>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event INJECT_KEYCMD \@SELECTED_URI" > $4; fi'
 
-# Command edi(ting binds
+# Command editing binds
 @ebind <Return>     = event KEYCMD_EXEC_CURRENT
 @ebind <Left>       = event SET_CURSOR_POS -
 @ebind <Right>      = event SET_CURSOR_POS +
@@ -135,7 +135,7 @@ set ebind = @mode_bind global,-insert
 @cbind aa   = spawn @scripts_dir/toggle_bars.sh 1 1
 
 # Load state of status bars
-sync_spawn  @scripts_dir/load_status.sh
+spawn @scripts_dir/load_status.sh
 
 @cbind 1    = set zoom_level = 1.0
 @cbind 2    = set zoom_level = 1.2
