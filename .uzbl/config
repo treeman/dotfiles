@@ -20,6 +20,7 @@ set progress        = request PROGRESS_CONFIG
 set set_mode        = set mode =
 set set_status      = set status =
 set shell_cmd       = sh -c
+set toggle_tablist  = sh 'if [ \@show_tablist -eq 0 ]; then echo "set show_tablist = 1" > $4; else echo "set show_tablist = 0" > $4; fi'
 
 set base_dir =      /home/tree/.uzbl
 set data_dir =      @base_dir/data
@@ -133,6 +134,8 @@ set ebind = @mode_bind global,-insert
 @cbind as   = spawn @scripts_dir/toggle_bars.sh 0 1
 @cbind at   = spawn @scripts_dir/toggle_bars.sh 1 0
 @cbind aa   = spawn @scripts_dir/toggle_bars.sh 1 1
+
+@cbind m = @toggle_tablist
 
 # Load state of status bars
 spawn @scripts_dir/load_status.sh
