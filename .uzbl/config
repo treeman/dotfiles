@@ -168,8 +168,8 @@ spawn @scripts_dir/load_status.sh
 # Uri opening
 @cbind o<uri:>_      = uri %s
 @cbind O<uri:\@uri>_ = uri %s
-@cbind H             = spawn @scripts_dir/load_url_from_history.sh
-@cbind B             = spawn @scripts_dir/load_url_from_bookmarks.sh
+@cbind H             = spawn @scripts_dir/load_url_from_history.sh uri
+@cbind B             = spawn @scripts_dir/load_url_from_bookmarks.sh uri
 
 # Vimperator style link following
 set javascript_windows  = 1
@@ -182,6 +182,8 @@ set follow_hint_keys    = qwertasdfg12345
 @cbind tn                   = event NEW_TAB_NEXT
 @cbind to<tab uri:>_        = event NEW_TAB %s
 @cbind tO<tab uri:\@uri>_   = event NEW_TAB %s
+@cbind th                   = spawn @scripts_dir/load_url_from_history.sh "event NEW_TAB"
+@cbind tb                   = spawn @scripts_dir/load_url_from_bookmarks.sh "event NEW_TAB"
 
 @cbind tq                   = exit
 @cbind tQ                   = event CLEAN_TABS
