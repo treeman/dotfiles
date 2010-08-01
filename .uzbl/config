@@ -201,7 +201,7 @@ set follow_hint_keys    = qwertasdfg12345
 @cbind bR           = spawn @scripts_dir/remove_bookmark.sh
 
 # History
-@cbind m            = spawn @scripts_dir/load_url_from_history.sh
+@cbind H            = spawn @scripts_dir/load_url_from_history.sh
 
 # Yank & Paste
 @cbind yu           = sh 'echo -n $6 | xclip -selection clipboard'
