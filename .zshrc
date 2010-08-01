@@ -19,7 +19,7 @@ export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib
 
 export EDITOR=/usr/local/bin/vim
 export SHELL=/bin/zsh
-export BROWSER=/home/tree/uzbl
+export BROWSER=/home/tree/bin/uzbl
 
 autoload -U colors && colors
 
@@ -38,7 +38,7 @@ fi
 
 PS1="$COL$PCHAR $CLEARCOL"
 PS2="$COL> $CLEARCOL"
-PS3="$COL+ $CLEARCOL"
+PS4="$COL+ $CLEARCOL"
 
 # Enable ls color support
 if [ "$TERM" != "dumb" ]; then
