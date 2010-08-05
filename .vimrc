@@ -1,7 +1,8 @@
 " Basics {
     if has("syntax")
         syntax on " highlight
-        colorscheme aurora
+        set t_Co=256
+        colorscheme ir_black
     endif
 
     set nocompatible " explicitly get out of vi-compatible mode

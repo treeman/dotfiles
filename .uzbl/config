@@ -132,6 +132,7 @@ set ebind = @mode_bind global,-insert
 @cbind as = toggle_status
 @cbind at = @toggle_tablist
 @cbind aa = spawn @scripts_dir/toggle.sh \@show_tablist
+#@cbind x  = chain '@toggle_tablist' 'toggle_status'
 
 @cbind 1    = set zoom_level = 1.0
 @cbind 2    = set zoom_level = 1.2
@@ -159,10 +160,10 @@ set ebind = @mode_bind global,-insert
 @cbind sW<Wine:>_           = uri http://www.winehq.org/search?cx=partner-pub-0971840239976722%3Aw9sqbcsxtyf&cof=FORID%3A10&ie=UTF-8&q=\@<encodeURIComponent(%r)>\@%21&siteurl=www.winehq.org%2F
 
 # Uri opening
-@cbind o<uri:>_      = uri %s
+@cbind oo<uri:>_     = uri %s
 @cbind O<uri:\@uri>_ = uri %s
-@cbind H             = spawn @scripts_dir/load_url_from_history.sh uri
-@cbind B             = spawn @scripts_dir/load_url_from_bookmarks.sh uri
+@cbind oh            = spawn @scripts_dir/load_url_from_history.sh uri
+@cbind ob            = spawn @scripts_dir/load_url_from_bookmarks.sh uri
 
 # Vimperator style link following
 set javascript_windows  = 1

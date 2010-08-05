@@ -20,6 +20,12 @@ export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib
 export EDITOR=/usr/local/bin/vim
 export SHELL=/bin/zsh
 export BROWSER=/home/tree/bin/uzbl
+export TERM='xterm-256color'
+
+# Force the use of my beloved characters
+#export LANG=se_SV.utf8
+#export LESSCHARSET=utf-8
+export LANG=en_US.utf8
 
 autoload -U colors && colors
 
@@ -51,7 +57,7 @@ alias lsa='ls -d .*' # Only list hidden files
 
 alias path='echo -e ${PATH//:/\\n}'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
-alias xterm='xterm -e /bin/zsh'
+alias xterm='xterm'
 
 # Vim key bindings ty
 bindkey -v
