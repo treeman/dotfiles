@@ -2,3 +2,5 @@ include /home/tree/.uzbl/config
 
 set cookie_handler      = 
 set history_handler     = 
+
+set status_format     = <span foreground="gold" font_family="monospace">P</span> @status_format

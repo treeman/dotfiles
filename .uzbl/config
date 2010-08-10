@@ -229,6 +229,7 @@ set follow_hint_keys    = qwertasdfg12345
 
 @cbind vs           = sh 'uzbl-browser -u "\@uri" -c /home/tree/.uzbl/config-viewsource'
 @cbind vp           = include /home/tree/.uzbl/config-private
+@cbind vP           = include /home/tree/.uzbl/config
 
 # --- Appearance ---
 
