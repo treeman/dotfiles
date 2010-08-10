@@ -1,0 +1,4 @@
+include /home/tree/.uzbl/config
+
+set cookie_handler      = 
+set history_handler     = 

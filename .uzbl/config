@@ -29,6 +29,7 @@ set scripts_dir =   @base_dir/scripts:/usr/local/share/uzbl/examples/data/:
 # --- Event handling ---
 
 set cookie_handler      = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_socket
+set history_handler     = @scripts_dir/history.sh
 
 # Reset keycmd on navigation
 @on_event LOAD_START    @set_mode
@@ -44,7 +45,7 @@ set cookie_handler      = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_sock
 
 @on_event NEW_WINDOW    event NEW_TAB %s
 
-@on_event LOAD_FINISH   spawn @scripts_dir/history.sh
+@on_event LOAD_FINISH   spawn \@history_handler
 
 @on_event DOWNLOAD_REQUEST  spawn @scripts_dir/download.sh %s \@proxy_url
 
@@ -132,7 +133,6 @@ set ebind = @mode_bind global,-insert
 @cbind as = toggle_status
 @cbind at = @toggle_tablist
 @cbind aa = spawn @scripts_dir/toggle.sh \@show_tablist
-#@cbind x  = chain '@toggle_tablist' 'toggle_status'
 
 @cbind 1    = set zoom_level = 1.0
 @cbind 2    = set zoom_level = 1.2
@@ -227,7 +227,8 @@ set follow_hint_keys    = qwertasdfg12345
 @cbind !dump        = sh "echo dump_config > $4"
 @cbind !reload      = sh "sed '/^# === Post-load misc commands/,$d' $1 | grep '^set ' > $4"
 
-@cbind vs           = sh 'uzbl-browser -u \@uri -c /home/tree/.uzbl/config-viewsource'
+@cbind vs           = sh 'uzbl-browser -u "\@uri" -c /home/tree/.uzbl/config-viewsource'
+@cbind vp           = include /home/tree/.uzbl/config-private
 
 # --- Appearance ---
 
