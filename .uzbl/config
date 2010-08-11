@@ -1,7 +1,5 @@
 # --- Core settings ---
 
-set default_mode    = command
-
 set useragent       = Uzbl (Webkit @{WEBKIT_MAJOR}.@{WEBKIT_MINOR}.@{WEBKIT_MICRO}) (@(+uname -sm)@ [@ARCH_UZBL]) (Commit @COMMIT)
 set fifo_dir        = /tmp
 set socket_dir      = /tmp
@@ -15,7 +13,8 @@ set ignore_key      = request IGNORE_KEY
 set mode_bind       = request MODE_BIND
 set on_event        = request ON_EVENT
 set toggle_modes    = request TOGGLE_MODES
-set progress        = request PROGRESS_CONFIG
+set on_set          = request ON_SET
+set mode_config     = request MODE_CONFIG
 
 set set_mode        = set mode =
 set set_status      = set status =
@@ -24,7 +23,7 @@ set toggle_tablist  = sh 'if [ \@show_tablist -eq 0 ]; then echo "set show_tabli
 
 set base_dir =      /home/tree/.uzbl
 set data_dir =      @base_dir/data
-set scripts_dir =   @base_dir/scripts:/usr/local/share/uzbl/examples/data/:
+set scripts_dir =   @base_dir/scripts:/usr/local/share/uzbl/examples/data/scripts:
 
 # --- Event handling ---
 
@@ -49,7 +48,7 @@ set history_handler     = @scripts_dir/history.sh
 
 @on_event DOWNLOAD_REQUEST  spawn @scripts_dir/download.sh %s \@proxy_url
 
-@on_event ESCAPE        set mode =
+@on_event ESCAPE        @set_mode
 
 # Error handling
 @on_event LOAD_START    set error =
@@ -218,8 +217,8 @@ set follow_hint_keys    = qwertasdfg12345
 # Mode switching
 @bind <Escape>      = event ESCAPE
 
-@cbind I            = @set_mode insert
-@cbind i            = @toggle_modes command insert
+@cbind i            = @set_mode insert
+@bind <Ctrl>i       = @set_mode insert
 
 @bind <Meta>Q       = exit
 
@@ -230,6 +229,30 @@ set follow_hint_keys    = qwertasdfg12345
 @cbind vs           = sh 'uzbl-browser -u "\@uri" -c /home/tree/.uzbl/config-viewsource'
 @cbind vp           = include /home/tree/.uzbl/config-private
 @cbind vP           = include /home/tree/.uzbl/config
+
+# --- Handling ---
+
+set default_mode    = command
+
+# Define some mode specific uzbl configurations.
+set command  = @mode_config command
+set insert   = @mode_config insert
+set stack    = @mode_config stack
+
+@command mode_indicator = C
+@command keycmd_events  = 1
+@command forward_keys   = 0
+@command modcmd_updates = 1
+
+@insert  mode_indicator = I
+@insert  forward_keys   = 1
+@insert  keycmd_events  = 0
+@insert  modcmd_updates = 0
+
+@stack   keycmd_events  = 1
+@stack   modcmd_updates = 1
+@stack   forward_keys   = 0
+@stack   mode_indicator = S
 
 # --- Appearance ---
 
@@ -269,7 +292,7 @@ set uri_color           = "#99FF66"
 
 set mode_section      = <span background="khaki" foreground="black">[\@[\@mode_indicator]\@]</span>
 set keycmd_section    = [<span \@prompt_style>\@[\@keycmd_prompt]\@</span><span \@modcmd_style>\@modcmd</span><span \@keycmd_style>\@keycmd</span><span \@completion_style>\@completion_list</span>]
-set progress_section  = <span foreground=\@progress_color>\@[\@progress_format]\@</span>
+set progress_section  = <span foreground=\@progress_color>\@[\@progress.output]\@</span>
 set uri_section       = <span foreground=\@uri_color>\@[\@uri]\@</span>
 set error_section     = <span foreground="red">\@[\@error]\@</span>
 set selected_section  = <span foreground="#fffe0a">\@[\@SELECTED_URI]\@</span>
@@ -280,4 +303,19 @@ set status_format     = <span font_family="monospace">@mode_section @keycmd_sect
 set title_format_long   = \@keycmd_prompt \@raw_modcmd \@raw_keycmd \@TITLE - Uzbl \@SELECTED_URI
 set title_format_short  = \@TITLE - Uzbl
 
-@progress format  = %c
+set progress.format  = %c
+
+set mode_section      = <span background="khaki" foreground="black">[\@[\@mode_indicator]\@]</span>
+set keycmd_section    = [<span \@prompt_style>\@[\@keycmd_prompt]\@</span><span \@modcmd_style>\@modcmd</span><span \@keycmd_style>\@keycmd</span><span \@completion_style>\@completion_list</span>]
+set progress_section  = <span foreground=\@progress_color>\@[\@progress.output]\@</span>
+set uri_section       = <span foreground=\@uri_color>\@[\@uri]\@</span>
+set error_section     = <span foreground="red">\@[\@error]\@</span>
+set selected_section  = <span foreground="#fffe0a">\@[\@SELECTED_URI]\@</span>
+
+set status_format     = <span font_family="monospace">@mode_section @keycmd_section @progress_section @uri_section @selected_section @error_section</span>
+
+# Title format
+set title_format_long   = \@keycmd_prompt \@raw_modcmd \@raw_keycmd \@TITLE - Uzbl \@SELECTED_URI
+set title_format_short  = \@TITLE - Uzbl
+
+set progress.format  = %c
