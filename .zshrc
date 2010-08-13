@@ -14,7 +14,7 @@ setopt appendhistory autocd extendedglob
 # Used with slackbuilds to set 64bit environment
 export ARCH=x86_64
 
-export PATH=~/bin:/usr/sbin:$PATH
+export PATH=~/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib
 
 export EDITOR=/usr/local/bin/vim

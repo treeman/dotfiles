@@ -234,10 +234,9 @@ set follow_hint_keys    = qwertasdfg12345
 
 set default_mode    = command
 
-# Define some mode specific uzbl configurations.
-set command  = @mode_config command
-set insert   = @mode_config insert
-set stack    = @mode_config stack
+set command         = @mode_config command
+set insert          = @mode_config insert
+set stack           = @mode_config stack
 
 @command mode_indicator = C
 @command keycmd_events  = 1

@@ -13,6 +13,10 @@ mangastreams = {
     "Naruto",
 }
 
+mangafoxs = {
+    "http://www.mangafox.com/manga/history_s_strongest_disciple_kenichi/",
+}
+
 function get_manga_info()
     details = {}
 
@@ -36,6 +40,13 @@ function get_manga_info()
             table.insert(details, extract_mangastream_details(mangastream, manga))
         end
     end
+
+    --for k, site in pairs(mangafoxs) do
+        --big_site = conky_parse("${curl "..site.."}")
+        --if big_site ~= "" then
+            --table.insert(details, extract_mangafox_details(big_site))
+        --end
+    --end
 
     table.sort(details, function (a,b) return a.time > b.time end)
 
@@ -113,6 +124,27 @@ function extract_mangastream_details(site, manga)
         date.hour = ""
         date.min = ""
     end
+    d.time = os.time(date)
+
+    return d
+end
+
+function extract_mangafox_details(site)
+    print(site)
+    d.manga = string.match(site, "<h2>(.-)</h2>")
+    print(d.manga)
+    latest = string.match(site, "th.-(.-)th")
+    print(latest)
+    d = {}
+    d.domain = "mangafox"
+    link, d.chapter, d.chapter = string.match(latest, "<a href=\"(.-)\">Ch%.(%d+): (.-)</a>")
+    d.link = "http://www." .. d.domain .. link
+    d.scans = ""
+
+    date = os.date("*t")
+    date.sec = ""
+    date.hour = ""
+    date.min = ""
     d.time = os.time(date)
 
     return d
