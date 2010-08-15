@@ -8,5 +8,5 @@ main = xmonad xfceConfig {
     , workspaces = ["1","2","3","4","5","6","7","8","9"]
     , normalBorderColor = "#fdfdfd"
     , focusedBorderColor = "#d00f0f"
-    , borderWidth = 1
+    , borderWidth = 0
     }

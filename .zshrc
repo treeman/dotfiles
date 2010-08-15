@@ -59,5 +59,8 @@ alias path='echo -e ${PATH//:/\\n}'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
 alias xterm='xterm'
 
+alias reboot='su -c reboot'
+alias shutdown='su -c "shutdown -h now"'
+
 # Vim key bindings ty
 bindkey -v
