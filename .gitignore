@@ -86,6 +86,7 @@ torrents
 .zcompdump
 .zsh_history
 .lastpass
-.irssi
 build
 StarCraft II/
+*.autosave
+.irssi
