@@ -14,6 +14,9 @@ XTerm*scrollKey: true
 XTerm*saveLines: 1000
 XTerm*multiClickTime: 250
 
+XTerm*eightBitInput: false
+XTerm*altSendsEscape: true
+
 XTerm*faceName: Consolas
 XTerm*faceSize: 10
 XTerm*utf8: 1
