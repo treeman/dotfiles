@@ -1,0 +1,320 @@
+# --- Core settings ---
+
+set useragent       = Uzbl (Webkit @{WEBKIT_MAJOR}.@{WEBKIT_MINOR}.@{WEBKIT_MICRO}) (@(+uname -sm)@ [@ARCH_UZBL]) (Commit @COMMIT)
+set fifo_dir        = /tmp
+set socket_dir      = /tmp
+
+# --- Shortcuts & Aliases ---
+
+# Shorten event bindings
+set modmap          = request MODMAP
+set modkey_addition = request MODKEY_ADDITION
+set ignore_key      = request IGNORE_KEY
+set mode_bind       = request MODE_BIND
+set on_event        = request ON_EVENT
+set toggle_modes    = request TOGGLE_MODES
+set on_set          = request ON_SET
+set mode_config     = request MODE_CONFIG
+
+set set_mode        = set mode =
+set set_status      = set status =
+set shell_cmd       = sh -c
+set toggle_tablist  = sh 'if [ \@show_tablist -eq 0 ]; then echo "set show_tablist = 1" > $4; else echo "set show_tablist = 0" > $4; fi'
+
+set base_dir =      /home/tree/.uzbl
+set data_dir =      @base_dir/data
+set scripts_dir =   @base_dir/scripts:/usr/local/share/uzbl/examples/data/scripts:
+
+# --- Event handling ---
+
+set cookie_handler      = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_socket
+set history_handler     = @scripts_dir/history.sh
+
+# Reset keycmd on navigation
+@on_event LOAD_START    @set_mode
+
+# Status
+@on_event LOAD_START    set progress_color = "red"
+@on_event LOAD_COMMIT   set progress_color = "green"
+@on_event LOAD_FINISH   set progress_color = "#fff"
+
+# Switch to insert if we click on form, else switch to command
+@on_event FORM_ACTIVE   @set_mode insert
+@on_event ROOT_ACTIVE   @set_mode command
+
+@on_event NEW_WINDOW    event NEW_TAB %s
+
+@on_event LOAD_FINISH   spawn \@history_handler
+
+@on_event DOWNLOAD_REQUEST  spawn @scripts_dir/download.sh %s \@proxy_url
+
+@on_event ESCAPE        @set_mode
+
+# Error handling
+@on_event LOAD_START    set error =
+@on_event LOAD_ERROR    sh 'echo set error = %s > $4'
+@on_event LOAD_ERROR    sh 'echo %s'
+
+@on_event LOAD_START    set uri_color = "#99FF66"
+@on_event LOAD_COMMIT   spawn @scripts_dir/is_bookmarked.sh
+
+# --- Keymappings ---
+
+# Remap
+@modmap <Control>           <Ctrl>
+@modmap <ISO_Left_Tab>      <Tab>
+@modmap <space>             <Space>
+@modmap <dead_circumflex>   ^
+@modmap <dead_tilde>        ~
+
+@modkey_addition <Shift> <Ctrl>     <Meta>
+@modkey_addition <Shift> <Tab>      <Shift-Tab>
+@modkey_addition <Shift> <Insert>   <Shift-Insert>
+
+@ignore_key <ISO_*>
+@ignore_key <Shift>
+@ignore_key <dead_*>
+@ignore_key <(null)>
+@ignore_key <XF*>
+
+# Different binding styles
+set bind  = @mode_bind global
+set ibind = @mode_bind insert
+set cbind = @mode_bind command
+set ebind = @mode_bind global,-insert
+
+# Mouse events
+@bind  <Button2>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event NEW_TAB_NEXT \@SELECTED_URI" > $4; fi'
+@bind  <Button8>    = sh 'if [ "\@SELECTED_URI" ]; then echo -n \@SELECTED_URI | xclip -selection clipboard; fi'
+@bind  <Button9>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event INJECT_KEYCMD \@SELECTED_URI" > $4; fi'
+
+# Command editing binds
+@ebind <Return>     = event KEYCMD_EXEC_CURRENT
+@ebind <Left>       = event SET_CURSOR_POS -
+@ebind <Right>      = event SET_CURSOR_POS +
+@ebind <BackSpace>  = event KEYCMD_BACKSPACE
+@ebind <Delete>     = event KEYCMD_DELETE
+@ebind <Tab>        = event START_COMPLETION
+
+@ebind <Ctrl>iu     = event INJECT_KEYCMD \@uri
+@ebind <Ctrl>it     = event INJECT_KEYCMD \@title
+@ebind <Ctrl>au     = event APPEND_KEYCMD \@uri
+@ebind <Ctrl>at     = event APPEND_KEYCMD \@title
+
+# Enter any command at runtime by prefixing a colon
+@cbind :_ = %s
+
+# Movement
+@cbind j            = scroll vertical 20
+@cbind k            = scroll vertical -20
+@cbind h            = scroll horizontal -20
+@cbind l            = scroll horizontal 20
+
+@cbind <Ctrl>j      = scroll vertical 40
+@cbind <Ctrl>k      = scroll vertical -40
+@cbind <Ctrl>h      = scroll horizontal -40
+@cbind <Ctrl>l      = scroll horizontal 40
+
+@cbind <Ctrl>b      = scroll vertical -100%
+@cbind <Ctrl>f      = scroll vertical 100%
+
+@cbind gg           = scroll vertical begin
+@cbind G            = scroll vertical end
+
+# Navigation
+@cbind r    = reload
+@cbind R    = reload_ign_cache
+@cbind S    = stop
+@cbind H    = back
+@cbind L    = forward
+
+# Appearance
+@cbind as = toggle_status
+@cbind at = @toggle_tablist
+@cbind aa = spawn @scripts_dir/toggle.sh \@show_tablist
+
+@cbind 1    = set zoom_level = 1.0
+@cbind 2    = set zoom_level = 1.2
+@cbind zi   = zoom_in
+@cbind zo   = zoom_out
+@cbind zt   = toggle_zoom_type
+
+# Page search
+@cbind /*   = search %s
+@cbind ?*   = search_reverse %s
+# Jump between search results
+@cbind n    = search
+@cbind N    = search_reverse
+@cbind sc   = dehilight
+
+# Web search
+@cbind sg<Google:>_         = uri https://www.google.com/search?q=\@<encodeURIComponent(%r)>\@
+@cbind sd<Duck:>_           = uri https://duckduckgo.com/?q=\@<encodeURIComponent(%r)>\@
+@cbind sw<Wolfram:>_        = uri http://www.wolframalpha.com/input/?i=\@<encodeURIComponent(%r)>\@
+@cbind st<Tyda:>_           = uri http://tyda.se/search?w=\@<encodeURIComponent(%r)>\@
+@cbind sp<Wikipedia:>_      = uri http://en.wikipedia.org/w/index.php?title=Special:Search&search=\@<encodeURIComponent(%r)>\@&go=Go
+@cbind sG<Github:>_         = uri http://github.com/search?q=\@<encodeURIComponent(%r)>\@&type=Everything&repo=&langOverride=&start_value=1
+@cbind si<Imdb:>_           = uri http://www.imdb.com/find?s=all&q=\@<encodeURIComponent(%r)>\@
+@cbind ssb<SlackBuild:>_    = uri http://slackbuilds.org/result/?search=\@<encodeURIComponent(%r)>\@&sv=13.1
+@cbind sW<Wine:>_           = uri http://www.winehq.org/search?cx=partner-pub-0971840239976722%3Aw9sqbcsxtyf&cof=FORID%3A10&ie=UTF-8&q=\@<encodeURIComponent(%r)>\@%21&siteurl=www.winehq.org%2F
+
+# Uri opening
+@cbind oo<uri:>_     = uri %s
+@cbind O<uri:\@uri>_ = uri %s
+@cbind oh            = spawn @scripts_dir/load_url_from_history.sh uri
+@cbind ob            = spawn @scripts_dir/load_url_from_bookmarks.sh uri
+
+# Vimperator style link following
+set javascript_windows  = 1
+set follow_hint_keys    = qwertasdfg12345
+
+@cbind fl*              = script @scripts_dir/follow.js '@follow_hint_keys %s'
+@cbind tl*              = script @scripts_dir/follownew.js '@follow_hint_keys %s'
+
+# Tabs
+@cbind tn                   = event NEW_TAB_NEXT
+@cbind to<tab uri:>_        = event NEW_TAB %s
+@cbind tO<tab uri:\@uri>_   = event NEW_TAB %s
+@cbind th                   = spawn @scripts_dir/load_url_from_history.sh "event NEW_TAB"
+@cbind tb                   = spawn @scripts_dir/load_url_from_bookmarks.sh "event NEW_TAB"
+
+@cbind tq                   = exit
+@cbind tQ                   = event CLEAN_TABS
+
+@cbind tt                   = event NEXT_TAB
+@cbind tT                   = event PREV_TAB
+@bind <Page_Up>             = event NEXT_TAB
+@bind <Page_Down>           = event PREV_TAB
+
+@cbind ti<index:>_          = event GOTO_TAB %s
+
+# Article queue
+@cbind qpu          = spawn @scripts_dir/article_queue.py push
+@cbind qpo          = spawn @scripts_dir/article_queue.py pop
+@cbind qp _         = spawn @scripts_dir/article_queue.py pop %s
+@cbind qap          = spawn @scripts_dir/article_queue.py append
+@cbind qs           = spawn @scripts_dir/article_queue.py shift
+@cbind qn           = spawn @scripts_dir/article_queue.py forward
+@cbind qN           = spawn @scripts_dir/article_queue.py back
+@cbind ql           = spawn @scripts_dir/article_queue.py list
+
+# Bookmarks
+@cbind bb           = spawn @scripts_dir/insert_bookmark.sh
+@cbind bR           = spawn @scripts_dir/remove_bookmark.sh
+
+# Yank & Paste
+@cbind yu           = sh 'echo -n $6 | xclip -selection clipboard'
+@cbind yt           = sh 'echo -n $7 | xclip -selection clipboard'
+
+@cbind pc           = sh 'echo "event INJECT_KEYCMD `xclip -o -selection clipboard | sed s/\\\@/%40/g`" > $4'
+@cbind pp           = sh 'echo "event INJECT_KEYCMD `xclip -o -primary   clipboard | sed s/\\\@/%40/g`" > $4'
+@cbind ps           = sh 'echo "event INJECT_KEYCMD `xclip -o -secondary clipboard | sed s/\\\@/%40/g`" > $4'
+
+@ebind <Ctrl>v      = sh 'echo "event INJECT_KEYCMD `xclip -o -selection clipboard | sed s/\\\@/%40/g`" > $4'
+@ebind <Ctrl><Alt>v = sh 'echo "event INJECT_KEYCMD `xclip -o -primary   clipboard | sed s/\\\@/%40/g`" > $4'
+@ebind <Meta>V      = sh 'echo "event INJECT_KEYCMD `xclip -o -secondary clipboard | sed s/\\\@/%40/g`" > $4'
+
+# Mode switching
+@bind <Escape>      = event ESCAPE
+
+@cbind i            = @set_mode insert
+@bind <Ctrl>i       = @set_mode insert
+
+@bind <Meta>Q       = exit
+
+# Handy stuff
+@cbind !dump        = sh "echo dump_config > $4"
+@cbind !reload      = sh "sed '/^# === Post-load misc commands/,$d' $1 | grep '^set ' > $4"
+
+@cbind vs           = sh 'uzbl-browser -u "\@uri" -c /home/tree/.uzbl/config-viewsource'
+@cbind vp           = include /home/tree/.uzbl/config-private
+@cbind vP           = include /home/tree/.uzbl/config
+
+# --- Handling ---
+
+set default_mode    = command
+
+set command         = @mode_config command
+set insert          = @mode_config insert
+set stack           = @mode_config stack
+
+@command mode_indicator = C
+@command keycmd_events  = 1
+@command forward_keys   = 0
+@command modcmd_updates = 1
+
+@insert  mode_indicator = I
+@insert  forward_keys   = 1
+@insert  keycmd_events  = 0
+@insert  modcmd_updates = 0
+
+@stack   keycmd_events  = 1
+@stack   modcmd_updates = 1
+@stack   forward_keys   = 0
+@stack   mode_indicator = S
+
+# --- Appearance ---
+
+set status_top          = 0
+set switch_to_new_tabs  = 0
+set multiline_tabs      = 0
+set max_title_len       = 10
+set new_tab_title       =
+
+# Icon
+set icon                = @data_dir/uzbl.png
+set icon_path           = @icon
+
+# Styling
+set status_background   = #303030
+
+# Tabs
+set tab_colours             = foreground = "#888" background = "#303030"
+set tab_text_colours        = foreground = "#bbb"
+set selected_tab            = foreground = "#fff"
+set selected_tab_text       = foreground = "#99FF66"
+set tab_indicate_https      = 1
+set https_colours           = foreground = "#888"
+set https_text_colours      = foreground = "#9c8e2d"
+set selected_https          = foreground = "#fff"
+set selected_https_text     = foreground = "#fffe0a"
+
+# Statusbar
+set modcmd_style        = foreground="#DE47C0"
+set keycmd_style        = weight="light" foreground="red"
+set prompt_style        = foreground="grey"
+set cursor_style        = underline="single"
+set completion_style    = foreground="green"
+set hint_style          = weight = "bold"
+set progress_color      = "#fff"
+set uri_color           = "#99FF66"
+
+set mode_section      = <span background="khaki" foreground="black">[\@[\@mode_indicator]\@]</span>
+set keycmd_section    = [<span \@prompt_style>\@[\@keycmd_prompt]\@</span><span \@modcmd_style>\@modcmd</span><span \@keycmd_style>\@keycmd</span><span \@completion_style>\@completion_list</span>]
+set progress_section  = <span foreground=\@progress_color>\@[\@progress.output]\@</span>
+set uri_section       = <span foreground=\@uri_color>\@[\@uri]\@</span>
+set error_section     = <span foreground="red">\@[\@error]\@</span>
+set selected_section  = <span foreground="#fffe0a">\@[\@SELECTED_URI]\@</span>
+
+set status_format     = <span font_family="monospace">@mode_section @keycmd_section @progress_section @uri_section @selected_section @error_section</span>
+
+# Title format
+set title_format_long   = \@keycmd_prompt \@raw_modcmd \@raw_keycmd \@TITLE - Uzbl \@SELECTED_URI
+set title_format_short  = \@TITLE - Uzbl
+
+set progress.format  = %c
+
+set mode_section      = <span background="khaki" foreground="black">[\@[\@mode_indicator]\@]</span>
+set keycmd_section    = [<span \@prompt_style>\@[\@keycmd_prompt]\@</span><span \@modcmd_style>\@modcmd</span><span \@keycmd_style>\@keycmd</span><span \@completion_style>\@completion_list</span>]
+set progress_section  = <span foreground=\@progress_color>\@[\@progress.output]\@</span>
+set uri_section       = <span foreground=\@uri_color>\@[\@uri]\@</span>
+set error_section     = <span foreground="red">\@[\@error]\@</span>
+set selected_section  = <span foreground="#fffe0a">\@[\@SELECTED_URI]\@</span>
+
+set status_format     = <span font_family="monospace">@mode_section @keycmd_section @progress_section @uri_section @selected_section @error_section</span>
+
+# Title format
+set title_format_long   = \@keycmd_prompt \@raw_modcmd \@raw_keycmd \@TITLE - Uzbl \@SELECTED_URI
+set title_format_short  = \@TITLE - Uzbl
+
+set progress.format  = %c

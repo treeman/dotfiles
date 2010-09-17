@@ -116,11 +116,15 @@
     noremap <f1> :bprev!<CR>
     noremap <f2> :bnext!<CR>
 
+    " Get a list of buffers, type a number and enter for easy switching
+    nnoremap <F3> :buffers<CR>:buffer<Space>
+
     map <F4> :NERDTreeToggle<CR>
 
     " trim trailing spaces and convert tabs to spaces
     map <F5> :silent! %s/\s\+$//<CR>:retab<CR>
 
+    " Toggle between tabs or no tabs
     map <F6> :set expandtab<CR>
     map <F7> :set noexpandtab<CR>
 
@@ -139,4 +143,28 @@
 
     " fix mswin overriding my visual block mode
     map <C-V> <C-V>
+
+    " Easy window switching and closing
+    map <C-J> <C-W>j
+    map <C-K> <C-W>k
+    map <C-H> <C-W>h
+    map <C-L> <C-W>l
+
+    " Allow deleteing without updating the clipboard (yank buffer)
+    vnoremap x "_x
+    vnoremap X "_X
+
+    " Don't move cursor after paste
+    noremap p p`[
+    noremap P P`[
+
+    " Shift-tab to insert hard tab
+    imap <silent> <S-tab> <C-V><tab>
+
+    let mapleader = ","
+
+    " Toggle show whitespace, <leader> = mapleader
+    nmap <silent> <leader>l :set list!<CR>
+    nmap <silent> <leader>n :silent nohlsearch<CR>
 " }
+

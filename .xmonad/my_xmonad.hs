@@ -22,7 +22,7 @@ myKeys (XConfig {XMonad.modMask = modm}) = M.fromList $
 main = xmonad xfceConfig {
       modMask = mod4Mask
     , workspaces = ["1","2","3","4","5","6","7","8","9"]
-    , normalBorderColor = "#fdfdfd"
+    , normalBorderColor = "#000000"
     , focusedBorderColor = "#d00f0f"
     , borderWidth = 1
     , terminal = "xterm"

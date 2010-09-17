@@ -90,3 +90,18 @@ build
 StarCraft II/
 *.autosave
 .irssi
+.links
+.minecraft
+.mysql*
+.my*
+csn
+*.sql
+minecraft
+movies*
+sc2*
+schema*
+vim-cheat-sheet*
+usb-backup
+*xmonad-1*
+*xmonad-2*
+*xmonad-example*

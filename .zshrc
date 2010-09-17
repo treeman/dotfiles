@@ -14,7 +14,10 @@ setopt appendhistory autocd extendedglob
 # Used with slackbuilds to set 64bit environment
 export ARCH=x86_64
 
-export PATH=~/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin
+export JAVAWS_HOME=/usr/lib64/java/javaws
+
+export PATH=.:~/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin
+
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib
 
 export EDITOR=/usr/local/bin/vim
@@ -23,8 +26,6 @@ export BROWSER=/home/tree/bin/uzbl
 export TERM='xterm-256color'
 
 # Force the use of my beloved characters
-#export LANG=se_SV.utf8
-#export LESSCHARSET=utf-8
 export LANG=en_US.utf8
 
 autoload -U colors && colors
