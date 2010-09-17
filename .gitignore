@@ -90,6 +90,7 @@ torrents
 build
 StarCraft II/
 <<<<<<< HEAD
+<<<<<<< HEAD
 *.autosave
 .irssi
 .links
@@ -107,5 +108,7 @@ usb-backup
 *xmonad-1*
 *xmonad-2*
 *xmonad-example*
+=======
+>>>>>>> parent of 3b52a1b... Xmonad handles keybindings and bind for toggling window borders.
 =======
 >>>>>>> parent of 3b52a1b... Xmonad handles keybindings and bind for toggling window borders.
