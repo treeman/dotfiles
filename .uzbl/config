@@ -84,7 +84,7 @@ set cbind = @mode_bind command
 set ebind = @mode_bind global,-insert
 
 # Mouse events
-@bind  <Button2>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event NEW_TAB_NEXT \@SELECTED_URI" > $4; fi'
+@bind  <Button2>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event NEW_TAB \@SELECTED_URI" > $4; fi'
 @bind  <Button8>    = sh 'if [ "\@SELECTED_URI" ]; then echo -n \@SELECTED_URI | xclip -selection clipboard; fi'
 @bind  <Button9>    = sh 'if [ "\@SELECTED_URI" ]; then echo "event INJECT_KEYCMD \@SELECTED_URI" > $4; fi'
 
