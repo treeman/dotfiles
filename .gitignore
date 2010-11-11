@@ -108,3 +108,9 @@ usb-backup
 *xmonad-example*
 .crash_report*
 *astmatix*
+.cabal
+.ghc
+.mplayer
+.octoshape
+quicklisp
+

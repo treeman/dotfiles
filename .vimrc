@@ -29,6 +29,7 @@
         set termencoding=utf-8
         set fileencodings=ucs-bom,ascii,utf-8,latin1
     endif
+    set fenc=utf-8 " save files with åäö kthx
 
     " Platform-dependent bits
     if has("win32")

@@ -76,6 +76,7 @@ set history_handler     = @scripts_dir/history.sh
 @ignore_key <dead_*>
 @ignore_key <(null)>
 @ignore_key <XF*>
+@ignore_key <Super>
 
 # Different binding styles
 set bind  = @mode_bind global

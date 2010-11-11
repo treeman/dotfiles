@@ -1,16 +1,14 @@
 onemangas = {
-    "http://www.onemanga.com/One_Piece/",
     "http://www.onemanga.com/Hajime_no_Ippo/",
-    "http://www.onemanga.com/Naruto/",
 }
 
 thousandmangas = {
-    "http://www.1000manga.com/Historys_Strongest_Disciple_Kenichi/",
 }
 
 mangastreams = {
     "One Piece",
     "Naruto",
+    "History's Strongest Disciple Kenichi",
 }
 
 mangafoxs = {
@@ -78,7 +76,11 @@ function extract_onemanga_details(site)
     date = {}
     date.month, date.day, date.year = string.match(date_str, "(...).-(%d+).-(%d%d%d%d)")
     date.month = rev_months[date.month]
-    d.time = os.time(date)
+    if date.month ~= nil then
+        d.time = os.time(date)
+    else
+        d.time = 0
+    end
 
     return d
 end
@@ -124,7 +126,11 @@ function extract_mangastream_details(site, manga)
         date.hour = ""
         date.min = ""
     end
-    d.time = os.time(date)
+    if date.month ~= nil then
+        d.time = os.time(date)
+    else
+        d.time = 0
+    end
 
     return d
 end
@@ -141,10 +147,11 @@ function extract_mangafox_details(site)
     d.link = "http://www." .. d.domain .. link
     d.scans = ""
 
-    date = os.date("*t")
     date.sec = ""
     date.hour = ""
     date.min = ""
+    date.month = ""
+    date = os.date("*t")
     d.time = os.time(date)
 
     return d
@@ -153,3 +160,4 @@ end
 function format_manga_details(details)
     return details.manga.." "..details.chapter.." - "..details.domain
 end
+
