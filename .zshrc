@@ -51,14 +51,12 @@ white=%{$'\e[1;37m'%}
 CLEARCOL=$lgray
 PCHAR='$'
 
-# Different colors for different user
+# Different color and symbol for root
 if [ $(id -u) -eq 0 ]; then
     COL=$lred
     PCHAR='#'
-elif [ $(whoami) = tree ]; then
-    COL=$yellow
 else
-    COL=$pink
+    COL=$yellow
 fi
 
 PS1="$brown%n@%m:%~$CLEARCOL 
