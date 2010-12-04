@@ -1,0 +1,96 @@
+zstyle ':completion:*' completer _complete _ignored
+zstyle :compinstall filename '/home/tree/.zshrc'
+
+# Add autocompletion
+autoload -Uz compinit
+compinit
+
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory autocd extendedglob
+
+export PATH=$PATH:/sw/vim-71/bin
+
+# Force the use of my beloved characters
+export LANG=en_US.utf8
+
+autoload -U colors && colors
+
+#Color table from: http://www.understudy.net/custom.html
+black=%{$'\e[0;30m'%}
+red=%{$'\e[0;31m'%}
+green=%{$'\e[0;32m'%}
+brown=%{$'\e[0;33m'%}
+blue=%{$'\e[0;34m'%}
+purple=%{$'\e[0;35m'%}
+cyan=%{$'\e[0;36m'%}
+lgray=%{$'\e[0;37m'%}
+dgray=%{$'\e[1;30m'%}
+lred=%{$'\e[1;31m'%}
+lgreen=%{$'\e[1;32m'%}
+yellow=%{$'\e[1;33m'%}
+lblue=%{$'\e[1;34m'%}
+pink=%{$'\e[1;35m'%}
+lcyan=%{$'\e[1;36m'%}
+white=%{$'\e[1;37m'%}
+
+CLEARCOL=$lgray
+PCHAR='$'
+
+# Different colors for different user
+COL=$yellow
+
+PS1="$brown%n@%m:%~$CLEARCOL 
+$COL$PCHAR $CLEARCOL"
+PS2="$COL> $CLEARCOL"
+PS4="$COL+ $CLEARCOL"
+
+# Nice cursor colors
+# Show when in vi mode
+CVICOL="\033]12;Brown\007"
+CCOL="\033]12;#83C048\007"
+
+# Called when we change keymap mode
+zle-keymap-select () {
+    case $KEYMAP in
+        vicmd) print -n $CVICOL;;
+        viins) print -n $CCOL;;
+        main) print -n $CCOL;;
+    esac
+}
+zle -N zle-keymap-select
+
+# Called when new line
+zle-line-init () {
+    zle -K viins
+    echo -ne $CCOL
+}
+zle -N zle-line-init
+
+# Vi key bindings ty
+bindkey -v
+
+# Delete key actually deletes now
+bindkey "^[[3~"  delete-char
+bindkey "^[3;5~" delete-char
+
+alias lsd='ls -d *(-/DN)' # List dirs and symbolic links to dirs
+alias lsa='ls -d .*' # Only list hidden files
+
+alias path='echo -e ${PATH//:/\\n}'
+alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
+alias xterm='xterm'
+
+alias reboot='su -c reboot'
+alias shutdown='su -c "shutdown -h now"'
+
+alias rshred='shred -n 31337 -z -u'
+
+# A lot of work gone?
+alias .='cd ../'
+alias ..='cd ../../'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+
