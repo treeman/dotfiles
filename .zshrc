@@ -34,18 +34,62 @@ autoload -U colors && colors
 CLEARCOL=$'\e[0m'
 PCHAR='$'
 
+#Color table from: http://www.understudy.net/custom.html
+black=%{$'\e[0;30m'%}
+red=%{$'\e[0;31m'%}
+green=%{$'\e[0;32m'%}
+brown=%{$'\e[0;33m'%}
+blue=%{$'\e[0;34m'%}
+purple=%{$'\e[0;35m'%}
+cyan=%{$'\e[0;36m'%}
+lgray=%{$'\e[0;37m'%}
+dgray=%{$'\e[1;30m'%}
+lred=%{$'\e[1;31m'%}
+lgreen=%{$'\e[1;32m'%}
+yellow=%{$'\e[1;33m'%}
+lblue=%{$'\e[1;34m'%}
+pink=%{$'\e[1;35m'%}
+lcyan=%{$'\e[1;36m'%}
+white=%{$'\e[1;37m'%}
+
 if [ $(id -u) -eq 0 ]; then
-    COL=$'\e[1;31m'
+    COL=$lred
     PCHAR='#'
 elif [ $(whoami) = tree ]; then
-    COL=$'\e[1;33m'
+    COL=$yellow
 else
-    COL=$'\e[1;35m'
+    COL=$pink
 fi
 
-PS1="$COL$PCHAR $CLEARCOL"
+PS1="$brown%n@%m:%~$CLEARCOL 
+$COL$PCHAR $CLEARCOL"
 PS2="$COL> $CLEARCOL"
 PS4="$COL+ $CLEARCOL"
+
+# Nice cursor colors
+# Show when in vi mode
+CVICOL="\033]12;Brown\007"
+CCOL="\033]12;#83C048\007"
+
+# Called when we change keymap mode
+zle-keymap-select () {
+    case $KEYMAP in
+        vicmd) print -n $CVICOL;;
+        viins) print -n $CCOL;;
+        main) print -n $CCOL;;
+    esac
+}
+zle -N zle-keymap-select
+
+# Called when new line
+zle-line-init () {
+    zle -K viins
+    echo -ne $CCOL
+}
+zle -N zle-line-init
+
+# Vi key bindings ty
+bindkey -v
 
 # Enable ls color support
 if [ "$TERM" != "dumb" ]; then
@@ -65,5 +109,3 @@ alias shutdown='su -c "shutdown -h now"'
 
 alias rshred='shred -n 31337 -z -u'
 
-# Vim key bindings ty
-bindkey -v
