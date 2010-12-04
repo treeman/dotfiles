@@ -1,7 +1,7 @@
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '/home/tree/.zshrc'
 
-# Add autocompetion
+# Add autocompletion
 autoload -Uz compinit
 compinit
 
@@ -30,10 +30,6 @@ export LANG=en_US.utf8
 
 autoload -U colors && colors
 
-# I prefer a simple color-coded prompt for different users
-CLEARCOL=$'\e[0m'
-PCHAR='$'
-
 #Color table from: http://www.understudy.net/custom.html
 black=%{$'\e[0;30m'%}
 red=%{$'\e[0;31m'%}
@@ -52,6 +48,10 @@ pink=%{$'\e[1;35m'%}
 lcyan=%{$'\e[1;36m'%}
 white=%{$'\e[1;37m'%}
 
+CLEARCOL=$lgray
+PCHAR='$'
+
+# Different colors for different user
 if [ $(id -u) -eq 0 ]; then
     COL=$lred
     PCHAR='#'
@@ -91,6 +91,10 @@ zle -N zle-line-init
 # Vi key bindings ty
 bindkey -v
 
+# Delete key actually deletes now
+bindkey "^[[3~"  delete-char
+bindkey "^[3;5~" delete-char
+
 # Enable ls color support
 if [ "$TERM" != "dumb" ]; then
     eval `dircolors -b`
@@ -108,4 +112,10 @@ alias reboot='su -c reboot'
 alias shutdown='su -c "shutdown -h now"'
 
 alias rshred='shred -n 31337 -z -u'
+
+# A lot of work gone?
+alias .='cd ../'
+alias ..='cd ../../'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
 
