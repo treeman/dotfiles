@@ -113,4 +113,9 @@ usb-backup
 .mplayer
 .octoshape
 quicklisp
-
+.filezilla
+.atomo_history
+.allegro*
+.mpd/
+music
+.sh_history

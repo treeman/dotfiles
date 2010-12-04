@@ -63,5 +63,7 @@ alias xterm='xterm'
 alias reboot='su -c reboot'
 alias shutdown='su -c "shutdown -h now"'
 
+alias rshred='shred -n 31337 -z -u'
+
 # Vim key bindings ty
 bindkey -v

@@ -24,12 +24,18 @@
     set noerrorbells " don't make a noise
 
     " The only sensible setup for Unicode editing.
-    if v:version >= 600
-        set encoding=utf-8
-        set termencoding=utf-8
-        set fileencodings=ucs-bom,ascii,utf-8,latin1
+    if has("multi_byte")
+        "if &termencoding == ""
+            "let &termencoding = &encoding
+        "endif
+        set bomb
+        set fileencoding=utf-8
+        "set encoding=utf-8
+        "set termencoding=utf-8
+        "setglobal fileencoding=utf-8 bomb
+        "set fileencodings=ucs-bom,utf-8,latin1
+        "set fenc=utf-8 " save files with åäö kthx
     endif
-    set fenc=utf-8 " save files with åäö kthx
 
     " Platform-dependent bits
     if has("win32")
