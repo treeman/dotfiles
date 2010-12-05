@@ -69,22 +69,24 @@ PS4="$COL+ $CLEARCOL"
 CVICOL="\033]12;Brown\007"
 CCOL="\033]12;#83C048\007"
 
+if [[ ! -o login ]]; then
 # Called when we change keymap mode
-zle-keymap-select () {
-    case $KEYMAP in
-        vicmd) print -n $CVICOL;;
-        viins) print -n $CCOL;;
-        main) print -n $CCOL;;
-    esac
-}
-zle -N zle-keymap-select
+    zle-keymap-select () {
+        case $KEYMAP in
+            vicmd) print -n $CVICOL;;
+            viins) print -n $CCOL;;
+            main) print -n $CCOL;;
+        esac
+    }
+    zle -N zle-keymap-select
 
 # Called when new line
-zle-line-init () {
-    zle -K viins
-    echo -ne $CCOL
-}
-zle -N zle-line-init
+    zle-line-init () {
+        zle -K viins
+        echo -ne $CCOL
+    }
+    zle -N zle-line-init
+fi
 
 # Vi key bindings ty
 bindkey -v
@@ -104,12 +106,18 @@ alias lsa='ls -d .*' # Only list hidden files
 
 alias path='echo -e ${PATH//:/\\n}'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
-alias xterm='xterm'
+alias xterm='xterm' # Hurr..?
 
+# Just lazy
 alias reboot='su -c reboot'
 alias shutdown='su -c "shutdown -h now"'
 
 alias rshred='shred -n 31337 -z -u'
+
+# Some fun aliases
+alias filetop="watch -d -n 2 'df; ls -FlAt;'"
+alias hackernews="watch -n 120 'lynx -dump http://news.ycombinator.com'"
+alias inram='dd if=/dev/mem | cat | strings'
 
 # A lot of work gone?
 alias .='cd ../'
