@@ -32,12 +32,12 @@ function get_manga_info()
         end
     end
 
-    mangastream = conky_parse("${curl http://mangastream.com/manga}")
-    if mangastream ~= "" then
-        for k, manga in pairs(mangastreams) do
-            table.insert(details, extract_mangastream_details(mangastream, manga))
-        end
-    end
+    --mangastream = conky_parse("${curl http://mangastream.com/manga}")
+    --if mangastream ~= "" then
+        --for k, manga in pairs(mangastreams) do
+            --table.insert(details, extract_mangastream_details(mangastream, manga))
+        --end
+    --end
 
     --for k, site in pairs(mangafoxs) do
         --big_site = conky_parse("${curl "..site.."}")

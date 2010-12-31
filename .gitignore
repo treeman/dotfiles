@@ -119,3 +119,6 @@ quicklisp
 .mpd/
 music
 .sh_history
+timelapse
+.mtpaint_fonts
+.gconfd
