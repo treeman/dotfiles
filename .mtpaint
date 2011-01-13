@@ -1,8 +1,8 @@
 # Remove this file to restore default settings.
 
 window_y = 26
-window_w = 728
-window_h = 385
+window_w = 1278
+window_h = 772
 toolbar3 = false
 toolbar_settings_y = 180
 toolbar_settings_x = 693
@@ -57,4 +57,3 @@ lastTextFilename = /usr/lib64/X11/fonts/misc//3270egt8.pcf.gz
 file14 = /home/tree/projects/hell_tycoon/mouse.png
 file15 = /home/tree/projects/hell_tycoon/koncept.png
 file16 = /home/tree/projects/hell_tycoon/floor.png
-window_x = 550
