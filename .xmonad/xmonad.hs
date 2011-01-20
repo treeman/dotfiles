@@ -10,15 +10,16 @@ import XMonad.Hooks.ManageHelpers
 import qualified Data.Map as M
 
 myKeys (XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm,                   xK_w), spawn "uzbl")
-    , ((modm,                   xK_m), spawn "spotify")
-    , ((modm,                   xK_p), spawn "pidgin")
-    , ((modm,                   xK_f), spawn "firefox")
-    , ((modm,                   xK_s), spawn "skype")
-    , ((modm,                   xK_i), spawn "xterm -e irssi")
-    , ((modm,                   xK_c), spawn "google-chrome")
-    , ((modm,                   xK_t), spawn "mtpaint")
-    --, ((modm,                   xK_h), spawn "Thunar")
+    [ ((modm .|. controlMask,   xK_w), spawn "uzbl")
+    , ((modm .|. controlMask,   xK_m), spawn "spotify")
+    , ((modm .|. controlMask,   xK_p), spawn "pidgin")
+    , ((modm .|. controlMask,   xK_f), spawn "firefox")
+    , ((modm .|. controlMask,   xK_s), spawn "skype")
+    , ((modm .|. controlMask,   xK_i), spawn "xterm -e irssi")
+    , ((modm .|. controlMask,   xK_c), spawn "google-chrome")
+    , ((modm .|. controlMask,   xK_t), spawn "mtpaint")
+    , ((modm .|. controlMask,   xK_h), spawn "Thunar")
+
     , ((modm .|. shiftMask,     xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.jpg -d")
     , ((modm .|. shiftMask,     xK_b), withAll toggleBorder)
     ]
