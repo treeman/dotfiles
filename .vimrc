@@ -1,177 +1,178 @@
-" Basics {
-    if has("syntax")
-        syntax on " highlight
-        set t_Co=256
-        colorscheme ir_black
+
+" Appearence
+if has("syntax")
+    syntax on " highlight
+    set t_Co=256
+    colorscheme ir_black
+endif
+set background=dark
+
+set noerrorbells " don't make a noise
+set novisualbell " don't blink
+
+set relativenumber " display relative line numbers
+
+set incsearch " highlight as you type search phrase
+set lazyredraw " don't redraw while running macros
+
+set showmatch " show matching brackets
+set matchtime=5 " how many tenths of a second to blink matching brackets for
+
+set numberwidth=5 " we are good up to 99999 lines
+set scrolloff=10 " keep 10 lines top and bottom for scope
+
+set list " show tabs
+set listchars=tab:>-,trail:- " show tabs and trailing
+
+" UI
+set laststatus=2 " always show the status line
+set linespace=0 " don't insert any extra pixel lines between rows
+set report=0 " tell us when anything is changed via :...
+set shortmess=aOstT " shortens messages to aviod 'perss a key' prompt
+set ruler " always show current positions along the bottom
+set showcmd " show the command being typed
+set completeopt= "don't use a pop up menu for completions
+
+" set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+    " %F: full path
+    " %m%r%h%w: modified/readonly/help/preview flags
+    " [%L]: num lines
+    " [%{&ff}]: fileformat
+    " %y: curr syntax
+    " [%p%%]: current % into file
+    " %041: curr line
+    " %04v: curr column
+" cream:
+" filename |fileformat:encode:??|?? crap wrap column width:left tabs:4 col/row
+" set statusline=%<%F\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
+
+" Text formatting
+set expandtab " no real tabs please!
+set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
+set shiftwidth=4 " auto indent amount when using indents ex >> and <<
+set softtabstop=4 " when hitting tab or backspace, how many spaces should a tab be
+set tabstop=4 " tabs width
+set autoindent " keep indenting after newline
+set smartindent
+
+"set nowrap " do not wrap lines
+
+" Searching
+" Use regular regexes plz
+nnoremap / /\v
+vnoremap / /\v
+
+set infercase " case inferred by default
+set ignorecase " case insensitive by default
+set smartcase " if there are caps, go case-sensitive
+
+set incsearch
+set hlsearch
+
+" Handling
+set nocompatible " explicitly get out of vi-compatible mode
+set noexrc " don't use the local version of .(g)vimrc and .exrc
+
+set modelines=0 " security exploits?
+
+set autochdir " always switch to the current file directory
+set backspace=indent,eol,start " make backspace more flexible
+
+set backupdir=~/.vim/backup " where to put backup
+set backup " make backup files
+set directory=~/.vim/tmp " directory to place swap files in
+
+set clipboard+=unnamed " share windows clipboard
+set hidden " you can change buffers without saving
+
+set mouse=a " use mouse everwhere
+
+" The only sensible setup for Unicode editing.
+if has("multi_byte")
+    set bomb
+    set encoding=utf-8
+    setglobal fileencoding=utf-8 bomb
+    set fileencodings=ucs-bom,utf-8,latin1
+    set fenc=utf-8 " save files with åäö kthx
+
+    if &termencoding == ""
+        let &termencoding = &encoding
     endif
 
-    set nocompatible " explicitly get out of vi-compatible mode
-    set noexrc " don't use the local version of .(g)vimrc and .exrc
-    set background=dark
-" }
+    "If it doesn't work maybe just use
+    "set fileencoding=utf-8
+endif
 
-" General {
-    set autochdir " always switch to the current file directory
-    set backspace=indent,eol,start " make backspace more flexible
+" Platform-dependent bits
+if has("win32")
+    set fileformats=dos,unix,mac
+    source $VIMRUNTIME/mswin.vim " windows way of copy paste
+elseif has("unix")
+    set fileformats=unix,dos,mac
+endif
 
-    set backupdir=~/.vim/backup " where to put backup
-    set backup " make backup files
-    set directory=~/.vim/tmp " directory to place swap files in
+" Mappings
 
-    set clipboard+=unnamed " share windows clipboard
-    set hidden " you can change buffers without saving
-    set mouse=a " use mouse everwhere
-    set noerrorbells " don't make a noise
+let mapleader = ","
 
-    " The only sensible setup for Unicode editing.
-    if has("multi_byte")
-        "if &termencoding == ""
-            "let &termencoding = &encoding
-        "endif
-        set bomb
-        set fileencoding=utf-8
-        "set encoding=utf-8
-        "set termencoding=utf-8
-        "setglobal fileencoding=utf-8 bomb
-        "set fileencodings=ucs-bom,utf-8,latin1
-        "set fenc=utf-8 " save files with åäö kthx
-    endif
+" Toggle show whitespace, <leader> = mapleader
+nmap <silent> <leader>l :set list!<CR>
+" Toggle search highlighting
+nmap <silent> <leader>n :silent nohlsearch<CR>
 
-    " Platform-dependent bits
-    if has("win32")
-        set fileformats=dos,unix,mac
-        source $VIMRUNTIME/mswin.vim " windows way of copy paste
-    elseif has("unix")
-        set fileformats=unix,dos,mac
-    endif
+" Bind buffert toggling to f1/f2
+noremap <f1> :bprev!<CR>
+noremap <f2> :bnext!<CR>
 
-    " :language en
-" }
+" Get a list of buffers, type a number and enter for easy switching
+nnoremap <F3> :buffers<CR>:buffer<Space>
 
-" Vim UI {
-    " set cursorcolumn " highlight the current column
-    set incsearch " highlight as you type search phrase
-    set laststatus=2 " always show the status line
-    set lazyredraw " don't redraw while running macros
-    set linespace=0 " don't insert any extra pixel lines between rows
-    set matchtime=5 " how many tenths of a second to blink matching brackets for
-    set nostartofline " leave my cursor where it was
-    set novisualbell " don't blink
-    set number " turn on line numbers
-    set numberwidth=5 " we are good up to 99999 lines
-    set report=0 " tell us when anything is changed via :...
-    set ruler " always show current positions along the bottom
-    set scrolloff=10 " keep 10 lines top and bottom for scope
-    set shortmess=aOstT " shortens messages to aviod 'perss a key' prompt
-    set showcmd " show the command being typed
-    set showmatch " show matching brackets
-    set sidescrolloff=10 " Keep 5 lines at the size
+map <F4> :NERDTreeToggle<CR>
 
-    set list " show tabs
-    set listchars=tab:>-,trail:- "show tabs and trailing
-    set clipboard=unnamed "yank to cross-vim register, after you close it
+" trim trailing spaces and convert tabs to spaces
+map <F5> :silent! %s/\s\+$//<CR>:retab<CR>
+nnoremap <leader>w :silent! %s/\s\+$//<CR>:retab<CR>
 
-    " set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
-        " %F: full path
-        " %m%r%h%w: modified/readonly/help/preview flags
-        " [%L]: num lines
-        " [%{&ff}]: fileformat
-        " %y: curr syntax
-        " [%p%%]: current % into file
-        " %041: curr line
-        " %04v: curr column
-        " %041: curr line
-        " %04v: curr column
-    " cream:
-    " filename |fileformat:encode:??|?? crap wrap column width:left tabs:4 col/row
-    " set statusline=%<%F\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-    set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
-" }
+" Toggle between tabs or no tabs
+map <F6> :set expandtab<CR>
+map <F7> :set noexpandtab<CR>
 
-" Text formatting/layout {
-    set completeopt= "don't use a pop up menu for completions
-    set expandtab " no real tabs please!
-    set ignorecase " case insensitive by default
-    set infercase " case inferred by default
-    set nowrap " do not wrap lines
-    set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
-    set smartcase " if there are caps, go case-sensitive
-    set shiftwidth=4 " auto indent amount when using indents ex >> and <<
-    set softtabstop=4 " when hitting tab or backspace, how many spaces should a tab be
-    set tabstop=4 " tabs width
-    set autoindent " keep indenting after newline
-    set smartindent
-" }
+" Shift-tab to insert hard tab
+imap <silent> <S-tab> <C-V><tab>
 
-" folding
+" Reselect just pasted text
+nnoremap <leader>v V`]
 
-    set foldenable " turn on folding
-    set foldmarker={,} " fold c style brackets
-    set foldmethod=marker " fold on the marker
-    set foldlevel=100 " don't autofold anything, but I can still fold manually
-    set foldopen=block,hor,mark,percent,quickfix,tag " what movements opens the fold
+" Remove arrow keys :)
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+map <up> <nop>
 
-    " custom fold text function
-    " cleaner than the default
-    function! SimpleFoldText()
-        return getline(v:foldstart).' '
-    endfunction
-    set foldtext=SimpleFoldText()
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+imap <up> <nop>
 
-" Mappings {
-    " Bind buffert toggling to f1/f2
-    noremap <f1> :bprev!<CR>
-    noremap <f2> :bnext!<CR>
+" Move screen lines instead of real lines
+nnoremap j gj
+nnoremap k gk
 
-    " Get a list of buffers, type a number and enter for easy switching
-    nnoremap <F3> :buffers<CR>:buffer<Space>
+" fix mswin overriding my visual block mode
+map <C-V> <C-V>
 
-    map <F4> :NERDTreeToggle<CR>
+" Easy window switching and closing
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-H> <C-W>h
+map <C-L> <C-W>l
 
-    " trim trailing spaces and convert tabs to spaces
-    map <F5> :silent! %s/\s\+$//<CR>:retab<CR>
+" Allow deleteing without updating the clipboard (yank buffer)
+vnoremap x "_x
+vnoremap X "_X
 
-    " Toggle between tabs or no tabs
-    map <F6> :set expandtab<CR>
-    map <F7> :set noexpandtab<CR>
-
-    " Remove arrow keys :)
-    map <down> <nop>
-    map <left> <nop>
-    map <right> <nop>
-    map <up> <nop>
-
-    imap <down> <nop>
-    imap <left> <nop>
-    imap <right> <nop>
-    imap <up> <nop>
-
-    imap <F6> \t
-
-    " fix mswin overriding my visual block mode
-    map <C-V> <C-V>
-
-    " Easy window switching and closing
-    map <C-J> <C-W>j
-    map <C-K> <C-W>k
-    map <C-H> <C-W>h
-    map <C-L> <C-W>l
-
-    " Allow deleteing without updating the clipboard (yank buffer)
-    vnoremap x "_x
-    vnoremap X "_X
-
-    " Don't move cursor after paste
-    noremap p p`[
-    noremap P P`[
-
-    " Shift-tab to insert hard tab
-    imap <silent> <S-tab> <C-V><tab>
-
-    let mapleader = ","
-
-    " Toggle show whitespace, <leader> = mapleader
-    nmap <silent> <leader>l :set list!<CR>
-    nmap <silent> <leader>n :silent nohlsearch<CR>
-" }
+" Don't move cursor after paste
+noremap p p`[
+noremap P P`[
 
