@@ -19,6 +19,7 @@ myKeys (XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_c), spawn "google-chrome")
     , ((modm .|. controlMask,   xK_t), spawn "mtpaint")
     , ((modm .|. controlMask,   xK_h), spawn "Thunar")
+    , ((modm .|. controlMask,   xK_e), spawn "emacs")
 
     , ((modm .|. shiftMask,     xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.jpg -d")
     , ((modm .|. shiftMask,     xK_b), withAll toggleBorder)

@@ -16,7 +16,7 @@ export ARCH=x86_64
 
 export JAVAWS_HOME=/usr/lib64/java/javaws
 
-export PATH=.:~/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin
+export PATH=.:~/bin:~/.cabal/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin
 
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib
 
