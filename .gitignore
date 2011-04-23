@@ -128,3 +128,17 @@ blog/
 lib/
 share/
 .thunderbird
+.mtpaint
+.vim/netrwhist
+.gEDA
+.gitk
+.lftp
+.lmmsrc.xml
+.lyx
+.ngspice_history
+.octave_hist
+.opera
+.vbam
+Software.ini
+gameboyadvance
+nintendo-ds
