@@ -1,0 +1,38 @@
+[user]
+    name = Jonas Hietala
+    email = tradet.h@gmail.com
+
+[alias]
+    # Stuff mostly taken from
+    # http://www.metacircus.com/hacking/2011/02/18/play-git-like-a-violin.html
+
+    # Interactive mode to make complex commits
+    ai = add --interactive
+
+    # Commits
+    c = commit
+    cm = commit -m
+    cam = commit -a -m
+    # Amend to previous commit
+    ca = commit --amend
+    caa = commit -a --amend -C HEAD
+
+    # Resets
+    # Soft
+    r = reset
+    r1 = reset HEAD^
+    r2 = reset HEAD^^
+    # Hard
+    rh = reset --hard
+    rh1 = reset HEAD^ --hard
+    rh2 = reset HEAD^^ --hard
+
+    # Common shortcuts
+    s = status
+    d = diff
+    a = add
+    co = checkout
+    b = branch
+    l = log
+    f = fetch
+

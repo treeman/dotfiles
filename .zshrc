@@ -16,9 +16,11 @@ export ARCH=x86_64
 
 export JAVAWS_HOME=/usr/lib64/java/javaws
 
-export PATH=.:~/bin:~/.cabal/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin
+export PATH=.:~/bin:~/.cabal/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin:/usr/share/texmf/bin
 
-export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib
+export MANPATH=/usr/share/texmf/doc/man:$MANPATH
+
+export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/lib64:/usr/lib64:/usr/local/lib64
 
 export EDITOR=/usr/local/bin/vim
 export SHELL=/bin/zsh
@@ -104,9 +106,10 @@ fi
 alias lsd='ls -d *(-/DN)' # List dirs and symbolic links to dirs
 alias lsa='ls -d .*' # Only list hidden files
 
+alias g='git' # Yay go git go!
+
 alias path='echo -e ${PATH//:/\\n}'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
-alias xterm='xterm' # Hurr..?
 
 # Just lazy
 alias reboot='su -c reboot'
@@ -114,9 +117,12 @@ alias shutdown='su -c "shutdown -h now"'
 
 alias rshred='shred -n 31337 -z -u'
 
-# Some fun aliases
+# Lazy ssh
+alias forest='ssh forest'
+alias liu='ssh liu'
+
+# Some fun and useful
 alias filetop="watch -d -n 2 'df; ls -FlAt;'"
-alias hackernews="watch -n 120 'lynx -dump http://news.ycombinator.com'"
 alias inram='dd if=/dev/mem | cat | strings'
 
 # A lot of work gone?
