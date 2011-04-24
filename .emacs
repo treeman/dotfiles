@@ -1,7 +1,10 @@
 ﻿(add-to-list 'load-path "~/.emacs.d/")
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-billw)
+(add-to-list 'load-path "~/.emacs.d/emacs-color-theme-solarized/")
+
+; Some theme I'm testing
+;(require 'color-theme)
+;(color-theme-initialize)
+;(color-theme-billw)
 
 ; Slightly smaller than regular
 (set-face-attribute 'default (selected-frame) :height 90)

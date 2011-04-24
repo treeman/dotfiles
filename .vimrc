@@ -1,4 +1,10 @@
-﻿
+﻿" Must be first, because it changes other options
+set nocompatible " explicitly get out of vi-compatible mode
+
+" Use pathogen to modify the runtime path to include plugin under ~/.vim/bundle
+call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
+
 " Appearence
 if has("syntax")
     syntax on " highlight
@@ -10,7 +16,10 @@ set background=dark
 set noerrorbells " don't make a noise
 set novisualbell " don't blink
 
+set title " change the terminals title
+
 set relativenumber " display relative line numbers
+" set number " show line numbers
 
 set incsearch " highlight as you type search phrase
 set lazyredraw " don't redraw while running macros
@@ -51,12 +60,13 @@ set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
 set expandtab " no real tabs please!
 set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
 set shiftwidth=4 " auto indent amount when using indents ex >> and <<
-set softtabstop=4 " when hitting tab or backspace, how many spaces should a tab be
+set softtabstop=4 " when hitting tab or backspace, how wide should a tab be
 set tabstop=4 " tabs width
 set autoindent " keep indenting after newline
 set smartindent
+set smarttab " insert tabs on the start according to shiftwidth, not tabstop
 
-"set nowrap " do not wrap lines
+set nowrap " do not wrap lines
 
 " Searching
 " Use regular regexes plz
@@ -71,7 +81,6 @@ set incsearch
 set hlsearch
 
 " Handling
-set nocompatible " explicitly get out of vi-compatible mode
 set noexrc " don't use the local version of .(g)vimrc and .exrc
 
 set modelines=0 " security exploits?
@@ -81,12 +90,18 @@ set backspace=indent,eol,start " make backspace more flexible
 
 set backupdir=~/.vim/backup " where to put backup
 set backup " make backup files
-set directory=~/.vim/tmp " directory to place swap files in
+set noswapfile " just annoying when I forcefully kill vim with the recovery
+
+" Don't care about these files plz
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali
 
 set clipboard+=unnamed " share windows clipboard
 set hidden " you can change buffers without saving
 
 set mouse=a " use mouse everwhere
+
+" Detect file type by extensions for context specifics
+filetype plugin indent on
 
 " The only sensible setup for Unicode editing.
 if has("multi_byte")
@@ -121,9 +136,12 @@ nmap <silent> <leader>l :set list!<CR>
 " Toggle search highlighting
 nmap <silent> <leader>n :silent nohlsearch<CR>
 
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
 " Bind buffert toggling to f1/f2
-noremap <f1> :bprev!<CR>
-noremap <f2> :bnext!<CR>
+noremap <F1> :bprev!<CR>
+noremap <F2> :bnext!<CR>
 
 " Get a list of buffers, type a number and enter for easy switching
 nnoremap <F3> :buffers<CR>:buffer<Space>
