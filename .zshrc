@@ -1,3 +1,10 @@
+# Vim version 7.3
+# Built with features
+# ./configure --with-features=huge
+#             --enable-rubyinterp --disable-gui
+#             --with-compiledby="Herp Derp <herp@derp.nu>"
+#             --prefix=/usr
+
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '/home/tree/.zshrc'
 
