@@ -119,6 +119,7 @@ alias rshred='shred -n 31337 -z -u'
 
 # Lazy ssh
 alias forest='ssh forest'
+alias eforest='ssh eforest'
 alias liu='ssh liu'
 
 # Some fun and useful
