@@ -1,60 +1,37 @@
-﻿" Must be first, because it changes other options
+﻿"
+" Vim version 7.3
+" Configured with
+" ./configure --with-features=huge
+"             --enable-rubyinterp --disable-gui
+"             --with-compiledby="Herp Derp <herp@derp.nu>"
+"             --prefix=/usr
+
+" Must be first, because it changes other options
 set nocompatible " explicitly get out of vi-compatible mode
 
 " Use pathogen to modify the runtime path to include plugin under ~/.vim/bundle
+filetype off " force reloading after pathogen call
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
+filetype plugin indent on " detect file type by extensions for context specifics
 
-" Appearence
-if has("syntax")
-    syntax on " highlight
-    set t_Co=256
-    colorscheme ir_black
-endif
-set background=dark
+" Handling
+set noexrc " don't use the local version of .(g)vimrc and .exrc
+set modelines=0 " security exploits?
+set autochdir " always switch to the current file directory
+set backspace=indent,eol,start " make backspace more flexible
 
-set noerrorbells " don't make a noise
-set novisualbell " don't blink
+set backupdir=~/.vim/backup " where to put backup
+set backup " make backup files
+set noswapfile " just annoying when I forcefully kill vim with the recovery
+set directory=~/.vim/tmp,~/tmp,/tmp " store swaps here if we do enable it
 
-set title " change the terminals title
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " don't care
 
-set relativenumber " display relative line numbers
-" set number " show line numbers
+set clipboard+=unnamed " share windows clipboard
+set hidden " you can change buffers without saving
 
-set incsearch " highlight as you type search phrase
-set lazyredraw " don't redraw while running macros
-
-set showmatch " show matching brackets
-set matchtime=5 " how many tenths of a second to blink matching brackets for
-
-set numberwidth=5 " we are good up to 99999 lines
-set scrolloff=10 " keep 10 lines top and bottom for scope
-
-set list " show tabs
-set listchars=tab:>-,trail:- " show tabs and trailing
-
-" UI
-set laststatus=2 " always show the status line
-set linespace=0 " don't insert any extra pixel lines between rows
-set report=0 " tell us when anything is changed via :...
-set shortmess=aOstT " shortens messages to aviod 'perss a key' prompt
-set ruler " always show current positions along the bottom
-set showcmd " show the command being typed
-set completeopt= "don't use a pop up menu for completions
-
-" set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
-    " %F: full path
-    " %m%r%h%w: modified/readonly/help/preview flags
-    " [%L]: num lines
-    " [%{&ff}]: fileformat
-    " %y: curr syntax
-    " [%p%%]: current % into file
-    " %041: curr line
-    " %04v: curr column
-" cream:
-" filename |fileformat:encode:??|?? crap wrap column width:left tabs:4 col/row
-" set statusline=%<%F\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
+let g:yankring_history_dir = '$HOME/.vim/tmp'
 
 " Text formatting
 set expandtab " no real tabs please!
@@ -66,42 +43,63 @@ set autoindent " keep indenting after newline
 set smartindent
 set smarttab " insert tabs on the start according to shiftwidth, not tabstop
 
-set nowrap " do not wrap lines
+" Appearence
+set background=dark
+if &t_Co >= 256 || has("gui_running")
+    colorscheme ir_black
+endif
+
+if &t_Co > 2 || has("syntax") || has("gui_running")
+    syntax on " highlight
+endif
+
+set noerrorbells " don't make a noise
+set novisualbell " don't blink
+
+set title " change the terminals title
+
+set relativenumber " display relative line numbers
+" set number " show line numbers
+
+set showmatch " show matching brackets
+set matchtime=5 " how many tenths of a second to blink matching brackets for
+
+set numberwidth=5 " we are good up to 99999 lines
+set scrolloff=4 " keep 4 lines top and bottom for scope
+
+set list " show tabs
+set listchars=tab:>-,trail:- " show tabs and trailing
+
+set lazyredraw " don't redraw while running macros
+
+" UI
+set laststatus=2 " always show the status line
+set linespace=0 " don't insert any extra pixel lines between rows
+set report=0 " tell us when anything is changed via :...
+set shortmess=aOstT " shortens messages to aviod 'perss a key' prompt
+set ruler " always show current positions along the bottom
+set showcmd " show the command being typed
+set completeopt= "don't use a pop up menu for completions
+
+set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
+
+"set nowrap " do not wrap lines
 
 " Searching
-" Use regular regexes plz
+" use regular regexes plz
 nnoremap / /\v
 vnoremap / /\v
+
+set gdefault " global searching/replacing for default
 
 set infercase " case inferred by default
 set ignorecase " case insensitive by default
 set smartcase " if there are caps, go case-sensitive
 
-set incsearch
-set hlsearch
-
-" Handling
-set noexrc " don't use the local version of .(g)vimrc and .exrc
-
-set modelines=0 " security exploits?
-
-set autochdir " always switch to the current file directory
-set backspace=indent,eol,start " make backspace more flexible
-
-set backupdir=~/.vim/backup " where to put backup
-set backup " make backup files
-set noswapfile " just annoying when I forcefully kill vim with the recovery
-
-" Don't care about these files plz
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali
-
-set clipboard+=unnamed " share windows clipboard
-set hidden " you can change buffers without saving
+set hlsearch " highlight search terms
+set incsearch " show search mathes as you type
 
 set mouse=a " use mouse everwhere
-
-" Detect file type by extensions for context specifics
-filetype plugin indent on
 
 " The only sensible setup for Unicode editing.
 if has("multi_byte")
@@ -128,7 +126,6 @@ elseif has("unix")
 endif
 
 " Mappings
-
 let mapleader = ","
 
 " Toggle show whitespace, <leader> = mapleader
@@ -185,12 +182,39 @@ map <C-J> <C-W>j
 map <C-K> <C-W>k
 map <C-H> <C-W>h
 map <C-L> <C-W>l
+nmap <leader>q :q<CR>
+nmap <leader>o <C-w>v<C-w>l
+nmap <leader>l <C-w>s
 
 " Allow deleteing without updating the clipboard (yank buffer)
 vnoremap x "_x
 vnoremap X "_X
 
+nmap <silent> <leader>d "_d
+vmap <silent> <leader>d "_d
+
+" Quick yank to the end of the line
+nmap Y y$
+
+" Fast yank/paste to OS clipboard
+nmap <leader>y "+y
+nmap <leader>Y "+yy
+nmap <leader>p "+p
+nmap <leader>P "+P
+
 " Don't move cursor after paste
 noremap p p`[
 noremap P P`[
+
+" Quick alignment of text
+nmap <leader>al :left<CR>
+nmap <leader>ar :right<CR>
+nmap <leader>ac :center<CR>
+
+" Sudo to write
+cmap w!! w !sudo tee % >/dev/null
+
+" Jump to matching pairs easily, with Tab
+nnoremap <Tab> %
+vnoremap <Tab> %
 
