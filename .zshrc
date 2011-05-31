@@ -1,10 +1,3 @@
-# Vim version 7.3
-# Built with features
-# ./configure --with-features=huge
-#             --enable-rubyinterp --disable-gui
-#             --with-compiledby="Herp Derp <herp@derp.nu>"
-#             --prefix=/usr
-
 zstyle ':completion:*' completer _complete _ignored
 zstyle :compinstall filename '/home/tree/.zshrc'
 
@@ -132,6 +125,8 @@ alias liu='ssh liu'
 # Some fun and useful
 alias filetop="watch -d -n 2 'df; ls -FlAt;'"
 alias inram='dd if=/dev/mem | cat | strings'
+alias packages="fgrep UNCOMPRESSED /var/log/packages/* | awk -F: '{print \$3,\$1}' | sort -rh" # list installed packages by size
+alias mtr='mtr --curses' # don't want an ugly gui
 
 # A lot of work gone?
 alias .='cd ../'

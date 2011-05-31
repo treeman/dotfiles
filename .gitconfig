@@ -35,4 +35,6 @@
     b = branch
     l = log
     f = fetch
+    p = push
+    pu = pull
 
