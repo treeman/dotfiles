@@ -36,7 +36,7 @@ color1 bab09e
 color2 baa47f
 
 #O.o
-lua_load /home/tree/.conky/ticker.lua
+#lua_load /home/tree/.conky/ticker.lua
 
 TEXT
 ${color2}UpTime: ${color1}${alignr}$uptime
@@ -45,7 +45,8 @@ ${color2}Kernel: ${alignr}${color1}$kernel $machine
 ${color2}${font Monospace:size=20}${alignc}${time %R}${alignr}${font}
 ${color1}${alignc}${time %A %d %b %Y}
 
-${lua_parse ticker 5}
+#${lua_parse ticker 5}
+#${execpi 90 /home/tree/bin/manga --cached -s}
 
 ${color2}CPU1:${color1} ${cpu cpu1}% ${alignr} \
 ${color2}CPU2:${color1} ${cpu cpu2}% ${alignr}
@@ -60,9 +61,9 @@ ${color1}${top name 2}${tab 45}${top pid 2}${alignr}${top cpu 2}%
 ${color1}${top name 3}${tab 45}${top pid 3}${alignr}${top cpu 3}%
 
 ${color2}Highest Ram:
-${color1}${top_mem name 1}${tab 45}${top_mem pid 1}${alignr}${top_mem mem 1}%
-${color1}${top_mem name 2}${tab 45}${top_mem pid 2}${alignr}${top_mem mem 2}%
-${color1}${top_mem name 3}${tab 45}${top_mem pid 3}${alignr}${top_mem mem 3}%
+${color1}${top_mem name 1}${tab 45}${top_mem pid 1}${alignr}${top_mem mem_res 1}
+${color1}${top_mem name 2}${tab 45}${top_mem pid 2}${alignr}${top_mem mem_res 2}
+${color1}${top_mem name 3}${tab 45}${top_mem pid 3}${alignr}${top_mem mem_res 3}
 
 ${color2}Ram:${color1}${alignc}$memperc% ${alignr}$mem/$memmax
 ${membar 3,180}
@@ -73,17 +74,17 @@ ${swapbar 3,180}
 ${if_match "${addrs eth0}" != "0.0.0.0"}${if_match "${addrs wlan0}" != "0.0.0.0"}\
 ${color2}ETH: ${alignr}${color1}${addr eth0}
 ${color2}Wlan: ${alignr}${color1}${addr wlan0}
-${color2}Ext: ${alignr}${color1}${execi 3600 wget -O - www.whatismyip.com/automation/n09230945.asp | tail}\
+${color2}Ext: ${alignr}${color1}${execi 3600 wget -O - automation.whatismyip.com/n09230945.asp | tail}\
 ${endif}${endif}\
 #wlan
 ${if_match "${addrs eth0}" != "0.0.0.0"}${if_match "${addrs wlan0}" == "0.0.0.0"}\
 ${color2}Eth: ${alignr}${color1}${addr eth0}
-${color2}Ext: ${alignr}${color1}${execi 3600 wget -O - www.whatismyip.com/automation/n09230945.asp | tail}\
+${color2}Ext: ${alignr}${color1}${execi 3600 wget -O - automation.whatismyip.com/n09230945.asp | tail}\
 ${endif}${endif}\
 #ethernet
 ${if_match "${addrs eth0}" == "0.0.0.0"}${if_match "${addrs wlan0}" != "0.0.0.0"}\
 ${color2}Wlan: ${alignr}${color1}${addr wlan0}
-${color2}Ext: ${alignr}${color1}${execi 3600 wget -O - www.whatismyip.com/automation/n09230945.asp | tail}\
+${color2}Ext: ${alignr}${color1}${execi 3600 wget -O - automation.whatismyip.com/n09230945.asp | tail}\
 ${endif}${endif}\
 #nothing
 ${if_match "${addrs eth0}" == "0.0.0.0"}${if_match "${addrs wlan0}" == "0.0.0.0"}\
@@ -119,9 +120,11 @@ ${color2}Down: ${alignr}${color1}${downspeed eth0}
 ${alignc}${downspeedgraph eth0 15,180 baa47f baa47f -l}\
 ${endif}${endif}
 
-${color2}/${alignr}${color1}${fs_free /}/${fs_size /}
+${color2}/${alignr}${color1}${fs_used /}/${fs_size /}
 ${fs_bar 3,180 /}
-${color2}~${alignr}${color1}${fs_free /home/tree}/${fs_size /home/tree}
+${color2}/usr${alignr}${color1}${fs_used /usr}/${fs_size /usr}
+${fs_bar 3,180 /}
+${color2}~${alignr}${color1}${fs_used /home/tree}/${fs_size /home/tree}
 ${fs_bar 3,180 /home/tree}
-${color2}/mnt/win${alignr}${color1}${fs_free /mnt/win}/${fs_size /mnt/win}
+${color2}/mnt/win${alignr}${color1}${fs_used /mnt/win}/${fs_size /mnt/win}
 ${fs_bar 3,180 /mnt/win}

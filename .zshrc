@@ -18,13 +18,13 @@ export JAVAWS_HOME=/usr/lib64/java/javaws
 
 export PATH=.:~/bin:~/.cabal/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin:/usr/share/texmf/bin
 
-export MANPATH=/usr/share/texmf/doc/man:$MANPATH
+export MANPATH=/usr/share/texmf/doc/man:/usr/local/share/man:$MANPATH
 
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/lib64:/usr/lib64:/usr/local/lib64
 
-export EDITOR=/usr/local/bin/vim
+export EDITOR=vim
 export SHELL=/bin/zsh
-export BROWSER=/home/tree/bin/uzbl
+#export BROWSER=/home/tree/bin/uzbl
 export TERM='xterm-256color'
 
 # Force the use of my beloved characters
@@ -66,30 +66,6 @@ $COL$PCHAR $CLEARCOL"
 PS2="$COL> $CLEARCOL"
 PS4="$COL+ $CLEARCOL"
 
-# Nice cursor colors
-# Show when in vi mode
-CVICOL="\033]12;Brown\007"
-CCOL="\033]12;#83C048\007"
-
-if [[ ! -o login ]]; then
-# Called when we change keymap mode
-    zle-keymap-select () {
-        case $KEYMAP in
-            vicmd) print -n $CVICOL;;
-            viins) print -n $CCOL;;
-            main) print -n $CCOL;;
-        esac
-    }
-    zle -N zle-keymap-select
-
-# Called when new line
-    zle-line-init () {
-        zle -K viins
-        echo -ne $CCOL
-    }
-    zle -N zle-line-init
-fi
-
 # Vi key bindings ty
 bindkey -v
 
@@ -106,7 +82,8 @@ fi
 alias lsd='ls -d *(-/DN)' # List dirs and symbolic links to dirs
 alias lsa='ls -d .*' # Only list hidden files
 
-alias g='git' # Yay go git go!
+alias g='git'   # Yay go git go!
+alias t='task'  # Warrior, lend me your strength!
 
 alias path='echo -e ${PATH//:/\\n}'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
@@ -129,8 +106,8 @@ alias packages="fgrep UNCOMPRESSED /var/log/packages/* | awk -F: '{print \$3,\$1
 alias mtr='mtr --curses' # don't want an ugly gui
 
 # A lot of work gone?
-alias .='cd ../'
-alias ..='cd ../../'
-alias ...='cd ../../../'
-alias ....='cd ../../../../'
+alias ..='cd ../'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
 

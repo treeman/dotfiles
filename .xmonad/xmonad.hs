@@ -13,7 +13,7 @@ myKeys (XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_w), spawn "uzbl")
     , ((modm .|. controlMask,   xK_f), spawn "firefox")
     , ((modm .|. controlMask,   xK_o), spawn "opera")
-    , ((modm .|. controlMask,   xK_c), spawn "google-chrome")
+    , ((modm .|. controlMask,   xK_c), spawn "chrome")
 
     , ((modm .|. controlMask,   xK_m), spawn "spotify")
     , ((modm .|. controlMask,   xK_s), spawn "skype")

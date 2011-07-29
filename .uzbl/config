@@ -67,7 +67,7 @@ set history_handler     = @scripts_dir/history.sh
 @modmap <dead_circumflex>   ^
 @modmap <dead_tilde>        ~
 
-@modkey_addition <Shift> <Ctrl>     <Meta>
+@modkey_addition <Shift> <Ctrl>     <Alt>
 @modkey_addition <Shift> <Tab>      <Shift-Tab>
 @modkey_addition <Shift> <Insert>   <Shift-Insert>
 
@@ -213,7 +213,7 @@ set follow_hint_keys    = qwertasdfg12345
 
 @ebind <Ctrl>v      = sh 'echo "event INJECT_KEYCMD `xclip -o -selection clipboard | sed s/\\\@/%40/g`" > $4'
 @ebind <Ctrl><Alt>v = sh 'echo "event INJECT_KEYCMD `xclip -o -primary   clipboard | sed s/\\\@/%40/g`" > $4'
-@ebind <Meta>V      = sh 'echo "event INJECT_KEYCMD `xclip -o -secondary clipboard | sed s/\\\@/%40/g`" > $4'
+@ebind <Alt>V       = sh 'echo "event INJECT_KEYCMD `xclip -o -secondary clipboard | sed s/\\\@/%40/g`" > $4'
 
 # Mode switching
 @bind <Escape>      = event ESCAPE
@@ -221,14 +221,14 @@ set follow_hint_keys    = qwertasdfg12345
 @cbind i            = @set_mode insert
 @bind <Ctrl>i       = @set_mode insert
 
-@bind <Meta>Q       = exit
+@bind <Alt>Q        = exit
 
 # Handy stuff
 @cbind !dump        = sh "echo dump_config > $4"
 @cbind !reload      = sh "sed '/^# === Post-load misc commands/,$d' $1 | grep '^set ' > $4"
 
 @cbind vs           = sh 'uzbl-browser -u "\@uri" -c /home/tree/.uzbl/config-viewsource'
-@cbind vp           = include /home/tree/.uzbl/config-private
+# @cbind vp           = include /home/tree/.uzbl/config-private
 @cbind vP           = include /home/tree/.uzbl/config
 
 # --- Handling ---
