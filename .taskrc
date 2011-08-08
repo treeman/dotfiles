@@ -33,12 +33,15 @@ dateformat.report=Y-M-D
 
 weekstart=Monday
 
+default.command=next
+
 # Swedish holidays
 include /usr/local/share/doc/task/rc/holidays-SE.rc
 
+# Sample report
 report.what.description=Shorter than list longer than ls
-report.what.columns=id,project,priority,due,description
+report.what.columns=id,project,priority,due,description_only
 report.what.labels=ID,Project,Pri,Due,Description
-report.what.sort=due+,priority-
+report.what.sort=due+,priority-,project+
 report.what.filter=status:pending
 
