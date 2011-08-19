@@ -66,8 +66,8 @@ $COL$PCHAR $CLEARCOL"
 PS2="$COL> $CLEARCOL"
 PS4="$COL+ $CLEARCOL"
 
-# Vi key bindings ty
-bindkey -v
+# Emacs key bindings ty
+bindkey -e
 
 # Delete key actually deletes now
 bindkey "^[[3~"  delete-char
@@ -94,16 +94,10 @@ alias shutdown='su -c "shutdown -h now"'
 
 alias rshred='shred -n 31337 -z -u'
 
-# Lazy ssh
-alias forest='ssh forest'
-alias eforest='ssh eforest'
-alias liu='ssh liu'
-
 # Some fun and useful
 alias filetop="watch -d -n 2 'df; ls -FlAt;'"
 alias inram='dd if=/dev/mem | cat | strings'
 alias packages="fgrep UNCOMPRESSED /var/log/packages/* | awk -F: '{print \$3,\$1}' | sort -rh" # list installed packages by size
-alias mtr='mtr --curses' # don't want an ugly gui
 
 # A lot of work gone?
 alias ..='cd ../'

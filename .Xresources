@@ -5,6 +5,14 @@
 ! Blink
 *visualBell: False
 
+Xft.antialias: 1
+Xft.hinting: -1
+Xft.rgba: rgb
+Xft.hintstyle: hintslight
+Xft.dpi: 100
+
+XTerm*bellsUrgent: true
+
 XTerm*internalBorder: 0
 XTerm*loginShell: false
 
@@ -17,7 +25,7 @@ XTerm*multiClickTime: 250
 XTerm*eightBitInput: false
 XTerm*altSendsEscape: true
 
-XTerm*faceName: Consolas
+XTerm*faceName: Consolasi
 XTerm*faceSize: 10
 XTerm*utf8: 1
 
