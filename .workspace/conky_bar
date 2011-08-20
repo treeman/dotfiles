@@ -1,0 +1,14 @@
+background no
+out_to_console yes
+out_to_x no
+update_interval 1.0
+total_run_times 0
+use_spacer none
+
+TEXT
+^fg()CPU ^fg(\#5EBDBD)${cpu cpu0}% ^fg()| \
+MEM ^fg(\#5EBDBD)${memperc}% ^fg()| \
+NET ^fg(\#5ebd5e)${downspeedf eth0}K ^fg(\#BD5E5E)${upspeedf eth0}K ^fg()| \
+^fg(\#5E5EBD)${time %Y-%m-%d} ^fg()| \
+^fg(\#8EBD5E)${time %R} 
+
