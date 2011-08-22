@@ -1,0 +1,9 @@
+#!/bin/sh
+
+conky -c conky_kernel -d
+conky -c conky_time -d
+conky -c conky_todo -d
+conky -c conky_school -d
+conky -c conky_ticker -d
+conky -c conky_timezones -d
+

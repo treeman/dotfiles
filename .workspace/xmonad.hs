@@ -27,6 +27,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_p), spawn "pidgin")
 
     , ((modm .|. controlMask,   xK_m), spawn "spotify")
+    , ((modm .|. controlMask,   xK_t), spawn "mtpaint")
 
     , ((modm .|. shiftMask,     xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
 
@@ -137,7 +138,14 @@ myDzenPP h = defaultPP
 main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
-    --hackertop <- spawnPipe myHackerTop
+
+    --conkyTodo <- spawnPipe "conky -c ~/.workspace/conky_todo"
+    --conkyKernel <- spawnPipe "conky -c ~/.workspace/conky_kernel"
+    --conkyTime <- spawnPipe "conky -c ~/.workspace/conky_time"
+    --conkySchool <- spawnPipe "conky -c ~/.workspace/conky_school"
+    conkyTimezone <- spawnPipe "conky -c ~/.workspace/conky_timezone"
+    --conkyTicker <- spawnPipe "conky -c ~/.workspace/conky_ticker"
+
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
       modMask = mod4Mask
     , workspaces = myWorkspaces

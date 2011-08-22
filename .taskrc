@@ -40,8 +40,8 @@ include /usr/local/share/doc/task/rc/holidays-SE.rc
 
 # Sample report
 report.what.description=Shorter than list longer than ls
-report.what.columns=id,project,priority,due,description_only
-report.what.labels=ID,Project,Pri,Due,Description
-report.what.sort=due+,priority-,project+
+report.what.columns=id,priority,due,description_only
+report.what.labels=Id,Pri,Due,Description
+report.what.sort=due+,priority-
 report.what.filter=status:pending
 

@@ -1,0 +1,37 @@
+#settings
+update_interval 3600
+total_run_times 0
+background 0
+double_buffer yes
+#no_buffers yes
+
+#text settings
+use_xft yes
+xftfont Comfortaa:size=10
+override_utf8_locale yes
+text_buffer_size 2048
+
+#window
+own_window_class Conky
+own_window yes
+own_window_type override
+#own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+alignment bottom_left
+gap_y 5
+gap_x 945
+
+#graphics
+draw_shades no
+border_inner_margin 0
+border_width 0
+draw_borders no
+draw_shades no
+stippled_borders 0
+
+color1 FFFFFF
+color2 FFB600
+
+TEXT
+${color1}Slackware 64  ${color2}${exec uname -r}
