@@ -35,4 +35,4 @@ color2 FFB600
 
 TEXT
 ${color}${font Comfortaa:size=16}Todo List${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- -school -software}
+${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- -school -software -assignment}
