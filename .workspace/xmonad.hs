@@ -113,12 +113,18 @@ myDzenPP h = defaultPP
     --, ppVisible = wrapFg "#F711DD" . dropId
     --, ppHidden = wrapFg "#1FA0E6" . dropId
     --, ppHiddenNoWindows = wrapFg "#616161" . dropId
+
+    --, ppCurrent = wrapFg "#8EBD5E" . dropId
+    --, ppVisible = wrapFg "#8E5EBD" . dropId
+    --, ppHidden = wrapFg "#5EBDBD" . dropId
+    --, ppHiddenNoWindows = wrapFg "#616161" . dropId
+    --, ppUrgent = wrapFg "#BD5E5E" . dropId
     { ppOutput = hPutStrLn h
-    , ppCurrent = wrapFg "#8EBD5E" . dropId
-    , ppVisible = wrapFg "#8E5EBD" . dropId
-    , ppHidden = wrapFg "#5EBDBD" . dropId
+    , ppCurrent = wrapFg "#FFB600" . dropId
+    , ppVisible = wrapFg "#FFD86E" . dropId
+    , ppHidden = wrapFg "#E8E8E8" . dropId
     , ppHiddenNoWindows = wrapFg "#616161" . dropId
-    , ppUrgent = wrapFg "#BD5E5E" . dropId
+    , ppUrgent = wrapFg "#FF0049" . dropId
     , ppTitle = wrap "< " " > " . wrapFg "#ffffff"
     , ppSep = " "
     , ppLayout = wrapFg myNormalStatusFG .
@@ -139,12 +145,12 @@ main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
 
-    --conkyTodo <- spawnPipe "conky -c ~/.workspace/conky_todo"
-    --conkyKernel <- spawnPipe "conky -c ~/.workspace/conky_kernel"
-    --conkyTime <- spawnPipe "conky -c ~/.workspace/conky_time"
-    --conkySchool <- spawnPipe "conky -c ~/.workspace/conky_school"
+    conkyTodo <- spawnPipe "conky -c ~/.workspace/conky_todo"
+    conkyKernel <- spawnPipe "conky -c ~/.workspace/conky_kernel"
+    conkyTime <- spawnPipe "conky -c ~/.workspace/conky_time"
+    conkySchool <- spawnPipe "conky -c ~/.workspace/conky_school"
     conkyTimezone <- spawnPipe "conky -c ~/.workspace/conky_timezone"
-    --conkyTicker <- spawnPipe "conky -c ~/.workspace/conky_ticker"
+    conkyTicker <- spawnPipe "conky -c ~/.workspace/conky_ticker"
 
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
       modMask = mod4Mask

@@ -6,9 +6,9 @@ total_run_times 0
 use_spacer none
 
 TEXT
-^fg()CPU ^fg(\#5EBDBD)${cpu cpu0}% ^fg()| \
-MEM ^fg(\#5EBDBD)${memperc}% ^fg()| \
-NET ^fg(\#5ebd5e)${downspeedf eth0}K ^fg(\#BD5E5E)${upspeedf eth0}K ^fg()| \
-^fg(\#5E5EBD)${time %Y-%m-%d} ^fg()| \
-^fg(\#8EBD5E)${time %R} 
+^fg()CPU ^fg(\#B1B1B1)${cpu cpu0}% ^fg()| \
+MEM ^fg(\#B1B1B1)${memperc}% ^fg()| \
+NET ^fg(\#B1B1B1)${downspeedf eth0}K ^fg(\#B1B1B1)${upspeedf eth0}K ^fg()| \
+^fg(\#B8B8B8)${time %Y-%m-%d} ^fg()| \
+^fg(\#FFD86E)${time %R} 
 
