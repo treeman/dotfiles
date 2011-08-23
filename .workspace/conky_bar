@@ -10,5 +10,5 @@ TEXT
 MEM ^fg(\#B1B1B1)${memperc}% ^fg()| \
 NET ^fg(\#B1B1B1)${downspeedf eth0}K ^fg(\#B1B1B1)${upspeedf eth0}K ^fg()| \
 ^fg(\#B8B8B8)${time %Y-%m-%d} ^fg()| \
-^fg(\#FFD86E)${time %R} 
+^fg(\#FFB600)${time %R} 
 

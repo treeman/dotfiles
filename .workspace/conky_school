@@ -35,8 +35,7 @@ color2 FFB600
 
 TEXT
 ${font Comfortaa:size=16}Assignment due dates${font}
-  ${voffset 10}31 Dec, Elektro
-  ${voffset 8}31 Dec, Ada
+${voffset 2}${execp ~/.workspace/desktop-tasks.pl --date -- +school}
 
 
 ${font Comfortaa:size=16}Schedule${font}
