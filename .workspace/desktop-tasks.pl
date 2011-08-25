@@ -35,13 +35,32 @@ sub today
 
 my $filter = join(" ", @ARGV);
 
-my $what = `task what rc.annotations:none $filter`;
+my $what = trim(`task what rc.annotations:none $filter`);
+#say $what;
 
 my @tasks = split(/\r?\n/, $what);
 
+while (scalar @tasks) {
+    my $t = $tasks[0];
+    if ($t !~/^\s*(\d+)/) {
+        shift (@tasks);
+    }
+    else {
+        last;
+    }
+}
+
+# Remove two last items
+pop (@tasks);
+pop (@tasks);
+
+#say join("\n", @tasks);
+
 # Remove beginning whitespace, list names and ----
 # Remove ending conf override, task num and whitespace
-@tasks = @tasks[3 .. @tasks - 4];
+# Needs rework!!!!!!!
+#@tasks = @tasks[3 .. @tasks - 4];
+#@tasks = @tasks[1 .. @tasks - 1];
 
 my @line_stack;
 
@@ -73,7 +92,7 @@ for my $task (@line_stack) {
     # YYYY-MM-DD
     my $date = $due;
 
-    my $str = $what;
+    my $str = trim($what);
 
     my $color = "FFFFFF";
 
@@ -115,6 +134,6 @@ for my $task (@line_stack) {
     # Trim leading/trailing whitespace
     $str = trim($str);
 
-    say "\${voffset 8}  $str";
+    print "  \${voffset 8}$str\n";
 }
 

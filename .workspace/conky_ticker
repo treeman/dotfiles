@@ -35,7 +35,4 @@ color2 FFB600
 
 TEXT
 ${font Comfortaa:size=16}Ticker${font}
-  ${voffset 10}Hajime No Ippo
-  ${voffset 8}One Piece
-  ${voffset 8}Naruto
-
+${voffset 2}${execp ~/.workspace/ticker.pl}

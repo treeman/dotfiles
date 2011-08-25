@@ -39,6 +39,5 @@ ${voffset 2}${execp ~/.workspace/desktop-tasks.pl --date -- +assignment}
 
 
 ${font Comfortaa:size=16}Schedule${font}
-  ${voffset 10}08:15 - 10:00 TDDC70 Föreläsning
-  ${voffset 8}13:15 - 15:00 TDDC69 Föreläsning
+${voffset 2}${execp ~/.workspace/calendar.pl}
 
