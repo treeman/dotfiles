@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cd /home/tree/.workspace
+rm xorg.conf
+ln -s ./xorg.conf-dual xorg.conf
+rm xmonad.hs
+ln -s ./xmonad-dual.hs xmonad.hs
+xmonad --recompile
+rm xinitrc
+ln -s ./xinitrc-dual xinitrc
+

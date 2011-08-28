@@ -1,0 +1,108 @@
+
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0" 1080 480
+    Screen      1  "Screen1" 0 0
+    InputDevice    "Keyboard0" "CoreKeyboard"
+    InputDevice    "Mouse0" "CorePointer"
+    Option         "Xinerama" "1"
+EndSection
+
+Section "Files"
+    FontPath        "/usr/lib64/X11/fonts/misc/:unscaled"
+    FontPath        "/usr/lib64/X11/fonts/100dpi/:unscaled"
+    FontPath        "/usr/lib64/X11/fonts/75dpi/:unscaled"
+    FontPath        "/usr/lib64/X11/fonts/misc/"
+    FontPath        "/usr/lib64/X11/fonts/Type1/"
+    FontPath        "/usr/lib64/X11/fonts/Speedo/"
+    FontPath        "/usr/lib64/X11/fonts/100dpi/"
+    FontPath        "/usr/lib64/X11/fonts/75dpi/"
+    FontPath        "/usr/lib64/X11/fonts/cyrillic/"
+    FontPath        "/usr/lib64/X11/fonts/TTF/"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Mouse0"
+    Driver         "mouse"
+    Option         "Protocol" "auto"
+    Option         "Device" "/dev/psaux"
+    Option         "Emulate3Buttons" "no"
+    Option         "ZAxisMapping" "4 5"
+EndSection
+
+Section "InputDevice"
+    Identifier     "Keyboard0"
+    Driver         "kbd"
+    Option         "XkbLayout" "se"
+EndSection
+
+Section "InputClass"
+    Identifier     "Keyboard Defaults"
+    MatchIsKeyboard "yes"
+    Option         "XkbLayout" "se"
+EndSection
+
+Section "Module"
+    Load "dbe"
+EndSection
+
+Section "Monitor"
+    Identifier     "Monitor0"
+    VendorName     "Unknown"
+    ModelName      "DELL U2211H"
+    HorizSync       30.0 - 83.0
+    VertRefresh     56.0 - 76.0
+    Option         "DPMS"
+EndSection
+
+Section "Monitor"
+    Identifier     "Monitor1"
+    VendorName     "Unknown"
+    ModelName      "DELL U2211H"
+    HorizSync       30.0 - 83.0
+    VertRefresh     56.0 - 76.0
+EndSection
+
+Section "Device"
+    Identifier     "Device0"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce GTX 550 Ti"
+    BusID          "PCI:1:0:0"
+    Screen          0
+EndSection
+
+Section "Device"
+    Identifier     "Device1"
+    Driver         "nvidia"
+    VendorName     "NVIDIA Corporation"
+    BoardName      "GeForce GTX 550 Ti"
+    BusID          "PCI:1:0:0"
+    Screen          1
+EndSection
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "Device0"
+    Monitor        "Monitor0"
+    DefaultDepth    24
+    Option         "TwinView" "0"
+    Option         "metamodes" "DFP-0: nvidia-auto-select +0+0"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+
+Section "Screen"
+    Identifier     "Screen1"
+    Device         "Device1"
+    Monitor        "Monitor1"
+    DefaultDepth    24
+    Option         "TwinView" "0"
+    Option         "metamodes" "DFP-2: nvidia-auto-select +0+0"
+    Option         "rotate" "ccw"
+    SubSection     "Display"
+        Depth       24
+    EndSubSection
+EndSection
+

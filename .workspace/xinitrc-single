@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Load X settings
+xrdb -load $HOME/.Xdefaults
+
+# Set background
+feh --bg-scale ~/.backgrounds/curr/war_is_hell.jpg
+
+# Set mouse pointer
+xsetroot -cursor_name left_ptr
+
+# Start xmonad yay!
+exec xmonad
+

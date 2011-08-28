@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Load X settings
+xrdb -load $HOME/.Xdefaults
+
+# Set backgrounds
+nitrogen --restore
+
+# Set mouse pointer
+xsetroot -cursor_name left_ptr
+
+# Start xmonad yay!
+exec xmonad
+

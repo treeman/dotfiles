@@ -12,6 +12,8 @@ Xft.hintstyle: hintslight
 Xft.dpi: 100
 
 XTerm*bellsUrgent: true
+! irssi notifications
+xterm.urgentOnBell: true
 
 XTerm*internalBorder: 0
 XTerm*loginShell: false
