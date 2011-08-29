@@ -56,19 +56,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
--- Delete later, not used
-myLogHook h = dynamicLogWithPP $ xmobarPP
-  { ppOutput          = hPutStrLn h
-  , ppTitle           = color "grey" . shorten 50
-  , ppHiddenNoWindows = color "grey" . dropId
-  , ppCurrent         = color "yellow" . dropId
-  , ppVisible         = color "#F711DD" . dropId
-  , ppHidden          = color "lightskyblue" . dropId
-  --, ppUrgent          = color "red" . dropId
-  }
-  where color x = xmobarColor x ""
-        dropId x = if (':' `elem` x) then drop 2 x else x
-
 --["α","β","γ","δ","ε","ζ"]
 myWorkspaces = ["α","β","γ", "4:prog", "5:www", "6:chat", "7:irc", "8:music", "9:misc"]
 
@@ -109,16 +96,6 @@ myTopRight = "conky -c ~/.workspace/conky_bar | " ++ myDzen ++ " -x '800' -y '0'
 myHackerTop = "conky -c ~/.workspace/conkyrc-hackertop"
 
 myDzenPP h = defaultPP
-    --{ ppCurrent = wrapFg "#FFFF00" . dropId
-    --, ppVisible = wrapFg "#F711DD" . dropId
-    --, ppHidden = wrapFg "#1FA0E6" . dropId
-    --, ppHiddenNoWindows = wrapFg "#616161" . dropId
-
-    --, ppCurrent = wrapFg "#8EBD5E" . dropId
-    --, ppVisible = wrapFg "#8E5EBD" . dropId
-    --, ppHidden = wrapFg "#5EBDBD" . dropId
-    --, ppHiddenNoWindows = wrapFg "#616161" . dropId
-    --, ppUrgent = wrapFg "#BD5E5E" . dropId
     { ppOutput = hPutStrLn h
     , ppCurrent = wrapFg "#FFB600" . dropId
     , ppVisible = wrapFg "#FFD86E" . dropId

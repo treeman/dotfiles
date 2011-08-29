@@ -76,64 +76,70 @@ for my $task (@tasks) {
     }
 }
 
-for my $task (@line_stack) {
-    # Match my special task what list
-    my ($id, $pri, $due, $what) = $task =~ /
-        \s*
-        (\d+)
-        \s*
-        ([LMH]?)
-        \s*
-        (\d{4}-\d{2}-\d{2})?
-        \s*
-        (.*)
-    /x;
+if (scalar @line_stack) {
 
-    # YYYY-MM-DD
-    my $date = $due;
+    for my $task (@line_stack) {
+        # Match my special task what list
+        my ($id, $pri, $due, $what) = $task =~ /
+            \s*
+            (\d+)
+            \s*
+            ([LMH]?)
+            \s*
+            (\d{4}-\d{2}-\d{2})?
+            \s*
+            (.*)
+        /x;
 
-    my $str = trim($what);
+        # YYYY-MM-DD
+        my $date = $due;
 
-    my $color = "FFFFFF";
+        my $str = trim($what);
 
-    # Ugly date comparison, but it works at least! (Doesn't take into consideration hours..)
-    # Change to DateTime if/when needed I guess
-    if (defined ($due)) {
-        # YYYYMMDD
-        $due =~ s/-//g;
-        my $today = today();
+        my $color = "FFFFFF";
 
-        #say "due: $due";
-        #say "today: $today";
+        # Ugly date comparison, but it works at least! (Doesn't take into consideration hours..)
+        # Change to DateTime if/when needed I guess
+        if (defined ($due)) {
+            # YYYYMMDD
+            $due =~ s/-//g;
+            my $today = today();
 
-        # Overdue
-        if ($due < $today) {
-            #$color = "BA0013";
-            $color = "D42222";
+            #say "due: $due";
+            #say "today: $today";
+
+            # Overdue
+            if ($due < $today) {
+                #$color = "BA0013";
+                $color = "D42222";
+            }
+            # Due in one week
+            elsif ($due - $today < 7) {
+                $color = "FFB600";
+            }
         }
-        # Due in one week
-        elsif ($due - $today < 7) {
-            $color = "FFB600";
+
+        if (defined ($due) && $print_date) {
+            my ($year, $month, $day) = split(/-/, $date);
+
+            my $dt = DateTime->new(
+                year => $year,
+                month => $month,
+                day => $day,
+            );
+            $str = "\${color $color}" . $dt->strftime( "%d %b" ) . "\${color FFFFFF},   $str";
         }
+        else {
+            $str = "\${color $color}$str";
+        }
+
+        # Trim leading/trailing whitespace
+        $str = trim($str);
+
+        print "  \${voffset 8}$str\n";
     }
-
-    if (defined ($due) && $print_date) {
-        my ($year, $month, $day) = split(/-/, $date);
-
-        my $dt = DateTime->new(
-            year => $year,
-            month => $month,
-            day => $day,
-        );
-        $str = "\${color $color}" . $dt->strftime( "%d %b" ) . "\${color FFFFFF},   $str";
-    }
-    else {
-        $str = "\${color $color}$str";
-    }
-
-    # Trim leading/trailing whitespace
-    $str = trim($str);
-
-    print "  \${voffset 8}$str\n";
+}
+else {
+    say "  \${voffset 8}Nothing!";
 }
 

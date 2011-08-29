@@ -3,7 +3,7 @@
 #endif
 
 ! Blink
-*visualBell: False
+!*visualBell: False
 
 Xft.antialias: 1
 Xft.hinting: -1
@@ -11,9 +11,10 @@ Xft.rgba: rgb
 Xft.hintstyle: hintslight
 Xft.dpi: 100
 
-XTerm*bellsUrgent: true
+URxvt.urgentOnBell: true
+
 ! irssi notifications
-xterm.urgentOnBell: true
+XTerm*bellIsUrgent: true
 
 XTerm*internalBorder: 0
 XTerm*loginShell: false
