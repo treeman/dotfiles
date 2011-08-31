@@ -43,5 +43,4 @@ report.what.description=Shorter than list longer than ls
 report.what.columns=id,priority,due,description_only
 report.what.labels=Id,Pri,Due,Description
 report.what.sort=due+,priority-
-report.what.filter=status:pending
-
+report.what.filter=status:pending depends.none:

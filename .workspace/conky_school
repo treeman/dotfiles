@@ -19,8 +19,9 @@ own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 alignment top_left
-gap_y 1270
+gap_y 1120
 gap_x 780
+maximum_width 295
 
 #graphics
 draw_shades no
@@ -35,7 +36,7 @@ color2 FFB600
 
 TEXT
 ${font Comfortaa:size=16}Assignment due dates${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl --date -- +assignment +tenta}
+${voffset 2}${execp ~/.workspace/desktop-tasks.pl --date -- +assignment}
 
 
 ${font Comfortaa:size=16}Schedule${font}

@@ -97,8 +97,22 @@ for my $event (@events) {
     push (@lessons, $str);
 }
 
+# Remove duplicates in list
+sub uniq {
+    my %seen = ();
+    my @r = ();
+    foreach my $a (@_) {
+        unless ($seen{$a}) {
+            push @r, $a;
+            $seen{$a} = 1;
+        }
+    }
+
+    return @r;
+}
+
 if (scalar @lessons) {
-    for my $lesson (sort @lessons) {
+    for my $lesson (uniq (sort @lessons)) {
         #say $lesson;
         say "  \${voffset 8}$lesson";
     }
