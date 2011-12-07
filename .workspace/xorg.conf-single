@@ -49,8 +49,8 @@ Section "Monitor"
     Identifier     "Monitor0"
     VendorName     "Unknown"
     ModelName      "DELL U2211H"
-    HorizSync       30.0 - 83.0
-    VertRefresh     56.0 - 76.0
+    HorizSync       60
+    VertRefresh     60
     Option         "DPMS"
 EndSection
 
@@ -58,8 +58,8 @@ Section "Monitor"
     Identifier     "Monitor1"
     VendorName     "Unknown"
     ModelName      "DELL U2211H"
-    HorizSync       30.0 - 83.0
-    VertRefresh     56.0 - 76.0
+    HorizSync       60
+    VertRefresh     60
 EndSection
 
 Section "Device"

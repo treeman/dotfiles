@@ -29,12 +29,14 @@
 .crash_report*
 .dbus
 .dosbox
+.eclipse
 .esd_auth
 .filezilla
 .fluxbox
 .font*
 .gEDA
 .gconfd
+.gem
 .gftp
 .ghc
 .gimp*
@@ -63,6 +65,7 @@
 .mplayer
 .mtpaint
 .mtpaint
+.mtpaint
 .mtpaint_fonts
 .my*
 .mysql*
@@ -75,11 +78,14 @@
 .pki
 .purple
 .recently-used*
+.ri
+.sc_history
 .screenrc
 .serverauth*
 .sh_history
 .ssh
 .subversion
+.task
 .themes
 .thumbnails
 .thunderbird
@@ -90,6 +96,7 @@
 .uzbl/history
 .uzbl/plugins
 .vbam
+.vim/.netrwhist
 .vim/backup
 .vim/netrwhist
 .vim/tmp
@@ -133,6 +140,7 @@ minecraft
 movies*
 music
 nintendo-ds
+on-desktop
 projects
 quicklisp
 rakudo
@@ -148,11 +156,3 @@ vim-cheat-sheet*
 wine
 workspace
 yankring_history*
-.task
-.eclipse
-.mtpaint
-.gem
-.ri
-.sc_history
-on-desktop
-.vim/.netrwhist

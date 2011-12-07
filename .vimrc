@@ -18,7 +18,7 @@ filetype plugin indent on " detect file type by extensions for context specifics
 " Handling
 set noexrc " don't use the local version of .(g)vimrc and .exrc
 set modelines=0 " security exploits?
-set autochdir " always switch to the current file directory
+" set autochdir " always switch to the current file directory
 set backspace=indent,eol,start " make backspace more flexible
 
 set backupdir=~/.vim/backup " where to put backup
@@ -40,7 +40,7 @@ set shiftwidth=4 " auto indent amount when using indents ex >> and <<
 set softtabstop=4 " when hitting tab or backspace, how wide should a tab be
 set tabstop=4 " tabs width
 set autoindent " keep indenting after newline
-set smartindent
+"set smartindent
 set smarttab " insert tabs on the start according to shiftwidth, not tabstop
 
 " Appearence
@@ -133,8 +133,13 @@ nmap <silent> <leader>l :set list!<CR>
 " Toggle search highlighting
 nmap <silent> <leader>n :silent nohlsearch<CR>
 
+" Remove ugly ^M chars
+nmap <silent> <leader>m :%s/.$//<CR>
+
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+nmap <silent> <leader>r :CommandTFlush<CR>
 
 " Bind buffert toggling to f1/f2
 noremap <F1> :bprev!<CR>

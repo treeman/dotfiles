@@ -16,7 +16,7 @@ use LWP::Simple;
 
 # Url for ical files
 my @urls = qw(
-    http://timeedit.liu.se/4DACTION/iCal_downloadReservations/timeedit.ics?from=1133&to=1144&id1=28824002&branch=8&lang=1
+    http://timeedit.liu.se/4DACTION/iCal_downloadReservations/timeedit.ics?from=1142&to=1151&id1=28824002&branch=5&lang=1
 );
 
 # Correct times
@@ -42,9 +42,9 @@ for my $url (@urls) {
 }
 
 my %my_courses = map { $_ => 1; } qw(
-    TDDC69
-    TDDC70
     TATA24
+    TSEA47
+    TDDC36
 );
 
 sub shorten_summary
@@ -64,7 +64,7 @@ sub shorten_summary
     return when (!$course);
 
     # String problems hate them! Need to get it sorted
-    my ($what) = $summary =~ /(Lektion|Laboration|F..rel..sning)/;
+    my ($what) = $summary =~ /(Lektion|Laboration|Föreläsning|Seminarium)/;
 
     my $str = $course;
     if ($what) { $str .= " $what"; }

@@ -37,7 +37,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Do not leave useless conky, dzen and xmobar after restart
     , ((modm,                   xK_q), spawn "killall xmobar conky dzen2; xmonad --recompile; xmonad --restart")
 
-    --, ((modm,                   xK_b     ), sendMessage ToggleStruts)
+    , ((modm,                   xK_b     ), sendMessage ToggleStruts)
     ]
 
     ++

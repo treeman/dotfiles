@@ -21,6 +21,7 @@ own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 alignment top_left
 gap_y 460
 gap_x 780
+maximum_width 495
 
 #graphics
 draw_shades no

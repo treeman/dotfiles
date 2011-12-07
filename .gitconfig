@@ -28,7 +28,7 @@
     rh2 = reset HEAD^^ --hard
 
     # Common shortcuts
-    s = status
+    s = status -sb
     d = diff
     a = add
     co = checkout

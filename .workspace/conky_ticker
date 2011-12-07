@@ -21,6 +21,7 @@ own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 alignment top_left
 gap_y 1180
 gap_x 120
+maximum_width 495
 
 #graphics
 draw_shades no
@@ -36,3 +37,4 @@ color2 FFB600
 TEXT
 ${font Comfortaa:size=16}Ticker${font}
 ${voffset 2}${execp ~/.workspace/ticker.pl}
+

@@ -44,3 +44,7 @@ report.what.columns=id,priority,due,description_only
 report.what.labels=Id,Pri,Due,Description
 report.what.sort=due+,priority-
 report.what.filter=status:pending depends.none:
+
+# Holidays
+holiday.programmersday.name=Programmers' Day
+holiday.programmersday.date=20110913

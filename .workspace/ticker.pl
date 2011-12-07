@@ -13,7 +13,7 @@ sub trim($)
     return $string;
 }
 
-my $what = trim(`/home/tree/projects/mangaprobe/mangas.pl -s`);
+my $what = trim(`/home/tree/projects/mangaprobe/mangas.pl -s -c`);
 my @list = split(/\r?\n/, $what);
 
 my $limit = 5;
