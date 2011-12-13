@@ -101,29 +101,19 @@ set incsearch " show search mathes as you type
 
 set mouse=a " use mouse everwhere
 
-" The only sensible setup for Unicode editing.
-if has("multi_byte")
-    set bomb
-    set encoding=utf-8
-    setglobal fileencoding=utf-8 bomb
-    set fileencodings=ucs-bom,utf-8,latin1
-    set fenc=utf-8 " save files with åäö kthx
-
-    if &termencoding == ""
-        let &termencoding = &encoding
-    endif
-
-    "If it doesn't work maybe just use
-    "set fileencoding=utf-8
-endif
+" Trying out new file settings
+set encoding=utf8
+set ffs=unix,dos,mac
 
 " Platform-dependent bits
 if has("win32")
-    set fileformats=dos,unix,mac
     source $VIMRUNTIME/mswin.vim " windows way of copy paste
-elseif has("unix")
-    set fileformats=unix,dos,mac
 endif
+
+" Plugin settings
+
+let mojo_highlight_data = 1
+let mojo_disable_html = 1
 
 " Mappings
 let mapleader = ","
