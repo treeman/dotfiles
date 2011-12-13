@@ -37,4 +37,5 @@
     f = fetch
     p = push
     pu = pull
+    g = grep
 
