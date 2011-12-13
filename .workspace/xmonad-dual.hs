@@ -21,6 +21,7 @@ import qualified XMonad.StackSet as W
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
     , ((modm .|. controlMask,   xK_u), spawn "uzbl")
+    , ((modm .|. controlMask,   xK_e), spawn "emacs")
 
     , ((modm .|. controlMask,   xK_s), spawn "skype")
     , ((modm .|. controlMask,   xK_i), spawn "xterm -e irssi")
