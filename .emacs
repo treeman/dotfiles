@@ -3,3 +3,6 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
+; set firefox as browser
+(setq browse-url-browser-function (quote browse-url-generic))
+(setq browse-url-generic-program "firefox")
