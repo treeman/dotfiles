@@ -3,7 +3,6 @@
 *.png
 *.sql
 *astmatix*
-*tmp
 *~
 .uzbl/*-example
 .uzbl/data
@@ -11,9 +10,7 @@
 .uzbl/history
 .uzbl/plugins
 .vim/.netrwhist
-.vim/backup
 .vim/netrwhist
-.vim/tmp
 .viminfo
 .vimsize
 .wine
