@@ -28,7 +28,7 @@
     rh2 = reset HEAD^^ --hard
 
     # Common shortcuts
-    s = status -sb
+    s = status
     d = diff
     a = add
     co = checkout
@@ -37,5 +37,7 @@
     f = fetch
     p = push
     pu = pull
-    g = grep
 
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master

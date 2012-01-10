@@ -11,9 +11,7 @@
 .uzbl/history
 .uzbl/plugins
 .vim/.netrwhist
-.vim/backup
 .vim/netrwhist
-.vim/tmp
 .viminfo
 .vimsize
 .wine
