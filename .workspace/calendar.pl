@@ -66,8 +66,10 @@ sub shorten_summary
 
     return when (!$course);
 
-    # String problems hate them! Need to get it sorted
     my ($what) = $summary =~ /(Lektion|Laboration|Föreläsning|Seminarium)/;
+
+    # Make sure that we output utf8 correctly
+    utf8::encode($what);
 
     my $str = $course;
     if ($what) { $str .= " $what"; }
