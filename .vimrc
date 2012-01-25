@@ -123,9 +123,6 @@ nmap <silent> <leader>l :set list!<CR>
 " Toggle search highlighting
 nmap <silent> <leader>n :silent nohlsearch<CR>
 
-" Remove ugly ^M chars
-nmap <silent> <leader>m :%s/.$//<CR>
-
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
