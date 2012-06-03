@@ -6,4 +6,3 @@ conky -c conky_todo -d
 conky -c conky_school -d
 conky -c conky_ticker -d
 conky -c conky_timezones -d
-conky -c conky_countdown -d

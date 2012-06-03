@@ -105,3 +105,7 @@ alias ...='cd ../../'
 alias ....='cd ../../../'
 alias .....='cd ../../../../'
 
+# Faster screen switching T.T
+alias ss='single-screen && startx'
+alias ds='dual-screen && startx'
+

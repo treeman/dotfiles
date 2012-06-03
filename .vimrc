@@ -119,7 +119,7 @@ let mojo_disable_html = 1
 let mapleader = ","
 
 " Toggle show whitespace, <leader> = mapleader
-nmap <silent> <leader>l :set list!<CR>
+nmap <silent> <leader>w :set list!<CR>
 " Toggle search highlighting
 nmap <silent> <leader>n :silent nohlsearch<CR>
 
@@ -139,7 +139,7 @@ map <F4> :NERDTreeToggle<CR>
 
 " trim trailing spaces and convert tabs to spaces
 map <F5> :silent! %s/\s\+$//<CR>:retab<CR>
-nnoremap <leader>w :silent! %s/\s\+$//<CR>:retab<CR>
+" nnoremap <leader>w :silent! %s/\s\+$//<CR>:retab<CR>
 
 " Toggle between tabs or no tabs
 map <F6> :set expandtab<CR>

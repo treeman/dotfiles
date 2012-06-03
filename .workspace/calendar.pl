@@ -66,7 +66,7 @@ sub shorten_summary
 
     return when (!$course);
 
-    my ($what) = $summary =~ /(Lektion|Laboration|Föreläsning|Seminarium)/;
+    my ($what) = $summary =~ /(Lektion|Laboration|Föreläsning|Seminarium|Handledning)/;
 
     # Make sure that we output utf8 correctly
     utf8::encode($what);

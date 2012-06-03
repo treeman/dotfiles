@@ -132,7 +132,6 @@ main = do
     conkySchool <- spawnPipe "conky -c ~/.workspace/conky_school"
     conkyTimezone <- spawnPipe "conky -c ~/.workspace/conky_timezone"
     conkyTicker <- spawnPipe "conky -c ~/.workspace/conky_ticker"
-    conkyCountdown <- spawnPipe "conky -c ~/.workspace/conky_countdown"
 
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
       modMask = mod4Mask
