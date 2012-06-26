@@ -31,7 +31,7 @@ set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " don't care
 set clipboard+=unnamed " share windows clipboard
 set hidden " you can change buffers without saving
 
-let g:yankring_history_dir = '$HOME/.vim/tmp'
+" let g:yankring_history_dir = '$HOME/.vim/tmp'
 
 " Text formatting
 set expandtab " no real tabs please!
