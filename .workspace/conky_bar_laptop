@@ -1,0 +1,15 @@
+background no
+out_to_console yes
+out_to_x no
+update_interval 1.0
+total_run_times 0
+use_spacer none
+
+TEXT
+^fg()battery ^fg(\#B1B1B1)${battery} ^fg()| \
+^fg()CPU ^fg(\#B1B1B1)${cpu cpu0}% ^fg()| \
+MEM ^fg(\#B1B1B1)${memperc}% ^fg()| \
+NET ^fg(\#B1B1B1)${downspeedf wlan0}K ^fg(\#B1B1B1)${upspeedf wlan0}K ^fg()| \
+^fg(\#B8B8B8)${time %Y-%m-%d} ^fg()| \
+^fg(\#FFB600)${time %R} 
+
