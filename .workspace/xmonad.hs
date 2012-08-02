@@ -1,1 +1,1 @@
-./xmonad-portable.hs
+xmonad-dual.hs
