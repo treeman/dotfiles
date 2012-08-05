@@ -1,0 +1,14 @@
+#!/usr/bin/env perl
+
+use Modern::Perl;
+
+my $screen = `screen -ls` // "";
+
+# If irc not running, start it
+if ($screen !~ /\d+\.irc/) {
+    `screen -d -m -S irc -c ~/.workspace/irssi_screen`;
+}
+
+# Launch a terminal with it
+`xterm -e screen -r irc`;
+

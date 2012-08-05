@@ -28,7 +28,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_e), spawn "emacs")
 
     , ((modm .|. controlMask,   xK_s), spawn "skype")
-    , ((modm .|. controlMask,   xK_i), spawn "xterm -e irssi")
+    , ((modm .|. controlMask,   xK_i), spawn "start_irc")
     , ((modm .|. controlMask,   xK_p), spawn "pidgin")
 
     , ((modm .|. controlMask,   xK_m), spawn "spotify")
@@ -39,6 +39,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
     , ((modm,                   xK_y), focusUrgent)
+
     -- Do not leave useless conky, dzen and xmobar after restart
     , ((modm,                   xK_q), spawn "killall xmobar conky dzen2; xmonad --recompile; xmonad --restart")
     ]

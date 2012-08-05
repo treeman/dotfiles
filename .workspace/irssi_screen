@@ -1,0 +1,3 @@
+# ~/irc_screen
+source ~/.screenrc
+screen -t IRC 1 irssi
