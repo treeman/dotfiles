@@ -9,5 +9,5 @@ Ideas
 
 Countdown to interesting stuff!
 
-Cmd line days until: echo $(expr '(' $(date -d 2012-05-15 +%s) - $(date +%s) + 86399 ')' / 86400)
+Cmd line days until `echo $(expr '(' $(date -d 2012-05-15 +%s) - $(date +%s) + 86399 ')' / 86400)`
 
