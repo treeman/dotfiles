@@ -16,8 +16,8 @@ use LWP::Simple;
 
 # Url for ical files
 my @urls = qw(
-    http://timeedit.liu.se/4DACTION/iCal_downloadReservations/timeedit.ics?from=1209&to=1222&id1=36479000&branch=5&lang=1
-    http://timeedit.liu.se/4DACTION/iCal_downloadReservations/timeedit.ics?from=1209&to=1222&id1=28824000&branch=5&lang=1
+    http://timeedit.liu.se/4DACTION/iCal_downloadReservations/timeedit.ics?from=1230&to=1242&id1=28825000&branch=5&lang=1
+    http://timeedit.liu.se/4DACTION/iCal_downloadReservations/timeedit.ics?from=1230&to=1242&id1=40336000&branch=5&lang=1
 );
 
 # Correct times
@@ -43,11 +43,15 @@ for my $url (@urls) {
 }
 
 my %my_courses = map { $_ => 1; } qw(
-    TATA53
+    TATA65
     TATA61
     TFYY68
-    TAOP33
-    TSEA43
+    TATA50
+    TDDB68
+    TDDC93
+    TEIO27
+    TSDT18
+    TSEA29
 );
 
 sub shorten_summary
@@ -66,7 +70,7 @@ sub shorten_summary
 
     return when (!$course);
 
-    my ($what) = $summary =~ /(Lektion|Laboration|Föreläsning|Seminarium|Handledning)/;
+    my ($what) = $summary =~ /(Lektion|Laboration|Föreläsning|Seminarium|Handledning|mentor)/i;
 
     # Make sure that we output utf8 correctly
     utf8::encode($what);

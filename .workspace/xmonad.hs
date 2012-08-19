@@ -1,1 +1,1 @@
-xmonad-dual.hs
+./xmonad-dual.hs
