@@ -1,0 +1,10 @@
+port_range = 49164-49164
+session = ./rtorrent_session
+
+# No hash check on finish
+check_hash = no
+
+# Use DHT
+dht = auto
+dht_port = 6882
+

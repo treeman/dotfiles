@@ -75,6 +75,16 @@ sub shorten_summary
     # Make sure that we output utf8 correctly
     utf8::encode($what);
 
+    # Temporary
+    if ($course eq "TATA65") {
+        #say "Got summary: '$summary'";
+
+        return unless $summary =~ /mentor/i;
+        return unless $summary =~ /C1/;
+
+        #say "Good summary: '$summary'";
+    }
+
     my $str = $course;
     if ($what) { $str .= " $what"; }
 
