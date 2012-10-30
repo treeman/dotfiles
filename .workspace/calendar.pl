@@ -81,6 +81,7 @@ sub shorten_summary
 
         return unless $summary =~ /mentor/i;
         return unless $summary =~ /C1/;
+        return unless $summary =~ /grupp_b/i;
 
         #say "Good summary: '$summary'";
     }

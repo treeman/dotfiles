@@ -186,7 +186,7 @@ nmap <silent> <leader>d "_d
 vmap <silent> <leader>d "_d
 
 " Quick yank to the end of the line
-nmap Y y$
+" nmap Y y$
 
 " Fast yank/paste to OS clipboard
 nmap <leader>y "+y
