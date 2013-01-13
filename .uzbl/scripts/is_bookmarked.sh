@@ -1,19 +1,23 @@
 #!/bin/sh
 
-file=$HOME/.uzbl/data/bookmarks
-[ -r "$file" ] || exit
+# Update uri color pending on bookmark status
 
-url=$6
+UZBL_BOOKMARKS_FILE=$HOME/.uzbl/data/bookmarks
+
+>> "$UZBL_BOOKMARKS_FILE" || exit 1
 
 x=0
-while [ $x -lt $(wc -l <$file) ]
+while [ $x -lt $(wc -l <$UZBL_BOOKMARKS_FILE) ]
 do
     let x=x+1
-    line=`head -n $x $file | tail -n 1`
-    test=$(echo $line | cut -d ' ' -f3)
+    line=`head -n $x $UZBL_BOOKMARKS_FILE | tail -n 1`
+    uri=$(echo $line | cut -d ' ' -f1)
 
-    if [ "$test" = "$url" ]; then
-        echo "set uri_color = \"#FFF826\"" > $4
+    if [ "$uri" = "$UZBL_URI" ]; then
+        echo "set uri_color = @uri_bm_color" > "$UZBL_FIFO"
         exit
     fi
 done
+
+echo "set uri_color = @uri_no_bm_color" > "$UZBL_FIFO"
+

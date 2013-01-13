@@ -1,8 +1,10 @@
 #!/bin/sh
 
-file=/home/tree/.uzbl/data/history
-[ -d `dirname $file` ] || exit 1
+UZBL_HISTORY_FILE=$HOME/.uzbl/data/history
 
-if [ -n "$6" ]; then
-    echo `date +'%Y-%m-%d %H:%M:%S'`" $6 $7" >> $file
-fi
+[ -n "$UZBL_PRIVATE" ] && exit 0
+
+>> "$UZBL_HISTORY_FILE" || exit 1
+
+echo "$( date +'%Y-%m-%d %H:%M:%S' ) $UZBL_URI $UZBL_TITLE" >> "$UZBL_HISTORY_FILE"
+
