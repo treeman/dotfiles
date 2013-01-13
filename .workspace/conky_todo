@@ -19,9 +19,9 @@ own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 alignment top_left
-gap_y 260
+gap_y 140
 gap_x 780
-maximum_width 495
+maximum_width 280
 
 #graphics
 draw_shades no
@@ -35,10 +35,26 @@ color1 818181
 color2 FFB600
 
 TEXT
-${color}${font Comfortaa:size=16}Todo List${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- -school -software -assignment -verro}
+${color}${font Comfortaa:size=16}Program${font}
+${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +prog}
 
-${offset 10}
+
+${color}${font Comfortaa:size=16}Write${font}
+${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +write}
+
+
+${color}${font Comfortaa:size=16}Read${font}
+${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +read}
+
+
+${color}${font Comfortaa:size=16}Watch${font}
+${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +watch}
+
+
 ${color}${font Comfortaa:size=16}Verro Todo${font}
 ${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +verro}
+
+
+${color}${font Comfortaa:size=16}Misc${font}
+${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- -prog -write -read -watch -verro -school -due}
 

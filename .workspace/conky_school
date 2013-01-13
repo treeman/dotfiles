@@ -35,8 +35,8 @@ color1 FFFFFF
 color2 FFB600
 
 TEXT
-${font Comfortaa:size=16}Assignment due dates${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl --date -- +assignment}
+${font Comfortaa:size=16}Due dates${font}
+${voffset 2}${execp ~/.workspace/desktop-tasks.pl --date -- +school}
 
 
 ${font Comfortaa:size=16}Schedule${font}
@@ -44,5 +44,5 @@ ${voffset 2}${execp ~/.workspace/calendar.pl}
 
 
 ${font Comfortaa:size=16}School Todo${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +school -assignment -tenta}
+${voffset 2}${execp ~/.workspace/desktop-tasks.pl --nodate -- +school}
 

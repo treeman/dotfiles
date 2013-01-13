@@ -21,11 +21,12 @@ import qualified XMonad.StackSet as W
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
-    , ((modm .|. controlMask,   xK_u), spawn "uzbl")
+    , ((modm .|. controlMask,   xK_u), spawn "uzbl-browser -c $HOME/.uzbl/config")
     , ((modm .|. controlMask,   xK_o), spawn "opera")
     , ((modm .|. controlMask,   xK_c), spawn "chrome")
 
     , ((modm .|. controlMask,   xK_e), spawn "emacs")
+    , ((modm .|. controlMask,   xK_x), spawn "apvlv")
 
     , ((modm .|. controlMask,   xK_s), spawn "skype")
     , ((modm .|. controlMask,   xK_i), spawn "start_irc")
