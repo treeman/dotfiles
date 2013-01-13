@@ -12,6 +12,6 @@ With the different tags
 * +watch
 * +verro
 * +school
-* +school +due due:YYYY-MM-DD
+* +school due:YYYY-MM-DD
 * misc (default)
 
