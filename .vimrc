@@ -128,6 +128,7 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 nmap <silent> <leader>r :CommandTFlush<CR>
 
+
 " Bind buffert toggling to f1/f2
 noremap <F1> :bprev!<CR>
 noremap <F2> :bnext!<CR>
@@ -144,6 +145,9 @@ map <F5> :silent! %s/\s\+$//<CR>:retab<CR>
 " Toggle between tabs or no tabs
 map <F6> :set expandtab<CR>
 map <F7> :set noexpandtab<CR>
+
+" Spell checking
+map <F10> :set spell! spell?<CR>
 
 " Shift-tab to insert hard tab
 imap <silent> <S-tab> <C-V><tab>
@@ -184,9 +188,6 @@ vnoremap X "_X
 
 nmap <silent> <leader>d "_d
 vmap <silent> <leader>d "_d
-
-" Quick yank to the end of the line
-nmap Y y$
 
 " Fast yank/paste to OS clipboard
 nmap <leader>y "+y
