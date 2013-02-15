@@ -128,7 +128,6 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 nmap <silent> <leader>r :CommandTFlush<CR>
 
-
 " Bind buffert toggling to f1/f2
 noremap <F1> :bprev!<CR>
 noremap <F2> :bnext!<CR>
