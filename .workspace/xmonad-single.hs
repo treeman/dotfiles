@@ -12,6 +12,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.SetWMName
 
 import System.IO
 
@@ -167,5 +168,8 @@ main = do
     , logHook = dynamicLogWithPP $ myDzenPP topLeft
     , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
     , manageHook = manageDocks <+> manageHook defaultConfig
+    --
+    -- Trick java apps like minecraft to correctly recognize windowed screen resolution in dual screen mode
+    , startupHook = setWMName "LG3D"
 }
 

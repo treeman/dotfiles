@@ -8,9 +8,11 @@ use Getopt::Long;
 use DateTime;
 
 my $print_date;
+my $no_date;
 
 GetOptions(
     'date' => \$print_date,
+    'nodate' => \$no_date,
 );
 
 sub trim($)
@@ -76,19 +78,23 @@ for my $task (@tasks) {
     }
 }
 
+my $cnt = 0;
+
 if (scalar @line_stack) {
 
     for my $task (@line_stack) {
         # Match my special task what list
         my ($id, $pri, $due, $what) = $task =~ /
+            ^
             \s*
             (\d+)
-            \s*
+            \s
             ([LMH]?)
             \s*
             (\d{4}-\d{2}-\d{2})?
             \s*
             (.*)
+            $
         /x;
 
         # YYYY-MM-DD
@@ -136,10 +142,27 @@ if (scalar @line_stack) {
         # Trim leading/trailing whitespace
         $str = trim($str);
 
-        print "  \${voffset 8}$str\n";
+        # Only print those with due dates
+        if ($print_date) {
+            if (defined ($due)) {
+                say "  \${voffset 8}$str";
+                ++$cnt;
+            }
+        }
+        elsif ($no_date) {
+            if (!defined ($due)) {
+                say "  \${voffset 8}$str";
+                ++$cnt;
+            }
+        }
+        else {
+            say "  \${voffset 8}$str";
+                ++$cnt;
+        }
     }
 }
-else {
+
+if (!$cnt) {
     say "  \${voffset 8}Nothing!";
 }
 

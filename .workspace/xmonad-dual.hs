@@ -13,6 +13,7 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.ICCCMFocus
 
 import System.IO
 
@@ -21,11 +22,12 @@ import qualified XMonad.StackSet as W
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
-    , ((modm .|. controlMask,   xK_u), spawn "uzbl")
+    , ((modm .|. controlMask,   xK_u), spawn "uzbl-browser -c $HOME/.uzbl/config")
     , ((modm .|. controlMask,   xK_o), spawn "opera")
     , ((modm .|. controlMask,   xK_c), spawn "chrome")
 
     , ((modm .|. controlMask,   xK_e), spawn "emacs")
+    , ((modm .|. controlMask,   xK_x), spawn "apvlv")
 
     , ((modm .|. controlMask,   xK_s), spawn "skype")
     , ((modm .|. controlMask,   xK_i), spawn "start_irc")
@@ -124,6 +126,10 @@ myDzenPP h = defaultPP
           wrapBg color content = wrap ("^bg(" ++ color ++ ")") "^bg()" content
           wrapBitmap bitmap = "^p(2)^i(" ++ myIconDir ++ bitmap ++ ")^p(2)"
 
+myManageHook = composeAll
+    [ className =? "Steam"  --> doIgnore
+    , manageDocks]
+
 main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
@@ -145,7 +151,7 @@ main = do
     , keys = \k -> myKeys k `M.union` keys defaultConfig k
     , logHook = dynamicLogWithPP $ myDzenPP topLeft
     , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
-    , manageHook = manageDocks <+> manageHook defaultConfig
+    , manageHook = manageDocks <+> myManageHook
 
     -- Trick java apps like minecraft to correctly recognize windowed screen resolution in dual screen mode
     , startupHook = setWMName "LG3D"
