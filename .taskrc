@@ -36,7 +36,7 @@ weekstart=Monday
 default.command=next
 
 # Swedish holidays
-include /usr/local/share/doc/task/rc/holidays-SE.rc
+include /usr/local/share/doc/task/rc/holidays.sv-SE.rc
 
 # Sample report
 report.what.description=Shorter than list longer than ls

@@ -3,13 +3,17 @@
 #endif
 
 ! Blink
-!*visualBell: False
+*visualBell: False
 
 Xft.antialias: 1
-Xft.hinting: -1
-Xft.rgba: rgb
-Xft.hintstyle: hintslight
-Xft.dpi: 100
+#Xft.hinting: -1
+Xft.hinting: 1
+#Xft.hintstyle: hintslight
+Xft.hintstyle: hintfull
+#Xft.hintstyle: hintmedium
+Xft.lcdfilter: lcddefault
+Xft.autohint: 0
+Xft.dpi: 96
 
 URxvt.urgentOnBell: true
 
@@ -25,12 +29,19 @@ XTerm*scrollKey: true
 XTerm*saveLines: 1000
 XTerm*multiClickTime: 250
 
-XTerm*eightBitInput: false
+XTerm*eightBitInput: false#
 XTerm*altSendsEscape: true
 
 XTerm*faceName: Consolasi
-XTerm*faceSize: 10
+XTerm*faceSize: 10.8
 XTerm*utf8: 1
+
+URxvt*faceName: Consolasi
+URxvt*faceSize: 16
+URxvt*utf8: 1
+
+URxvt*background: black
+URxvt*foreground: white
 
 XTerm*background: black
 XTerm*foreground: white
@@ -60,3 +71,4 @@ XTerm*color12: #96CBFE
 XTerm*color13: #FF73FD
 XTerm*color14: #C6C5FE
 XTerm*color15: #EEEEEE
+

@@ -33,7 +33,7 @@
     a = add
     co = checkout
     b = branch
-    l = log
+    l = "!source ~/.githelpers && pretty_git_log"
     f = fetch
     p = push
     pu = pull

@@ -42,8 +42,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
     , ((modm,                   xK_y), focusUrgent)
 
-    -- Do not leave useless conky, dzen and xmobar after restart
-    , ((modm,                   xK_q), spawn "killall xmobar conky dzen2; xmonad --recompile; xmonad --restart")
+    -- Do not leave useless conky, dzen and after restart
+    , ((modm,                   xK_q), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
     ]
 
     ++

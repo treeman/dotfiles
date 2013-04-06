@@ -13,11 +13,14 @@ use Data::ICal;
 use Data::ICal::DateTime;
 
 use LWP::Simple;
+use Data::Dumper;
 
 # Url for ical files
 my @urls = qw(
-    http://timeedit.liu.se/4DACTION/iCal_downloadReservations/timeedit.ics?from=1301&to=1313&id1=28825002&branch=5&lang=1
-    http://timeedit.liu.se/4DACTION/iCal_downloadReservations/timeedit.ics?from=1301&to=1313&id1=40151000&branch=5&lang=1
+    https://se.timeedit.net/web/liu/db1/schema/ri6Y5590X66Z5WQ07564y8325320505779Q9758QQ27Z5Y02.ics
+    https://se.timeedit.net/web/liu/db1/schema/ri6Y735Q706ZQ9Q955600Zy35718Q5W377345.ics
+    https://se.timeedit.net/web/liu/db1/schema/ri6Y735Q706ZQ4Q955600Zy35718Q5W377345.ics
+    https://se.timeedit.net/web/liu/db1/schema/ri6Y5420X66Z2WQ87559y8395390655772Q4700QQ97Z5Y05.ics
 );
 
 # Correct times
@@ -44,9 +47,9 @@ for my $url (@urls) {
 
 my %my_courses = map { $_ => 1; } qw(
     TATA64
-    TSRT12
     TDDD09
-    TSKS10
+    TFYA68
+    TAMS27
 );
 
 sub shorten_summary

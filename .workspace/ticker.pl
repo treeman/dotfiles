@@ -13,16 +13,11 @@ sub trim($)
     return $string;
 }
 
-my $what = trim(`/home/tree/projects/mangaprobe/mangas.pl -s -c`);
-my @list = split(/\r?\n/, $what);
-
-my $limit = 5;
-
-if (scalar @list > $limit) {
-    @list = @list[0 .. $limit - 1];
-}
+my $what = trim(`ticker --limit 10 --format list`);
+my @list = split(/^/, $what);
 
 for my $item (@list) {
-    print "  \${voffset 8}$item\n";
+    chomp $item;
+    say "  \${voffset 8}$item";
 }
 
