@@ -14,6 +14,7 @@ setopt appendhistory autocd extendedglob
 # Used with slackbuilds to set 64bit environment
 export ARCH=x86_64
 
+export JAVA_HOME=/usr/lib64/java
 export JAVAWS_HOME=/usr/lib64/java/javaws
 
 export PATH=.:~/bin:~/.cabal/bin:/opt/jre1.6.0_38/bin/:/opt/sbt/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin:/usr/share/texmf/bin
@@ -108,4 +109,11 @@ alias .....='cd ../../../../'
 # Faster screen switching T.T
 alias ss='single-screen && startx'
 alias ds='dual-screen && startx'
+
+utf8()
+{
+    iconv -f ISO-8859-1 -t UTF-8 $1 > $1.tmp
+    rm $1
+    mv $1.tmp $1
+}
 

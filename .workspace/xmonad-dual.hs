@@ -20,6 +20,7 @@ import System.IO
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
+
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
     , ((modm .|. controlMask,   xK_u), spawn "uzbl-browser -c $HOME/.uzbl/config")
@@ -37,6 +38,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_t), spawn "mtpaint")
 
     , ((modm .|. shiftMask,     xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
+
+    , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us")
+    --, ((modm .|. controlMask,   xK_u), spawn setKeyboardLayout)
+    , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se")
 
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
@@ -127,7 +132,11 @@ myDzenPP h = defaultPP
           wrapBitmap bitmap = "^p(2)^i(" ++ myIconDir ++ bitmap ++ ")^p(2)"
 
 myManageHook = composeAll
-    [ className =? "Steam"  --> doIgnore
+    [ className =? "Steam"  --> doFloat
+    , className =? "steam"  --> doFullFloat
+    , className =? "MainThrd"  --> doFloat
+    , title =? "plasma-desktop"  --> doIgnore
+    --[ className =? "Steam"  --> doIgnore
     , manageDocks]
 
 main = do

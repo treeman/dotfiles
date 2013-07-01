@@ -13,6 +13,7 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.ICCCMFocus
 
 import System.IO
 
@@ -146,6 +147,14 @@ myDzenPP h = defaultPP
           wrapBg color content = wrap ("^bg(" ++ color ++ ")") "^bg()" content
           wrapBitmap bitmap = "^p(2)^i(" ++ myIconDir ++ bitmap ++ ")^p(2)"
 
+myManageHook = composeAll
+    [ className =? "Steam"  --> doFloat
+    , className =? "steam"  --> doFloat
+    , className =? "MainThrd"  --> doFloat
+    --, title =? "plasma-desktop"  --> doIgnore
+    --[ className =? "Steam"  --> doIgnore
+    , manageDocks]
+
 main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
@@ -167,7 +176,7 @@ main = do
     , keys = \k -> myKeys k `M.union` keys defaultConfig k
     , logHook = dynamicLogWithPP $ myDzenPP topLeft
     , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
-    , manageHook = manageDocks <+> manageHook defaultConfig
+    , manageHook = manageDocks <+> myManageHook
     --
     -- Trick java apps like minecraft to correctly recognize windowed screen resolution in dual screen mode
     , startupHook = setWMName "LG3D"

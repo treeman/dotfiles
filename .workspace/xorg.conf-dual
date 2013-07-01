@@ -19,6 +19,7 @@ Section "Files"
     FontPath        "/usr/lib64/X11/fonts/75dpi/"
     FontPath        "/usr/lib64/X11/fonts/cyrillic/"
     FontPath        "/usr/lib64/X11/fonts/TTF/"
+    FontPath        "/usr/local/share/fonts"
 EndSection
 
 Section "InputDevice"
@@ -27,7 +28,7 @@ Section "InputDevice"
     Option         "Protocol" "auto"
     Option         "Device" "/dev/psaux"
     Option         "Emulate3Buttons" "no"
-    Option         "ZAxisMapping" "4 5"
+#    Option         "ZAxisMapping" "4 5"
 EndSection
 
 Section "InputDevice"
@@ -50,8 +51,8 @@ Section "Monitor"
     Identifier     "Monitor0"
     VendorName     "Unknown"
     ModelName      "DELL U2211H"
-    HorizSync       60
-    VertRefresh     60
+    HorizSync       30.0 - 83.0
+    VertRefresh     56.0 - 76.0
     Option         "DPMS"
 EndSection
 
@@ -59,8 +60,8 @@ Section "Monitor"
     Identifier     "Monitor1"
     VendorName     "Unknown"
     ModelName      "DELL U2211H"
-    HorizSync       60
-    VertRefresh     60
+    HorizSync       30.0 - 83.0
+    VertRefresh     56.0 - 76.0
 EndSection
 
 Section "Device"
@@ -99,8 +100,7 @@ Section "Screen"
     Monitor        "Monitor1"
     DefaultDepth    24
     Option         "TwinView" "0"
-    Option         "metamodes" "DFP-2: nvidia-auto-select +0+0"
-    Option         "rotate" "ccw"
+    Option         "metamodes" "DFP-2: nvidia-auto-select +0+0 { Rotation=left }"
     SubSection     "Display"
         Depth       24
     EndSubSection
