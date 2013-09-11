@@ -13,14 +13,12 @@ use Data::ICal;
 use Data::ICal::DateTime;
 
 use LWP::Simple;
+use LWP::UserAgent;
 use Data::Dumper;
 
-# Url for ical files
-my @urls = qw(
-    https://se.timeedit.net/web/liu/db1/schema/ri6Y5590X66Z5WQ07564y8325320505779Q9758QQ27Z5Y02.ics
-    https://se.timeedit.net/web/liu/db1/schema/ri6Y735Q706ZQ9Q955600Zy35718Q5W377345.ics
-    https://se.timeedit.net/web/liu/db1/schema/ri6Y735Q706ZQ4Q955600Zy35718Q5W377345.ics
-    https://se.timeedit.net/web/liu/db1/schema/ri6Y5420X66Z2WQ87559y8395390655772Q4700QQ97Z5Y05.ics
+# Url for timeedit
+my @timeedit = qw(
+    https://se.timeedit.net/web/liu/db1/schema/ri6Y7064X66Z4QQ7X56405745Q26657YZ254257Q67775Yy040W10575075.ics
 );
 
 # Correct times
@@ -33,50 +31,31 @@ my $tomorrow = DateTime->now()->set( hour => 0, minute => 0, second => 0 )->add(
 
 my $span = DateTime::Span->from_datetimes( start => $today, end => $tomorrow );
 
-#my @events = $calendar->events($span);
-#my @events = $calendar->events();
-
 my @events;
 
-for my $url (@urls) {
-    my $str = LWP::Simple::get $url;
+my $ua = LWP::UserAgent->new;
+$ua->timeout(10);
+$ua->env_proxy;
+
+for my $url (@timeedit) {
+    my $response = $ua->get($url);
+
+    die $response->status_line if !$response->is_success;
+
+    my $str = $response->decoded_content;
     my $calendar = Data::ICal->new(data => $str);
 
     @events = (@events, $calendar->events($span));
 }
 
-my %my_courses = map { $_ => 1; } qw(
-    TATA64
-    TDDD09
-    TFYA68
-    TAMS27
-);
-
 sub shorten_summary
 {
     my ($summary) = @_;
 
-    my @stuff = split(/,\s*/, $summary);
-    my ($course, $description);
+    utf8::encode($summary);
+    my ($course, $type, $lecturer, $location) = split(/,\s*/, $summary);
 
-    for my $item (@stuff) {
-        if ($my_courses{$item}) {
-            $course = $item;
-            last;
-        }
-    }
-
-    return when (!$course);
-
-    my ($what) = $summary =~ /(Lektion|Laboration|Föreläsning|Seminarium|Handledning|mentor)/i;
-
-    # Make sure that we output utf8 correctly
-    utf8::encode($what);
-
-    my $str = $course;
-    if ($what) { $str .= " $what"; }
-
-    return $str;
+    return "$course $type $location";
 }
 
 my @lessons;
@@ -120,12 +99,10 @@ sub uniq {
 
 if (scalar @lessons) {
     for my $lesson (uniq (sort @lessons)) {
-        #say $lesson;
         say "  \${voffset 8}$lesson";
     }
 }
 else {
-    #say "I'm free!";
     say "  \${voffset 8}I'm free!";
 }
 
