@@ -72,6 +72,8 @@ for my $event (@events) {
     # It's not a proper atom timestring! Might want to make something more robust?
     my $start = $f->parse_datetime( $event->start . 'Z' );
     my $end = $f->parse_datetime( $event->end . 'Z' );
+    $start->set_time_zone( 'Europe/Stockholm' );
+    $end->set_time_zone( 'Europe/Stockholm' );
 
     my $pretty_start = $start->strftime( "%H:%M" );
     my $pretty_end = $end->strftime( "%H:%M" );
