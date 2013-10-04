@@ -210,3 +210,5 @@ cmap w!! w !sudo tee % >/dev/null
 nnoremap <Tab> %
 vnoremap <Tab> %
 
+" SML make code
+autocmd FileType sml setlocal makeprg=sml\ -P\ full\ '%'
