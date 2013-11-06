@@ -18,7 +18,7 @@ use Data::Dumper;
 
 # Url for timeedit
 my @timeedit = qw(
-    https://se.timeedit.net/web/liu/db1/schema/ri6Y7064X66Z4QQ7X56405745Q26657YZ254257Q67775Yy040W10575075.ics
+    https://se.timeedit.net/web/liu/db1/schema/ri6Y7474X66Z5QQ6X16405Y25Q26657YZ204257Q63770Yy5Xm59680554Yg.ics
 );
 
 # Correct times

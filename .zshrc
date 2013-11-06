@@ -17,7 +17,7 @@ export ARCH=x86_64
 export JAVA_HOME=/usr/lib64/java
 export JAVAWS_HOME=/usr/lib64/java/javaws
 
-export PATH=.:~/bin:~/.cabal/bin:/opt/jre1.6.0_38/bin/:/opt/sbt/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin:/usr/share/texmf/bin
+export PATH=.:~/bin:~/.cabal/bin:/opt/jre1.6.0_38/bin/:/opt/sbt/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin:/usr/share/texmf/bin:/usr/share/smlnj/bin
 
 export MANPATH=/usr/share/texmf/doc/man:/usr/local/share/man:$MANPATH
 

@@ -35,26 +35,7 @@ color1 818181
 color2 FFB600
 
 TEXT
-${color}${font Comfortaa:size=16}Program${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +prog}
-
-
-${color}${font Comfortaa:size=16}Write${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +write}
-
-
-${color}${font Comfortaa:size=16}Read${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +read}
-
-
-${color}${font Comfortaa:size=16}Watch${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +watch}
-
 
 ${color}${font Comfortaa:size=16}Verro Todo${font}
 ${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +verro}
-
-
-${color}${font Comfortaa:size=16}Misc${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- -prog -write -read -watch -verro -school -due}
 

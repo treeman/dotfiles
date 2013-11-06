@@ -42,7 +42,3 @@ ${voffset 2}${execp ~/.workspace/desktop-tasks.pl --date -- +school}
 ${font Comfortaa:size=16}Schedule${font}
 ${voffset 2}${execp ~/.workspace/calendar.pl}
 
-
-${font Comfortaa:size=16}School Todo${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl --nodate -- +school}
-
