@@ -42,7 +42,6 @@ set tabstop=4 " tabs width
 set autoindent " keep indenting after newline
 "set smartindent
 set smarttab " insert tabs on the start according to shiftwidth, not tabstop
-filetype plugin indent off
 
 " Appearence
 set background=dark
@@ -211,5 +210,3 @@ cmap w!! w !sudo tee % >/dev/null
 nnoremap <Tab> %
 vnoremap <Tab> %
 
-" SML make code
-autocmd FileType sml setlocal makeprg=sml\ -P\ full\ '%'

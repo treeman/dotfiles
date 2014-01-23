@@ -18,7 +18,7 @@ use Data::Dumper;
 
 # Url for timeedit
 my @timeedit = qw(
-    https://se.timeedit.net/web/liu/db1/schema/ri6Y7474X66Z5QQ6X16405Y25Q26657YZ204257Q63770Yy5Xm59680554Yg.ics
+    https://se.timeedit.net/web/liu/db1/schema/ri6Y7654X66Z1QQ6X26485725Q46757YZ604654Q74745Yy865W96580159.ics
 );
 
 # Correct times
@@ -53,7 +53,16 @@ sub shorten_summary
     my ($summary) = @_;
 
     utf8::encode($summary);
-    my ($course, $type, $lecturer, $location) = split(/,\s*/, $summary);
+    #say Dumper($summary);
+
+    # OOOooooh those hacks!
+    my ($course) = $summary =~ /Kurs: (\S+)/;
+    my ($location) = $summary =~ /Lokal: (\S+)/;
+    my ($type) = $summary =~ /Undervisningstyp: (\S+)/;
+
+    $course =~ s/,//;
+    $location =~ s/,//;
+    $type =~ s/,//;
 
     return "$course $type $location";
 }
