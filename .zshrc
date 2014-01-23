@@ -110,6 +110,8 @@ alias .....='cd ../../../../'
 alias ss='single-screen && startx'
 alias ds='dual-screen && startx'
 
+alias g++11='g++ -g -O2 -static -std=gnu++0x'
+
 utf8()
 {
     iconv -f ISO-8859-1 -t UTF-8 $1 > $1.tmp

@@ -6,3 +6,5 @@
 ; set firefox as browser
 (setq browse-url-browser-function (quote browse-url-generic))
 (setq browse-url-generic-program "firefox")
+(setenv "PATH" (concat "/usr/share/smlnj/bin:" (getenv "PATH")))
+(setq exec-path (cons "/usr/share/smlnj/bin" exec-path))
