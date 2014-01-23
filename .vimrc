@@ -209,6 +209,3 @@ cmap w!! w !sudo tee % >/dev/null
 " Jump to matching pairs easily, with Tab
 nnoremap <Tab> %
 vnoremap <Tab> %
-
-" SML make code
-autocmd FileType sml setlocal makeprg=sml\ -P\ full\ '%'
