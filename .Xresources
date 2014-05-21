@@ -15,10 +15,12 @@ Xft.lcdfilter: lcddefault
 Xft.autohint: 0
 Xft.dpi: 96
 
-URxvt.urgentOnBell: true
+! URxvt.urgentOnBell: true
+URxvt.urgentOnBell: false
 
 ! irssi notifications
-XTerm*bellIsUrgent: true
+!XTerm*bellIsUrgent: true
+XTerm*bellIsUrgent: false
 
 XTerm*internalBorder: 0
 XTerm*loginShell: false

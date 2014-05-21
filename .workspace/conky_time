@@ -35,7 +35,7 @@ color2 FFB600
 
 TEXT
 ${font Consolas:size=72}${time %R}${font}${voffset 8}
- ${color2}UpTime: ${color1}$uptime_short   ${execp ~/.workspace/gm1.pl}
+ ${color2}UpTime: ${color1}$uptime_short
 
 ${offset 310}${voffset -117}${color2}${font Consolas:size=28}${time %d}${font Consolas:size=14} ${voffset -10}${color1}${time %B %Y}
 

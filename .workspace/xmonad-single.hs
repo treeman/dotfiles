@@ -34,9 +34,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     , ((modm .|. shiftMask,     xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
 
+    -- , ((modm .|. controlMask,   xK_u), spawn "xmodmap .xmodmap-us")
+    -- , ((modm .|. controlMask,   xK_space), spawn "xmodmap .xmodmap-se")
+    , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
+    , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
+
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
     , ((modm,                   xK_y), focusUrgent)
+
     -- Do not leave useless conky, dzen and xmobar after restart
     , ((modm,                   xK_q), spawn "killall xmobar conky dzen2; xmonad --recompile; xmonad --restart")
 

@@ -36,12 +36,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     , ((modm .|. controlMask,   xK_m), spawn "spotify")
     , ((modm .|. controlMask,   xK_t), spawn "mtpaint")
+    , ((modm .|. controlMask,   xK_a), spawn "anki")
 
     , ((modm .|. shiftMask,     xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
 
-    , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us")
     --, ((modm .|. controlMask,   xK_u), spawn setKeyboardLayout)
-    , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se")
+    -- , ((modm .|. controlMask,   xK_u), spawn "xmodmap .xmodmap-us")
+    -- , ((modm .|. controlMask,   xK_space), spawn "xmodmap .xmodmap-se")
+    , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
+    , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
 
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
@@ -143,7 +146,7 @@ main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
 
-    conkyTodo <- spawnPipe "conky -c ~/.workspace/conky_todo"
+    --conkyTodo <- spawnPipe "conky -c ~/.workspace/conky_todo"
     conkyKernel <- spawnPipe "conky -c ~/.workspace/conky_kernel"
     conkyTime <- spawnPipe "conky -c ~/.workspace/conky_time"
     conkySchool <- spawnPipe "conky -c ~/.workspace/conky_school"
