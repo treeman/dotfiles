@@ -5,72 +5,35 @@
 ! Blink
 *visualBell: False
 
-Xft.antialias: 1
-#Xft.hinting: -1
-Xft.hinting: 1
-#Xft.hintstyle: hintslight
-Xft.hintstyle: hintfull
-#Xft.hintstyle: hintmedium
-Xft.lcdfilter: lcddefault
-Xft.autohint: 0
-Xft.dpi: 96
+! urxvt
+URxvt*color0: #4E4E4E
+URxvt*color1: #FF6C60
+URxvt*color2: #A8FF60
+URxvt*color3: #FFFFB6
+URxvt*color4: #96CBFE
+URxvt*color5: #FF73FD
+URxvt*color6: #C6C5FE
+URxvt*color7: #EEEEEE
 
-! URxvt.urgentOnBell: true
-URxvt.urgentOnBell: false
+URxvt*color8: #4E4E4E
+URxvt*color9: #FF6C60
+URxvt*color10: #A8FF60
+URxvt*color11: #FFFF6A
+URxvt*color12: #96CBFE
+URxvt*color13: #FF73FD
+URxvt*color14: #C6C5FE
+URxvt*color15: #EEEEEE
 
-! irssi notifications
-!XTerm*bellIsUrgent: true
-XTerm*bellIsUrgent: false
+URxvt*font: xft:Monospace:pixelsize=14
+URxvt*letterSpace: -1
 
-XTerm*internalBorder: 0
-XTerm*loginShell: false
+URxvt.scrollBar: false
 
-XTerm*scrollBar: false
-XTerm*scrollKey: true
-
-XTerm*saveLines: 1000
-XTerm*multiClickTime: 250
-
-XTerm*eightBitInput: false#
-XTerm*altSendsEscape: true
-
-XTerm*faceName: Consolasi
-XTerm*faceSize: 10.8
-XTerm*utf8: 1
-
-URxvt*faceName: Consolasi
-URxvt*faceSize: 16
-URxvt*utf8: 1
-
+URxvt*pointerColor: red
+URxvt*pointerColorBackground: black
+URxvt*cursorColor: green
 URxvt*background: black
 URxvt*foreground: white
 
 XTerm*background: black
 XTerm*foreground: white
-
-XTerm*pointerColor: red
-XTerm*pointerColorBackground: black
-XTerm*cursorColor: green
-
-XTerm*iconPixmap: /home/tree/.icons/terminal.xbm
-
-XTerm*termName: xterm-256color
-
-XTerm*color0: #4E4E4E
-XTerm*color1: #FF6C60
-XTerm*color2: #A8FF60
-XTerm*color3: #FFFFB6
-XTerm*color4: #96CBFE
-XTerm*color5: #FF73FD
-XTerm*color6: #C6C5FE
-XTerm*color7: #EEEEEE
-
-XTerm*color8: #4E4E4E
-XTerm*color9: #FF6C60
-XTerm*color10: #A8FF60
-XTerm*color11: #FFFF6A
-XTerm*color12: #96CBFE
-XTerm*color13: #FF73FD
-XTerm*color14: #C6C5FE
-XTerm*color15: #EEEEEE
-

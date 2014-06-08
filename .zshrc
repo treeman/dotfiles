@@ -74,12 +74,12 @@ bindkey -e
 bindkey "^[[3~"  delete-char
 bindkey "^[3;5~" delete-char
 
-# Enable ls color support
-if [ "$TERM" != "dumb" ]; then
-    eval `dircolors -b`
-    alias ls='ls -h --color'
-fi
+# Make ls better
+LS_OPTIONS="-F -b -T 0 --color=auto"
+export LS_OPTIONS
+eval `dircolors -b $HOME/.dir_colors`
 
+alias ls='/bin/ls ${=LS_OPTIONS}'
 alias lsd='ls -d *(-/DN)' # List dirs and symbolic links to dirs
 alias lsa='ls -d .*' # Only list hidden files
 

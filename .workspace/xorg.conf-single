@@ -42,7 +42,7 @@ EndSection
 Section "InputClass"
     Identifier     "Keyboard Defaults"
     MatchIsKeyboard "yes"
-    Option         "XkbLayout" "se"
+    Option         "XkbLayout" "us"
 EndSection
 
 Section "Monitor"

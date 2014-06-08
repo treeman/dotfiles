@@ -23,26 +23,20 @@ import qualified XMonad.StackSet as W
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
-    , ((modm .|. controlMask,   xK_u), spawn "uzbl-browser -c $HOME/.uzbl/config")
-    , ((modm .|. controlMask,   xK_o), spawn "opera")
     , ((modm .|. controlMask,   xK_c), spawn "chrome")
 
     , ((modm .|. controlMask,   xK_e), spawn "emacs")
-    , ((modm .|. controlMask,   xK_x), spawn "apvlv")
 
     , ((modm .|. controlMask,   xK_s), spawn "skype")
     , ((modm .|. controlMask,   xK_i), spawn "start_irc")
-    , ((modm .|. controlMask,   xK_p), spawn "pidgin")
 
     , ((modm .|. controlMask,   xK_m), spawn "spotify")
     , ((modm .|. controlMask,   xK_t), spawn "mtpaint")
     , ((modm .|. controlMask,   xK_a), spawn "anki")
 
+    , ((modm .|. shiftMask,     xK_t), spawn "xterm") -- Just a backup for now, with the borked enter
     , ((modm .|. shiftMask,     xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
 
-    --, ((modm .|. controlMask,   xK_u), spawn setKeyboardLayout)
-    -- , ((modm .|. controlMask,   xK_u), spawn "xmodmap .xmodmap-us")
-    -- , ((modm .|. controlMask,   xK_space), spawn "xmodmap .xmodmap-se")
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
 
@@ -109,8 +103,6 @@ myDzen = " dzen2 -xs 1 -dock -h 18 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++ myNo
 myStatusBar = myDzen ++ " -x '0' -y '0' -ta 'l' -w 800"
 myTopRight = "conky -c ~/.workspace/conky_bar | " ++ myDzen ++ " -x '800' -y '0' -ta 'r' -p"
 
-myHackerTop = "conky -c ~/.workspace/conkyrc-hackertop"
-
 myDzenPP h = defaultPP
     { ppOutput = hPutStrLn h
     , ppCurrent = wrapFg "#FFB600" . dropId
@@ -159,7 +151,7 @@ main = do
     , normalBorderColor = "#000000"
     , focusedBorderColor = "#363636"
     , borderWidth = 1
-    , terminal = "xterm"
+    , terminal = "urxvt"
     , keys = \k -> myKeys k `M.union` keys defaultConfig k
     , logHook = dynamicLogWithPP $ myDzenPP topLeft
     , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig

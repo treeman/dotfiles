@@ -18,7 +18,6 @@ Section "Files"
     FontPath "/usr/lib64/X11/fonts/75dpi/"
     FontPath "/usr/lib64/X11/fonts/cyrillic/"
     FontPath "/usr/lib64/X11/fonts/TTF/"
-    FontPath "/usr/local/share/fonts"
 EndSection
 
 Section "InputDevice"
@@ -33,13 +32,13 @@ EndSection
 Section "InputDevice"
     Identifier "Keyboard0"
     Driver "kbd"
-    Option "XkbLayout" "se"
+    Option "XkbLayout" "us"
 EndSection
 
 Section "InputClass"
     Identifier "Keyboard Defaults"
     MatchIsKeyboard "yes"
-    Option "XkbLayout" "se"
+    Option "XkbLayout" "us"
 EndSection
 
 Section "Module"

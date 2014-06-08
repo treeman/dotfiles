@@ -59,7 +59,7 @@ set novisualbell " don't blink
 set title " change the terminals title
 
 set relativenumber " display relative line numbers
-" set number " show line numbers
+set number " show line numbers
 
 set showmatch " show matching brackets
 set matchtime=5 " how many tenths of a second to blink matching brackets for
