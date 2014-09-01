@@ -44,3 +44,5 @@
     merge = refs/heads/master
 [core]
 	pager = less -r
+[push]
+	default = simple

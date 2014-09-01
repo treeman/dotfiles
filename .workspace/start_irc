@@ -10,5 +10,5 @@ if ($screen !~ /\d+\.irc/) {
 }
 
 # Launch a terminal with it
-`xterm -e screen -r irc`;
+`urxvt -e screen -r irc`;
 

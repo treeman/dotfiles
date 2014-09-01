@@ -22,20 +22,20 @@ import qualified XMonad.StackSet as W
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
-    , ((modm .|. controlMask,   xK_u), spawn "uzbl")
+    , ((modm .|. controlMask,   xK_c), spawn "chrome")
+
     , ((modm .|. controlMask,   xK_e), spawn "emacs")
 
     , ((modm .|. controlMask,   xK_s), spawn "skype")
     , ((modm .|. controlMask,   xK_i), spawn "start_irc")
-    , ((modm .|. controlMask,   xK_p), spawn "pidgin")
 
     , ((modm .|. controlMask,   xK_m), spawn "spotify")
     , ((modm .|. controlMask,   xK_t), spawn "mtpaint")
+    , ((modm .|. controlMask,   xK_a), spawn "anki")
 
+    , ((modm .|. shiftMask,     xK_t), spawn "xterm") -- Just a backup for now, with the borked enter
     , ((modm .|. shiftMask,     xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
 
-    -- , ((modm .|. controlMask,   xK_u), spawn "xmodmap .xmodmap-us")
-    -- , ((modm .|. controlMask,   xK_space), spawn "xmodmap .xmodmap-se")
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
 
@@ -43,12 +43,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
     , ((modm,                   xK_y), focusUrgent)
 
-    -- Do not leave useless conky, dzen and xmobar after restart
-    , ((modm,                   xK_q), spawn "killall xmobar conky dzen2; xmonad --recompile; xmonad --restart")
-
-    , ((modm,                   xK_b     ), sendMessage ToggleStruts)
+    -- Do not leave useless conky, dzen and after restart
+    , ((modm,                   xK_q), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
     ]
-
     ++
 
     -- mod-[1..9], Switch to workspace N
@@ -82,7 +79,8 @@ myLogHook h = dynamicLogWithPP $ xmobarPP
 
 --["α","β","γ","δ","ε","ζ"]
 --myWorkspaces = ["α","β","γ", "4:prog", "5:www", "6:chat", "7:irc", "8:music", "9:misc"]
-myWorkspaces = ["α","β","γ","δ","ε","ζ","η","θ","ι","κ"]
+{-myWorkspaces = ["α","β","γ","δ","ε","ζ","η","θ","ι","κ"]-}
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 
 --myIconDir = "/home/and1/.dzen"
 myDzenFGColor = "#555555"
@@ -178,7 +176,7 @@ main = do
     , normalBorderColor = "#000000"
     , focusedBorderColor = "#363636"
     , borderWidth = 0
-    , terminal = "xterm"
+    , terminal = "urxvt"
     , keys = \k -> myKeys k `M.union` keys defaultConfig k
     , logHook = dynamicLogWithPP $ myDzenPP topLeft
     , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig

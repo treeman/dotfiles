@@ -18,7 +18,10 @@ use Data::Dumper;
 
 # Url for timeedit
 my @timeedit = qw(
-    https://se.timeedit.net/web/liu/db1/schema/ri66X826X08Z04Q5Z86g6Y10y4026Y59705gQY5Q57778668Y54467666770Q454XY7.ics
+    https://se.timeedit.net/web/liu/db1/schema/ri657XQQ519Z50Qv57025gZ6y7Y7208Q6Y45Y7.ics
+    https://se.timeedit.net/web/liu/db1/schema/ri607856X25Z04Q5Z26g1Y90y5056Y58Q07gQY5Q53777.ics
+    https://se.timeedit.net/web/liu/db1/schema/ri65YXQ0519Z53Qv8X0258Q6y9Y220366Yy5Y7gQ8076970ZZ9Q4y6Z1YQ657x2Yo87X427265g616.ics
+    https://se.timeedit.net/web/liu/db1/schema/ri657XQQ519Z50Qv97065gZ6y7Y7202Q6Y45Y8.ics
 );
 
 # Correct times
@@ -26,8 +29,8 @@ my $today = DateTime->now()->set( hour => 0, minute => 0, second => 0 );
 my $tomorrow = DateTime->now()->set( hour => 0, minute => 0, second => 0 )->add( days => 1 );
 
 # Change day to where we have a few lessons
-#$today = DateTime->new( year => 2011, month => 8, day => 29 );
-#$tomorrow = DateTime->new( year => 2011, month => 8, day => 30 );
+#$today = DateTime->new( year => 2014, month => 9, day => 5 );
+#$tomorrow = DateTime->new( year => 2014, month => 9, day => 6 );
 
 my $span = DateTime::Span->from_datetimes( start => $today, end => $tomorrow );
 
@@ -48,21 +51,19 @@ for my $url (@timeedit) {
     @events = (@events, $calendar->events($span));
 }
 
+#say Dumper(@events);
+
 sub shorten_summary
 {
-    my ($summary) = @_;
+    my ($event) = @_;
 
+    my $summary = $event->property('summary')->[0]->value;
+    my $location = $event->property('location')->[0]->value;
     utf8::encode($summary);
-    #say Dumper($summary);
 
-    # OOOooooh those hacks!
-    my ($course) = $summary =~ /Kurs: (\S+)/;
-    my ($location) = $summary =~ /Lokal: (\S+)/;
-    my ($type) = $summary =~ /Undervisningstyp: (\S+)/;
-
-    $course =~ s/,//;
-    $location =~ s/,//;
-    $type =~ s/,//;
+    my @list = split (/\s*,\s*/, $summary);
+    my ($course) = $list[0] =~ /Kurs: (\S+)/;
+    my $type = $list[1];
 
     return "$course $type $location";
 }
@@ -71,7 +72,9 @@ my @lessons;
 
 for my $event (@events) {
 
-    my $summary = shorten_summary($event->property('summary')->[0]->value);
+    #say Dumper($event);
+
+    my $summary = shorten_summary($event);
 
     # No short summary = nothing interesting
     if (!$summary) { next };

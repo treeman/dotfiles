@@ -209,3 +209,8 @@ cmap w!! w !sudo tee % >/dev/null
 " Jump to matching pairs easily, with Tab
 nnoremap <Tab> %
 vnoremap <Tab> %
+
+" Use :cw to open up quickfix window. This toggles to next and previous
+" errors.
+map <C-p> :cp<CR>
+map <C-n> :cn<CR>

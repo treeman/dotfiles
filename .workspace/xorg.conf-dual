@@ -26,7 +26,7 @@ Section "InputDevice"
     Option "Protocol" "auto"
     Option "Device" "/dev/psaux"
     Option "Emulate3Buttons" "no"
-# Option "ZAxisMapping" "4 5"
+    Option "ZAxisMapping" "4 5"
 EndSection
 
 Section "InputDevice"
