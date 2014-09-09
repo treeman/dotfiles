@@ -35,10 +35,6 @@ color1 FFFFFF
 color2 FFB600
 
 TEXT
-${font Comfortaa:size=16}Due dates${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl --date -- +school}
-
-
 ${font Comfortaa:size=16}Schedule${font}
 ${voffset 2}${execp ~/.workspace/calendar.pl}
 
