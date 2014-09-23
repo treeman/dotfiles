@@ -18,10 +18,10 @@ use Data::Dumper;
 
 # Url for timeedit
 my @timeedit = qw(
-    https://se.timeedit.net/web/liu/db1/schema/ri657XQQ519Z50Qv57025gZ6y7Y7208Q6Y45Y7.ics
     https://se.timeedit.net/web/liu/db1/schema/ri607856X25Z04Q5Z26g1Y90y5056Y58Q07gQY5Q53777.ics
     https://se.timeedit.net/web/liu/db1/schema/ri65YXQ0519Z53Qv8X0258Q6y9Y220366Yy5Y7gQ8076970ZZ9Q4y6Z1YQ657x2Yo87X427265g616.ics
     https://se.timeedit.net/web/liu/db1/schema/ri657XQQ519Z50Qv97065gZ6y7Y7202Q6Y45Y8.ics
+    https://se.timeedit.net/web/liu/db1/schema/ri607856X25Z04Q5Z36g1Y90y5046Y50Q07gQY5Q53777.ics
 );
 
 # Correct times

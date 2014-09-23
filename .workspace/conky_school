@@ -19,7 +19,7 @@ own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 alignment top_left
-gap_y 1120
+gap_y 1180
 gap_x 780
 maximum_width 280
 
