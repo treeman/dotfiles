@@ -13,6 +13,9 @@ nitrogen --restore
 # Set mouse pointer
 xsetroot -cursor_name left_ptr
 
+# Startup skyped
+# skyped
+
 # Start xmonad yay!
 exec xmonad
 

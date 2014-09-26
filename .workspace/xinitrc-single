@@ -3,6 +3,10 @@
 # Load X settings
 xrdb -load $HOME/.Xdefaults
 
+# Override bad enter
+setxkbmap us
+xmodmap .xmodmap
+
 # Set background
 feh --bg-scale ~/.backgrounds/curr/war_is_hell.jpg
 
