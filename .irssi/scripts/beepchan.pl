@@ -36,5 +36,5 @@ Irssi::signal_add('message irc action', 'beepchan');
 Irssi::signal_add('print text', 'beephilight');
 Irssi::settings_add_bool('misc', 'beep_on_channel', 1);
 Irssi::settings_add_bool('misc', 'beep_on_hilight', 1);
- Irssi::settings_add_str('misc','beep_channels','#madeoftree #viperassassinsquad');
+Irssi::settings_add_str('misc','beep_channels','#treecraft');
 

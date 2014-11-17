@@ -36,5 +36,5 @@ color2 FFB600
 
 TEXT
 ${font Comfortaa:size=16}Schedule${font}
-${voffset 2}${execp ~/.workspace/calendar.pl}
+${voffset 2}${execp ~/code/liuschema/target/liuschema --conky --config ~/.workspace/liuschema_conf.json --today}
 
