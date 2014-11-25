@@ -37,10 +37,10 @@ color2 FFB600
 TEXT
 
 ${color}${font Comfortaa:size=16}Todo${font}
-${voffset 10}${execp ~/code/habitrpg-viewer/target/habitrpg-viewer --todos --conky}
+${voffset 2}${execp ~/code/habitrpg-viewer/target/habitrpg-viewer --todos --conky}
 
 
 
 ${font Comfortaa:size=16}Dailys${font}
-${voffset 10}${execp ~/code/habitrpg-viewer/target/habitrpg-viewer --dailys --conky}
+${voffset 2}${execp ~/code/habitrpg-viewer/target/habitrpg-viewer --dailys --conky}
 
