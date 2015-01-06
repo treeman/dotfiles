@@ -180,6 +180,7 @@ g:CommandTScanDotDirectories	command-t.txt	/*g:CommandTScanDotDirectories*
 g:CommandTSelectNextMap	command-t.txt	/*g:CommandTSelectNextMap*
 g:CommandTSelectPrevMap	command-t.txt	/*g:CommandTSelectPrevMap*
 g:CommandTToggleFocusMap	command-t.txt	/*g:CommandTToggleFocusMap*
+g:cargo_manifest_name	rust.txt	/*g:cargo_manifest_name*
 g:ftplugin_rust_source_path	rust.txt	/*g:ftplugin_rust_source_path*
 g:julia_auto_latex_to_unicode	julia-vim.txt	/*g:julia_auto_latex_to_unicode*
 g:julia_latex_suggestions_enabled	julia-vim.txt	/*g:julia_latex_suggestions_enabled*
@@ -190,6 +191,7 @@ g:rust_conceal	rust.txt	/*g:rust_conceal*
 g:rust_conceal_mod_path	rust.txt	/*g:rust_conceal_mod_path*
 g:rust_conceal_pub	rust.txt	/*g:rust_conceal_pub*
 g:rust_fold	rust.txt	/*g:rust_fold*
+g:rust_recommended_style	rust.txt	/*g:rust_recommended_style*
 g:rustc_makeprg_no_percent	rust.txt	/*g:rustc_makeprg_no_percent*
 g:rustc_path	rust.txt	/*g:rustc_path*
 julia-vim	julia-vim.txt	/*julia-vim*
