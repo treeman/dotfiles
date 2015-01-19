@@ -111,7 +111,7 @@ alias ss='single-screen && startx'
 alias ds='dual-screen && startx'
 
 alias g++11='g++ -g -O2 -static -std=gnu++0x -Wall'
-alias clang++11='clang++ --std=c++11'
+alias clang++11='clang++ --std=c++11 -Wall'
 
 utf8()
 {
