@@ -14,7 +14,7 @@ nitrogen --restore
 xsetroot -cursor_name left_ptr
 
 # Startup skyped
-skyped
+# skyped
 
 # Start xmonad yay!
 exec xmonad
