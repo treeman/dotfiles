@@ -33,6 +33,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     --, ((modm .|. shiftMask,     xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
 
+    , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us")
+    --, ((modm .|. controlMask,   xK_u), spawn setKeyboardLayout)
+    , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se")
+
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
     , ((modm,                   xK_y), focusUrgent)

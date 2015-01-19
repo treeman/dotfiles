@@ -4,8 +4,8 @@
 xrdb -load $HOME/.Xdefaults
 
 # Override bad enter
-setxkbmap us
-xmodmap .xmodmap
+#setxkbmap us
+#xmodmap .xmodmap
 
 # Set backgrounds
 nitrogen --restore
