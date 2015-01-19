@@ -3,7 +3,7 @@
 " Maintainer:   Patrick Walton <pcwalton@mozilla.com>
 " Maintainer:   Ben Blum <bblum@cs.cmu.edu>
 " Maintainer:   Chris Morgan <me@chrismorgan.info>
-" Last Change:  2014 Jan 4
+" Last Change:  January 5, 2015
 
 if version < 600
   syntax clear
@@ -17,112 +17,94 @@ syn keyword   rustConditional match if else
 syn keyword   rustOperator    as
 
 syn match     rustAssert      "\<assert\(\w\)*!" contained
-syn match     rustFail        "\<fail\(\w\)*!" contained
-syn keyword   rustKeyword     break continue do extern
+syn match     rustPanic       "\<panic\(\w\)*!" contained
+syn keyword   rustKeyword     break
+syn keyword   rustKeyword     box nextgroup=rustBoxPlacement skipwhite skipempty
+syn keyword   rustKeyword     continue
+syn keyword   rustKeyword     extern nextgroup=rustExternCrate,rustObsoleteExternMod skipwhite skipempty
+syn keyword   rustKeyword     fn nextgroup=rustFuncName skipwhite skipempty
 syn keyword   rustKeyword     for in if impl let
-syn keyword   rustKeyword     loop once priv pub
-syn keyword   rustKeyword     return
-syn keyword   rustKeyword     unsafe while
-syn keyword   rustKeyword     use nextgroup=rustModPath skipwhite
+syn keyword   rustKeyword     loop once pub
+syn keyword   rustKeyword     return super
+syn keyword   rustKeyword     unsafe virtual where while
+syn keyword   rustKeyword     use nextgroup=rustModPath skipwhite skipempty
 " FIXME: Scoped impl's name is also fallen in this category
-syn keyword   rustKeyword     mod trait struct enum type nextgroup=rustIdentifier skipwhite
-syn keyword   rustKeyword     fn nextgroup=rustFuncName skipwhite
-syn keyword   rustKeyword     proc
-syn keyword   rustStorage     mut ref static
-syn keyword   rustObsoleteStorage const
+syn keyword   rustKeyword     mod trait struct enum type nextgroup=rustIdentifier skipwhite skipempty
+syn keyword   rustStorage     move mut ref static const
+
+syn keyword   rustInvalidBareKeyword crate
+
+syn keyword   rustExternCrate crate contained nextgroup=rustIdentifier,rustExternCrateString skipwhite skipempty
+" This is to get the `bar` part of `extern crate "foo" as bar;` highlighting.
+syn match   rustExternCrateString /".*"\_s*as/ contained nextgroup=rustIdentifier skipwhite transparent skipempty contains=rustString,rustOperator
+syn keyword   rustObsoleteExternMod mod contained nextgroup=rustIdentifier skipwhite skipempty
 
 syn match     rustIdentifier  contains=rustIdentifierPrime "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
 syn match     rustFuncName    "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
 
+syn region    rustBoxPlacement matchgroup=rustBoxPlacementParens start="(" end=")" contains=TOP contained
+syn keyword   rustBoxPlacementExpr GC containedin=rustBoxPlacement
+" Ideally we'd have syntax rules set up to match arbitrary expressions. Since
+" we don't, we'll just define temporary contained rules to handle balancing
+" delimiters.
+syn region    rustBoxPlacementBalance start="(" end=")" containedin=rustBoxPlacement transparent
+syn region    rustBoxPlacementBalance start="\[" end="\]" containedin=rustBoxPlacement transparent
+" {} are handled by rustFoldBraces
+
+syn region rustMacroRepeat matchgroup=rustMacroRepeatDelimiters start="$(" end=")" contains=TOP nextgroup=rustMacroRepeatCount
+syn match rustMacroRepeatCount ".\?[*+]" contained
+syn match rustMacroVariable "$\w\+"
+
 " Reserved (but not yet used) keywords {{{2
-syn keyword   rustReservedKeyword alignof be offsetof pure sizeof typeof yield
+syn keyword   rustReservedKeyword alignof be do offsetof priv pure sizeof typeof unsized yield abstract final override macro
 
 " Built-in types {{{2
-syn keyword   rustType        int uint float char bool u8 u16 u32 u64 f32
+syn keyword   rustType        int isize uint usize float char bool u8 u16 u32 u64 f32
 syn keyword   rustType        f64 i8 i16 i32 i64 str Self
 
 " Things from the prelude (src/libstd/prelude.rs) {{{2
 " This section is just straight transformation of the contents of the prelude,
 " to make it easy to update.
 
-" Core operators {{{3
-syn keyword   rustEnum        Either
-syn keyword   rustEnumVariant Left Right
-syn keyword   rustTrait       Sized
-syn keyword   rustTrait       Freeze Send
-syn keyword   rustTrait       Add Sub Mul Div Rem Neg Not
-syn keyword   rustTrait       BitAnd BitOr BitXor
-syn keyword   rustTrait       Drop
-syn keyword   rustTrait       Shl Shr Index
-syn keyword   rustEnum        Option
-syn keyword   rustEnumVariant Some None
-syn keyword   rustEnum        Result
-syn keyword   rustEnumVariant Ok Err
+" Reexported core operators {{{3
+syn keyword   rustTrait       Copy Send Sized Sync
+syn keyword   rustTrait       Drop Fn FnMut FnOnce
 
-" Functions {{{3
-"syn keyword rustFunction print println
-"syn keyword rustFunction range
-"syn keyword rustFunction from_str
+" Reexported functions {{{3
+syn keyword rustFunction drop
 
-" Types and traits {{{3
-syn keyword rustTrait Any AnyOwnExt AnyRefExt AnyMutRefExt
-syn keyword rustTrait Ascii AsciiCast OwnedAsciiCast AsciiStr IntoBytes
-syn keyword rustTrait Bool
-syn keyword rustTrait ToCStr
-syn keyword rustTrait Char
-syn keyword rustTrait Clone DeepClone
-syn keyword rustTrait Eq Ord TotalEq TotalOrd Ordering Equiv
-syn keyword rustEnumVariant Less Equal Greater
-syn keyword rustTrait Container Mutable Map MutableMap Set MutableSet
-syn keyword rustTrait Default
-syn keyword rustTrait Hash
-syn keyword rustTrait FromStr
-syn keyword rustTrait FromIterator Extendable
-syn keyword rustTrait Iterator DoubleEndedIterator RandomAccessIterator CloneableIterator
-syn keyword rustTrait OrdIterator MutableDoubleEndedIterator ExactSize
-syn keyword rustTrait Times
-
-syn keyword rustTrait Algebraic Trigonometric Exponential Hyperbolic
-syn keyword rustTrait Bitwise Bounded Integer Fractional Real RealExt
-syn keyword rustTrait Num NumCast CheckedAdd CheckedSub CheckedMul
-syn keyword rustTrait Orderable Signed Unsigned Round
-syn keyword rustTrait Primitive Int Float ToStrRadix ToPrimitive FromPrimitive
-syn keyword rustTrait GenericPath Path PosixPath WindowsPath
-syn keyword rustTrait RawPtr
-syn keyword rustTrait Buffer Writer Reader Seek
-syn keyword rustTrait SendStr SendStrOwned SendStrStatic IntoSendStr
-syn keyword rustTrait Str StrVector StrSlice OwnedStr
-syn keyword rustTrait IterBytes
-syn keyword rustTrait ToStr IntoStr
-syn keyword rustTrait CopyableTuple ImmutableTuple
-syn keyword rustTrait Tuple1 Tuple2 Tuple3 Tuple4
-syn keyword rustTrait Tuple5 Tuple6 Tuple7 Tuple8
-syn keyword rustTrait Tuple9 Tuple10 Tuple11 Tuple12
-syn keyword rustTrait ImmutableTuple1 ImmutableTuple2 ImmutableTuple3 ImmutableTuple4
-syn keyword rustTrait ImmutableTuple5 ImmutableTuple6 ImmutableTuple7 ImmutableTuple8
-syn keyword rustTrait ImmutableTuple9 ImmutableTuple10 ImmutableTuple11 ImmutableTuple12
-syn keyword rustTrait ImmutableEqVector ImmutableTotalOrdVector ImmutableCopyableVector
-syn keyword rustTrait OwnedVector OwnedCopyableVector OwnedEqVector MutableVector
-syn keyword rustTrait Vector VectorVector CopyableVector ImmutableVector
-
-"syn keyword rustFunction stream
-syn keyword rustTrait Port Chan GenericChan GenericSmartChan GenericPort Peekable
-"syn keyword rustFunction spawn
-
-syn keyword   rustSelf        self
-syn keyword   rustBoolean     true false
-
-syn keyword   rustConstant    Some None       " option
-syn keyword   rustConstant    Left Right      " either
-syn keyword   rustConstant    Ok Err          " result
-syn keyword   rustConstant    Less Equal Greater " Ordering
+" Reexported types and traits {{{3
+syn keyword rustTrait Box
+syn keyword rustTrait CharExt
+syn keyword rustTrait Clone
+syn keyword rustTrait PartialEq PartialOrd Eq Ord
+syn keyword rustTrait DoubleEndedIterator
+syn keyword rustTrait ExactSizeIterator
+syn keyword rustTrait Iterator IteratorExt Extend
+syn keyword rustEnum Option
+syn keyword rustEnumVariant Some None
+syn keyword rustTrait PtrExt MutPtrExt
+syn keyword rustEnum Result
+syn keyword rustEnumVariant Ok Err
+syn keyword rustTrait AsSlice
+syn keyword rustTrait SliceExt SliceConcatExt
+syn keyword rustTrait Str StrExt
+syn keyword rustTrait String ToString
+syn keyword rustTrait Vec
+" FIXME: remove when path reform lands
+syn keyword rustTrait Path GenericPath
+" FIXME: remove when I/O reform lands
+syn keyword rustTrait Buffer Writer Reader Seek BufferPrelude
+" FIXME: remove when range syntax lands
+syn keyword rustFunction range
 
 " Other syntax {{{2
+syn keyword   rustSelf        self
+syn keyword   rustBoolean     true false
 
 " If foo::bar changes to foo.bar, change this ("::" to "\.").
 " If foo::bar changes to Foo::bar, change this (first "\w" to "\u").
 syn match     rustModPath     "\w\(\w\)*::[^<]"he=e-3,me=e-3
-syn match     rustModPath     "\w\(\w\)*" contained " only for 'use path;'
 syn match     rustModPathSep  "::"
 
 syn match     rustFuncCall    "\w\(\w\)*("he=e-1,me=e-1
@@ -141,17 +123,20 @@ syn match     rustSigil        display /[&~@*][^)= \t\r\n]/he=e-1,me=e-1
 " Last, because the & in && isn't a sigil
 syn match     rustOperator     display "&&\|||"
 
-syn match     rustMacro       '\w\(\w\)*!' contains=rustAssert,rustFail
-syn match     rustMacro       '#\w\(\w\)*' contains=rustAssert,rustFail
+syn match     rustMacro       '\w\(\w\)*!' contains=rustAssert,rustPanic
+syn match     rustMacro       '#\w\(\w\)*' contains=rustAssert,rustPanic
 
-syn match     rustSpecialError display contained /\\./
-syn match     rustSpecial     display contained /\\\([nrt0\\'"]\|x\x\{2}\|u\x\{4}\|U\x\{8}\)/
+syn match     rustEscapeError   display contained /\\./
+syn match     rustEscape        display contained /\\\([nrt0\\'"]\|x\x\{2}\)/
+syn match     rustEscapeUnicode display contained /\\\(u\x\{4}\|U\x\{8}\)/
+syn match     rustEscapeUnicode display contained /\\u{\x\{1,6}}/
 syn match     rustStringContinuation display contained /\\\n\s*/
-syn region    rustString      start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=rustSpecial,rustSpecialError,rustStringContinuation,@Spell
-syn region    rustString      start='r\z(#*\)"' end='"\z1' contains=@Spell
+syn region    rustString      start=+b"+ skip=+\\\\\|\\"+ end=+"+ contains=rustEscape,rustEscapeError,rustStringContinuation
+syn region    rustString      start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=rustEscape,rustEscapeUnicode,rustEscapeError,rustStringContinuation,@Spell
+syn region    rustString      start='b\?r\z(#*\)"' end='"\z1' contains=@Spell
 
-syn region    rustAttribute   start="#\[" end="\]" contains=rustString,rustDeriving
-syn region    rustDeriving    start="deriving(" end=")" contained contains=rustTrait
+syn region    rustAttribute   start="#!\?\[" end="\]" contains=rustString,rustDerive
+syn region    rustDerive      start="derive(" end=")" contained contains=rustTrait
 
 " Number literals
 syn match     rustDecNumber   display "\<[0-9][0-9_]*\%([iu]\%(8\|16\|32\|64\)\=\)\="
@@ -160,9 +145,10 @@ syn match     rustOctNumber   display "\<0o[0-7_]\+\%([iu]\%(8\|16\|32\|64\)\=\)
 syn match     rustBinNumber   display "\<0b[01_]\+\%([iu]\%(8\|16\|32\|64\)\=\)\="
 
 " Special case for numbers of the form "1." which are float literals, unless followed by
-" an identifier, which makes them integer literals with a method call or field access.
+" an identifier, which makes them integer literals with a method call or field access,
+" or by another ".", which makes them integer literals followed by the ".." token.
 " (This must go first so the others take precedence.)
-syn match     rustFloat       display "\<[0-9][0-9_]*\.\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\@!"
+syn match     rustFloat       display "\<[0-9][0-9_]*\.\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\|\.\)\@!"
 " To mark a number as a normal float, it must have at least one of the three things integral values don't have:
 " a decimal point and more numbers; an exponent; and a type suffix.
 syn match     rustFloat       display "\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\%([eE][+-]\=[0-9_]\+\)\=\(f32\|f64\)\="
@@ -176,13 +162,18 @@ syn region rustGenericLifetimeCandidate display start=/\%(<\|,\s*\)\@<='/ end=/[
 
 "rustLifetime must appear before rustCharacter, or chars will get the lifetime highlighting
 syn match     rustLifetime    display "\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*"
-syn match   rustCharacter   /'\([^'\\]\|\\\(.\|x\x\{2}\|u\x\{4}\|U\x\{8}\)\)'/ contains=rustSpecial,rustSpecialError
+syn match   rustCharacterInvalid   display contained /b\?'\zs[\n\r\t']\ze'/
+" The groups negated here add up to 0-255 but nothing else (they do not seem to go beyond ASCII).
+syn match   rustCharacterInvalidUnicode   display contained /b'\zs[^[:cntrl:][:graph:][:alnum:][:space:]]\ze'/
+syn match   rustCharacter   /b'\([^\\]\|\\\(.\|x\x\{2}\)\)'/ contains=rustEscape,rustEscapeError,rustCharacterInvalid,rustCharacterInvalidUnicode
+syn match   rustCharacter   /'\([^\\]\|\\\(.\|x\x\{2}\|u\x\{4}\|U\x\{8}\|u{\x\{1,6}}\)\)'/ contains=rustEscape,rustEscapeUnicode,rustEscapeError,rustCharacterInvalid
 
-syn cluster rustComment contains=rustCommentLine,rustCommentLineDoc,rustCommentBlock,rustCommentBlockDoc
-syn region rustCommentLine                                    start="//"                      end="$"   contains=rustTodo,@Spell
-syn region rustCommentLineDoc                                 start="//\%(//\@!\|!\)"         end="$"   contains=rustTodo,@Spell
-syn region rustCommentBlock    matchgroup=rustCommentBlock    start="/\*\%(!\|\*[*/]\@!\)\@!" end="\*/" contains=rustTodo,@rustComment,@Spell keepend extend
-syn region rustCommentBlockDoc matchgroup=rustCommentBlockDoc start="/\*\%(!\|\*[*/]\@!\)"    end="\*/" contains=rustTodo,@rustComment,@Spell keepend extend
+syn region rustCommentLine                                        start="//"                      end="$"   contains=rustTodo,@Spell
+syn region rustCommentLineDoc                                     start="//\%(//\@!\|!\)"         end="$"   contains=rustTodo,@Spell
+syn region rustCommentBlock    matchgroup=rustCommentBlock        start="/\*\%(!\|\*[*/]\@!\)\@!" end="\*/" contains=rustTodo,rustCommentBlockNest,@Spell
+syn region rustCommentBlockDoc matchgroup=rustCommentBlockDoc     start="/\*\%(!\|\*[*/]\@!\)"    end="\*/" contains=rustTodo,rustCommentBlockDocNest,@Spell
+syn region rustCommentBlockNest matchgroup=rustCommentBlock       start="/\*"                     end="\*/" contains=rustTodo,rustCommentBlockNest,@Spell contained transparent
+syn region rustCommentBlockDocNest matchgroup=rustCommentBlockDoc start="/\*"                     end="\*/" contains=rustTodo,rustCommentBlockDocNest,@Spell contained transparent
 " FIXME: this is a really ugly and not fully correct implementation. Most
 " importantly, a case like ``/* */*`` should have the final ``*`` not being in
 " a comment, but in practice at present it leaves comments open two levels
@@ -199,10 +190,8 @@ syn keyword rustTodo contained TODO FIXME XXX NB NOTE
 
 " Folding rules {{{2
 " Trivial folding rules to begin with.
-" TODO: use the AST to make really good folding
+" FIXME: use the AST to make really good folding
 syn region rustFoldBraces start="{" end="}" transparent fold
-" If you wish to enable this, setlocal foldmethod=syntax
-" It's not enabled by default as it would drive some people mad.
 
 " Default highlighting {{{1
 hi def link rustDecNumber       rustNumber
@@ -212,11 +201,17 @@ hi def link rustBinNumber       rustNumber
 hi def link rustIdentifierPrime rustIdentifier
 hi def link rustTrait           rustType
 
+hi def link rustMacroRepeatCount   rustMacroRepeatDelimiters
+hi def link rustMacroRepeatDelimiters   Macro
+hi def link rustMacroVariable Define
 hi def link rustSigil         StorageClass
-hi def link rustSpecial       Special
-hi def link rustSpecialError  Error
+hi def link rustEscape        Special
+hi def link rustEscapeUnicode rustEscape
+hi def link rustEscapeError   Error
 hi def link rustStringContinuation Special
 hi def link rustString        String
+hi def link rustCharacterInvalid Error
+hi def link rustCharacterInvalidUnicode rustCharacterInvalid
 hi def link rustCharacter     Character
 hi def link rustNumber        Number
 hi def link rustBoolean       Boolean
@@ -241,21 +236,26 @@ hi def link rustCommentLineDoc SpecialComment
 hi def link rustCommentBlock  rustCommentLine
 hi def link rustCommentBlockDoc rustCommentLineDoc
 hi def link rustAssert        PreCondit
-hi def link rustFail          PreCondit
+hi def link rustPanic         PreCondit
 hi def link rustMacro         Macro
 hi def link rustType          Type
 hi def link rustTodo          Todo
 hi def link rustAttribute     PreProc
-hi def link rustDeriving      PreProc
+hi def link rustDerive        PreProc
 hi def link rustStorage       StorageClass
 hi def link rustObsoleteStorage Error
 hi def link rustLifetime      Special
+hi def link rustInvalidBareKeyword Error
+hi def link rustExternCrate   rustKeyword
+hi def link rustObsoleteExternMod Error
+hi def link rustBoxPlacementParens Delimiter
+hi def link rustBoxPlacementExpr rustKeyword
 
 " Other Suggestions:
 " hi rustAttribute ctermfg=cyan
-" hi rustDeriving ctermfg=cyan
+" hi rustDerive ctermfg=cyan
 " hi rustAssert ctermfg=yellow
-" hi rustFail ctermfg=red
+" hi rustPanic ctermfg=red
 " hi rustMacro ctermfg=magenta
 
 syn sync minlines=200

@@ -36,6 +36,6 @@ color2 FFB600
 
 TEXT
 
-${color}${font Comfortaa:size=16}Verro Todo${font}
-${voffset 2}${execp ~/.workspace/desktop-tasks.pl -- +verro}
+${color}${font Comfortaa:size=16}Todo${font}
+${voffset 2}${execp ~/code/habitrpg-viewer/habit --todos}
 

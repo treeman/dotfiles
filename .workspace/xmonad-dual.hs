@@ -66,7 +66,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
-myWorkspaces = ["α","β","γ","δ","ε","ζ","η","θ","ι","κ"]
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+--myWorkspaces = ["α","β","γ","δ","ε","ζ","η","θ","ι","κ"]
 --myWorkspaces = ["α","β","γ", "4:prog", "5:www", "6:chat", "7:irc", "8:music", "9:misc"]
 
 --myIconDir = "/home/and1/.dzen"
@@ -130,6 +131,7 @@ myManageHook = composeAll
     [ className =? "Steam"  --> doFloat
     , className =? "steam"  --> doFullFloat
     , className =? "MainThrd"  --> doFloat
+    , title =? "SmallCity"  --> doFloat
     , title =? "plasma-desktop"  --> doIgnore
     --[ className =? "Steam"  --> doIgnore
     , manageDocks]
@@ -138,7 +140,7 @@ main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
 
-    --conkyTodo <- spawnPipe "conky -c ~/.workspace/conky_todo"
+    conkyHabit <- spawnPipe "conky -c ~/.workspace/conky_habit"
     conkyKernel <- spawnPipe "conky -c ~/.workspace/conky_kernel"
     conkyTime <- spawnPipe "conky -c ~/.workspace/conky_time"
     conkySchool <- spawnPipe "conky -c ~/.workspace/conky_school"
@@ -146,18 +148,18 @@ main = do
     conkyTicker <- spawnPipe "conky -c ~/.workspace/conky_ticker"
 
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
-      modMask = mod4Mask
-    , workspaces = myWorkspaces
-    , normalBorderColor = "#000000"
-    , focusedBorderColor = "#363636"
-    , borderWidth = 1
-    , terminal = "urxvt"
-    , keys = \k -> myKeys k `M.union` keys defaultConfig k
-    , logHook = dynamicLogWithPP $ myDzenPP topLeft
-    , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
-    , manageHook = manageDocks <+> myManageHook
+        modMask = mod4Mask
+        , workspaces = myWorkspaces
+        , normalBorderColor = "#000000"
+        , focusedBorderColor = "#363636"
+        , borderWidth = 1
+        , terminal = "urxvt"
+        , keys = \k -> myKeys k `M.union` keys defaultConfig k
+        , logHook = dynamicLogWithPP $ myDzenPP topLeft
+        , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
+        , manageHook = manageDocks <+> myManageHook
 
-    -- Trick java apps like minecraft to correctly recognize windowed screen resolution in dual screen mode
-    , startupHook = setWMName "LG3D"
-}
+        -- Trick java apps like minecraft to correctly recognize windowed screen resolution in dual screen mode
+        , startupHook = setWMName "LG3D"
+    }
 

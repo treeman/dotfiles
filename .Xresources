@@ -61,11 +61,49 @@ XTerm*faceName: Consolasi
 XTerm*faceSize: 10.8
 XTerm*utf8: 1
 
+! URxvt*font: xft:Monospace:pixelsize=14
+! URxvt*letterSpace: -1
+
+! Ability to print hangul symbols.
+! Find baekmuk-fonts-ttf.SlackBuild
+!urxvt*font: xft:Monospace:pixelsize=14,\
+!            xft:Baekmuk Gulim
+!URxvt*letterSpace: -1
+
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+!Xft.hintstyle: hintslight
+Xft.hintstyle: hintsfull
+
+! Testing some fonts...
+URxvt*font: xft:Consolas:size=12
+!URxvt*font: xft:Inconsolata:size=12
+URxvt*letterSpace: -1
+!URxvt.lineSpace: -1
+URxvt.lineSpace: 0
+
+! Fonts
+!URxvt.allow_bold: false
+!URxvt*font: xft:Consolas:pixelsize=16
+!URxvt*boldFont: xft:Consolas:pixelsize=14
+
+! Fix font space
+!URxvt*letterSpace: -1
+
+URxvt.urgentOnBell: true
+URxvt.scrollBar: false
+
 URxvt*pointerColor: red
 URxvt*pointerColorBackground: black
 URxvt*cursorColor: green
 URxvt*background: black
 URxvt*foreground: white
+!URxvt*visualBell: false
 
 XTerm*background: black
 XTerm*foreground: white
+! Testing...
+URxvt*buffered: false
+

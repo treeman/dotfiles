@@ -1,3 +1,4 @@
 # ~/irc_screen
+vbell off
 source ~/.screenrc
 screen -t IRC 1 irssi

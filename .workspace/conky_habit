@@ -19,7 +19,7 @@ own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 alignment top_left
-gap_y 1180
+gap_y 100
 gap_x 780
 maximum_width 280
 
@@ -31,10 +31,16 @@ draw_borders no
 draw_shades no
 stippled_borders 0
 
-color1 FFFFFF
+color1 818181
 color2 FFB600
 
 TEXT
-${font Comfortaa:size=16}Schedule${font}
-${voffset 2}${execp ~/code/liuschema/target/liuschema --conky --config ~/.workspace/liuschema_conf.json --today}
+
+${color}${font Comfortaa:size=16}Todo${font}
+${voffset 2}${execp ~/code/habitrpg-viewer/target/habitrpg-viewer --todos --conky}
+
+
+
+${font Comfortaa:size=16}Dailys${font}
+${voffset 2}${execp ~/code/habitrpg-viewer/target/habitrpg-viewer --dailys --conky}
 
