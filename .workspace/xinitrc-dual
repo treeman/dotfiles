@@ -4,8 +4,8 @@
 xrdb -load $HOME/.Xdefaults
 
 # Override bad enter
-#setxkbmap us
-#xmodmap .xmodmap
+setxkbmap us
+xmodmap .xmodmap
 
 # Set backgrounds
 nitrogen --restore
@@ -14,7 +14,7 @@ nitrogen --restore
 xsetroot -cursor_name left_ptr
 
 # Startup skyped
-# skyped
+skyped
 
 # Start xmonad yay!
 exec xmonad
