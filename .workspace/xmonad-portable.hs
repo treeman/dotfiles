@@ -13,6 +13,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.SetWMName
 
 import System.IO
 
@@ -41,6 +42,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
     , ((modm,                   xK_y), focusUrgent)
+
     -- Do not leave useless conky, dzen and xmobar after restart
     , ((modm,                   xK_q), spawn "killall xmobar conky dzen2; xmonad --recompile; xmonad --restart")
 
@@ -96,16 +98,6 @@ myStatusBar = myDzen ++ " -x '0' -y '0' -ta 'l' -w 800"
 myTopRight = "conky -c ~/.workspace/conky_bar_laptop | " ++ myDzen ++ " -x '800' -y '0' -ta 'r' -p"
 
 myDzenPP h = defaultPP
-    --{ ppCurrent = wrapFg "#FFFF00" . dropId
-    --, ppVisible = wrapFg "#F711DD" . dropId
-    --, ppHidden = wrapFg "#1FA0E6" . dropId
-    --, ppHiddenNoWindows = wrapFg "#616161" . dropId
-
-    --, ppCurrent = wrapFg "#8EBD5E" . dropId
-    --, ppVisible = wrapFg "#8E5EBD" . dropId
-    --, ppHidden = wrapFg "#5EBDBD" . dropId
-    --, ppHiddenNoWindows = wrapFg "#616161" . dropId
-    --, ppUrgent = wrapFg "#BD5E5E" . dropId
     { ppOutput = hPutStrLn h
     , ppCurrent = wrapFg "#FFB600" . dropId
     , ppVisible = wrapFg "#FFD86E" . dropId
@@ -132,13 +124,6 @@ main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
 
-    --conkyTodo <- spawnPipe "conky -c ~/.workspace/conky_todo"
-    --conkyKernel <- spawnPipe "conky -c ~/.workspace/conky_kernel"
-    --conkyTime <- spawnPipe "conky -c ~/.workspace/conky_time"
-    --conkySchool <- spawnPipe "conky -c ~/.workspace/conky_school"
-    --conkyTimezone <- spawnPipe "conky -c ~/.workspace/conky_timezone"
-    --conkyTicker <- spawnPipe "conky -c ~/.workspace/conky_ticker"
-
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
       modMask = mod4Mask
     , workspaces = myWorkspaces
@@ -151,5 +136,6 @@ main = do
     , layoutHook = gaps [(U,18)] $ layoutHook defaultConfig -- manually override, old did not work...
     -- , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
     , manageHook = manageDocks <+> manageHook defaultConfig
+    , startupHook = setWMName "LG3D"
 }
 
