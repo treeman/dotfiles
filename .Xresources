@@ -5,6 +5,24 @@
 ! Blink
 *visualBell: False
 
+XTerm*color0: #4E4E4E
+XTerm*color1: #FF6C60
+XTerm*color2: #A8FF60
+XTerm*color3: #FFFFB6
+XTerm*color4: #96CBFE
+XTerm*color5: #FF73FD
+XTerm*color6: #C6C5FE
+XTerm*color7: #EEEEEE
+
+XTerm*color8: #4E4E4E
+XTerm*color9: #FF6C60
+XTerm*color10: #A8FF60
+XTerm*color11: #FFFF6A
+XTerm*color12: #96CBFE
+XTerm*color13: #FF73FD
+XTerm*color14: #C6C5FE
+XTerm*color15: #EEEEEE
+
 ! urxvt
 URxvt*color0: #4E4E4E
 URxvt*color1: #FF6C60
@@ -23,6 +41,25 @@ URxvt*color12: #96CBFE
 URxvt*color13: #FF73FD
 URxvt*color14: #C6C5FE
 URxvt*color15: #EEEEEE
+
+!XTerm*bellIsUrgent: true
+XTerm*bellIsUrgent: false
+
+XTerm*internalBorder: 0
+XTerm*loginShell: false
+
+XTerm*scrollBar: false
+XTerm*scrollKey: true
+
+XTerm*saveLines: 1000
+XTerm*multiClickTime: 250
+
+XTerm*eightBitInput: false#
+XTerm*altSendsEscape: true
+
+XTerm*faceName: Consolasi
+XTerm*faceSize: 10.8
+XTerm*utf8: 1
 
 ! URxvt*font: xft:Monospace:pixelsize=14
 ! URxvt*letterSpace: -1

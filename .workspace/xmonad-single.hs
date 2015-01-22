@@ -64,19 +64,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
--- Delete later, not used
-myLogHook h = dynamicLogWithPP $ xmobarPP
-  { ppOutput          = hPutStrLn h
-  , ppTitle           = color "grey" . shorten 50
-  , ppHiddenNoWindows = color "grey" . dropId
-  , ppCurrent         = color "yellow" . dropId
-  , ppVisible         = color "#F711DD" . dropId
-  , ppHidden          = color "lightskyblue" . dropId
-  --, ppUrgent          = color "red" . dropId
-  }
-  where color x = xmobarColor x ""
-        dropId x = if (':' `elem` x) then drop 2 x else x
-
 --["α","β","γ","δ","ε","ζ"]
 --myWorkspaces = ["α","β","γ", "4:prog", "5:www", "6:chat", "7:irc", "8:music", "9:misc"]
 {-myWorkspaces = ["α","β","γ","δ","ε","ζ","η","θ","ι","κ"]-}
@@ -115,8 +102,6 @@ myDzen = " dzen2 -xs 1 -dock -h 18 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++ myNo
 
 myStatusBar = myDzen ++ " -x '0' -y '0' -ta 'l' -w 800"
 myTopRight = "conky -c ~/.workspace/conky_bar | " ++ myDzen ++ " -x '800' -y '0' -ta 'r' -p"
-
-myHackerTop = "conky -c ~/.workspace/conkyrc-hackertop"
 
 myDzenPP h = defaultPP
     --{ ppCurrent = wrapFg "#FFFF00" . dropId
