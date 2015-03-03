@@ -19,7 +19,5 @@
 .xmonad/*.errors
 .xmonad/*.hi
 .xmonad/*linux
-.irssi/config
-.irssi/startup
 .irssi/default.theme
 .irssi/saved_colors
