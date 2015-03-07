@@ -1,9 +1,9 @@
 " Vim indent file
 " Language:      Perl 6
-" Maintainer:    Andy Lester <andy@petdance.com>
-" Homepage:      http://github.com/petdance/vim-perl
-" Bugs/requests: http://github.com/petdance/vim-perl/issues
-" Last Change:   2009-07-04
+" Maintainer:    vim-perl <vim-perl@googlegroups.com>
+" Homepage:      http://github.com/vim-perl/vim-perl
+" Bugs/requests: http://github.com/vim-perl/vim-perl/issues
+" Last Change:   {{LAST_CHANGE}}
 " Contributors:  Andy Lester <andy@petdance.com>
 "                Hinrik Örn Sigurðsson <hinrik.sig@gmail.com>
 "
@@ -47,15 +47,10 @@ if !b:indent_use_syntax
     setlocal indentkeys+=0=EO
 endif
 
-" Only define the function once.
-if exists("*GetPerl6Indent")
-    finish
-endif
-
 let s:cpo_save = &cpo
 set cpo-=C
 
-function GetPerl6Indent()
+function! GetPerl6Indent()
 
     " Get the line to be indented
     let cline = getline(v:lnum)
