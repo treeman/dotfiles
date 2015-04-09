@@ -1,1 +1,0 @@
-/home/tree/code/lang/syntax.vim

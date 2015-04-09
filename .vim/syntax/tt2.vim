@@ -1,9 +1,9 @@
 " Language:      TT2 (Perl Template Toolkit)
-" Maintainer:    Andy Lester <andy@petdance.com>
+" Maintainer:    vim-perl <vim-perl@googlegroups.com>
 " Author:        Moriki, Atsushi <4woods+vim@gmail.com>
-" Homepage:      http://github.com/petdance/vim-perl
-" Bugs/requests: http://github.com/petdance/vim-perl/issues
-" Last Change:   2010-07-21
+" Homepage:      http://github.com/vim-perl/vim-perl
+" Bugs/requests: http://github.com/vim-perl/vim-perl/issues
+" Last Change:   {{LAST_CHANGE}}
 "
 " Instration:
 "   put tt2.vim and tt2html.vim in to your syntax diretory.
@@ -51,11 +51,16 @@ if !exists("b:tt2_syn_tags")
     "let b:tt2_syn_tags = '\[% %] \[\* \*]'
 endif
 
-let b:tt2_syn_inc_perl = 1
+if !exists("b:tt2_syn_inc_perl")
+    let b:tt2_syn_inc_perl = 1
+endif
 
 if exists("b:current_syntax")
   finish
 endif
+
+let s:cpo_save = &cpo
+set cpo&vim
 
 syn case match
 
@@ -89,7 +94,7 @@ if exists("b:tt2_syn_tags")
                     \ 'keepend extend'
 
         "Include Perl syntax when 'PERL' 'RAWPERL' block
-        if exists("b:tt2_syn_inc_perl")
+        if b:tt2_syn_inc_perl
             syn include @Perl $VIMRUNTIME/syntax/perl.vim
             exec 'syn region tt2_perlcode '.
                         \ 'start=+\(\(RAW\)\=PERL\s*[-]\=' . s:ed . '\(\n\)\=\)\@<=+ ' .
@@ -116,7 +121,7 @@ else
                 \ keepend extend
 
     "Include Perl syntax when 'PERL' 'RAWPERL' block
-    if exists("b:tt2_syn_inc_perl")
+    if b:tt2_syn_inc_perl
         syn include @Perl $VIMRUNTIME/syntax/perl.vim
         syn region tt2_perlcode
                     \ start=+\(\(RAW\)\=PERL\s*[-]\=%]\(\n\)\=\)\@<=+
@@ -198,5 +203,8 @@ if exists("b:tt2_syn_tags")
 endif
 
 let b:current_syntax = "tt2"
+
+let &cpo = s:cpo_save
+unlet s:cpo_save
 
 " vim:ts=4:sw=4
