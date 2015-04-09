@@ -1,5 +1,5 @@
 servers = (
-  {
+  { 
     address = "chat.freenode.net";
     chatnet = "Freenode";
     port = "6667";

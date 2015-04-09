@@ -43,6 +43,6 @@ Irssi::command_bind('crapbuster', \&cmd_crapbuster);
 Irssi::settings_add_str($IRSSI{name}, 'crapbuster_levels', 'CLIENTCRAP CRAP');
 
 # XXX how to make this automatic? Is this good enough?
-Irssi::signal_add('message public', 'cmd_crapbuster');
-Irssi::signal_add('message irc action', 'cmd_crapbuster');
-Irssi::signal_add('print text', 'cmd_crapbuster');
+#Irssi::signal_add('message public', 'cmd_crapbuster');
+#Irssi::signal_add('message irc action', 'cmd_crapbuster');
+#Irssi::signal_add('print text', 'cmd_crapbuster');
