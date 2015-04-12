@@ -6,6 +6,7 @@ total_run_times 0
 use_spacer none
 
 TEXT
+${execp /home/tree/.rakudobrew/bin/perl6 ~/code/pom/pom.p6 --conky} ^fg()| \
 ^fg()battery ^fg(\#B1B1B1)${battery} ^fg()| \
 ^fg()CPU ^fg(\#B1B1B1)${cpu cpu0}% ^fg()| \
 MEM ^fg(\#B1B1B1)${memperc}% ^fg()| \

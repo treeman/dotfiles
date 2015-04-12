@@ -39,6 +39,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se")
 
+    , ((modm .|. shiftMask,     xK_p), spawn "/home/tree/.rakudobrew/bin/perl6 /home/tree/code/pom/pom.p6 --continue")
+    , ((modm .|. shiftMask,     xK_s), spawn "/home/tree/.rakudobrew/bin/perl6 /home/tree/code/pom/pom.p6 --stop")
+
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
     , ((modm,                   xK_y), focusUrgent)
@@ -95,7 +98,7 @@ myNormalStatusBG = "#0f0f0f"
 myDzen = " dzen2 -xs 1 -dock -h 18 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++ myNormalStatusFG ++ "' -bg '" ++ myNormalStatusBG ++ "' "
 
 myStatusBar = myDzen ++ " -x '0' -y '0' -ta 'l' -w 800"
-myTopRight = "conky -c ~/.workspace/conky_bar_laptop | " ++ myDzen ++ " -x '800' -y '0' -ta 'r' -p"
+myTopRight = "conky -c ~/.workspace/conky_bar_laptop | " ++ myDzen ++ " -x '700' -y '0' -ta 'r' -p"
 
 myDzenPP h = defaultPP
     { ppOutput = hPutStrLn h
