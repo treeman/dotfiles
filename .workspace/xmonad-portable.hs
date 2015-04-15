@@ -100,8 +100,8 @@ myNormalStatusBG = "#0f0f0f"
 
 myDzen = " dzen2 -xs 1 -dock -h 18 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++ myNormalStatusFG ++ "' -bg '" ++ myNormalStatusBG ++ "' "
 
-myStatusBar = myDzen ++ " -x '0' -y '0' -ta 'l' -w 900"
-myTopRight = "conky -c ~/.workspace/conky_bar_laptop | " ++ myDzen ++ " -x '700' -y '0' -ta 'r' -p"
+myStatusBar = myDzen ++ " -x '0' -y '0' -ta 'l' -w 700"
+myTopRight = "conky -c ~/.workspace/conky_bar_laptop | " ++ myDzen ++ " -x '600' -y '0' -ta 'r' -p"
 
 myDzenPP h = defaultPP
     { ppOutput = hPutStrLn h
