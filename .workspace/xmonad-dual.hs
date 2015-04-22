@@ -39,8 +39,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
 
-    , ((modm .|. controlMask,   xK_p), spawn "pom --continue")
-    , ((modm .|. controlMask,   xK_s), spawn "pom --stop")
+    , ((modm .|. shiftMask,     xK_p), spawn "pom --continue")
+    , ((modm .|. shiftMask,     xK_o), spawn "pom --stop")
 
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
