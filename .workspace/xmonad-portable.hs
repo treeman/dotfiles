@@ -39,11 +39,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se")
 
-    , ((modm .|. shiftMask,     xK_p), spawn "/home/tree/.rakudobrew/bin/perl6 /home/tree/code/pom/pom.p6 --continue")
+    , ((modm .|. shiftMask,     xK_w), spawn "/home/tree/.rakudobrew/bin/perl6 /home/tree/code/pom/pom.p6 --continue")
     , ((modm .|. shiftMask,     xK_s), spawn "/home/tree/.rakudobrew/bin/perl6 /home/tree/code/pom/pom.p6 --stop")
-
-    , ((modm .|. controlMask,   xK_p), spawn "pom --continue")
-    , ((modm .|. controlMask,   xK_s), spawn "pom --stop")
 
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
