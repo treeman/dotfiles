@@ -39,7 +39,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se")
 
-    , ((modm .|. shiftMask,     xK_p), spawn "/home/tree/.rakudobrew/bin/perl6 /home/tree/code/pom/pom.p6 --continue")
+    , ((modm .|. shiftMask,     xK_w), spawn "/home/tree/.rakudobrew/bin/perl6 /home/tree/code/pom/pom.p6 --continue")
     , ((modm .|. shiftMask,     xK_s), spawn "/home/tree/.rakudobrew/bin/perl6 /home/tree/code/pom/pom.p6 --stop")
 
     , ((modm .|. shiftMask,     xK_p), spawn "pom --continue")
