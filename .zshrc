@@ -33,6 +33,10 @@ export LANG=en_US.utf8
 
 autoload -U colors && colors
 
+# To use Krita
+export KDEDIRS=$HOME/kde4/inst:$KDEDIRS
+export PATH=$HOME/kde4/inst/bin:$PATH
+
 #Color table from: http://www.understudy.net/custom.html
 black=%{$'\e[0;30m'%}
 red=%{$'\e[0;31m'%}

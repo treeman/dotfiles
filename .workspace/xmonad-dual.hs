@@ -22,7 +22,7 @@ import qualified XMonad.StackSet as W
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
-    , ((modm .|. controlMask,   xK_c), spawn "chrome")
+    , ((modm .|. controlMask,   xK_c), spawn "chromium")
 
     , ((modm .|. controlMask,   xK_e), spawn "emacs")
 
@@ -34,7 +34,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_a), spawn "anki")
 
     , ((modm .|. shiftMask,     xK_t), spawn "xterm") -- Just a backup for now, with the borked enter
-    , ((modm .|. shiftMask,     xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
+    , ((modm .|. controlMask,   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
 
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
