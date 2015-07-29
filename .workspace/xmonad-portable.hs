@@ -22,7 +22,7 @@ import qualified XMonad.StackSet as W
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
-    , ((modm .|. controlMask,   xK_c), spawn "chrome")
+    , ((modm .|. controlMask,   xK_c), spawn "chromium")
 
     , ((modm .|. controlMask,   xK_e), spawn "emacs")
 
