@@ -17,7 +17,7 @@ export ARCH=x86_64
 export JAVA_HOME=/usr/lib64/java
 export JAVAWS_HOME=/usr/lib64/java/javaws
 
-export PATH=.:~/bin:~/.cabal/bin:/opt/jre1.6.0_38/bin/:/opt/sbt/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin:/usr/share/texmf/bin:/usr/share/smlnj/bin:/usr/local/languages/perl6/site/bin:~/.rakudobrew/bin
+export PATH=.:~/bin:/home/tree/.cabal/bin:/opt/jre1.6.0_38/bin/:/opt/sbt/bin:/usr/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/lib64/java/javaws:/usr/lib64/java/bin:/usr/share/texmf/bin:/usr/share/smlnj/bin:/usr/local/languages/perl6/site/bin:~/.rakudobrew/bin
 
 export MANPATH=/usr/share/texmf/doc/man:/usr/local/share/man:$MANPATH
 
@@ -36,6 +36,8 @@ autoload -U colors && colors
 # To use Krita
 export KDEDIRS=$HOME/kde4/inst:$KDEDIRS
 export PATH=$HOME/kde4/inst/bin:$PATH
+export XDG_DATA_HOME=$HOME/kde4/inst/share:$XDG_DATA_HOME
+export XDG_DATA_DIRS=$HOME/kde4/inst/share:$XDG_DATA_DIRS
 
 #Color table from: http://www.understudy.net/custom.html
 black=%{$'\e[0;30m'%}
@@ -116,6 +118,8 @@ alias ds='dual-screen && startx'
 
 alias g++11='g++ -g -O2 -static -std=gnu++0x -Wall'
 alias clang++11='clang++ --std=c++11 -Wall'
+
+alias vim='nvim'
 
 utf8()
 {

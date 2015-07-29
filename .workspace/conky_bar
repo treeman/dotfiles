@@ -6,7 +6,6 @@ total_run_times 0
 use_spacer none
 
 TEXT
-${execp ~/code/pom/pom.p6 --conky} ^fg()| \
 ^fg()CPU ^fg(\#B1B1B1)${cpu cpu0}% ^fg()| \
 MEM ^fg(\#B1B1B1)${memperc}% ^fg()| \
 NET ^fg(\#B1B1B1)${downspeedf eth0}K ^fg(\#B1B1B1)${upspeedf eth0}K ^fg()| \

@@ -82,3 +82,11 @@ nmap <leader>l <C-w>s
 " Jump to matching pairs easily, with Tab
 nnoremap <Tab> %
 vnoremap <Tab> %
+
+" Fast yank/paste to CLIPBOARD. PRIMARY (middle mouse button) is found with *
+" requires xclip
+nmap <leader>y "+y
+nmap <leader>Y "+yy
+nmap <leader>p "+p
+nmap <leader>P "+P
+
