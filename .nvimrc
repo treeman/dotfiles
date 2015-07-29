@@ -1,7 +1,18 @@
-﻿filetype plugin indent on
+﻿" Workaround as vim sometimes depends on POSIX functionality
+if &shell =~# 'fish$'
+    set shell=sh
+endif
+
+" Plugin handling using vim-plug
+" Do :PlugInstall to install the plugins
+call plug#begin('~/.vim/plugged')
+Plug 'https://github.com/dag/vim-fish.git'
+call plug#end()
+
+filetype plugin indent on
 
 " Appearance
-syntax on
+syntax enable
 colorscheme ir_black
 
 set relativenumber " display relative line numbers
