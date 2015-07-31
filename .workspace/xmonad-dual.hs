@@ -69,10 +69,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ]
 
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
---myWorkspaces = ["α","β","γ","δ","ε","ζ","η","θ","ι","κ"]
---myWorkspaces = ["α","β","γ", "4:prog", "5:www", "6:chat", "7:irc", "8:music", "9:misc"]
 
---myIconDir = "/home/and1/.dzen"
 myDzenFGColor = "#555555"
 myDzenBGColor = "#222222"
 myNormalFGColor = "#ffffff"
@@ -89,17 +86,6 @@ myFont = "Consolasi:size=9"
 myIconDir = "/home/tree/.workspace/icons/"
 myNormalStatusFG = "#616161"
 myNormalStatusBG = "#0f0f0f"
-
--- Triades
--- yellow: #F2FF00
--- lightblue: #00F2FF
--- pink: #FF00F2
---
--- Tetrades
--- red: #BD5E5E
--- green: #8EBD5E
--- blue: #5EBDBD
--- purple: #8E5EBD
 
 myDzen = " dzen2 -xs 1 -dock -h 18 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++ myNormalStatusFG ++ "' -bg '" ++ myNormalStatusBG ++ "' "
 
@@ -145,8 +131,6 @@ main = do
     conkyHabit <- spawnPipe "conky -c ~/.workspace/conky_habit"
     conkyKernel <- spawnPipe "conky -c ~/.workspace/conky_kernel"
     conkyTime <- spawnPipe "conky -c ~/.workspace/conky_time"
-    conkySchool <- spawnPipe "conky -c ~/.workspace/conky_school"
-    conkyTimezone <- spawnPipe "conky -c ~/.workspace/conky_timezone"
     conkyTicker <- spawnPipe "conky -c ~/.workspace/conky_ticker"
 
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
