@@ -7,13 +7,27 @@ endif
 " Do :PlugInstall to install the plugins
 call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/dag/vim-fish.git'
+Plug 'https://github.com/morhetz/gruvbox.git'
+Plug 'https://github.com/chriskempson/base16-vim.git'
 call plug#end()
 
 filetype plugin indent on
 
 " Appearance
 syntax enable
-colorscheme ir_black
+" colorscheme ir_black " old
+" colorscheme jellybeans " ok, not completely dark backround though
+" colorscheme CandyPaper " ok. Green!
+
+" base16 colors. Need to change terminal colors!
+" let base16colorspace=256
+" colorscheme base16-default
+
+" use gruvbox colorscheme
+" see https://github.com/morhetz/gruvbox
+set background=dark
+let g:gruvbox_contrast_dark = "hard"
+colorscheme gruvbox
 
 set relativenumber " display relative line numbers
 set number " show line numbers
@@ -94,8 +108,10 @@ nmap <leader>l <C-w>s
 nnoremap <Tab> %
 vnoremap <Tab> %
 
+" Always use the PRIMARY register * as default with yank/paste
+set clipboard+=unnamed
+
 " Fast yank/paste to CLIPBOARD. PRIMARY (middle mouse button) is found with *
-" requires xclip
 nmap <leader>y "+y
 nmap <leader>Y "+yy
 nmap <leader>p "+p
