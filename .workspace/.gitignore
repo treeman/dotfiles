@@ -4,3 +4,4 @@ bin/*
 /xinitrc
 /xmonad.hs
 /xorg.conf
+*.swp

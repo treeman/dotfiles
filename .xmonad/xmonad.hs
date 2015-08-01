@@ -1,1 +1,1 @@
-/home/tree/.workspace/xmonad.hs
+./xmonad-dual.hs
