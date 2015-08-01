@@ -31,8 +31,8 @@ draw_borders no
 draw_shades no
 stippled_borders 0
 
-color1 818181
-color2 FFB600
+color1 ebdbb2
+color2 b57614
 
 TEXT
 

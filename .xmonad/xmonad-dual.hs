@@ -34,10 +34,10 @@ main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
 
-    conkyHabit <- spawnPipe "conky -c ~/.conky/conky_habit"
-    conkyKernel <- spawnPipe "conky -c ~/.conky/conky_kernel"
-    conkyTime <- spawnPipe "conky -c ~/.conky/conky_time"
-    conkyTicker <- spawnPipe "conky -c ~/.conky/conky_ticker"
+    --conkyHabit <- spawnPipe "conky -c ~/.conky/conky_habit"
+    --conkyKernel <- spawnPipe "conky -c ~/.conky/conky_kernel"
+    --conkyTime <- spawnPipe "conky -c ~/.conky/conky_time"
+    --conkyTicker <- spawnPipe "conky -c ~/.conky/conky_ticker"
 
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
         modMask = mod4Mask

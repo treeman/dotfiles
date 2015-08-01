@@ -30,8 +30,8 @@ draw_borders no
 draw_shades no
 stippled_borders 0
 
-color1 FFFFFF
-color2 FFB600
+color1 ebdbb2
+color2 b57614
 
 TEXT
 ${color1}Slackware 64  ${color2}${exec uname -r}
