@@ -4,11 +4,56 @@ import XMonad
 import XMonad.Actions.WithAll
 import XMonad.Actions.NoBorders
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 
+--import XMonad.Layout.NoBorders
+--import XMonad.Actions.NoBorders
+--import XMonad.Actions.WithAll
+--import XMonad.Hooks.UrgencyHook
+--import XMonad.Hooks.SetWMName
+
+import System.IO
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
-keys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+-- 16 bit Colors inspired from gruvbox
+-- names may differ from appearence ;)
+gb_black = "#282828"
+gb_darkgrey = "#928374"
+gb_darkred = "#cc241d"
+gb_red = "#fb4934"
+gb_darkgreen = "#98971a"
+gb_green = "#b8bb26"
+gb_darkyellow = "#d79921"
+gb_yellow = "#fabd2f"
+gb_darkblue = "#458588"
+gb_blue = "#83a598"
+gb_darkmagenta = "#b16286"
+gb_magenta = "#d3869b"
+gb_darkcyan = "#689d6a"
+gb_cyan = "#8ec07c"
+gb_lightgrey = "#a89984"
+gb_white = "#ebdbb2"
+-- hard contrast background
+gb_background = "#1d2021"
+gb_background_soft = "#32302f"
+-- random colors
+gb_purple = "#8f3f71"
+gb_dark_orange = "#b57614"
+gb_orange = "#fe8019"
+
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+myFont = "Consolasi:size=9"
+myIconDir = "/home/tree/.workspace/icons/"
+
+normalStatusFG = gb_darkgrey
+normalStatusBG = gb_background
+
+term = "urxvt"
+
+myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
     , ((modm .|. controlMask,   xK_c), spawn "chromium")
 
@@ -24,6 +69,7 @@ keys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask,     xK_t), spawn "xterm") -- Just a backup for now, with the borked enter
     , ((modm .|. controlMask,   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
 
+    -- My enter key is broken, xmodmap .xmodmap remaps it to right shift
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
 
@@ -40,19 +86,42 @@ keys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     ++
 
-    -- mod-[1..9], Switch to workspace N
-    -- mod-shift-[1..9], Move client to workspace N
+    -- mod-[1..9, 0], Switch to workspace N
+    -- mod-shift-[1..9, 0], Move client to workspace N
     -- non greedy view, changed from default!
     [ ((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
-    ++
+myManageHook = composeAll
+    [ className =? "Steam"  --> doFloat
+    , className =? "steam"  --> doFullFloat
+    , className =? "MainThrd"  --> doFloat
+    , title =? "SmallCity"  --> doFloat
+    , title =? "plasma-desktop"  --> doIgnore
+    , manageDocks]
 
-    -- mod-e, mod-w switch workspaces (I've got flipped monitors, flip e and w from standard
-    [ ((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_e, xK_w] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
-    ]
+myDzenPP h = defaultPP
+    { ppOutput = hPutStrLn h
+    , ppCurrent = wrapFg gb_darkmagenta . dropId       -- Current workspace
+    , ppVisible = wrapFg gb_magenta . dropId           -- Workspace for other screen
+    , ppHidden = wrapFg gb_white . dropId              -- Hidden workspace with windows
+    , ppHiddenNoWindows = wrapFg gb_darkgrey . dropId  -- Hidden workspace without windows
+    , ppUrgent = wrapFg gb_darkred . dropId            -- Signaling workspace
+    , ppTitle = wrap "< " " > " . wrapFg gb_white      -- Window title
+    , ppSep = " "
+    , ppLayout = wrapFg normalStatusFG .
+        (\x -> case x of
+            "Tall" -> wrapBitmap "Tall.xbm"
+            "Mirror Tall" -> wrapBitmap "MirrorTall.xbm"
+            "Full" -> wrapBitmap "Full.xbm"
+            _ -> x
+        )
+    }
+    where dropId x = if (':' `elem` x) then drop 2 x else x
+          wrapFgBg fg bg content = wrap ("^fg(" ++ fg ++ ")^bg(" ++ bg ++ ")") "^fg()^bg()" content
+          wrapFg color content = wrap ("^fg(" ++ color ++ ")") "^fg()" content
+          wrapBg color content = wrap ("^bg(" ++ color ++ ")") "^bg()" content
+          wrapBitmap bitmap = "^p(2)^i(" ++ myIconDir ++ bitmap ++ ")^p(2)"
 

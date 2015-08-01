@@ -50,6 +50,7 @@ URxvt.foreground: #ebdbb2
 *color0:  #282828
 *color8:  #928374
 ! DarkRed + Red
+*color1:  #cc241d
 *color9:  #fb4934
 ! DarkGreen + Green
 *color2:  #98971a
