@@ -6,10 +6,10 @@ total_run_times 0
 use_spacer none
 
 TEXT
-^fg()battery ^fg(\#B1B1B1)${battery} ^fg()| \
-^fg()CPU ^fg(\#B1B1B1)${cpu cpu0}% ^fg()| \
-MEM ^fg(\#B1B1B1)${memperc}% ^fg()| \
-NET ^fg(\#B1B1B1)${downspeedf wlan0}K ^fg(\#B1B1B1)${upspeedf wlan0}K ^fg()| \
-^fg(\#B8B8B8)${time %Y-%m-%d} ^fg()| \
-^fg(\#FFB600)${time %R} 
+^fg()battery ^fg(\#ebdbb2)${battery} ^fg()| \
+^fg()CPU ^fg(\#ebdbb2)${cpu cpu0}% ^fg()| \
+MEM ^fg(\#ebdbb2)${memperc}% ^fg()| \
+NET ^fg(\#ebdbb2)${downspeedf wlan0}K ^fg(\#ebdbb2)${upspeedf wlan0}K ^fg()| \
+^fg(\#ebdbb2)${time %Y-%m-%d} ^fg()| \
+^fg(\#b57614)${time %R} 
 
