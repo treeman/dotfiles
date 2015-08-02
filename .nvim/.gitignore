@@ -1,4 +1,4 @@
-*
-!.gitignore
-!autoload/plug.vim
-!colors
+/plugged
+/backup
+/tmp
+.netrwhist
