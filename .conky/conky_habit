@@ -1,5 +1,5 @@
 #settings
-update_interval 30
+update_interval 60
 total_run_times 0
 background 0
 double_buffer yes
@@ -7,7 +7,7 @@ double_buffer yes
 
 #text settings
 use_xft yes
-xftfont Consolas:size=10
+xftfont Comfortaa:size=10
 override_utf8_locale yes
 text_buffer_size 2048
 
@@ -15,12 +15,13 @@ text_buffer_size 2048
 own_window_class Conky
 own_window yes
 own_window_type override
-#own_window_transparent yes
+own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 alignment top_left
-gap_y 1495
-gap_x 1307
+gap_y 100
+gap_x 780
+maximum_width 280
 
 #graphics
 draw_shades no
@@ -30,9 +31,16 @@ draw_borders no
 draw_shades no
 stippled_borders 0
 
-color1 818181
-color2 434343
+color1 ebdbb2
+color2 b57614
 
 TEXT
-${execp ~/.workspace/pretty-timezone.pl}
+
+${color2}${font Comfortaa:size=16}Todo${font}
+${voffset 2}${execp ~/code/habitrpg-viewer/target/release/habitrpg-viewer --todos --conky}
+
+
+
+${color2}${font Comfortaa:size=16}Dailys${font}
+${voffset 2}${execp ~/code/habitrpg-viewer/target/release/habitrpg-viewer --dailys --conky}
 

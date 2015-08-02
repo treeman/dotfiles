@@ -1,5 +1,5 @@
 #settings
-update_interval 60
+update_interval 3600
 total_run_times 0
 background 0
 double_buffer yes
@@ -15,13 +15,12 @@ text_buffer_size 2048
 own_window_class Conky
 own_window yes
 own_window_type override
-own_window_transparent yes
+#own_window_transparent yes
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
-alignment top_left
-gap_y 100
-gap_x 780
-maximum_width 280
+alignment bottom_left
+gap_y 5
+gap_x 5
 
 #graphics
 draw_shades no
@@ -31,16 +30,8 @@ draw_borders no
 draw_shades no
 stippled_borders 0
 
-color1 818181
-color2 FFB600
+color1 ebdbb2
+color2 b57614
 
 TEXT
-
-${color}${font Comfortaa:size=16}Todo${font}
-${voffset 2}${execp ~/code/habitrpg-viewer/target/habitrpg-viewer --todos --conky}
-
-
-
-${font Comfortaa:size=16}Dailys${font}
-${voffset 2}${execp ~/code/habitrpg-viewer/target/habitrpg-viewer --dailys --conky}
-
+${color1}Slackware 64  ${color2}${exec uname -r}

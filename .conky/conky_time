@@ -30,11 +30,11 @@ draw_borders no
 draw_shades no
 stippled_borders 0
 
-color1 FFFFFF
-color2 FFB600
+color1 ebdbb2
+color2 b57614
 
 TEXT
-${font Consolas:size=72}${time %R}${font}${voffset 8}
+${color1}${font Consolas:size=72}${time %R}${font}${voffset 8}
  ${color2}UpTime: ${color1}$uptime_short
 
 ${offset 310}${voffset -117}${color2}${font Consolas:size=28}${time %d}${font Consolas:size=14} ${voffset -10}${color1}${time %B %Y}

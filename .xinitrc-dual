@@ -17,7 +17,10 @@ nitrogen --restore
 xsetroot -cursor_name left_ptr
 
 # Startup skyped
-skyped
+#skyped
+
+# Do I need to start pulseaudio?
+# /usr/bin/start-pulseaudio-x11
 
 # Start xmonad yay!
 exec xmonad

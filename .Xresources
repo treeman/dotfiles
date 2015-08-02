@@ -5,61 +5,71 @@
 ! Blink
 *visualBell: False
 
-XTerm*color0: #4E4E4E
-XTerm*color1: #FF6C60
-XTerm*color2: #A8FF60
-XTerm*color3: #FFFFB6
-XTerm*color4: #96CBFE
-XTerm*color5: #FF73FD
-XTerm*color6: #C6C5FE
-XTerm*color7: #EEEEEE
+! Gruvbox
+URxvt.color24:  #076678
+URxvt.color66:  #427b58
+URxvt.color88:  #9d0006
+URxvt.color96:  #8f3f71
+URxvt.color100: #79740e
+URxvt.color108: #8ec07c
+URxvt.color109: #83a598
+URxvt.color130: #af3a03
+URxvt.color136: #b57614
+URxvt.color142: #b8bb26
+URxvt.color167: #fb4934
+URxvt.color175: #d3869b
+URxvt.color208: #fe8019
+URxvt.color214: #fabd2f
+URxvt.color223: #ebdbb2
+URxvt.color228: #f4e8ba
+URxvt.color229: #fdf4c1
+URxvt.color230: #ffffc8
+URxvt.color234: #1d2021
+URxvt.color235: #282828
+URxvt.color236: #32302f
+URxvt.color237: #3c3836
+URxvt.color239: #504945
+URxvt.color241: #665c54
+URxvt.color243: #7c6f64
+URxvt.color244: #928374
+URxvt.color245: #928374
+URxvt.color246: #a89984
+URxvt.color248: #bdae93
+URxvt.color250: #d5c4a1
 
-XTerm*color8: #4E4E4E
-XTerm*color9: #FF6C60
-XTerm*color10: #A8FF60
-XTerm*color11: #FFFF6A
-XTerm*color12: #96CBFE
-XTerm*color13: #FF73FD
-XTerm*color14: #C6C5FE
-XTerm*color15: #EEEEEE
+! Temporary workaround?
+URxvt.background: #1d2021
+URxvt.foreground: #ebdbb2
 
-! urxvt
-URxvt*color0: #4E4E4E
-URxvt*color1: #FF6C60
-URxvt*color2: #A8FF60
-URxvt*color3: #FFFFB6
-URxvt*color4: #96CBFE
-URxvt*color5: #FF73FD
-URxvt*color6: #C6C5FE
-URxvt*color7: #EEEEEE
-
-URxvt*color8: #4E4E4E
-URxvt*color9: #FF6C60
-URxvt*color10: #A8FF60
-URxvt*color11: #FFFF6A
-URxvt*color12: #96CBFE
-URxvt*color13: #FF73FD
-URxvt*color14: #C6C5FE
-URxvt*color15: #EEEEEE
-
-!XTerm*bellIsUrgent: true
-XTerm*bellIsUrgent: false
-
-XTerm*internalBorder: 0
-XTerm*loginShell: false
-
-XTerm*scrollBar: false
-XTerm*scrollKey: true
-
-XTerm*saveLines: 1000
-XTerm*multiClickTime: 250
-
-XTerm*eightBitInput: false#
-XTerm*altSendsEscape: true
-
-XTerm*faceName: Consolasi
-XTerm*faceSize: 10.8
-XTerm*utf8: 1
+! hard contrast: *background: #1d2021
+! medium contrast: *background: #282828
+! soft contrast: *background: #32302f
+!*background: #1d2021
+!*foreground: #ebdbb2
+! Black + DarkGrey
+*color0:  #282828
+*color8:  #928374
+! DarkRed + Red
+*color1:  #cc241d
+*color9:  #fb4934
+! DarkGreen + Green
+*color2:  #98971a
+*color10: #b8bb26
+! DarkYellow + Yellow
+*color3:  #d79921
+*color11: #fabd2f
+! DarkBlue + Blue
+*color4:  #458588
+*color12: #83a598
+! DarkMagenta + Magenta
+*color5:  #b16286
+*color13: #d3869b
+! DarkCyan + Cyan
+*color6:  #689d6a
+*color14: #8ec07c
+! LightGrey + White
+*color7:  #a89984
+*color15: #ebdbb2
 
 ! URxvt*font: xft:Monospace:pixelsize=14
 ! URxvt*letterSpace: -1
@@ -74,36 +84,13 @@ Xft.dpi: 96
 Xft.antialias: true
 Xft.rgba: rgb
 Xft.hinting: true
-!Xft.hintstyle: hintslight
 Xft.hintstyle: hintsfull
 
-! Testing some fonts...
 URxvt*font: xft:Consolas:size=12
-!URxvt*font: xft:Inconsolata:size=12
 URxvt*letterSpace: -1
-!URxvt.lineSpace: -1
 URxvt.lineSpace: 0
-
-! Fonts
-!URxvt.allow_bold: false
-!URxvt*font: xft:Consolas:pixelsize=16
-!URxvt*boldFont: xft:Consolas:pixelsize=14
-
-! Fix font space
-!URxvt*letterSpace: -1
 
 URxvt.urgentOnBell: true
 URxvt.scrollBar: false
-
-URxvt*pointerColor: red
-URxvt*pointerColorBackground: black
-URxvt*cursorColor: green
-URxvt*background: black
-URxvt*foreground: white
-!URxvt*visualBell: false
-
-XTerm*background: black
-XTerm*foreground: white
-! Testing...
 URxvt*buffered: false
 

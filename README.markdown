@@ -1,14 +1,14 @@
 My config files for stuff.
 
-Some are incomplete and not used, but others such as [.vimrc][] are more complete. I also have my [xmonad][] dual screen setup and some scripts for the desktop there.
+# Different setups
 
-[.vimrc]: http://github.com/treeman/dotfiles/blob/master/.vimrc ".vimrc I use"
-[xmonad]: http://xmonad.org/ "xmonad a nice tiling window manager"
+Layouts differ from my portable and different layouts for single and dual screen modes on the desktop. Scripts `dual-screen` and `single-screen` toggle symlinks to `~/.xmonad/xmonad.hs` and `~/.xinitrc`. For portable manually set respective symlinks.
 
-Ideas
------
+Assume dotfiles is in `~`. Add `~/dotfiles/bin` to path.
 
-Countdown to interesting stuff!
+# TODO
 
-Cmd line days until `echo $(expr '(' $(date -d 2012-05-15 +%s) - $(date +%s) + 86399 ')' / 86400)`
+1. Remove/rework `.conky`
+2. Cleanup `.workspace`
+3. Fully migrate from zsh to fish-shell
 

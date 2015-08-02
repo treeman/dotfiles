@@ -1,8 +1,37 @@
-﻿filetype plugin indent on
+﻿" Workaround as vim sometimes depends on POSIX functionality
+if &shell =~# 'fish$'
+    set shell=sh
+endif
+
+" Plugin handling using vim-plug
+" Do :PlugInstall to install the plugins
+call plug#begin('~/.vim/plugged')
+Plug 'https://github.com/dag/vim-fish.git'
+Plug 'https://github.com/morhetz/gruvbox.git'
+Plug 'https://github.com/chriskempson/base16-vim.git'
+Plug 'https://github.com/rust-lang/rust.vim'
+Plug 'https://github.com/cespare/vim-toml.git'
+Plug 'https://github.com/scrooloose/nerdcommenter.git'
+Plug 'https://github.com/benekastah/neomake.git'
+call plug#end()
+
+filetype plugin indent on
 
 " Appearance
-syntax on
-colorscheme ir_black
+syntax enable
+" colorscheme ir_black " old
+" colorscheme jellybeans " ok, not completely dark backround though
+" colorscheme CandyPaper " ok. Green!
+
+" base16 colors. Need to change terminal colors!
+" let base16colorspace=256
+" colorscheme base16-default
+
+" use gruvbox colorscheme
+" see https://github.com/morhetz/gruvbox
+set background=dark
+let g:gruvbox_contrast_dark = "hard"
+colorscheme gruvbox
 
 set relativenumber " display relative line numbers
 set number " show line numbers
@@ -29,6 +58,14 @@ set showcmd " show the command being typed
 set completeopt= "don't use a pop up menu for completions
 
 set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
+
+" Files etc
+set backupdir=~/.nvim/backup " where to put backup
+set backup " make backup files
+set noswapfile " just annoying when I forcefully kill vim with the recovery
+set directory=~/.nvim/tmp,~/tmp,/tmp " store swaps here if we do enable it
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " ignore files for file handling
+set hidden " Can change buffers without saving
 
 " Searching
 set hlsearch " highlight search terms
@@ -82,3 +119,27 @@ nmap <leader>l <C-w>s
 " Jump to matching pairs easily, with Tab
 nnoremap <Tab> %
 vnoremap <Tab> %
+
+" Always use the PRIMARY register * as default with yank/paste
+set clipboard+=unnamed
+
+" Fast yank/paste to CLIPBOARD. PRIMARY (middle mouse button) is found with *
+nmap <leader>y "+y
+nmap <leader>Y "+yy
+nmap <leader>p "+p
+nmap <leader>P "+P
+
+" :copen    " Open quickfix window
+" :cw       " Open if there are errors, otherwise close it
+" :cc       " Show current error
+" :cn       " Goto next error
+" :cnf      " Go to first error in next file
+" :set makeprg=cargo\ build
+" :Neomake doesn't really work...
+
+" :E to go to explorer mode!
+" toggle list style with i
+
+" Pretty format json:
+" :%!python -m json.tool
+"
