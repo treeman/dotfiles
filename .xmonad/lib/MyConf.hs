@@ -46,7 +46,7 @@ gb_orange = "#fe8019"
 
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 myFont = "Consolasi:size=9"
-myIconDir = "/home/tree/.workspace/icons/"
+myIconDir = "/home/tree/dotfiles/icons/"
 
 normalStatusFG = gb_darkgrey
 normalStatusBG = gb_background

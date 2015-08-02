@@ -36,11 +36,11 @@ color2 b57614
 
 TEXT
 
-${color}${font Comfortaa:size=16}Todo${font}
-${voffset 2}${execp ~/code/habitrpg-viewer/target/habitrpg-viewer --todos --conky}
+${color2}${font Comfortaa:size=16}Todo${font}
+${voffset 2}${execp ~/code/habitrpg-viewer/target/release/habitrpg-viewer --todos --conky}
 
 
 
-${font Comfortaa:size=16}Dailys${font}
-${voffset 2}${execp ~/code/habitrpg-viewer/target/habitrpg-viewer --dailys --conky}
+${color2}${font Comfortaa:size=16}Dailys${font}
+${voffset 2}${execp ~/code/habitrpg-viewer/target/release/habitrpg-viewer --dailys --conky}
 
