@@ -6,12 +6,6 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
 
---import XMonad.Layout.NoBorders
---import XMonad.Actions.NoBorders
---import XMonad.Actions.WithAll
---import XMonad.Hooks.ManageHelpers
---import System.IO
-
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
