@@ -6,6 +6,8 @@ Layouts differ from my portable and different layouts for single and dual screen
 
 Assume dotfiles is in `~`. Add `~/dotfiles/bin` to path.
 
+If neovim should be used, symlink `~/.vim` to `~/.nvim` and `~/.vimrc` to `~/.nvimrc` for correct plugin registration.
+
 # TODO
 
 1. Remove/rework `.conky`

@@ -3,12 +3,9 @@
 *.png
 *.sql
 *astmatix*
-*tmp
 *~
 .vim/.netrwhist
 .vim/netrwhist
-.viminfo
-.vimsize
 .wine*
 .xmonad/*.errors
 .xmonad/*linux
