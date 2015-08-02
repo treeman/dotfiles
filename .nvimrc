@@ -9,6 +9,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/dag/vim-fish.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
 Plug 'https://github.com/chriskempson/base16-vim.git'
+Plug 'https://github.com/rust-lang/rust.vim'
+Plug 'https://github.com/cespare/vim-toml.git'
+Plug 'https://github.com/scrooloose/nerdcommenter.git'
+Plug 'https://github.com/benekastah/neomake.git'
 call plug#end()
 
 filetype plugin indent on
@@ -54,6 +58,14 @@ set showcmd " show the command being typed
 set completeopt= "don't use a pop up menu for completions
 
 set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
+
+" Files etc
+set backupdir=~/.nvim/backup " where to put backup
+set backup " make backup files
+set noswapfile " just annoying when I forcefully kill vim with the recovery
+set directory=~/.nvim/tmp,~/tmp,/tmp " store swaps here if we do enable it
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " ignore files for file handling
+set hidden " Can change buffers without saving
 
 " Searching
 set hlsearch " highlight search terms
@@ -117,3 +129,17 @@ nmap <leader>Y "+yy
 nmap <leader>p "+p
 nmap <leader>P "+P
 
+" :copen    " Open quickfix window
+" :cw       " Open if there are errors, otherwise close it
+" :cc       " Show current error
+" :cn       " Goto next error
+" :cnf      " Go to first error in next file
+" :set makeprg=cargo\ build
+" :Neomake doesn't really work...
+
+" :E to go to explorer mode!
+" toggle list style with i
+
+" Pretty format json:
+" :%!python -m json.tool
+"

@@ -13,6 +13,8 @@ set -x PATH ~/bin ~/dotfiles/bin $PATH
 set -x PATH $PATH /opt/kde4/inst/bin
 set -x KDEDIRS /opt/kde4/inst $KDEDIRS
 
+set -x LD_LIBRARY_PATH /usr/local/lib /lib /usr/lib $LD_LIBRARY_PATH
+
 # git message editor and other things
 set -x EDITOR nvim
 
