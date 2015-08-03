@@ -41,7 +41,7 @@ gb_background = "#1d2021"
 gb_background_soft = "#32302f"
 -- random colors
 gb_purple = "#8f3f71"
-gb_dark_orange = "#b57614"
+gb_darkorange = "#b57614"
 gb_orange = "#fe8019"
 
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -104,7 +104,7 @@ myManageHook = composeAll
 
 myDzenPP h = defaultPP
     { ppOutput = hPutStrLn h
-    , ppCurrent = wrapFg gb_darkmagenta . dropId       -- Current workspace
+    , ppCurrent = wrapFg gb_darkorange . dropId        -- Current workspace
     , ppVisible = wrapFg gb_magenta . dropId           -- Workspace for other screen
     , ppHidden = wrapFg gb_white . dropId              -- Hidden workspace with windows
     , ppHiddenNoWindows = wrapFg gb_darkgrey . dropId  -- Hidden workspace without windows
