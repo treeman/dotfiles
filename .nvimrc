@@ -1,7 +1,5 @@
 ﻿" Workaround as vim sometimes depends on POSIX functionality
-if &shell =~# 'fish$'
-    set shell=sh
-endif
+set shell=/bin/bash
 
 " Plugin handling using vim-plug
 " Do :PlugInstall to install the plugins
@@ -13,6 +11,7 @@ Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/cespare/vim-toml.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/benekastah/neomake.git'
+Plug 'https://github.com/Floobits/floobits-neovim.git'
 call plug#end()
 
 filetype plugin indent on
@@ -142,4 +141,3 @@ nmap <leader>P "+P
 
 " Pretty format json:
 " :%!python -m json.tool
-"
