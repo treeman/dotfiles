@@ -1,0 +1,44 @@
+#!/bin/env fish
+# vim: syntax=fish
+
+# Just a hacky script for switching dropbox profiles...
+# Setup
+# ln -s /store/dropbox/.dropbox ~/
+# Also setup directories
+# /store/dropbox/saja
+# /store/dropbox/jonas
+# Hardcoded! :)
+#
+# Can use dropbox.py to get sync status, or stop.
+# Maybe something else, but didn't test it.
+set name (basename (status -f))
+set base /store/dropbox
+
+function print_help
+  echo "This implements switching between default dropbox folders."
+  echo "Usage:"
+  echo "        $name {saja|jonas}"
+  echo "        $name help"
+  echo "        $name status"
+  echo "        $name stop"
+end
+
+if set -q argv
+  switch $argv
+    case help
+      print_help
+    case saja
+      rm ~/.dropbox
+      ln -s $base/saja/.dropbox ~/
+      set -x HOME $base/saja/; dropboxd
+    case jonas
+      rm ~/.dropbox
+      ln -s $base/jonas/.dropbox ~/
+      set -x HOME $base/jonas/; dropboxd
+    case status
+      dropbox.py status
+    case stop
+      dropbox.py stop
+  end
+end
+
