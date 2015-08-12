@@ -31,7 +31,8 @@ main = do
     conkyHabit <- spawnPipe "conky -c ~/.conky/conky_habit"
     conkyKernel <- spawnPipe "conky -c ~/.conky/conky_kernel"
     conkyTime <- spawnPipe "conky -c ~/.conky/conky_time"
-    conkyTicker <- spawnPipe "conky -c ~/.conky/conky_ticker"
+    -- TODO make ticker work first!
+    -- conkyTicker <- spawnPipe "conky -c ~/.conky/conky_ticker"
 
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
         modMask = mod4Mask

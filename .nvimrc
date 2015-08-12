@@ -119,14 +119,21 @@ nmap <leader>l <C-w>s
 nnoremap <Tab> %
 vnoremap <Tab> %
 
-" Always use the PRIMARY register * as default with yank/paste
-set clipboard+=unnamed
+" Use CLIPBOARD register + as default
+set clipboard+=unnamedplus
 
-" Fast yank/paste to CLIPBOARD. PRIMARY (middle mouse button) is found with *
-nmap <leader>y "+y
-nmap <leader>Y "+yy
-nmap <leader>p "+p
-nmap <leader>P "+P
+set mouse=a
+
+" Fast yank/paste
+" PRIMARY (middle mouse button) is found with *
+" CLIPBOARD  is found with +
+nmap <leader>y "*y
+nmap <leader>Y "*yy
+nmap <leader>p "*p
+nmap <leader>P "*P
+
+" Yank mouse selection with ctrl c
+vmap <C-C> "*y
 
 " :copen    " Open quickfix window
 " :cw       " Open if there are errors, otherwise close it
