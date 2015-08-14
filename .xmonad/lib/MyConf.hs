@@ -104,6 +104,7 @@ myManageHook = composeAll
     , className =? "steam"  --> doFullFloat
     , className =? "MainThrd"  --> doFloat
     , title =? "SmallCity"  --> doFloat
+    , title =? "ld33"  --> doFloat
     , title =? "plasma-desktop"  --> doIgnore
     , manageDocks]
 

@@ -12,6 +12,7 @@ Plug 'https://github.com/cespare/vim-toml.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/benekastah/neomake.git'
 Plug 'https://github.com/Floobits/floobits-neovim.git'
+Plug 'https://github.com/vim-perl/vim-perl.git'
 call plug#end()
 
 filetype plugin indent on

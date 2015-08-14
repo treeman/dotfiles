@@ -22,6 +22,8 @@ xsetroot -cursor_name left_ptr
 # Do I need to start pulseaudio?
 # /usr/bin/start-pulseaudio-x11
 
+$HOME/dotfiles/bin/wacom-settings.sh
+
 # Start xmonad yay!
 exec xmonad
 

@@ -6,7 +6,7 @@ my $screen = `screen -ls` // "";
 
 # If irc not running, start it
 if ($screen !~ /\d+\.irc/) {
-    `screen -d -m -S irc -c ~/.workspace/irssi_screen`;
+    `screen -d -m -S irc -c ~/dotfiles/irssi_screen`;
 }
 
 # Launch a terminal with it
