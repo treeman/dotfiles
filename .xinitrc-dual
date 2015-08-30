@@ -22,7 +22,8 @@ xsetroot -cursor_name left_ptr
 # Do I need to start pulseaudio?
 # /usr/bin/start-pulseaudio-x11
 
-$HOME/dotfiles/bin/wacom-settings.sh
+xsetwacom --set "Wacom Intuos PT S Pen stylus" Mode "relative"
+xsetwacom --set "Wacom Intuos PT S Pen eraser" Mode "relative"
 
 # Start xmonad yay!
 exec xmonad

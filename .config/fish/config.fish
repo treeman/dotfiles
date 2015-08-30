@@ -13,6 +13,9 @@ set -x PATH ~/bin ~/dotfiles/bin $PATH
 set -x PATH $PATH /opt/kde4/inst/bin
 set -x KDEDIRS /opt/kde4/inst $KDEDIRS
 
+# For java
+set -x PATH $PATH /usr/lib64/java/bin
+
 # For rust...?
 set -x LD_LIBRARY_PATH /usr/local/lib /lib /usr/lib $LD_LIBRARY_PATH
 

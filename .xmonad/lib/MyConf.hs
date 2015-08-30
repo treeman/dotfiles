@@ -99,12 +99,21 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
+resizeAndMove w =  withDisplay $ \d -> do
+               focus w
+               io $ resizeWindow d w 800 600
+               float w
+               mouseMoveWindow w
+               windows W.shiftMaster
+
 myManageHook = composeAll
     [ className =? "Steam"  --> doFloat
     , className =? "steam"  --> doFullFloat
     , className =? "MainThrd"  --> doFloat
     , title =? "SmallCity"  --> doFloat
-    , title =? "ld33"  --> doFloat
+    {-, title =? "ld33"  --> doFloat-}
+    -- Hack workaround trololol
+    , title =? "ld33"  --> doRectFloat (W.RationalRect 0.2 0.1 (800/1914) (600/1076))
     , title =? "plasma-desktop"  --> doIgnore
     , manageDocks]
 

@@ -13,6 +13,7 @@ Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/benekastah/neomake.git'
 Plug 'https://github.com/Floobits/floobits-neovim.git'
 Plug 'https://github.com/vim-perl/vim-perl.git'
+Plug 'https://github.com/elixir-lang/vim-elixir.git'
 call plug#end()
 
 filetype plugin indent on
@@ -136,16 +137,50 @@ nmap <leader>P "*P
 " Yank mouse selection with ctrl c
 vmap <C-C> "*y
 
-" :copen    " Open quickfix window
-" :cw       " Open if there are errors, otherwise close it
-" :cc       " Show current error
-" :cn       " Goto next error
-" :cnf      " Go to first error in next file
-" :set makeprg=cargo\ build
-" :Neomake doesn't really work...
-
 " :E to go to explorer mode!
 " toggle list style with i
 
 " Pretty format json:
 " :%!python -m json.tool
+
+" Quickfix
+" :copen    " Open quickfix window
+" :cw       " Open if there are errors, otherwise close it
+" :cc       " Show current error
+" :cn       " Goto next error
+" :cnf      " Go to first error in next file
+" :cN       " Goto prev error
+" :set makeprg=cargo\ build
+" :Neomake doesn't really work...
+
+" Ctrl alt p
+map  :make<CR>:cw<CR>
+" Ctrl alt x
+map <C-M-X> :make clean<CR>
+"map  :Neomake!<CR>:cw<CR>
+" Next, previous errors and goto current error
+map <C-N> :cn<CR>
+map <C-P> :cN<CR>
+map <C-C> :cc<CR>
+
+" Just for now, could make things better later.
+" Bind automatic run like this if you're doing things?
+" map <C-X> :! cd bin && ./ld33<CR><CR>
+
+" Tags
+" C-] jump to tag
+" C-Alt-] jump to tag, select 
+map  g<C-]>
+" C-= jump back (default C-T)
+map <C-=> :pop<CR>
+" C-' previous matching tag
+map ' :tp<CR>
+" C-\ next matching tag
+map  :tn<CR>
+" try
+" set tags=tags/;
+" set tags=./tags
+" rerun tags -R sometimes with Ctrl alt \
+map  :! ctags -R<CR>
+
+set tags=./tags;/
