@@ -31,6 +31,7 @@ main = do
     conkyHabit <- spawnPipe "conky -c ~/.conky/conky_habit"
     conkyKernel <- spawnPipe "conky -c ~/.conky/conky_kernel"
     conkyTime <- spawnPipe "conky -c ~/.conky/conky_time"
+    conkyCountdown <- spawnPipe "conky -c ~/.conky/conky_countdown"
     -- TODO make ticker work first!
     -- conkyTicker <- spawnPipe "conky -c ~/.conky/conky_ticker"
 

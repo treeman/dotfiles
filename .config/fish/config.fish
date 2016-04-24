@@ -17,7 +17,7 @@ set -x KDEDIRS /opt/kde4/inst $KDEDIRS
 set -x PATH $PATH /usr/lib64/java/bin
 
 # For rust...?
-set -x LD_LIBRARY_PATH /usr/local/lib /lib /usr/lib $LD_LIBRARY_PATH
+set -x LD_LIBRARY_PATH /usr/local/lib /usr/local/lib64 /lib /usr/lib /usr/lib64 $LD_LIBRARY_PATH
 
 # git message editor and other things
 set -x EDITOR nvim
