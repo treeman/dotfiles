@@ -16,7 +16,8 @@ my @countdown = (["2016-06-12", "Dan Gradering"],
                  ["2016-05-14", "ANRPC Finals"],
                  ["2016-05-06", "Lincon Regionals"],
                  ["2016-05-21", "Sa-Ja Gradering"],
-                 ["2016-04-29", "Diablo Season 6"]);
+                 ["2016-04-29", "Diablo Season 6"],
+                 ["2016-07-07", "Prag"]);
 
 @countdown = sort { @$a[0] cmp @$b[0] } @countdown;
 
