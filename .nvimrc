@@ -60,6 +60,11 @@ set completeopt= "don't use a pop up menu for completions
 
 set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
 
+" File exploring?
+" TODO find a better one...?
+"map <C-X><C-F> :Lexplore<CR>
+let g:netrw_liststyle = 3 " tree view
+
 " Files etc
 set backupdir=~/.nvim/backup " where to put backup
 set backup " make backup files
