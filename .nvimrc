@@ -121,6 +121,10 @@ nmap <leader>l <C-w>s
 nnoremap <Tab> %
 vnoremap <Tab> %
 
+" Move through visual lines
+nnoremap <silent> k gk
+nnoremap <silent> j gj
+
 " Use CLIPBOARD register + as default
 set clipboard+=unnamedplus
 
