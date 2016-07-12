@@ -14,6 +14,8 @@ Plug 'https://github.com/benekastah/neomake.git'
 Plug 'https://github.com/Floobits/floobits-neovim.git'
 Plug 'https://github.com/vim-perl/vim-perl.git'
 Plug 'https://github.com/elixir-lang/vim-elixir.git'
+Plug 'https://github.com/avdgaag/vim-phoenix'
+Plug 'https://github.com/slashmili/alchemist.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -98,6 +100,9 @@ map <F7> :set noexpandtab<CR>
 
 " Spell checking
 map <F10> :set spell! spell?<CR>
+
+" Edit file with a prefilled path
+nnoremap <leader>e :e <C-R>=expand('%:p:h') . '/'<CR>
 
 " Shift-tab to insert hard tab
 imap <silent> <S-tab> <C-V><tab>
