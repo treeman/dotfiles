@@ -1,0 +1,1 @@
+/home/tree/dotfiles/.nvimrc

@@ -1,9 +1,12 @@
-﻿" Workaround as vim sometimes depends on POSIX functionality
+﻿" Note that neovim config files now exist in ~/.config (base $XDG_CONFIG_HOME)
+" ~/.config/nvim ~/.config/nvim/init.vim
+
+" Workaround as vim sometimes depends on POSIX functionality
 set shell=/bin/bash
 
 " Plugin handling using vim-plug
 " Do :PlugInstall to install the plugins
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/dotfiles/.nvim/plugged')
 Plug 'https://github.com/dag/vim-fish.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
 Plug 'https://github.com/chriskempson/base16-vim.git'
@@ -68,10 +71,10 @@ set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
 let g:netrw_liststyle = 3 " tree view
 
 " Files etc
-set backupdir=~/.nvim/backup " where to put backup
+set backupdir=~/dotfiles/.nvim/backup " where to put backup
 set backup " make backup files
 set noswapfile " just annoying when I forcefully kill vim with the recovery
-set directory=~/.nvim/tmp,~/tmp,/tmp " store swaps here if we do enable it
+set directory=~/dotfiles/.nvim/tmp,~/tmp,/tmp " store swaps here if we do enable it
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " ignore files for file handling
 set hidden " Can change buffers without saving
 
