@@ -19,6 +19,7 @@ Plug 'https://github.com/vim-perl/vim-perl.git'
 Plug 'https://github.com/elixir-lang/vim-elixir.git'
 Plug 'https://github.com/avdgaag/vim-phoenix'
 Plug 'https://github.com/slashmili/alchemist.vim'
+Plug 'https://github.com/vimwiki/vimwiki.git'
 call plug#end()
 
 filetype plugin indent on
