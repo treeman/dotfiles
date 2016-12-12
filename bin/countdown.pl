@@ -12,12 +12,8 @@ my $date_parser = DateTime::Format::Strptime->new(
   on_error => 'croak',
 );
 
-my @countdown = (["2016-06-12", "Dan Gradering"],
-                 ["2016-05-14", "ANRPC Finals"],
-                 ["2016-05-06", "Lincon Regionals"],
-                 ["2016-05-21", "Sa-Ja Gradering"],
-                 ["2016-04-29", "Diablo Season 6"],
-                 ["2016-07-07", "Prag"]);
+my @countdown = (["2016-12-16", "Rogue One"],
+                 ["2016-12-22", "Jullov"]);
 
 @countdown = sort { @$a[0] cmp @$b[0] } @countdown;
 
@@ -34,6 +30,8 @@ for my $item (@countdown) {
     my $days = $finish[0] - $start[0];
     #say $days;
 
-    say "\${color2}\${font Comfortaa:size=14}$days\${font}\${color1} days to $what";
+    if ($days > 0) {
+        say "\${color2}\${font Comfortaa:size=14}$days\${font}\${color1} days to $what";
+    }
 }
 

@@ -1,2 +1,4 @@
-keycode  36 =
 keycode  62 = Return NoSymbol Return
+remove Lock = Caps_Lock
+keysym Caps_Lock = Escape
+add Lock = Caps_Lock

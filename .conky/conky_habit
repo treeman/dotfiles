@@ -1,5 +1,5 @@
 #settings
-update_interval 60
+update_interval 300
 total_run_times 0
 background 0
 double_buffer yes
@@ -37,10 +37,10 @@ color2 b57614
 TEXT
 
 ${color2}${font Comfortaa:size=16}Todo${font}
-${voffset 2}${execp ~/code/habitrpg-viewer/target/release/habitrpg-viewer --todos --conky}
+${voffset 2}${execp ~/code/habitica_viewer/habitica_viewer todos --conky}
 
 
 
-${color2}${font Comfortaa:size=16}Dailys${font}
-${voffset 2}${execp ~/code/habitrpg-viewer/target/release/habitrpg-viewer --dailys --conky}
+${color2}${font Comfortaa:size=16}Dailies${font}
+${voffset 2}${execp ~/code/habitica_viewer/habitica_viewer dailies --conky}
 
