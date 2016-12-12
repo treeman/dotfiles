@@ -9,6 +9,9 @@ nitrogen --restore
 # Set mouse pointer
 xsetroot -cursor_name left_ptr
 
+# Remap caps to escape
+setxkbmap -option caps:escape
+
 # Start xmonad yay!
 exec xmonad
 

@@ -6,7 +6,7 @@ set shell=/bin/bash
 
 " Plugin handling using vim-plug
 " Do :PlugInstall to install the plugins
-call plug#begin('~/dotfiles/.nvim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 Plug 'https://github.com/dag/vim-fish.git'
 Plug 'https://github.com/morhetz/gruvbox.git'
 Plug 'https://github.com/chriskempson/base16-vim.git'
@@ -72,10 +72,10 @@ set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
 let g:netrw_liststyle = 3 " tree view
 
 " Files etc
-set backupdir=~/dotfiles/.nvim/backup " where to put backup
+set backupdir=~/.config/nvim/backup " where to put backup
 set backup " make backup files
 set noswapfile " just annoying when I forcefully kill vim with the recovery
-set directory=~/dotfiles/.nvim/tmp,~/tmp,/tmp " store swaps here if we do enable it
+set directory=~/.config/nvim/tmp,~/tmp,/tmp " store swaps here if we do enable it
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " ignore files for file handling
 set hidden " Can change buffers without saving
 
@@ -94,6 +94,9 @@ nmap <silent> <leader>n :silent nohlsearch<CR>
 " Bind buffert toggling to f1/f2
 noremap <F1> :bprev!<CR>
 noremap <F2> :bnext!<CR>
+
+" Jump to previously opened buffer
+noremap <F3> :b#<CR>
 
 " trim trailing spaces and convert tabs to spaces
 map <F5> :silent! %s/\s\+$//<CR>:retab<CR>
