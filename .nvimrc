@@ -19,10 +19,27 @@ Plug 'https://github.com/vim-perl/vim-perl.git'
 Plug 'https://github.com/elixir-lang/vim-elixir.git'
 Plug 'https://github.com/avdgaag/vim-phoenix'
 Plug 'https://github.com/slashmili/alchemist.vim'
-Plug 'https://github.com/vimwiki/vimwiki.git'
+Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
+Plug 'https://github.com/pangloss/vim-javascript.git'
+Plug 'https://github.com/hail2u/vim-css3-syntax.git'
+" Plug 'https://github.com/ap/vim-css-color'
+
+Plug 'https://github.com/blindFS/vim-taskwarrior'
+
+Plug 'https://github.com/tbabej/taskwiki.git'
+"Plug 'https://github.com/powerman/vim-plugin-AnsiEsc.git'
+"Plug 'https://github.com/majutsushi/tagbar.git'
+"Plug 'https://github.com/farseer90718/vim-taskwarrior.git'
 call plug#end()
 
 filetype plugin indent on
+
+" File specific
+autocmd Filetype html setlocal ts=2 sts=2 sw=2
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+
+" vimwiki
+let g:taskwiki_disable_concealcursor = 1
 
 " Appearance
 syntax enable
@@ -205,3 +222,7 @@ map  :tn<CR>
 map  :! ctags -R<CR>
 
 set tags=./tags;/
+
+" C-x C-o omnicomplete
+" C-n C-p to toggle between. Nice!
+
