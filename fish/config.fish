@@ -28,6 +28,8 @@ set -x EDITOR nvim
 alias vim nvim
 alias g git
 
+set -x FZF_DEFAULT_COMMAND 'ag -g ""'
+
 # List and sort packages by size
 function packages
     fgrep UNCOMPRESSED /var/log/packages/* | awk -F: '{print $3, $1}' | sort -h

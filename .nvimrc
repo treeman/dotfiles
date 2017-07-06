@@ -22,14 +22,10 @@ Plug 'https://github.com/slashmili/alchemist.vim'
 Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
 Plug 'https://github.com/pangloss/vim-javascript.git'
 Plug 'https://github.com/hail2u/vim-css3-syntax.git'
-" Plug 'https://github.com/ap/vim-css-color'
-
-Plug 'https://github.com/blindFS/vim-taskwarrior'
-
+" Plug 'https://github.com/blindFS/vim-taskwarrior' " Some problem with sync
 Plug 'https://github.com/tbabej/taskwiki.git'
-"Plug 'https://github.com/powerman/vim-plugin-AnsiEsc.git'
-"Plug 'https://github.com/majutsushi/tagbar.git'
-"Plug 'https://github.com/farseer90718/vim-taskwarrior.git'
+Plug 'https://github.com/EinfachToll/DidYouMean.git'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " May want to customize it more, very powerful
 call plug#end()
 
 filetype plugin indent on
@@ -125,8 +121,27 @@ map <F7> :set noexpandtab<CR>
 " Spell checking
 map <F10> :set spell! spell?<CR>
 
-" Edit file with a prefilled path
-nnoremap <leader>e :e <C-R>=expand('%:p:h') . '/'<CR>
+" Find files
+nnoremap <leader>e :call fzf#run({'sink': 'e', 'down': '40%'})<CR>
+
+" Select buffer
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+nnoremap <silent> <Leader><Enter> :call fzf#run({
+\   'source':  reverse(<sid>buflist()),
+\   'sink':    function('<sid>bufopen'),
+\   'options': '+m',
+\   'down':    len(<sid>buflist()) + 2
+\ })<CR>
 
 " Shift-tab to insert hard tab
 imap <silent> <S-tab> <C-V><tab>
