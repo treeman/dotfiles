@@ -26,6 +26,8 @@ Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 Plug 'https://github.com/tbabej/taskwiki.git'
 Plug 'https://github.com/EinfachToll/DidYouMean.git'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " May want to customize it more, very powerful
+Plug 'junegunn/fzf.vim'
+Plug 'https://github.com/tpope/vim-fugitive.git' " Git plugin. Need to integrate it to workflow!
 call plug#end()
 
 filetype plugin indent on
@@ -39,16 +41,6 @@ let g:taskwiki_disable_concealcursor = 1
 
 " Appearance
 syntax enable
-" colorscheme ir_black " old
-" colorscheme jellybeans " ok, not completely dark backround though
-" colorscheme CandyPaper " ok. Green!
-
-" base16 colors. Need to change terminal colors!
-" let base16colorspace=256
-" colorscheme base16-default
-
-" use gruvbox colorscheme
-" see https://github.com/morhetz/gruvbox
 set background=dark
 let g:gruvbox_contrast_dark = "hard"
 colorscheme gruvbox
@@ -78,11 +70,6 @@ set showcmd " show the command being typed
 set completeopt= "don't use a pop up menu for completions
 
 set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
-
-" File exploring?
-" TODO find a better one...?
-"map <C-X><C-F> :Lexplore<CR>
-let g:netrw_liststyle = 3 " tree view
 
 " Files etc
 set backupdir=~/.config/nvim/backup " where to put backup
@@ -121,27 +108,15 @@ map <F7> :set noexpandtab<CR>
 " Spell checking
 map <F10> :set spell! spell?<CR>
 
-" Find files
-nnoremap <leader>e :call fzf#run({'sink': 'e', 'down': '40%'})<CR>
-
-" Select buffer
-function! s:buflist()
-  redir => ls
-  silent ls
-  redir END
-  return split(ls, '\n')
-endfunction
-
-function! s:bufopen(e)
-  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
-endfunction
-
-nnoremap <silent> <Leader><Enter> :call fzf#run({
-\   'source':  reverse(<sid>buflist()),
-\   'sink':    function('<sid>bufopen'),
-\   'options': '+m',
-\   'down':    len(<sid>buflist()) + 2
-\ })<CR>
+" Edit file with prefilled path from the current file
+nnoremap <leader>e :e <C-R>=expand('%:p:h') . '/'<CR>
+" Find with zfz
+nnoremap <silent> <leader><space> :Files<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+" Find git commits
+nnoremap <silent> <leader>gc :Commits<CR>
+nnoremap <silent> <leader>gb :BCommits<CR>
 
 " Shift-tab to insert hard tab
 imap <silent> <S-tab> <C-V><tab>
@@ -151,11 +126,6 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 map <up> <nop>
-
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
-imap <up> <nop>
 
 " Easy window handling
 map <C-J> <C-W>j
@@ -189,9 +159,6 @@ nmap <leader>P "*P
 
 " Yank mouse selection with ctrl c
 vmap <C-C> "*y
-
-" :E to go to explorer mode!
-" toggle list style with i
 
 " Pretty format json:
 " :%!python -m json.tool
