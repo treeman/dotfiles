@@ -28,7 +28,7 @@ set -x EDITOR nvim
 alias vim nvim
 alias g git
 
-set -x FZF_DEFAULT_COMMAND 'ag -g ""'
+set -x FZF_DEFAULT_COMMAND 'ag --hidden --ignore .git -g ""'
 
 # List and sort packages by size
 function packages

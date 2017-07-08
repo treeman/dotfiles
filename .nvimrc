@@ -84,7 +84,7 @@ set hlsearch " highlight search terms
 set incsearch " show search mathes as you type
 
 " Mappings
-let mapleader = ","
+let mapleader = " "
 
 " Toggle show whitespace, <leader> = mapleader
 nmap <silent> <leader>w :set list!<CR>
@@ -114,6 +114,7 @@ nnoremap <leader>e :e <C-R>=expand('%:p:h') . '/'<CR>
 nnoremap <silent> <leader><space> :Files<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+nnoremap <silent> <leader>f :call fzf#run({'dir': expand('%:p:h') . '/'})<CR>
 " Find git commits
 nnoremap <silent> <leader>gc :Commits<CR>
 nnoremap <silent> <leader>gb :BCommits<CR>
