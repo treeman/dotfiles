@@ -16,14 +16,11 @@ nitrogen --restore
 # Set mouse pointer
 xsetroot -cursor_name left_ptr
 
-# Startup skyped
-#skyped
-
 # Do I need to start pulseaudio?
 # /usr/bin/start-pulseaudio-x11
 
-xsetwacom --set "Wacom Intuos PT S Pen stylus" Mode "relative"
-xsetwacom --set "Wacom Intuos PT S Pen eraser" Mode "relative"
+# xsetwacom --set "Wacom Intuos PT S Pen stylus" Mode "relative"
+# xsetwacom --set "Wacom Intuos PT S Pen eraser" Mode "relative"
 
 # Start xmonad yay!
 exec xmonad

@@ -1,10 +1,8 @@
-port_range = 49164-49164
+port_range = 7188-7188
 session = ./.rtorrent_session
 
 # No hash check on finish
 check_hash = no
 
-# Use DHT
-dht = auto
-dht_port = 6882
+encryption = allow_incoming,try_outgoing,enable_retry
 

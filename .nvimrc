@@ -146,6 +146,7 @@ nnoremap <silent> k gk
 nnoremap <silent> j gj
 
 " Use CLIPBOARD register + as default
+" Remember to install "xsel" for this to work!
 set clipboard+=unnamedplus
 
 set mouse=a
