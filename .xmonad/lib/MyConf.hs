@@ -74,7 +74,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask,     xK_t), spawn "xterm") -- Just a backup for now, with the borked enter
     , ((modm .|. controlMask,   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
 
-    -- My enter key is broken, xmodmap .xmodmap remaps it to right shift
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
 
@@ -84,6 +83,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
     , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
     , ((modm,                   xK_y), focusUrgent)
+
+    , ((modm .|. shiftMask,     xK_b), sendMessage $ ToggleStrut U)
 
     -- Do not leave useless conky, dzen and after restart
     , ((modm,                   xK_q), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")

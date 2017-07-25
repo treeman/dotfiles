@@ -28,8 +28,8 @@ main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
 
-    conkyKernel <- spawnPipe "conky -c ~/.conky/conky_kernel"
-    conkyTime <- spawnPipe "conky -c ~/.conky/conky_time"
+    -- conkyKernel <- spawnPipe "conky -c ~/.conky/conky_kernel"
+    -- conkyTime <- spawnPipe "conky -c ~/.conky/conky_time"
     -- TODO make ticker work first!
     -- conkyTicker <- spawnPipe "conky -c ~/.conky/conky_ticker"
 
@@ -44,6 +44,8 @@ main = do
         , logHook = dynamicLogWithPP $ myDzenPP topLeft
         , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
         , manageHook = manageDocks <+> myManageHook
+        -- Necessary to recognize struts for dzen
+        , handleEventHook = docksEventHook <+> handleEventHook defaultConfig
 
         -- Trick java apps like minecraft to correctly recognize windowed screen
         -- resolution in dual screen mode
