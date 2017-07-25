@@ -80,7 +80,7 @@ set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " ignore files for file
 set hidden " Can change buffers without saving
 
 " Searching
-set hlsearch " highlight search terms
+set nohlsearch " don't highlight search terms
 set incsearch " show search mathes as you type
 
 " Mappings
