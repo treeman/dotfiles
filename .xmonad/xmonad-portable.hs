@@ -5,6 +5,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
+import XMonad.Layout.Gaps
 
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
@@ -36,7 +37,9 @@ main = do
     , terminal = term
     , keys = \k -> myKeys k `M.union` portableKeys k `M.union` keys defaultConfig k
     , logHook = dynamicLogWithPP $ myDzenPP topLeft
-    , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
+    -- Avoid struts doesn't work properly with dzen here, workaround by hardcoding a gap
+    -- , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
+    , layoutHook = gaps [(U,18)] $ layoutHook defaultConfig
     , manageHook = manageDocks <+> manageHook defaultConfig
     , startupHook = setWMName "LG3D"
 }
