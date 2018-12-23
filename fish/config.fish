@@ -1,12 +1,7 @@
 # Base16 Shell
 #eval sh $HOME/.config/base16-shell/base16-default.dark.sh
 
-# Some slackbuild scripts want this
-set -x ARCH x86_64
-
-set -x PATH /opt/man-db/bin /opt/man-db/sbin $PATH
 set -x PATH $PATH /usr/local/sbin /usr/sbin /sbin
-#set -x PATH ~/.rakudobrew/bin ~/.cabal/bin $PATH
 set -x PATH ~/.cabal/bin $PATH
 set -x PATH ~/bin ~/dotfiles/bin $PATH
 
@@ -27,37 +22,6 @@ alias g git
 
 set -x FZF_DEFAULT_COMMAND 'ag --hidden --ignore .git -g ""'
 
-# List and sort packages by size
-function packages
-    fgrep UNCOMPRESSED /var/log/packages/* | awk -F: '{print $3, $1}' | sort -h
-end
-
 function reload
     source ~/.config/fish/config.fish
 end
-
-function 32dev
-  set -x -g ARCH i486
-  set -x -g PATH /usr/bin/32 /usr/lib/qt/bin $PATH
-  # This is actually the /usr/bin/32/gcc wrapper
-  set -x -g CC gcc
-  set -x -g CXX g++
-  # This is actually the /usr/bin/32/gfortran wrapper
-  set -x -g FC gfortran
-  set -x -g F77 gfortran
-
-  # Check for Qt4 and the old 'compatibility install' of Qt3
-  if test -d /opt/kde3/lib/qt3
-    set -x -g QTDIR /opt/kde3/lib/qt3
-  end
-  if test -d /usr/lib/qt
-    set -x -g QT4DIR /usr/lib/qt
-  end
-
-  set -x -g LD_LIBRARY_PATH /usr/local/lib /lib /usr/lib $LD_LIBRARY_PATH
-
-  set -x -g PKG_CONFIG_PATH /usr/local/lib/pkgconfig /usr/lib/pkgconfig $PKG_CONFIG_PATH
-
-  echo "ARCH" (echo $ARCH)
-end
-
