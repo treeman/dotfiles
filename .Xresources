@@ -86,10 +86,11 @@ Xft.rgba: rgb
 Xft.hinting: true
 Xft.hintstyle: hintsfull
 
-URxvt*font: xft:Consolas:size=12,\
-            xft:Baekmuk Gulim
-URxvt*letterSpace: -1
-URxvt.lineSpace: 0
+!URxvt*font: xft:Consolas:size=12, xft:Baekmuk Gulim
+!URxvt*letterSpace: -1
+!URxvt*font: xft:Fira Code:size=11
+!URxvt.lineSpace: 0
+URxvt*font: xft:Hack:size=11
 
 URxvt.urgentOnBell: true
 URxvt.scrollBar: false

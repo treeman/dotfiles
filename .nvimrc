@@ -14,7 +14,7 @@ Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/cespare/vim-toml.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/benekastah/neomake.git'
-Plug 'https://github.com/Floobits/floobits-neovim.git'
+" Plug 'https://github.com/Floobits/floobits-neovim.git'
 Plug 'https://github.com/vim-perl/vim-perl.git'
 Plug 'https://github.com/elixir-lang/vim-elixir.git'
 Plug 'https://github.com/avdgaag/vim-phoenix'
@@ -41,8 +41,12 @@ let g:taskwiki_disable_concealcursor = 1
 
 " Appearance
 syntax enable
-set background=dark
+" set termguicolors " urxvt doesn't support it properly
+"set background=light
+ set background=dark " FIXME make this work
 let g:gruvbox_contrast_dark = "hard"
+let g:gruvbox_contrast_light = "soft"
+let g:gruvbox_italic = 1
 colorscheme gruvbox
 
 set relativenumber " display relative line numbers
@@ -78,6 +82,7 @@ set noswapfile " just annoying when I forcefully kill vim with the recovery
 set directory=~/.config/nvim/tmp,~/tmp,/tmp " store swaps here if we do enable it
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " ignore files for file handling
 set hidden " Can change buffers without saving
+"let g:netrw_browser_viewer = 'firefox'
 
 " Searching
 set nohlsearch " don't highlight search terms
@@ -209,4 +214,16 @@ set tags=./tags;/
 
 " C-x C-o omnicomplete
 " C-n C-p to toggle between. Nice!
+
+" Open url in firefox.
+function! HandleURL()
+  let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+  echo s:uri
+  if s:uri != ""
+    silent exec "!firefox '".s:uri."'"
+  else
+    echo "No URI found in line."
+  endif
+endfunction
+map <leader>u :call HandleURL()<cr>
 
