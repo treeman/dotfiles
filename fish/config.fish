@@ -17,6 +17,9 @@ set -x TZ Europe/Stockholm
 # git message editor and other things
 set -x EDITOR nvim
 
+# enable true colors in nvim
+set -x NVIM_TUI_ENABLE_TRUE_COLOR 1
+
 alias vim nvim
 alias g git
 

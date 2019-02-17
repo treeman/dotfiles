@@ -14,7 +14,7 @@ Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/cespare/vim-toml.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/benekastah/neomake.git'
-Plug 'https://github.com/Floobits/floobits-neovim.git'
+" Plug 'https://github.com/Floobits/floobits-neovim.git'
 Plug 'https://github.com/vim-perl/vim-perl.git'
 Plug 'https://github.com/elixir-lang/vim-elixir.git'
 Plug 'https://github.com/avdgaag/vim-phoenix'
@@ -23,7 +23,7 @@ Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
 Plug 'https://github.com/pangloss/vim-javascript.git'
 Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 " Plug 'https://github.com/blindFS/vim-taskwarrior' " Some problem with sync
-Plug 'https://github.com/tbabej/taskwiki.git'
+" Plug 'https://github.com/tbabej/taskwiki.git' " don't use task, this breaks vimwiki
 Plug 'https://github.com/EinfachToll/DidYouMean.git'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " May want to customize it more, very powerful
 Plug 'junegunn/fzf.vim'
@@ -41,8 +41,21 @@ let g:taskwiki_disable_concealcursor = 1
 
 " Appearance
 syntax enable
+
+" use the same background as the terminal by setting it to NONE
+"function! MyHighlights() abort
+    "highlight Normal ctermbg=NONE
+"endfunction
+
+"augroup MyColors
+    "autocmd!
+    "autocmd ColorScheme * call MyHighlights()
+"augroup END
+
 set background=dark
 let g:gruvbox_contrast_dark = "hard"
+"let g:gruvbox_contrast_light = "soft"
+let g:gruvbox_italic = 1 " Do we want italics for comments?
 colorscheme gruvbox
 
 set relativenumber " display relative line numbers

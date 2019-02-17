@@ -38,7 +38,9 @@ URxvt.color248: #bdae93
 URxvt.color250: #d5c4a1
 
 ! Temporary workaround?
+! URxvt.background: #000000
 URxvt.background: #1d2021
+!URxvt.background: #0B0C0D
 URxvt.foreground: #ebdbb2
 
 ! hard contrast: *background: #1d2021
@@ -86,10 +88,7 @@ Xft.rgba: rgb
 Xft.hinting: true
 Xft.hintstyle: hintsfull
 
-URxvt*font: xft:Consolas:size=12,\
-            xft:Baekmuk Gulim
-URxvt*letterSpace: -1
-URxvt.lineSpace: 0
+URxvt*font: xft:Hack:size=12
 
 URxvt.urgentOnBell: true
 URxvt.scrollBar: false

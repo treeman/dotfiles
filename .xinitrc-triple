@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Load X settings
+xrdb -load $HOME/.Xdefaults
+
+# Set backgrounds
+nitrogen --restore
+
+# Remap caps and escape
+xmodmap $HOME/.xmodmap
+
+# Setup screens
+xrandr --output DisplayPort-1 --mode 2560x1440 --pos 0x0 --rotate left \
+ --output DisplayPort-0 --mode 3840x2160 --pos 1440x0 \
+ --output DisplayPort-2 --mode 2560x1440 --pos 5280x0 --rotate right
+
+# Set mouse pointer
+xsetroot -cursor_name left_ptr
+
+# Start xmonad yay!
+exec xmonad
+
