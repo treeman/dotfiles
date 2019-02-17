@@ -91,6 +91,7 @@ set noswapfile " just annoying when I forcefully kill vim with the recovery
 set directory=~/.config/nvim/tmp,~/tmp,/tmp " store swaps here if we do enable it
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " ignore files for file handling
 set hidden " Can change buffers without saving
+"let g:netrw_browser_viewer = 'firefox'
 
 " Searching
 set nohlsearch " don't highlight search terms
@@ -222,4 +223,16 @@ set tags=./tags;/
 
 " C-x C-o omnicomplete
 " C-n C-p to toggle between. Nice!
+
+" Open url in firefox.
+function! HandleURL()
+  let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+  echo s:uri
+  if s:uri != ""
+    silent exec "!firefox '".s:uri."'"
+  else
+    echo "No URI found in line."
+  endif
+endfunction
+map <leader>u :call HandleURL()<cr>
 
