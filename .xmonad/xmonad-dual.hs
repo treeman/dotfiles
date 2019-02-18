@@ -12,13 +12,18 @@ import qualified XMonad.StackSet as W
 import MyConf
 
 dualKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+    [ ((modm .|. shiftMask,     xK_t), spawn "urxvt")
+    ]
+
+    ++
+
     -- mod-e, mod-w switch workspaces (I've got flipped monitors, flip e and w from standard
     [ ((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_e, xK_w] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
-myDzen = " dzen2 -xs 1 -dock -h 18 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++
+myDzen = " dzen2 -xs 1 -dock -h 20 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++
     normalStatusFG ++ "' -bg '" ++ normalStatusBG ++ "' "
 
 myStatusBar = myDzen ++ " -x '0' -y '0' -ta 'l' -w 800"
@@ -39,8 +44,8 @@ main = do
         , normalBorderColor = gb_background
         , focusedBorderColor = gb_background_soft
         , borderWidth = 1
-        , terminal = term
-        , keys = \k -> myKeys k `M.union` dualKeys k `M.union` keys defaultConfig k
+        , terminal = "kitty"
+        , keys = \k -> dualKeys k `M.union` myKeys k `M.union` keys defaultConfig k
         , logHook = dynamicLogWithPP $ myDzenPP topLeft
         , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
         , manageHook = manageDocks <+> myManageHook
