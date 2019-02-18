@@ -50,7 +50,7 @@ gb_light3 = "#bdae93"
 gb_light4 = "#a89984"
 
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-myFont = "Consolasi:size=11"
+myFont = "Consolasi:size=9"
 myIconDir = "/home/tree/dotfiles/icons/"
 
 normalStatusFG = gb_darkgrey

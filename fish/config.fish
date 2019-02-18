@@ -2,6 +2,7 @@
 set -x PATH $PATH /usr/local/sbin /usr/sbin /sbin
 set -x PATH ~/.cabal/bin $PATH
 set -x PATH ~/bin ~/dotfiles/bin $PATH
+set -x PATH $PATH /opt/texlive/2018/bin/x86_64-linuxmusl
 
 # Workaround for local timezone discovery
 set -x TZ Europe/Stockholm
