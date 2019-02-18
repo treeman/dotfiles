@@ -1,6 +1,5 @@
 ﻿" Note that neovim config files now exist in ~/.config (base $XDG_CONFIG_HOME)
 " ~/.config/nvim ~/.config/nvim/init.vim
-
 " Workaround as vim sometimes depends on POSIX functionality
 set shell=/bin/bash
 
@@ -56,6 +55,9 @@ set background=dark
 let g:gruvbox_contrast_dark = "hard"
 "let g:gruvbox_contrast_light = "soft"
 let g:gruvbox_italic = 1 " Do we want italics for comments?
+if $TERM == "xterm-kitty"
+    set termguicolors " true colors
+endif
 colorscheme gruvbox
 
 set relativenumber " display relative line numbers
