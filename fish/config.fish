@@ -18,5 +18,8 @@ function reload
     source ~/.config/fish/config.fish
 end
 
+set fish_greeting ""
+
 # Colorscheme
-theme_gruvbox dark hard
+gruvbox
+
