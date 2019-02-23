@@ -3,9 +3,6 @@
 # Load X settings
 xrdb -load $HOME/.Xdefaults
 
-# Set backgrounds
-nitrogen --restore
-
 # Remap caps and escape
 xmodmap $HOME/.xmodmap
 
@@ -16,6 +13,9 @@ xrandr --output DisplayPort-1 --mode 2560x1440 --pos 0x0 --rotate left \
 
 # Set mouse pointer
 xsetroot -cursor_name left_ptr
+
+# Set backgrounds
+nitrogen --restore
 
 # Start xmonad yay!
 exec xmonad
