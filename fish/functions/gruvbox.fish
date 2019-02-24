@@ -70,5 +70,8 @@ function gruvbox --description 'Apply gruvbox theme'
     # SETUVAR fish_color_search_match:\x1e\x2d\x2dbackground\x3d3c3836
 
     # Not sure of the color for commands?
+    # Check out color selection from:
+    # https://github.com/maximbaz/dotfiles
+    # https://user-images.githubusercontent.com/1177900/48734879-18572e80-ec47-11e8-938f-35be9b66d23a.png
 end
 
