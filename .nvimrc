@@ -27,6 +27,8 @@ Plug 'https://github.com/EinfachToll/DidYouMean.git'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " May want to customize it more, very powerful
 Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/tpope/vim-fugitive.git' " Git plugin. Need to integrate it to workflow!
+Plug 'https://github.com/wlangstroth/vim-racket'
+Plug 'https://github.com/otherjoel/vim-pollen.git'
 call plug#end()
 
 filetype plugin indent on
@@ -99,6 +101,20 @@ set hidden " Can change buffers without saving
 set nohlsearch " don't highlight search terms
 set incsearch " show search mathes as you type
 
+" File types
+augroup configgroup
+    autocmd!
+
+    " Pollen
+    au! BufRead,BufNewFile *.p set filetype=pollen
+    au! BufRead,BufNewFile *.pm set filetype=pollen
+    au! BufRead,BufNewFile *.pmd set filetype=pollen
+    au! BufRead,BufNewFile *.pp set filetype=pollen
+    au! BufRead,BufNewFile *.ptree set filetype=pollen
+    autocmd FileType pollen setlocal wrap      " Soft wrap (don't affect buffer)
+    autocmd FileType pollen setlocal linebreak " Wrap on word-breaks only
+augroup END
+
 " Mappings
 let mapleader = " "
 
@@ -137,6 +153,10 @@ nnoremap <silent> <leader>gb :BCommits<CR>
 
 " Shift-tab to insert hard tab
 imap <silent> <S-tab> <C-V><tab>
+
+" Special chars
+imap <C-L> λ
+imap <C-E> ◊
 
 " Remove arrow keys :)
 map <down> <nop>

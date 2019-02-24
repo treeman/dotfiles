@@ -57,7 +57,7 @@ function gruvbox --description 'Apply gruvbox theme'
 
     # Completion pager:
     set fish_pager_color_prefix         $br_aqua # the color of the prefix string, i.e. the string that is to be completed
-    set fish_pager_color_completion     $red # the color of the completion itself
+    set fish_pager_color_completion     $fg # the color of the completion itself
     set fish_pager_color_description    $fg3 # the color of the completion description
     set fish_pager_color_progress       $gray_256 # the color of the progress bar at the bottom left corner
     set fish_pager_color_secondary      $br_red --underline # the background color of the every second completion
