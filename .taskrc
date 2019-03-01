@@ -1,4 +1,4 @@
-# [Created by task 2.5.1 1/14/2017 19:29:53]
+# [Created by task 2.5.1 2/22/2019 10:11:16]
 # Taskwarrior program configuration file.
 # For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
 # 'man task-sync' or 'man taskrc'
@@ -13,26 +13,21 @@
 # Files
 data.location=~/.task
 
-# Color theme (uncomment one to use)
-#include /usr/local/share/doc/task/rc/light-16.theme
-#include /usr/local/share/doc/task/rc/light-256.theme
-#include /usr/local/share/doc/task/rc/dark-16.theme
-#include /usr/local/share/doc/task/rc/dark-256.theme
-#include /usr/local/share/doc/task/rc/dark-red-256.theme
-#include /usr/local/share/doc/task/rc/dark-green-256.theme
-#include /usr/local/share/doc/task/rc/dark-blue-256.theme
-#include /usr/local/share/doc/task/rc/dark-violets-256.theme
-#include /usr/local/share/doc/task/rc/dark-yellow-green.theme
-#include /usr/local/share/doc/task/rc/dark-gray-256.theme
-#include /usr/local/share/doc/task/rc/dark-gray-blue-256.theme
-#include /usr/local/share/doc/task/rc/solarized-dark-256.theme
-#include /usr/local/share/doc/task/rc/solarized-light-256.theme
-#include /usr/local/share/doc/task/rc/no-color.theme
-include ~/.task/gruvbox.theme
+include ~/dotfiles/task/gruvbox.theme
 
-# Make sure to get permission files and place them in ~/.task
-taskd.server=freecinc.com:53589
-taskd.key=\/home\/tree\/.task\/freecinc_009aeeb8.key.pem
-taskd.certificate=\/home\/tree\/.task\/freecinc_009aeeb8.cert.pem
-taskd.ca=\/home\/tree\/.task\/freecinc_009aeeb8.ca.pem
-taskd.credentials=FreeCinc\/freecinc_009aeeb8\/daf0a9b6-1a7b-4b93-932a-be15a6cc6f16
+# Color theme (uncomment one to use)
+#include /usr/share/doc/task/rc/light-16.theme
+#include /usr/share/doc/task/rc/light-256.theme
+#include /usr/share/doc/task/rc/dark-16.theme
+#include /usr/share/doc/task/rc/dark-256.theme
+#include /usr/share/doc/task/rc/dark-red-256.theme
+#include /usr/share/doc/task/rc/dark-green-256.theme
+#include /usr/share/doc/task/rc/dark-blue-256.theme
+#include /usr/share/doc/task/rc/dark-violets-256.theme
+#include /usr/share/doc/task/rc/dark-yellow-green.theme
+#include /usr/share/doc/task/rc/dark-gray-256.theme
+#include /usr/share/doc/task/rc/dark-gray-blue-256.theme
+#include /usr/share/doc/task/rc/solarized-dark-256.theme
+#include /usr/share/doc/task/rc/solarized-light-256.theme
+#include /usr/share/doc/task/rc/no-color.theme
+
