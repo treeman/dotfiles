@@ -30,72 +30,72 @@ rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,sc
 # It can be used as template for other themes
 
 # General decoration
-#color.label=
-#color.label.sort=
-#color.alternate=
-#color.header=
-#color.footnote=
-#color.warning=
-#color.error=
-#color.debug=
+color.label=color250
+color.label.sort=color250
+color.alternate=
+color.header=color244
+color.footnote=
+color.warning=color9
+color.error=color1
+color.debug=color244
 
 # Task state
-#color.completed=
-#color.deleted=
-#color.active=
-#color.recurring=
-#color.scheduled=
-#color.until=
-color.blocked=color244
-color.blocking=color5
+color.completed=color2
+color.deleted=color246
+color.active=color11 on color0
+color.recurring=color4
+color.scheduled=
+color.until=
+color.blocked=color8 on color0
+color.blocking=color15 on color0
 
 # Project
-#color.project.none=
+color.project.none=
 
 # Priority
-#color.uda.priority.H=
-#color.uda.priority.L=
-#color.uda.priority.M=
+color.uda.priority.H=color96
+color.uda.priority.M=color5
+color.uda.priority.L=color7
 
 # Tags
-#color.tag.next=
-#color.tag.none=
-#color.tagged=
+color.tag.next=
+color.tag.none=
+color.tagged=color6
 
 # Due
-#color.due=
-#color.due.today=
-#color.overdue=
+color.due=color168
+color.due.today=color9
+color.overdue=color1
 
 # Report: burndown
-#color.burndown.done=
-#color.burndown.pending=
-#color.burndown.started=
+color.burndown.done=color0 on color2
+color.burndown.pending=color0 on color4
+color.burndown.started=color0 on color3
 
 # Report: history
-#color.history.add=
-#color.history.delete=
-#color.history.done=
+color.history.add=color0 on color6
+color.history.delete=color0 on color246
+color.history.done=color0 on color2
 
 # Report: summary
-#color.summary.background=
-#color.summary.bar=
+color.summary.background=
+color.summary.bar=on color12
 
 # Command: calendar
-#color.calendar.due=
-#color.calendar.due.today=
-#color.calendar.holiday=
-#color.calendar.overdue=
-#color.calendar.today=
-#color.calendar.weekend=
-#color.calendar.weeknumber=
+color.calendar.due=color168
+color.calendar.due.today=color9
+color.calendar.holiday=color0 on color250
+color.calendar.overdue=color1
+color.calendar.today=on color237
+color.calendar.weekend=
+color.calendar.weeknumber=color8
 
 # Command: sync
-#color.sync.added=
-#color.sync.changed=
-#color.sync.rejected=
+color.sync.added=
+color.sync.changed=
+color.sync.rejected=
 
 # Command: undo
-#color.undo.after=
-#color.undo.before=
+color.undo.after=
+color.undo.before=
 

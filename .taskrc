@@ -13,7 +13,7 @@
 # Files
 data.location=~/.task
 
-#include ~/dotfiles/task/gruvbox.theme
+include ~/dotfiles/.task/gruvbox.theme
 
 # Color theme (uncomment one to use)
 #include /usr/share/doc/task/rc/light-16.theme
@@ -26,7 +26,7 @@ data.location=~/.task
 #include /usr/share/doc/task/rc/dark-violets-256.theme
 #include /usr/share/doc/task/rc/dark-yellow-green.theme
 #include /usr/share/doc/task/rc/dark-gray-256.theme
-include /usr/share/doc/task/rc/dark-gray-blue-256.theme
+#include /usr/share/doc/task/rc/dark-gray-blue-256.theme
 #include /usr/share/doc/task/rc/solarized-dark-256.theme
 #include /usr/share/doc/task/rc/solarized-light-256.theme
 #include /usr/share/doc/task/rc/no-color.theme
