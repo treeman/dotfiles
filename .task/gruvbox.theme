@@ -51,6 +51,7 @@ color.blocking=color15 on color0
 
 # Project
 color.project.none=
+color.project.japan=color3
 
 # Priority
 color.uda.priority.H=color96
