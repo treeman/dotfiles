@@ -29,6 +29,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/tpope/vim-fugitive.git' " Git plugin. Need to integrate it to workflow!
 Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
+Plug 'https://github.com/nathangrigg/vim-beancount'
 call plug#end()
 
 filetype plugin indent on
