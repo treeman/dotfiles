@@ -29,7 +29,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/tpope/vim-fugitive.git' " Git plugin. Need to integrate it to workflow!
 Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
-Plug 'https://github.com/nathangrigg/vim-beancount'
+"Plug 'https://github.com/nathangrigg/vim-beancount'
+Plug 'https://github.com/treeman/vim-beancount' " Some mods
 call plug#end()
 
 filetype plugin indent on
@@ -258,4 +259,9 @@ function! HandleURL()
   endif
 endfunction
 map <leader>u :call HandleURL()<cr>
+
+" Insert datetime
+command! InsertDateTime :normal i<C-R>=strftime("%FT%T%zZ")<CR>
+" Insert a uuid
+command! InsertUUID :normal i<C-R>=system('uuidgen')<CR>
 
