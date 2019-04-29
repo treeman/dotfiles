@@ -42,4 +42,3 @@ context.work=+work
 context.home=-book -work -blog -posts
 context.blog=+blog
 
-context=home
