@@ -261,7 +261,7 @@ endfunction
 map <leader>u :call HandleURL()<cr>
 
 " Insert datetime
-command! InsertDateTime :normal i<C-R>=strftime("%FT%T%zZ")<CR>
+command! InsertDateTime :normal i<C-R>=system("date +%FT%T%:z")<CR>
 " Insert a uuid
 command! InsertUUID :normal i<C-R>=system('uuidgen')<CR>
 
