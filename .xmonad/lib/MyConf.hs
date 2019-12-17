@@ -72,7 +72,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_a), spawn "anki")
 
     , ((modm .|. shiftMask,     xK_t), spawn "kitty") -- Nice but has some memory leaks/excessive usage.
-    , ((modm .|. controlMask,   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png -d")
+    , ((modm .|. controlMask,   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
 
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
