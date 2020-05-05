@@ -31,13 +31,10 @@ Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
 "Plug 'https://github.com/nathangrigg/vim-beancount'
 Plug 'https://github.com/treeman/vim-beancount' " Some mods
+Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax' " Some mods
 call plug#end()
 
 filetype plugin indent on
-
-" File specific
-autocmd Filetype html setlocal ts=2 sts=2 sw=2
-autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 
 " vimwiki
 let g:taskwiki_disable_concealcursor = 1
@@ -57,6 +54,7 @@ syntax enable
 
 set background=dark
 let g:gruvbox_contrast_dark = "hard"
+"set background=light
 "let g:gruvbox_contrast_light = "soft"
 let g:gruvbox_italic = 1 " Do we want italics for comments?
 if $TERM == "xterm-kitty"
@@ -103,6 +101,13 @@ set hidden " Can change buffers without saving
 set nohlsearch " don't highlight search terms
 set incsearch " show search mathes as you type
 
+" File specific
+autocmd Filetype html setlocal ts=2 sts=2 sw=2
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+
+" Block vimwiki from hijacking markdown files
+let g:vimwiki_global_ext = 0
+
 " File types
 augroup configgroup
     autocmd!
@@ -115,6 +120,9 @@ augroup configgroup
     au! BufRead,BufNewFile *.ptree set filetype=pollen
     autocmd FileType pollen setlocal wrap      " Soft wrap (don't affect buffer)
     autocmd FileType pollen setlocal linebreak " Wrap on word-breaks only
+
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+    au! BufNewFile,BufFilePre,BufRead *.markdown set filetype=markdown.pandoc
 augroup END
 
 " Mappings
