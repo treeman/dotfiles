@@ -30,3 +30,4 @@ set fish_greeting ""
 # Colorscheme
 gruvbox
 
+
