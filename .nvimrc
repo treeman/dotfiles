@@ -31,10 +31,13 @@ Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
 "Plug 'https://github.com/nathangrigg/vim-beancount'
 Plug 'https://github.com/treeman/vim-beancount' " Some mods
-Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax' " Some mods
+"Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
 call plug#end()
 
 filetype plugin indent on
+
+" Kill annoying beep sound?
+set visualbell
 
 " vimwiki
 let g:taskwiki_disable_concealcursor = 1
@@ -121,8 +124,9 @@ augroup configgroup
     autocmd FileType pollen setlocal wrap      " Soft wrap (don't affect buffer)
     autocmd FileType pollen setlocal linebreak " Wrap on word-breaks only
 
-    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-    au! BufNewFile,BufFilePre,BufRead *.markdown set filetype=markdown.pandoc
+    " Pandoc markdown pretty slow and cumbersome to be honest
+    "au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+    "au! BufNewFile,BufFilePre,BufRead *.markdown set filetype=markdown.pandoc
 augroup END
 
 " Mappings

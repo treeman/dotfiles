@@ -35,10 +35,13 @@
     a = add
     co = checkout
     b = branch
-    l = "!source ~/.githelpers && pretty_git_log"
+    #l = "!source ~/.githelpers && pretty_git_log"
+    l = log
     f = fetch
     p = push
     pu = pull
+    sw = switch
+    re = restore
 
 [branch "master"]
     remote = origin
@@ -49,7 +52,7 @@
 [push]
     default = simple
 [filter "lfs"]
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
