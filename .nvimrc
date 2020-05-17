@@ -18,7 +18,8 @@
 "https://github.com/jreybert/vimagit/blob/master/README.md
 "https://github.com/tpope/vim-dispatch/blob/master/README.markdown
 
-
+" Vertical split and launch fish
+" :vsp term://fish
 
 
 " Note that neovim config files now exist in ~/.config (base $XDG_CONFIG_HOME)
