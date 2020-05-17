@@ -1,4 +1,27 @@
-﻿" Note that neovim config files now exist in ~/.config (base $XDG_CONFIG_HOME)
+﻿"https://www.reddit.com/r/vim/comments/gbhvlo/what_am_i_missing_by_not_using_fzf/
+"https://www.reddit.com/r/vim/comments/8riofp/airlinelightline_not_useful/
+"https://www.reddit.com/r/vim/comments/775n4o/is_there_any_way_to_switch_statusbar_color_or/
+"https://www.reddit.com/r/neovim/comments/gjz5cx/whats_a_plugin_that_does_something_you_didnt/
+"https://www.reddit.com/r/vim/comments/gk53u1/just_discovered_ca_and_cx/
+"https://www.reddit.com/r/vim/comments/gjz27p/whats_a_plugin_that_does_something_you_didnt/
+"https://www.reddit.com/r/vim/comments/gib54k/anyone_has_a_copy_of_custom_vim_refactorings/
+"https://www.reddit.com/r/vim/comments/a0q8dv/id_like_to_update_to_modern_vim_practices_what/
+"https://www.reddit.com/r/neovim/comments/g5uo37/supercharge_your_vim_with_fzf_ripgrep/
+"https://www.reddit.com/r/vim/comments/gfouey/markdown_mode_with_collapsible_blocks_and/
+"https://stackoverflow.com/questions/13337618/how-to-use-customized-key-to-start-visual-block-selection-in-vim
+"https://blog.usejournal.com/a-detailed-guide-to-writing-your-first-neovim-plugin-in-rust-a81604c606b1?gi=2c1f7e07ec18
+"https://medium.com/@caleb89taylor/a-guide-to-modern-web-development-with-neo-vim-333f7efbf8e2
+"https://github.com/Shougo/denite.nvim/blob/master/README.md
+"https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
+"https://kodi.wiki/view/Add-on:VimCasts
+"https://github.com/lambdalisue/gina.vim/blob/master/README.md
+"https://github.com/jreybert/vimagit/blob/master/README.md
+"https://github.com/tpope/vim-dispatch/blob/master/README.markdown
+
+
+
+
+" Note that neovim config files now exist in ~/.config (base $XDG_CONFIG_HOME)
 " ~/.config/nvim ~/.config/nvim/init.vim
 " Workaround as vim sometimes depends on POSIX functionality
 set shell=/bin/bash
