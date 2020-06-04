@@ -18,10 +18,6 @@
 "https://github.com/jreybert/vimagit/blob/master/README.md
 "https://github.com/tpope/vim-dispatch/blob/master/README.markdown
 
-" Vertical split and launch fish
-" :vsp term://fish
-
-
 " Note that neovim config files now exist in ~/.config (base $XDG_CONFIG_HOME)
 " ~/.config/nvim ~/.config/nvim/init.vim
 " Workaround as vim sometimes depends on POSIX functionality
@@ -119,35 +115,8 @@ set hidden " Can change buffers without saving
 set nohlsearch " don't highlight search terms
 set incsearch " show search mathes as you type
 
-" File specific
-autocmd Filetype html setlocal ts=2 sts=2 sw=2
-autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
-
-" Block vimwiki from hijacking markdown files
-let g:vimwiki_global_ext = 0
-
-" File types
-augroup configgroup
-    autocmd!
-
-    " Pollen
-    au! BufRead,BufNewFile *.p set filetype=pollen
-    au! BufRead,BufNewFile *.pm set filetype=pollen
-    au! BufRead,BufNewFile *.pmd set filetype=pollen
-    au! BufRead,BufNewFile *.pp set filetype=pollen
-    au! BufRead,BufNewFile *.ptree set filetype=pollen
-    autocmd FileType pollen setlocal wrap      " Soft wrap (don't affect buffer)
-    autocmd FileType pollen setlocal linebreak " Wrap on word-breaks only
-
-    " Pandoc markdown pretty slow and cumbersome to be honest
-    "au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-    "au! BufNewFile,BufFilePre,BufRead *.markdown set filetype=markdown.pandoc
-augroup END
-
-" Mappings
-let mapleader = " "
-
 " Toggle show whitespace, <leader> = mapleader
+" FIXME this doesn't work well with vimwiki's <leader>w mapping
 nmap <silent> <leader>w :set list!<CR>
 " Toggle search highlighting
 nmap <silent> <leader>n :silent nohlsearch<CR>
@@ -169,38 +138,12 @@ map <F7> :set noexpandtab<CR>
 " Spell checking
 map <F10> :set spell! spell?<CR>
 
-" Edit file with prefilled path from the current file
-nnoremap <leader>e :e <C-R>=expand('%:p:h') . '/'<CR>
-" Find with zfz
-nnoremap <silent> <leader><space> :Files<CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
-nnoremap <silent> <leader>f :call fzf#run({'sink': 'e', 'dir': expand('%:p:h') . '/'})<CR>
-" Find git commits
-nnoremap <silent> <leader>gc :Commits<CR>
-nnoremap <silent> <leader>gb :BCommits<CR>
+" Maybe we can use git-fuzzy plugin instead?
+"nnoremap <silent> <leader>gc :Commits<CR>
+"nnoremap <silent> <leader>gb :BCommits<CR>
 
 " Shift-tab to insert hard tab
 imap <silent> <S-tab> <C-V><tab>
-
-" Special chars
-imap <C-L> λ
-imap <C-E> ◊
-
-" Remove arrow keys :)
-"map <down> <nop>
-"map <left> <nop>
-"map <right> <nop>
-"map <up> <nop>
-
-" Easy window handling
-"map <C-J> <C-W>j
-"map <C-K> <C-W>k
-"map <C-H> <C-W>h
-"map <C-L> <C-W>l
-"nmap <leader>q :q<CR>
-"nmap <leader>o <C-w>v<C-w>l
-"nmap <leader>l <C-w>s
 
 " Jump to matching pairs easily, with Tab
 nnoremap <Tab> %
@@ -254,24 +197,6 @@ map <C-C> :cc<CR>
 " Bind automatic run like this if you're doing things?
 " map <C-X> :! cd bin && ./ld33<CR><CR>
 
-" Tags
-" C-] jump to tag
-" C-Alt-] jump to tag, select 
-map  g<C-]>
-" C-= jump back (default C-T)
-map <C-=> :pop<CR>
-" C-' previous matching tag
-map ' :tp<CR>
-" C-\ next matching tag
-map  :tn<CR>
-" try
-" set tags=tags/;
-" set tags=./tags
-" rerun tags -R sometimes with Ctrl alt \
-map  :! ctags -R<CR>
-
-set tags=./tags;/
-
 " C-x C-o omnicomplete
 " C-n C-p to toggle between. Nice!
 
@@ -286,10 +211,5 @@ function! HandleURL()
   endif
 endfunction
 map <leader>u :call HandleURL()<cr>
-
-" Insert datetime
-command! InsertDateTime :normal i<C-R>=system("date +%FT%T%:z")<CR>
-" Insert a uuid
-command! InsertUUID :normal i<C-R>=system('uuidgen')<CR>
 
 
