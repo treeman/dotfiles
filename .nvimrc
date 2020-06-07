@@ -1,4 +1,25 @@
-﻿" Basic {{{
+﻿" Future ideas and TODOs {{{
+
+" Explore https://github.com/tpope/vim-unimpaired for interesting mappins
+" encoding/decoding xml/url/C-string encoding
+" [b, ]b, [B, ]B    buffer switching
+" [q                quickfix handling
+" [f, ]f            goto prev/next file in current file's directory
+" easy toggle of settings:
+"   hlsearch
+"   list
+"   spell
+"
+" Pretty format XML, JSON
+"
+" nvim-lsp for rust
+" https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
+"
+" p in visual mode should use "0p by default
+"
+" Better opening of files
+" }}}
+" Basic {{{
 " Difficult to use fish as a default shell as plugins may depend on POSIX
 " Instead launch terminal with fish
 set shell=/bin/bash
@@ -9,7 +30,7 @@ source ~/.config/nvim/old.vim
 set mouse=a
 " Use CLIPBOARD register + as default
 " Remember to install "xsel" for this to work!
-set clipboard+=unnamedplus
+"set clipboard+=unnamedplus
 
 " Files
 set backupdir=~/.config/nvim/backup " where to put backup
@@ -95,9 +116,9 @@ let mapleader = " "
 let maplocalleader = "-"
 
 " Fast yank/paste from PRIMARY (middle mouse buton)
-nnoremap <leader>y "*y
-nnoremap <leader>p "*p
-nnoremap <leader>P "*P
+"nnoremap <leader>y "*y
+"nnoremap <leader>p "*p
+"nnoremap <leader>P "*P
 
 " Easy way to edit vimrc
 nnoremap <leader>ev :e $MYVIMRC<CR>

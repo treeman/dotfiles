@@ -1,3 +1,4 @@
+" Random unsorted plugins
 "https://www.reddit.com/r/vim/comments/gbhvlo/what_am_i_missing_by_not_using_fzf/
 "https://www.reddit.com/r/vim/comments/8riofp/airlinelightline_not_useful/
 "https://www.reddit.com/r/vim/comments/775n4o/is_there_any_way_to_switch_statusbar_color_or/
@@ -18,7 +19,22 @@
 "https://github.com/jreybert/vimagit/blob/master/README.md
 "https://github.com/tpope/vim-dispatch/blob/master/README.markdown
 
-" Plugin handling using vim-plug
+" nvim-lsp for rust
+"https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
+
+" Plugins to check
+" Comment stuff out
+" https://github.com/tpope/vim-commentary
+" Git
+" https://github.com/tpope/vim-fugitive
+" Surrounding things
+" https://github.com/tpope/vim-surround
+" Supposedly good mappings for things
+" https://github.com/tpope/vim-unimpaired
+" Launch async things
+" https://github.com/tpope/vim-dispatch
+" Show git changes in gutter
+" https://github.com/airblade/vim-gitgutter
 
 filetype plugin indent on
 
