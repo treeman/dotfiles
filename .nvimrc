@@ -162,11 +162,6 @@ let g:gruvbox_italic = 1
 let mapleader = " "
 let maplocalleader = "-"
 
-" Fast yank/paste from PRIMARY (middle mouse buton)
-"nnoremap <leader>y "*y
-"nnoremap <leader>p "*p
-"nnoremap <leader>P "*P
-
 " Easy way to edit vimrc
 nnoremap <leader>ev :e $MYVIMRC<CR>
 " Edit file with prefilled path from the current file
@@ -190,8 +185,8 @@ inoremap <C-v>e ◊
 
 " Easy way to launch terminal
 nnoremap <leader>tt :e term://fish<CR>
-nnoremap <leader>to :vsp term://fish<CR>
-nnoremap <leader>tl :sp term://fish<CR>
+nnoremap <leader>tv :vsp term://fish<CR>
+nnoremap <leader>ts :sp term://fish<CR>
 
 " Happy window switching
 " Terminal mode:
@@ -204,10 +199,7 @@ nnoremap <C-h> <c-w>h
 nnoremap <C-j> <c-w>j
 nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
-" Split windows
-" FIXME better keybinding
-nnoremap <leader>o :vsp<CR>
-nnoremap <leader>l :sp<CR>
+" Create splits with <C-w>v and <C-w>s instead
 
 " Open url under cursor
 " FIXME better keybinding
@@ -217,19 +209,8 @@ map <leader>u :call HandleURL()<cr>
 " FIXME Should create a map for it to trim only the selection
 nnoremap <leader>tw :silent! %s/\s\+$//<CR>:retab<CR>
 
-" Press * to search forwards for selected text, and # backwards {{{
-" https://vim.fandom.com/wiki/Search_for_visually_selected_text
-vnoremap <silent> * :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy/<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gVzv:call setreg('"', old_reg, old_regtype)<CR>
-vnoremap <silent> # :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy?<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
-  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gVzv:call setreg('"', old_reg, old_regtype)<CR>
-" }}}
+" Turn off search highlight after a search, will get enabled again next time
+nnoremap <silent> <leader>h :silent nohlsearch<CR> 
 
 " Next/prev from unimpaired.vim {{{
 " [b, ]b, [B, ]B       :bprev, :bnext, :bfirst, :blast
@@ -237,12 +218,13 @@ vnoremap <silent> # :<C-U>
 " [q, ]q, [Q, ]Q       :qprev, :qnext, :qfirst, :qlast
 " Goto next/prev files by name in current folder:
 " [f, ]f
+"
 " }}}
 " Option toggling from unimpaired.vim {{{
+"
 "   On Off Toggle  Option
 " *[ob*   *]ob*   *yob*   'background' (dark is off, light is on)
 " *[oc*   *]oc*   *yoc*   'cursorline'
-" *[oh*   *]oh*   *yoh*   'hlsearch'
 " *[ol*   *]ol*   *yol*   'list'
 " *[os*   *]os*   *yos*   'spell'
 " *[ow*   *]ow*   *yow*   'wrap'
