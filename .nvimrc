@@ -1,36 +1,30 @@
 ﻿" Future ideas and TODOs {{{
 
-" Explore https://github.com/tpope/vim-unimpaired for interesting mappins
-" encoding/decoding xml/url/C-string encoding
-" [b, ]b, [B, ]B    buffer switching
-" [q                quickfix handling
-" [f, ]f            goto prev/next file in current file's directory
-" easy toggle of settings:
-"   hlsearch
-"   list
-"   spell
-"
 " Pretty format XML, JSON
+" :%!python -m json.tool
+" ??
 "
 " nvim-lsp for rust
 " https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
 "
-" p in visual mode should use "0p by default
+" Maybe use an LSP settings handler?
+" https://github.com/mattn/vim-lsp-settings
 "
-" Better opening of files
+" Add back <leader>n (or similar) to turn search highlight off until next time
 " }}}
 " Basic {{{
 " Difficult to use fish as a default shell as plugins may depend on POSIX
 " Instead launch terminal with fish
 set shell=/bin/bash
 
-source ~/.config/nvim/old.vim
-
 " Enable mouse
 set mouse=a
 " Use CLIPBOARD register + as default
 " Remember to install "xsel" for this to work!
-"set clipboard+=unnamedplus
+set clipboard+=unnamedplus
+
+" Kill annoying beep sound
+set visualbell
 
 " Files
 set backupdir=~/.config/nvim/backup " where to put backup
@@ -40,8 +34,10 @@ set directory=~/.config/nvim/tmp,~/tmp,/tmp " store swaps here if we do enable i
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " ignore files for file handling
 set hidden " Can change buffers without saving
 
-" Searching
+" Interactivity
 set incsearch " show search mathes as you type
+set inccommand=split " live update for subtitute commands
+let g:highlightedyank_highlight_duration = 500 " shorter highlighting for yank
 
 " Text display
 set list " show tabs
@@ -60,9 +56,17 @@ set smarttab " insert tabs on the start according to shiftwidth, not tabstop
 set relativenumber " display relative line numbers
 set number " show line numbers
 set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
+set laststatus=2 " always show the status line
+set linespace=0 " don't insert any extra pixel lines between rows
+set report=0 " tell us when anything is changed via :...
+set shortmess=aOstT " shortens messages to aviod 'perss a key' prompt
+set ruler " always show current positions along the bottom
+set showcmd " show the command being typed
 
 " }}}
 " Plugins {{{
+
+filetype plugin indent on
 
 " See :Plug* for commands
 call plug#begin('~/.config/nvim/plugged')
@@ -77,6 +81,8 @@ Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
 Plug 'https://github.com/EinfachToll/DidYouMean.git'
 " Easy way to comment things
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
+" Highlight what was yanked
+Plug 'https://github.com/machakann/vim-highlightedyank'
 " These are just for highlighting specific files
 Plug 'https://github.com/nathangrigg/vim-beancount'
 Plug 'https://github.com/dag/vim-fish.git'
@@ -84,6 +90,9 @@ Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/cespare/vim-toml.git'
 Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 Plug 'https://github.com/wlangstroth/vim-racket'
+" LSP support
+" See doc :help lsp
+Plug 'https://github.com/neovim/nvim-lsp'
 call plug#end()
 
 " Plugins recommended by Practical vim:
@@ -93,6 +102,44 @@ call plug#end()
 "https://github.com/junegunn/fzf/wiki/Examples-(vim)
 "use enter key, CTRL-T, CTRL-X or CTRL-V to open selected files in the current window, in new tabs, in horizontal splits, or in vertical splits respectively.
 
+" Random unsorted plugins
+"https://www.reddit.com/r/vim/comments/gbhvlo/what_am_i_missing_by_not_using_fzf/
+"https://www.reddit.com/r/vim/comments/8riofp/airlinelightline_not_useful/
+"https://www.reddit.com/r/vim/comments/775n4o/is_there_any_way_to_switch_statusbar_color_or/
+"https://www.reddit.com/r/neovim/comments/gjz5cx/whats_a_plugin_that_does_something_you_didnt/
+"https://www.reddit.com/r/vim/comments/gk53u1/just_discovered_ca_and_cx/
+"https://www.reddit.com/r/vim/comments/gjz27p/whats_a_plugin_that_does_something_you_didnt/
+"https://www.reddit.com/r/vim/comments/gib54k/anyone_has_a_copy_of_custom_vim_refactorings/
+"https://www.reddit.com/r/vim/comments/a0q8dv/id_like_to_update_to_modern_vim_practices_what/
+"https://www.reddit.com/r/neovim/comments/g5uo37/supercharge_your_vim_with_fzf_ripgrep/
+"https://www.reddit.com/r/vim/comments/gfouey/markdown_mode_with_collapsible_blocks_and/
+"https://stackoverflow.com/questions/13337618/how-to-use-customized-key-to-start-visual-block-selection-in-vim
+"https://blog.usejournal.com/a-detailed-guide-to-writing-your-first-neovim-plugin-in-rust-a81604c606b1?gi=2c1f7e07ec18
+"https://medium.com/@caleb89taylor/a-guide-to-modern-web-development-with-neo-vim-333f7efbf8e2
+"https://github.com/Shougo/denite.nvim/blob/master/README.md
+"https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
+"https://kodi.wiki/view/Add-on:VimCasts
+"https://github.com/lambdalisue/gina.vim/blob/master/README.md
+"https://github.com/jreybert/vimagit/blob/master/README.md
+"https://github.com/tpope/vim-dispatch/blob/master/README.markdown
+
+" nvim-lsp for rust
+"https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
+
+" Plugins to check
+" Comment stuff out
+" https://github.com/tpope/vim-commentary
+" Git
+" https://github.com/tpope/vim-fugitive
+" Surrounding things
+" https://github.com/tpope/vim-surround
+" Launch async things
+" https://github.com/tpope/vim-dispatch
+" Show git changes in gutter
+" https://github.com/airblade/vim-gitgutter
+"
+" Plug 'Chiel92/vim-autoformat'
+" KKPMW/vim-send-to-window
 " }}}
 " Appearance {{{
 
@@ -133,11 +180,6 @@ nnoremap <silent> <leader>fg :execute 'Rg ' . input('Rg/')<CR>
 " Find from open buffers
 nnoremap <silent> <leader>fb :Buffers<CR>
 
-" Turn off search highlight after a search, will get enabled again next time
-nnoremap <silent> <leader>n :silent nohlsearch<CR>
-" Toggle show whitespace
-nnoremap <silent> <leader>sw :set list!<CR>
-
 " Make escape enter normal mode in terminal as well
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-v><Esc> <Esc>
@@ -162,49 +204,49 @@ nnoremap <C-h> <c-w>h
 nnoremap <C-j> <c-w>j
 nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
-" Split and close windows
-nnoremap <leader>q :q<CR>
+" Split windows
+" FIXME better keybinding
 nnoremap <leader>o :vsp<CR>
 nnoremap <leader>l :sp<CR>
 
+" Open url under cursor
+" FIXME better keybinding
+map <leader>u :call HandleURL()<cr>
+
+" Trim whitespaces
+" FIXME Should create a map for it to trim only the selection
+nnoremap <leader>tw :silent! %s/\s\+$//<CR>:retab<CR>
+
 " Press * to search forwards for selected text, and # backwards {{{
-" Type <leader>vl to toggle whitespace matching on/off
-"
-" http://vim.wikia.com/wiki/VimTip171
 " https://vim.fandom.com/wiki/Search_for_visually_selected_text
-let s:save_cpo = &cpo | set cpo&vim
-if !exists('g:VeryLiteral')
-  let g:VeryLiteral = 0
-endif
-function! s:VSetSearch(cmd)
-  let old_reg = getreg('"')
-  let old_regtype = getregtype('"')
-  normal! gvy
-  if @@ =~? '^[0-9a-z,_]*$' || @@ =~? '^[0-9a-z ,_]*$' && g:VeryLiteral
-    let @/ = @@
-  else
-    let pat = escape(@@, a:cmd.'\')
-    if g:VeryLiteral
-      let pat = substitute(pat, '\n', '\\n', 'g')
-    else
-      let pat = substitute(pat, '^\_s\+', '\\s\\+', '')
-      let pat = substitute(pat, '\_s\+$', '\\s\\*', '')
-      let pat = substitute(pat, '\_s\+', '\\_s\\+', 'g')
-    endif
-    let @/ = '\V'.pat
-  endif
-  normal! gV
-  call setreg('"', old_reg, old_regtype)
-endfunction
-vnoremap <silent> * :<C-U>call <SID>VSetSearch('/')<CR>/<C-R>/<CR>
-vnoremap <silent> # :<C-U>call <SID>VSetSearch('?')<CR>?<C-R>/<CR>
-vmap <kMultiply> *
-nmap <silent> <Plug>VLToggle :let g:VeryLiteral = !g:VeryLiteral
-  \\| echo "VeryLiteral " . (g:VeryLiteral ? "On" : "Off")<CR>
-if !hasmapto("<Plug>VLToggle")
-  nmap <unique> <Leader>vl <Plug>VLToggle
-endif
-let &cpo = s:save_cpo | unlet s:save_cpo
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gVzv:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gVzv:call setreg('"', old_reg, old_regtype)<CR>
+" }}}
+
+" Next/prev from unimpaired.vim {{{
+" [b, ]b, [B, ]B       :bprev, :bnext, :bfirst, :blast
+" [l, ]l, [L, ]L       :lprev, :lnext, :lfirst, :llast
+" [q, ]q, [Q, ]Q       :qprev, :qnext, :qfirst, :qlast
+" Goto next/prev files by name in current folder:
+" [f, ]f
+" }}}
+" Option toggling from unimpaired.vim {{{
+"   On Off Toggle  Option
+" *[ob*   *]ob*   *yob*   'background' (dark is off, light is on)
+" *[oc*   *]oc*   *yoc*   'cursorline'
+" *[oh*   *]oh*   *yoh*   'hlsearch'
+" *[ol*   *]ol*   *yol*   'list'
+" *[os*   *]os*   *yos*   'spell'
+" *[ow*   *]ow*   *yow*   'wrap'
+" *[ot*   *]ot*   *yot*   'expandtab'
 " }}}
 
 " }}}
@@ -213,14 +255,6 @@ let &cpo = s:save_cpo | unlet s:save_cpo
 command! InsertDateTime :normal i<C-R>=system("date +%FT%T%:z")<CR>
 " Insert a uuid
 command! InsertUUID :normal i<C-R>=system('uuidgen')<CR>
-
-" FIXME how to execute this?
-" command! TrimWhitespace :%s/\s\+$//<CR>:retab<CR>
-
-" Toggle between tabs or no tabs
-" Defined as commands to be easier to remember
-command! ExpandTab :set expandtab
-command! NoExpandTab :set noexpandtab
 
 " }}}
 " Functions {{{
@@ -296,5 +330,39 @@ augroup vim_filetype
 augroup END
 
 " }}}
-"
+" Rust {{{
+
+augroup rust_filetype
+    lua require'nvim_lsp'.rust_analyzer.setup{}
+
+    " Use LSP omni-completion in Rust files
+    autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+    " Not sure how to use clippy
+    "nnoremap <leader>c :!cargo clippy
+    " See :help lsp-buf
+    "
+    " This doesn't work at all, maybe because rust doesn't have a declaration
+    " context
+    " nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+    "
+    " FIXME maybe remap them to something more intuitive?
+    " This works, can use it on traits to see implementations
+    nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+    " Jump to def
+    nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+    " Hover description
+    nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+    " Display signature of functions etc
+    nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+    " Goto type definition from variable
+    nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+    " Goto usages of a type
+    nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+    " Go through symbols in a document (functions, definitions etc)
+    nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+    " Go through symbols in the workspace (takes a search query)
+    nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+augroup END
+" }}}
 " }}}
