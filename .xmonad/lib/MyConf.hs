@@ -56,7 +56,7 @@ myIconDir = "/home/tree/dotfiles/icons/"
 normalStatusFG = gb_darkgrey
 normalStatusBG = gb_background
 
-term = "urxvt"
+term = "kitty"
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
@@ -71,7 +71,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask,   xK_t), spawn "mtpaint")
     , ((modm .|. controlMask,   xK_a), spawn "anki")
 
-    , ((modm .|. shiftMask,     xK_t), spawn "kitty") -- Nice but has some memory leaks/excessive usage.
+    , ((modm .|. shiftMask,     xK_t), spawn "urxvt")
+    --, ((modm .|. shiftMask,     xK_t), spawn "kitty") -- Nice but has some memory leaks/excessive usage.
     , ((modm .|. controlMask,   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
 
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
