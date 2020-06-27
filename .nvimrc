@@ -1,7 +1,6 @@
 ﻿" Future ideas and TODOs {{{
 
 " Pretty format XML, JSON
-" :%!python -m json.tool
 " ??
 "
 " nvim-lsp for rust
@@ -11,6 +10,9 @@
 " https://github.com/mattn/vim-lsp-settings
 "
 " Add back <leader>n (or similar) to turn search highlight off until next time
+"
+" Move out file specific into ftplugin
+" Create an easily accessible cheat sheet
 " }}}
 " Basic {{{
 " Difficult to use fish as a default shell as plugins may depend on POSIX
@@ -35,6 +37,7 @@ set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " ignore files for file
 set hidden " Can change buffers without saving
 
 " Interactivity
+set hlsearch " highlight search terms
 set incsearch " show search mathes as you type
 set inccommand=split " live update for subtitute commands
 let g:highlightedyank_highlight_duration = 500 " shorter highlighting for yank
@@ -83,6 +86,8 @@ Plug 'https://github.com/EinfachToll/DidYouMean.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 " Highlight what was yanked
 Plug 'https://github.com/machakann/vim-highlightedyank'
+" Vim cheat sheet
+Plug 'https://github.com/lifepillar/vim-cheat40'
 " These are just for highlighting specific files
 Plug 'https://github.com/nathangrigg/vim-beancount'
 Plug 'https://github.com/dag/vim-fish.git'
@@ -90,6 +95,7 @@ Plug 'https://github.com/rust-lang/rust.vim'
 Plug 'https://github.com/cespare/vim-toml.git'
 Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 Plug 'https://github.com/wlangstroth/vim-racket'
+Plug 'https://github.com/otherjoel/vim-pollen.git'
 " LSP support
 " See doc :help lsp
 Plug 'https://github.com/neovim/nvim-lsp'
@@ -140,6 +146,11 @@ call plug#end()
 "
 " Plug 'Chiel92/vim-autoformat'
 " KKPMW/vim-send-to-window
+"
+" Don't use default cheat sheet
+let g:cheat40_use_default = 0
+" Hide folds
+let g:cheat40_foldlevel = 0
 " }}}
 " Appearance {{{
 
@@ -149,11 +160,9 @@ colorscheme gruvbox
 let g:gruvbox_contrast_dark = "hard"
 let g:gruvbox_contrast_light = "soft"
 if $TERM == "xterm-kitty"
-    set background=light
     set termguicolors
-else
-    set background=dark
 endif
+set background=dark
 let g:gruvbox_italic = 1
 
 " }}}
@@ -164,8 +173,22 @@ let maplocalleader = "-"
 
 " Easy way to edit vimrc
 nnoremap <leader>ev :e $MYVIMRC<CR>
+" Edit my cheat sheet
+function! EditCheat40()
+  let path = stdpath("config")."/cheat40.txt"
+  execute 'e '.path
+  " Taken from cheat40#open in vim-cheat40
+  setlocal foldmethod=marker foldtext=substitute(getline(v:foldstart),'\\s\\+{{{.*$','','')
+  execute 'setlocal foldlevel='.get(g:, 'cheat40_foldlevel', 1)
+  setlocal concealcursor=nc conceallevel=3
+  setlocal expandtab nospell nowrap textwidth=40
+  setlocal fileencoding=utf-8 filetype=cheat40
+  setlocal iskeyword=@,48-57,-,/,.,192-255
+endfunction
+nnoremap <leader>ec :call EditCheat40()<CR>
 " Edit file with prefilled path from the current file
 nnoremap <leader>ef :e <C-R>=expand('%:p:h') . '/'<CR>
+
 " Find files
 nnoremap <silent> <leader>ff :Files<CR>
 " Find files relative to current file
@@ -176,6 +199,7 @@ nnoremap <silent> <leader>fg :execute 'Rg ' . input('Rg/')<CR>
 nnoremap <silent> <leader>fb :Buffers<CR>
 
 " Make escape enter normal mode in terminal as well
+" FIXME only when manually launched terminal
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-v><Esc> <Esc>
 
@@ -184,9 +208,14 @@ inoremap <C-v>l λ
 inoremap <C-v>e ◊
 
 " Easy way to launch terminal
+" FIXME hide line numbers
 nnoremap <leader>tt :e term://fish<CR>
 nnoremap <leader>tv :vsp term://fish<CR>
 nnoremap <leader>ts :sp term://fish<CR>
+
+" Clear screen and turn off search highlighting until the next time we search
+" FIXME maybe use C-l here and move window switching functions to M-l?
+nnoremap <silent> <M-l> :<C-u>nohlsearch<CR><C-l>
 
 " Happy window switching
 " Terminal mode:
@@ -202,15 +231,12 @@ nnoremap <C-l> <c-w>l
 " Create splits with <C-w>v and <C-w>s instead
 
 " Open url under cursor
-" FIXME better keybinding
+" FIXME better keybinding?
 map <leader>u :call HandleURL()<cr>
 
 " Trim whitespaces
 " FIXME Should create a map for it to trim only the selection
 nnoremap <leader>tw :silent! %s/\s\+$//<CR>:retab<CR>
-
-" Turn off search highlight after a search, will get enabled again next time
-nnoremap <silent> <leader>h :silent nohlsearch<CR> 
 
 " Next/prev from unimpaired.vim {{{
 " [b, ]b, [B, ]B       :bprev, :bnext, :bfirst, :blast
@@ -300,6 +326,7 @@ augroup web
     autocmd!
     autocmd Filetype html setlocal ts=2 sts=2 sw=2
     autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+    autocmd Filetype json setlocal ts=2 sts=2 sw=2
 augroup END
 
 " }}}
@@ -330,21 +357,31 @@ augroup rust_filetype
     "
     " FIXME maybe remap them to something more intuitive?
     " This works, can use it on traits to see implementations
-    nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+    "nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
     " Jump to def
-    nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+    "nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
     " Hover description
-    nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+    "nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
     " Display signature of functions etc
-    nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+    "nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
     " Goto type definition from variable
-    nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+    "nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
     " Goto usages of a type
-    nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+    "nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
     " Go through symbols in a document (functions, definitions etc)
-    nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+    "nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
     " Go through symbols in the workspace (takes a search query)
-    nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+    "nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 augroup END
 " }}}
+" XML {{{
+" FIXME can we make this work on visual selection?
+command! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
 " }}}
+" json {{{
+" FIXME can we make this work on visual selection?
+command! FormatJSON :%!python -m json.tool
+" }}}
+" }}}
+
+" vim:set sw=2 sts=2:
