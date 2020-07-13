@@ -1,5 +1,5 @@
 Press q to dismiss, <Tab> to lose focus
-About {{{2
+About {{{1
   Abbreviations used in descriptions:
 
   »      Forwards/rightwards
@@ -9,6 +9,7 @@ About {{{2
   Notation for key sequences:
 
   \      Leader (see `<leader>`)
+  -      Localleader (see `<localleader>`)
   ‹r›    A register (", *, 0, 1, …)
          See `registers`
   ‹Move› A motion or a text object
@@ -53,6 +54,180 @@ About {{{2
        before a motion or a text object)
   *    Acts on text under/after cursor
 }}}
+Fold {{{1
+Fold                     zc           *N
+Open fold                zo           *N
+Unfold cursor line       zv           *N
+Toggle fold              za           *N
+Fold all                 zM            N
+Unfold all               zR            N
+To start of next fold    zj            N
+To end of previous fold  zk            N
+}}}
+Buffers {{{1
+Prev buffer              [b            N
+Next buffer              ]b            N
+First buffer             [B            N
+Last buffer              ]B            N
+Find buffer              \fb           N
+}}}
+Windows {{{1
+}}}
+Files {{{1
+Find file pwd            \ff           N
+Find file rel            \fe           N
+Edit file pwd            :e            N
+Edit file rel            \ef           N
+Find in files            \fg           N
+Reload file              :e            N
+}}}
+Quickfix locallist {{{1
+Prev quickfix            [c            N
+Next quickfix            ]c            N
+First quickfix           [C            N
+Last quickfix            ]C            N
+Prev local list          [l            N
+Next local list          ]l            N
+First local list         [L            N
+Last local list          ]L            N
+}}}
+Registers {{{1
+# Use with "<register>
+Unnamed                  "             N
+OS primary clipboard     +             N
+OS secondary (mouse)     *             N
+Named registers          a-z           N
+Append to register       A-Z           N
+Evaluate expressions     =             N
+# Automatic
+Name of current file     %             N
+Name of alternate file   #             N
+Last inserted text       .             N
+Last Ex command          :             N
+Last search command      /             N
+}}}
+Operators {{{1
+Swap case                g~            O
+Lowercase                gu            O
+Uppercase                gU            O
+Auto indent              =             O
+Filter motions ext prog  !             O
+}}}
+Motions {{{1
+Word wise {{{2
+Forward to start next    w             N
+Back to start curr/prev  b             N
+Forward to end curr/next e             N
+Back to end of prev      ge            N
+}}}
+Display lines {{{2
+Move real line           gj            N
+First char               g0            N
+First nonblank char      g^            N
+End                      g$            N
+}}}
+Marks {{{2
+Set mark                 m‹c›          N
+Jump to mark             `‹c›          M
+Jump to marked line      '‹c›          M
+View all marks           :marks        N
+Remove marks             :delmarks …   N
+# Automatic marks
+Last jump in currfile    ``            M
+Location of last change  `.            M
+Location of last insert  `^            M
+Start last change/yank    `[           M
+End of last change/yank  `]            M
+Start of last visual sel `<            M
+End of last visual sel   `>            M
+}}}
+Jump to next blank line  }             M
+Jump to prev blank line  {             M
+Jump to begin of block   [{            M
+Jump to end of block     ]}            M
+Jump to end of sentence  )             M
+Jump to beg. of sentence (             M
+Jump to end of section   ]]            M
+Jump to beg. of section  [[            M
+Jump to top of window    H             M
+Jump to middle           M             M
+Jump to bottom           L             M
+Jump to matching delim   %             M
+To prev jump position    «C-o»         N
+To next jump position    «C-i»         N
+To start of next fold    zj            N
+To end of previous fold  zk            N
+}}}
+Text Objects {{{1
+# Delmited text objects (block)
+(parens)                 ( ) b         T
+{curly brackets}         { } B         T
+[brackets]               [ ]           T
+<angle brackets>         < >           T
+'single quotes'          '             T
+"double quotes"          "             T
+`double quotes`          `             T
+<xml>tags</xml>          t             T
+# Bounded text objects (non-block)
+word plus space(s)       w             T
+WORD plus space(s)       W             T
+sentence plus space(s)   s             T
+paragraph plus space(s)  p             T
+}}}
+Commands {{{1
+Change line from cursor  C             N
+Change character         s   cl        N
+Change line              S   ^C        N
+}}}
+Insert mode {{{1
+}}}
+Visual mode {{{1
+}}}
+Command mode {{{1
+}}}
+Reversing {{{1
+# Act                      Repeat  Undo
+{edit}                   .       u
+f,t,F,T                  ;       ,
+/ and ?                  n       N
+:s/target/replace/       &       u
+qx{changes}q             @x      u
+}}}
+Spell checking {{{1
+}}}
+Autocomplete {{{1
+}}}
+Settings and options {{{1
+# Turn on settings with [ox
+# Turn off settings with ]ox
+# Toggle settings with yox
+Background               yob           N
+Cursorline               yoc           N
+Hidden chars (list)      yol           N
+Spell                    yos           N
+Wrap                     yow           N
+Expand tab               yot           N
+}}}
+Vimscript {{{1
+}}}
+LSP {{{1
+Implementation           -i            N
+Definition               -d            N
+Hover                    -h            N
+Signature help           -H            N
+Type def                 -td           N
+References               -r            N
+Symbols in doc           -r            N
+search forSymbols in doc -r            N
+}}}
+coc.vim {{{1
+Navigate diagnostics     [g ]g         N
+Definition               gd            N
+Type definition          gy            N
+Implementation           gi            N
+References               gr            N
+}}}
+
 File {{{1
 New untitled document    :enew         N
 New/open file or dir     :e …          N

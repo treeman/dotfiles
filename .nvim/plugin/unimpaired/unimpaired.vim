@@ -65,10 +65,10 @@ function! s:MapNextFamily(map,cmd) abort
   endif
 endfunction
 
-"call s:MapNextFamily('a','') " :next :prev, unused
+call s:MapNextFamily('a','')
 call s:MapNextFamily('b','b')
 call s:MapNextFamily('l','l')
-call s:MapNextFamily('q','c')
+call s:MapNextFamily('c','c')
 "call s:MapNextFamily('t','t') " tab switching, unused
 
 function! s:entries(path) abort

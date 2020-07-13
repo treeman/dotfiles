@@ -96,9 +96,14 @@ Plug 'https://github.com/cespare/vim-toml.git'
 Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
+Plug 'https://github.com/elixir-editors/vim-elixir.git'
 " LSP support
 " See doc :help lsp
 Plug 'https://github.com/neovim/nvim-lsp'
+" coc.vim, intellisense engine
+Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
+" nvim in Firefox
+Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 call plug#end()
 
 " Plugins recommended by Practical vim:
@@ -151,6 +156,7 @@ call plug#end()
 let g:cheat40_use_default = 0
 " Hide folds
 let g:cheat40_foldlevel = 0
+
 " }}}
 " Appearance {{{
 
@@ -160,7 +166,7 @@ colorscheme gruvbox
 let g:gruvbox_contrast_dark = "hard"
 let g:gruvbox_contrast_light = "soft"
 if $TERM == "xterm-kitty"
-    set termguicolors
+  set termguicolors
 endif
 set background=dark
 let g:gruvbox_italic = 1
@@ -246,16 +252,6 @@ nnoremap <leader>tw :silent! %s/\s\+$//<CR>:retab<CR>
 " [f, ]f
 "
 " }}}
-" Option toggling from unimpaired.vim {{{
-"
-"   On Off Toggle  Option
-" *[ob*   *]ob*   *yob*   'background' (dark is off, light is on)
-" *[oc*   *]oc*   *yoc*   'cursorline'
-" *[ol*   *]ol*   *yol*   'list'
-" *[os*   *]os*   *yos*   'spell'
-" *[ow*   *]ow*   *yow*   'wrap'
-" *[ot*   *]ot*   *yot*   'expandtab'
-" }}}
 
 " }}}
 " Commands {{{
@@ -269,12 +265,12 @@ command! InsertUUID :normal i<C-R>=system('uuidgen')<CR>
 
 " Counts the number of # in markdown headers
 function! MarkdownLevel()
-    let h = matchstr(getline(v:lnum), '^#\+')
-    if empty(h)
-        return "="
-    else
-        return ">" . len(h)
-    endif
+  let h = matchstr(getline(v:lnum), '^#\+')
+  if empty(h)
+    return "="
+  else
+    return ">" . len(h)
+  endif
 endfunction
 
 " }}}
@@ -288,91 +284,57 @@ let g:vimwiki_global_ext = 0
 " Markdown {{{
 
 augroup markdowngroup
-    autocmd!
-    autocmd FileType markdown setlocal foldexpr=MarkdownLevel()
-    autocmd FileType markdown setlocal foldmethod=expr
-    autocmd FileType markdown :normal zR
+  autocmd!
+  autocmd FileType markdown setlocal foldexpr=MarkdownLevel()
+  autocmd FileType markdown setlocal foldmethod=expr
+  autocmd FileType markdown :normal zR
 augroup END
 
 " }}}
 " Beancount {{{
 
 augroup beancountgroup
-    autocmd!
-    autocmd FileType beancount setlocal foldexpr=MarkdownLevel()
-    autocmd FileType beancount setlocal foldmethod=expr
+  autocmd!
+  autocmd FileType beancount setlocal foldexpr=MarkdownLevel()
+  autocmd FileType beancount setlocal foldmethod=expr
 augroup END
 
 " }}}
 " Pollen {{{
 
 augroup pollengroup
-    autocmd!
-    au! BufRead,BufNewFile *.p set filetype=pollen
-    au! BufRead,BufNewFile *.pm set filetype=pollen
-    au! BufRead,BufNewFile *.pmd set filetype=pollen
-    au! BufRead,BufNewFile *.pp set filetype=pollen
-    au! BufRead,BufNewFile *.ptree set filetype=pollen
-    " Soft wrap (don't affect buffer)
-    autocmd FileType pollen setlocal wrap
-    " Wrap on word-breaks only
-    autocmd FileType pollen setlocal linebreak
+  autocmd!
+  au! BufRead,BufNewFile *.p set filetype=pollen
+  au! BufRead,BufNewFile *.pm set filetype=pollen
+  au! BufRead,BufNewFile *.pmd set filetype=pollen
+  au! BufRead,BufNewFile *.pp set filetype=pollen
+  au! BufRead,BufNewFile *.ptree set filetype=pollen
+  " Soft wrap (don't affect buffer)
+  autocmd FileType pollen setlocal wrap
+  " Wrap on word-breaks only
+  autocmd FileType pollen setlocal linebreak
 augroup END
 
 " }}}
 " Web {{{
 
 augroup web
-    autocmd!
-    autocmd Filetype html setlocal ts=2 sts=2 sw=2
-    autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
-    autocmd Filetype json setlocal ts=2 sts=2 sw=2
+  autocmd!
+  autocmd Filetype html setlocal ts=2 sts=2 sw=2
+  autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+  autocmd Filetype json setlocal ts=2 sts=2 sw=2
 augroup END
 
 " }}}
 " Vim {{{
 
 augroup vim_filetype
-    autocmd!
-    autocmd Filetype vim setlocal foldmethod=marker
-    autocmd Filetype vim setlocal nofoldenable
+  autocmd!
+  autocmd Filetype vim setlocal foldmethod=marker
+  autocmd Filetype vim setlocal nofoldenable
+  autocmd Filetype vim setlocal ts=2 sts=2 sw=2
 augroup END
 
-" }}}
-" Rust {{{
-
-augroup rust_filetype
-    lua require'nvim_lsp'.rust_analyzer.setup{}
-
-    " Use LSP omni-completion in Rust files
-    autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-    " Not sure how to use clippy
-    "nnoremap <leader>c :!cargo clippy
-    " See :help lsp-buf
-    "
-    " This doesn't work at all, maybe because rust doesn't have a declaration
-    " context
-    " nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-    "
-    " FIXME maybe remap them to something more intuitive?
-    " This works, can use it on traits to see implementations
-    "nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-    " Jump to def
-    "nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-    " Hover description
-    "nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-    " Display signature of functions etc
-    "nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-    " Goto type definition from variable
-    "nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-    " Goto usages of a type
-    "nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-    " Go through symbols in a document (functions, definitions etc)
-    "nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-    " Go through symbols in the workspace (takes a search query)
-    "nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-augroup END
 " }}}
 " XML {{{
 " FIXME can we make this work on visual selection?
@@ -383,5 +345,29 @@ command! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.min
 command! FormatJSON :%!python -m json.tool
 " }}}
 " }}}
+" coc.vim {{{
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" }}}
+
+"}}}
+"Firenvim {{{
+if exists('g:started_by_firenvim') && g:started_by_firenvim
+  set laststatus=0 nonumber noruler noshowcmd
+  set background=light
+
+  augroup firenvim
+    autocmd!
+    autocmd BufEnter *.txt setlocal filetype=markdown
+  augroup END
+endif
+"}}}
 " vim:set sw=2 sts=2:
