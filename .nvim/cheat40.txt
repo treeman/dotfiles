@@ -223,9 +223,13 @@ search forSymbols in doc -r            N
 coc.vim {{{1
 Navigate diagnostics     [g ]g         N
 Definition               gd            N
+Declaration              gD            N
 Type definition          gy            N
 Implementation           gi            N
 References               gr            N
+# Text objects, inside and around
+Function object          f             T
+Class object             c             T
 }}}
 
 File {{{1
