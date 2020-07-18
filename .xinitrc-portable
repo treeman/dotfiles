@@ -12,6 +12,9 @@ xsetroot -cursor_name left_ptr
 # Remap caps to escape
 setxkbmap -option caps:escape
 
+# Kill beep?
+xset b off
+
 # Start xmonad yay!
 exec xmonad
 

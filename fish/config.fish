@@ -19,7 +19,7 @@ alias g git
 # zlip decompress
 alias zinflate='ruby -r zlib -e "STDOUT.write Zlib::Inflate.inflate(STDIN.read)"'
 
-set -x FZF_DEFAULT_COMMAND 'ag --hidden --ignore .git -g ""'
+set -x FZF_DEFAULT_COMMAND 'fd --type file --hidden --exclude .git'
 
 function reload
     source ~/.config/fish/config.fish
