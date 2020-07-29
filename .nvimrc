@@ -204,6 +204,28 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 " }}}
+"Firenvim {{{
+if exists('g:started_by_firenvim') && g:started_by_firenvim
+  set laststatus=0 nonumber noruler noshowcmd
+  set background=light
+
+  let g:firenvim_config = { 
+      \ 'localSettings': {
+          \ '.*': {
+              \ 'cmdline': 'firenvim',
+              \ 'priority': 0,
+              \ 'selector': 'textarea',
+              \ 'takeover': 'once',
+          \ },
+      \ }
+  \ }
+
+  augroup firenvim
+    autocmd!
+    autocmd BufEnter *.txt setlocal filetype=markdown
+  augroup END
+endif
+"}}}
 
 " }}}
 " Appearance {{{
@@ -391,16 +413,5 @@ command! FormatJSON :%!python -m json.tool
 " }}}
 " }}}
 
-"}}}
-"Firenvim {{{
-if exists('g:started_by_firenvim') && g:started_by_firenvim
-  set laststatus=0 nonumber noruler noshowcmd
-  set background=light
-
-  augroup firenvim
-    autocmd!
-    autocmd BufEnter *.txt setlocal filetype=markdown
-  augroup END
-endif
 "}}}
 " vim:set sw=2 sts=2:
