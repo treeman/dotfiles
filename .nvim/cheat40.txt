@@ -173,6 +173,10 @@ word plus space(s)       w             T
 WORD plus space(s)       W             T
 sentence plus space(s)   s             T
 paragraph plus space(s)  p             T
+# targets.vim
+Argument                 a             T
+Separators               | * _ - ,     T
+
 }}}
 Commands {{{1
 Change line from cursor  C             N
@@ -231,6 +235,19 @@ References               gr            N
 Function object          f             T
 Class object             c             T
 }}}
+commentary {{{1
+Comment line             gcc           N
+Comment                  gc‹Move›      M
+Comment                  gc            V
+}}}
+surround {{{1
+Change delimiters        cs‹c›‹c›      N
+Delete delimiters        ds‹c›         N
+Add delimiters           ys‹to›‹c›     N
+Add delimiters           S…            V
+}}}
+
+
 
 File {{{1
 New untitled document    :enew         N
@@ -583,32 +600,3 @@ Increase height          «C-w»+        N
 Decrease width           «C-w»<        N
 Increase width           «C-w»>        N
 Exec. Cmd in all windows :windo ‹Cmd›  N
-Tabs  {{{1
-New untitled tab         :tabnew       N
-New/open in tab          :tabe …       N
-Next tab                 gt            N
-Previous tab             gT            N
-Go to tab n              ‹n›gt         N
-Close tab                :tabc         N
-Close all other tabs     :tabo         N
-List tabs                :tabs         N
-Move window to new tab   «C-w»T        N
-Open one tab per buffer  :tab ball     N
-Execute Cmd in all tabs  :tabdo ‹Cmd›  N
-Help {{{1
-Help about …             :h …          N
-Help search              :helpgrep …   N
-# Use quickfix commands
-# to move between results
-Help on highlight test   :h hitest.vim N
-View mappings            :map …        N
-View Insert mode mappings:imap …       N
-View registers           :di           N
-List of sourced files    :scr          N
-List of digraphs         :digraphs     N
-List all syntax items    :syn          N
-Misc {{{1
-Current directory        :pwd          N
-Change directory         :cd …         N
-Show the value of ‹Var›  :echo ‹Var›   N
-Show value of option     :set ‹Var›?   N

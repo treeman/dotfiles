@@ -87,7 +87,14 @@ Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
 " Avoid mistyping filenames, ask which file to open if file not find
 Plug 'https://github.com/EinfachToll/DidYouMean.git'
 " Easy way to comment things
-Plug 'https://github.com/scrooloose/nerdcommenter.git'
+Plug 'https://github.com/tpope/vim-commentary'
+" For many more features see tcomment_vim
+" Enhance the '.' operator
+Plug 'https://github.com/tpope/vim-repeat'
+" Easily surround things
+Plug 'https://github.com/tpope/vim-surround'
+" More targets
+Plug 'https://github.com/wellle/targets.vim'
 " Highlight what was yanked
 Plug 'https://github.com/machakann/vim-highlightedyank'
 " Vim cheat sheet
@@ -101,6 +108,8 @@ Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
 Plug 'https://github.com/elixir-editors/vim-elixir.git'
+" Automatically insert end in insert mode for some languages
+Plug 'https://github.com/tpope/vim-endwise'
 " LSP support
 " See doc :help lsp
 "Plug 'https://github.com/neovim/nvim-lsp'
@@ -111,8 +120,24 @@ Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0)
 call plug#end()
 
 "{{{ Plugins to check
+" File handling plugins:
+" https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html#fernvim
+" CHADTree
+"
+" Quality of life plugins:
+" https://github.com/tpope/vim-dispatch ?
+"
+" Git plugins:
+" https://github.com/tpope/vim-fugitive
+" https://github.com/airblade/vim-gitgutter
+" https://github.com/jreybert/vimagit/blob/master/README.md
+"
+" Phoenix:
+" smathy/vim-pheonix
+" vim-projectionist
+"
+"
 " Plugins recommended by Practical vim:
-" surround.vim
 "
 " More fuzzy funding examples:
 "https://github.com/junegunn/fzf/wiki/Examples-(vim)
@@ -127,8 +152,6 @@ call plug#end()
 "https://www.reddit.com/r/vim/comments/gjz27p/whats_a_plugin_that_does_something_you_didnt/
 "https://www.reddit.com/r/vim/comments/gib54k/anyone_has_a_copy_of_custom_vim_refactorings/
 "https://www.reddit.com/r/vim/comments/a0q8dv/id_like_to_update_to_modern_vim_practices_what/
-"https://www.reddit.com/r/neovim/comments/g5uo37/supercharge_your_vim_with_fzf_ripgrep/
-"https://www.reddit.com/r/vim/comments/gfouey/markdown_mode_with_collapsible_blocks_and/
 "https://stackoverflow.com/questions/13337618/how-to-use-customized-key-to-start-visual-block-selection-in-vim
 "https://blog.usejournal.com/a-detailed-guide-to-writing-your-first-neovim-plugin-in-rust-a81604c606b1?gi=2c1f7e07ec18
 "https://medium.com/@caleb89taylor/a-guide-to-modern-web-development-with-neo-vim-333f7efbf8e2
@@ -136,26 +159,17 @@ call plug#end()
 "https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
 "https://kodi.wiki/view/Add-on:VimCasts
 "https://github.com/lambdalisue/gina.vim/blob/master/README.md
-"https://github.com/jreybert/vimagit/blob/master/README.md
 "https://github.com/tpope/vim-dispatch/blob/master/README.markdown
 
 " nvim-lsp for rust
 "https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
 
-" Plugins to check
-" Comment stuff out
-" https://github.com/tpope/vim-commentary
-" Git
-" https://github.com/tpope/vim-fugitive
-" Surrounding things
-" https://github.com/tpope/vim-surround
-" Launch async things
-" https://github.com/tpope/vim-dispatch
-" Show git changes in gutter
-" https://github.com/airblade/vim-gitgutter
 "
 " Plug 'Chiel92/vim-autoformat'
 " KKPMW/vim-send-to-window
+"
+" Better f/F
+" https://github.com/rhysd/clever-f.vim
 "}}}
 "{{{ cheat40
 " Don't use default cheat sheet
@@ -204,28 +218,6 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 " }}}
-"Firenvim {{{
-if exists('g:started_by_firenvim') && g:started_by_firenvim
-  set laststatus=0 nonumber noruler noshowcmd
-  set background=light
-
-  let g:firenvim_config = { 
-      \ 'localSettings': {
-          \ '.*': {
-              \ 'cmdline': 'firenvim',
-              \ 'priority': 0,
-              \ 'selector': 'textarea',
-              \ 'takeover': 'once',
-          \ },
-      \ }
-  \ }
-
-  augroup firenvim
-    autocmd!
-    autocmd BufEnter *.txt setlocal filetype=markdown
-  augroup END
-endif
-"}}}
 
 " }}}
 " Appearance {{{
@@ -251,7 +243,7 @@ function! EditCheat40()
   let path = stdpath("config")."/cheat40.txt"
   execute 'e '.path
   " Taken from cheat40#open in vim-cheat40
-  setlocal foldmethod=marker foldtext=substitute(getline(v:foldstart),'\\s\\+{{{.*$','','')
+  setlocal foldmethod=marker foldtext=substitute(getline(v:foldstart),'\\s\\+{.*$','','')
   execute 'setlocal foldlevel='.get(g:, 'cheat40_foldlevel', 1)
   setlocal concealcursor=nc conceallevel=3
   setlocal expandtab nospell nowrap textwidth=40
@@ -271,20 +263,22 @@ nnoremap <silent> <leader>fg :execute 'Rg ' . input('Rg/')<CR>
 " Find from open buffers
 nnoremap <silent> <leader>fb :Buffers<CR>
 
-" Make escape enter normal mode in terminal as well
-" FIXME only when manually launched terminal
-tnoremap <Esc> <C-\><C-n>
-tnoremap <C-v><Esc> <Esc>
-
 " Special chars
 inoremap <C-v>l λ
 inoremap <C-v>e ◊
 
 " Easy way to launch terminal
-" FIXME hide line numbers
-nnoremap <leader>tt :e term://fish<CR>
-nnoremap <leader>tv :vsp term://fish<CR>
-nnoremap <leader>ts :sp term://fish<CR>
+function! FishTerm()
+  execute 'e term://fish'
+  " Make escape enter normal mode in terminal as well
+  tnoremap <buffer> <Esc> <C-\><C-n>
+  tnoremap <buffer> <C-v><Esc> <Esc>
+  setlocal nonumber
+  setlocal norelativenumber
+endfunction
+nnoremap <leader>tt :call FishTerm()<CR>
+nnoremap <leader>tv :vs <bar> :call FishTerm()<CR>
+nnoremap <leader>ts :sp <bar> :call FishTerm()<CR>
 
 " Clear screen and turn off search highlighting until the next time we search
 " FIXME maybe use C-l here and move window switching functions to M-l?
@@ -301,7 +295,7 @@ nnoremap <C-h> <c-w>h
 nnoremap <C-j> <c-w>j
 nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
-" Create splits with <C-w>v and <C-w>s instead
+" Create splits with <C-w>v and <C-w>s, or :sp and :vs
 
 " Open url under cursor
 " FIXME better keybinding?
@@ -400,6 +394,7 @@ augroup vim_filetype
   autocmd Filetype vim setlocal foldmethod=marker
   autocmd Filetype vim setlocal nofoldenable
   autocmd Filetype vim setlocal ts=2 sts=2 sw=2
+  "autocmd FileType vim :normal zM
 augroup END
 
 " }}}
@@ -412,6 +407,26 @@ command! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.min
 command! FormatJSON :%!python -m json.tool
 " }}}
 " }}}
+"Firenvim {{{
+if exists('g:started_by_firenvim') && g:started_by_firenvim
+  let g:firenvim_config = { 
+      \ 'localSettings': {
+          \ '.*': {
+              \ 'cmdline': 'firenvim',
+              \ 'priority': 0,
+              \ 'selector': 'textarea',
+              \ 'takeover': 'once',
+          \ },
+      \ }
+  \ }
 
+  set laststatus=0 nonumber noruler noshowcmd
+  set background=light
+
+  augroup firenvim
+    autocmd!
+    autocmd BufEnter *.txt setlocal filetype=markdown
+  augroup END
+endif
 "}}}
 " vim:set sw=2 sts=2:
