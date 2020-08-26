@@ -13,6 +13,6 @@ conky.text = [[
 MEM ^fg(\#ebdbb2)${memperc}% ^fg()| \
 NET ^fg(\#ebdbb2)${downspeedf wlan0}K ^fg(\#ebdbb2)${upspeedf wlan0}K ^fg()| \
 ^fg(\#ebdbb2)${time %Y-%m-%d} ^fg()| \
-^fg(\#b57614)${time %R} 
+^fg(\#b16286)${time %R} 
 ]]
 

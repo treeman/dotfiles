@@ -2,6 +2,7 @@
 set -x PATH $PATH /usr/local/sbin /usr/sbin /sbin
 set -x PATH ~/.cabal/bin $PATH
 set -x PATH ~/.cargo/bin ~/.cargo/env $PATH
+set -x PATH ~/.local/bin $PATH
 set -x PATH ~/bin ~/dotfiles/bin $PATH
 
 # Beancount module finding for importers
