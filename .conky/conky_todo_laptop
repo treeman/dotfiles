@@ -1,0 +1,30 @@
+conky.config = {
+    update_interval = 30,
+    double_buffer = true,
+    background = false,
+    draw_shades = false,
+
+    use_xft = true,
+
+    own_window_class = 'Conky',
+    own_window = true,
+    own_window_type = 'override',
+    own_window_transparent = true,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    minimum_height = 220,
+    minimum_width = 5,
+
+    alignment = 'top_left',
+    gap_x = 220,
+    gap_y = 40,
+
+    color1 = 'D069BC',
+}
+
+conky.text = [[
+${color1}${font Sweetly Broken:size=40}Why cryptocurrencies?
+Deep Work
+Coding proficiency
+Fitness level
+]]
+

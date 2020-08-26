@@ -23,10 +23,14 @@ myDzen = " dzen2 -xs 1 -dock -h 18 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++
 
 myStatusBar = myDzen ++ " -x '0' -y '0' -ta 'l' -w 700"
 myTopRight = "conky -c ~/.conky/conky_bar_laptop | " ++ myDzen ++ " -x '600' -y '0' -ta 'r' -p"
+myTime = "conky -c ~/.conky/conky_time_laptop"
+myTodo = "conky -c ~/.conky/conky_todo_laptop"
 
 main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
+    myTime <- spawnPipe myTime
+    myTodo <- spawnPipe myTodo
 
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
       modMask = mod4Mask

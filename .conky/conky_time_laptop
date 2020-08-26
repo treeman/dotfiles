@@ -1,0 +1,26 @@
+conky.config = {
+    update_interval = 30,
+    double_buffer = true,
+    background = false,
+    draw_shades = false,
+
+    use_xft = true,
+
+    own_window_class = 'Conky',
+    own_window = true,
+    own_window_type = 'override',
+    own_window_transparent = true,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+    alignment = 'top_left',
+    gap_x = 750,
+    gap_y = 340,
+
+    color1 = 'AAD6FD',
+}
+
+conky.text = [[
+${color1}${font Digital:size=20}${time %b}${offset 10}${time %d}${offset 10}${time %Y}
+${color1}${font Digital:size=72}${time %R}
+]]
+
