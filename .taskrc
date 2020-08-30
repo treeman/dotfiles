@@ -51,10 +51,17 @@ report.in.labels = ID,Description
 report.in.description = Inbox
 report.in.filter = status:pending limit:page (+in)
 
+# Read report
 report.rd.columns = id,description,url
 report.rd.labels = ID,Description,Url
 report.rd.description = Read
 report.rd.filter = status:pending limit:page (+read)
+
+# R&D report
+report.rnd.columns = id,description
+report.rnd.labels = ID,Description
+report.rnd.description = R&D
+report.rnd.filter = status:pending limit:page (+rnd)
 
 uda.url.type = string
 uda.url.label = url

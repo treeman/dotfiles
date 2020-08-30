@@ -51,8 +51,8 @@ function gruvbox --description 'Apply gruvbox theme'
     set fish_color_escape               $yellow # the color used to highlight character escapes like '\n' and '\x70'
     set fish_color_cwd                  $green # the color used for the current working directory in the default prompt
     set fish_color_autosuggestion       $gray_256 # the color used for autosuggestions
-    set fish_color_user                 $br_red --underline # the color used to print the current username in some of fish default prompts
-    set fish_color_host                 $br_red --underline # the color used to print the current host system in some of fish default prompts
+    set fish_color_user                 $fg # the color used to print the current username in some of fish default prompts
+    set fish_color_host                 $fg # the color used to print the current host system in some of fish default prompts
     set fish_color_cancel               $br_orange # the color for the '^C' indicator on a canceled command
 
     # Completion pager:

@@ -87,7 +87,7 @@ Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
 " Avoid mistyping filenames, ask which file to open if file not find
 Plug 'https://github.com/EinfachToll/DidYouMean.git'
 " Easy way to comment things
-Plug 'https://github.com/tpope/vim-commentary'
+Plug 'https://github.com/tomtom/tcomment_vim'
 " For many more features see tcomment_vim
 " Enhance the '.' operator
 Plug 'https://github.com/tpope/vim-repeat'
@@ -236,6 +236,8 @@ let g:gruvbox_italic = 1
 " }}}
 " Mapping {{{
 
+" Reload vimrc
+nnoremap <leader>sv :so $MYVIMRC<CR>
 " Easy way to edit vimrc
 nnoremap <leader>ev :e $MYVIMRC<CR>
 " Edit my cheat sheet
