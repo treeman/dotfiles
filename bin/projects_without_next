@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+# From: https://cs-syd.eu/posts/2016-02-21-return-to-taskwarrior.html
+import tasklib
+
+tw = tasklib.TaskWarrior()
+
+# Projects without a +next or +waiting action
+result = set(tw.execute_command(["+PROJECT", "+PENDING", "+READY", "-waiting", "_projects"])) - set(tw.execute_command(["+PENDING", "+next", "_projects"]))
+
+for i in result:
+    print(i)
+

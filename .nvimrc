@@ -264,8 +264,10 @@ nnoremap <silent> <leader>fg :execute 'Rg ' . input('Rg/')<CR>
 nnoremap <silent> <leader>fb :Buffers<CR>
 
 " Special chars
-inoremap <C-v>l λ
-inoremap <C-v>e ◊
+inoremap <C-l> λ
+inoremap <C-e> ◊
+"inoremap <C-v>l λ
+"inoremap <C-v>e ◊
 
 " Easy way to launch terminal
 function! FishTerm()

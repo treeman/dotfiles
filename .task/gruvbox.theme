@@ -49,19 +49,23 @@ color.until=
 color.blocked=color8 on color0
 color.blocking=color15 on color0
 
-# Project
-color.project.none=
-color.project.japan=color3
-
 # Priority
 color.uda.priority.H=color96
 color.uda.priority.M=color5
 color.uda.priority.L=color7
 
+# Project
+color.project.none=
+color.project.cryptobook=color2
+color.project.keyboard=color14
+color.project.vim=color3
+
 # Tags
-color.tag.next=
 color.tag.none=
-color.tagged=color6
+color.tagged=
+color.tag.next=
+color.tag.read=color12
+color.tag.rnd=color6
 
 # Due
 color.due=color168

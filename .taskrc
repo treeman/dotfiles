@@ -37,8 +37,25 @@ taskd.ca=\/home\/tree\/.task\/freecinc_d9d3d68a.ca.pem
 taskd.server=freecinc.com:53589
 taskd.credentials=FreeCinc\/freecinc_d9d3d68a\/48d6af2e-fab6-4843-99fa-707f7b6e4c92
 taskd.trust=strict
-context.book=+book
-context.work=+work
-context.home=-book -work -blog -posts
-context.blog=+blog
+
+context.work=+@work
+context.consulting=+@consulting
+context.house=+@home -@computer
+context.home=+@home or +@computer
+
+urgency.user.tag.next.coefficient=0
+
+# Inbox report
+report.in.columns = id,description
+report.in.labels = ID,Description
+report.in.description = Inbox
+report.in.filter = status:pending limit:page (+in)
+
+report.rd.columns = id,description,url
+report.rd.labels = ID,Description,Url
+report.rd.description = Read
+report.rd.filter = status:pending limit:page (+read)
+
+uda.url.type = string
+uda.url.label = url
 
