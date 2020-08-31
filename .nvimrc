@@ -261,7 +261,7 @@ nnoremap <silent> <leader>ff :Files<CR>
 " Find files relative to current file
 nnoremap <silent> <leader>fe :call fzf#run({'sink': 'e', 'dir': expand('%:p:h') . '/'})<CR>
 " Find in files
-nnoremap <silent> <leader>fg :execute 'Rg ' . input('Rg/')<CR>
+nnoremap <silent> <leader>/ :execute 'Rg ' . input('Rg/')<CR>
 " Find from open buffers
 nnoremap <silent> <leader>fb :Buffers<CR>
 

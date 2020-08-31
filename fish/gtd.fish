@@ -15,12 +15,12 @@ alias think 'tickle +1d'
 alias rnd 'task add +rnd +next +@computer'
 
 # Track maybe tasks inside vimwiki instead
-alias maybe "vim $HOME/vimwiki/maybe.markdown"
+alias maybe "vim $HOME/vimwiki/projects/maybe.markdown"
 # Track notes per project
 function _note
   set id $argv
   set dir "$HOME/vimwiki/projects/"
-  set file "$dir/$id.markdown"
+  set file "$dir$id.markdown"
 
   mkdir -p $dir
   vim "$file"

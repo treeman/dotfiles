@@ -34,8 +34,8 @@ include ~/dotfiles/.task/gruvbox.theme
 taskd.certificate=\/home\/tree\/.task\/freecinc_d9d3d68a.cert.pem
 taskd.key=\/home\/tree\/.task\/freecinc_d9d3d68a.key.pem
 taskd.ca=\/home\/tree\/.task\/freecinc_d9d3d68a.ca.pem
-taskd.server=freecinc.com:53589
 taskd.credentials=FreeCinc\/freecinc_d9d3d68a\/48d6af2e-fab6-4843-99fa-707f7b6e4c92
+taskd.server=freecinc.com:53589
 taskd.trust=strict
 
 context.work=+@work

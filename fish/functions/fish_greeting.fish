@@ -4,14 +4,15 @@ function fish_greeting
     end
 
     set projects (projects_without_next)
-    if test -n projects
+    if test -z $projects
+    else
         echo "Attention: The following projects don't currently have a next action:"
         echo $projects
         echo
     end
 
-    set wating = (task +waiting +PENDING count)
-    if test -n wating
+    set waiting (task +waiting +PENDING count)
+    if test $waiting != "0"
         echo "Any progress on these waiting-fors?"
         task +waiting +PENDING ls
     end
