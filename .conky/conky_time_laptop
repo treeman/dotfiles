@@ -12,8 +12,8 @@ conky.config = {
     own_window_transparent = true,
     own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 
-    alignment = 'top_left',
-    gap_x = 740,
+    alignment = 'top_middle',
+    gap_x = 96,
     gap_y = 340,
 
     color1 = 'AAD6FD',

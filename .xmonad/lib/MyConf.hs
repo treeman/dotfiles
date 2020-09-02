@@ -121,12 +121,12 @@ myManageHook = composeAll
 
 myDzenPP h = defaultPP
     { ppOutput = hPutStrLn h
-    , ppCurrent = wrapFg gb_magenta . dropId            -- Current workspace
+    , ppCurrent = wrapFgBg gb_black gb_darkmagenta . dropId -- Current workspace
     , ppVisible = wrapFg gb_darkmagenta . dropId            -- Workspace for other screen
-    , ppHidden = wrapFg gb_white . dropId              -- Hidden workspace with windows
-    , ppHiddenNoWindows = wrapFg gb_darkgrey . dropId  -- Hidden workspace without windows
-    , ppUrgent = wrapFg gb_darkred . dropId            -- Signaling workspace
-    , ppTitle = wrap "< " " > " . wrapFg gb_white      -- Window title
+    , ppHidden = wrapFg gb_white . dropId                   -- Hidden workspace with windows
+    , ppHiddenNoWindows = wrapFg gb_darkgrey . dropId       -- Hidden workspace without windows
+    , ppUrgent = wrapFg gb_darkred . dropId                 -- Signaling workspace
+    , ppTitle = wrap "< " " > " . wrapFg gb_white           -- Window title
     , ppSep = " "
     , ppLayout = wrapFg normalStatusFG .
         (\x -> case x of

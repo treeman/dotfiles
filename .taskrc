@@ -38,7 +38,6 @@ taskd.credentials=FreeCinc\/freecinc_d9d3d68a\/48d6af2e-fab6-4843-99fa-707f7b6e4
 taskd.server=freecinc.com:53589
 taskd.trust=strict
 
-context.work=+@work
 context.consulting=+@consulting
 context.house=+@home -@computer
 context.home=+@home or +@computer
