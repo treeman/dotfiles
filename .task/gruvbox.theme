@@ -66,6 +66,7 @@ color.tagged=
 color.tag.next=
 color.tag.read=color12
 color.tag.rnd=color6
+color.tag.in=color7
 
 # Due
 color.due=color168
