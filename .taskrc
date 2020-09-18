@@ -50,6 +50,9 @@ report.in.labels = ID,Description
 report.in.description = Inbox
 report.in.filter = status:pending limit:page (+in)
 
+# Next report
+report.next.filter = status:pending limit:page (+next)
+
 # Read report
 report.rd.columns = id,description,url
 report.rd.labels = ID,Description,Url
