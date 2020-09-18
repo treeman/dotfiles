@@ -1,5 +1,5 @@
 # Easily add to GTD inbox
-alias in 'task add +in'
+alias in 't add +in'
 
 # Easy handling of tickler files
 function tickle
@@ -12,20 +12,7 @@ alias tick tickle
 alias think 'tickle +1d'
 
 # For R&D
-alias rnd 'task add +rnd +next +@computer'
-
-# Track maybe tasks inside vimwiki instead
-alias maybe "vim $HOME/vimwiki/projects/maybe.markdown"
-# Track notes per project
-function _note
-  set id $argv
-  set dir "$HOME/vimwiki/projects/"
-  set file "$dir$id.markdown"
-
-  mkdir -p $dir
-  vim "$file"
-end
-alias n _note
+alias rnd 't add +rnd +next +@computer'
 
 # For things to read
 function webpage_title
@@ -37,7 +24,7 @@ function _read
     set input $argv
     set url (echo $input | rg -o "(https?://\S+)")
     if test -z $url
-        task add +read +next +@home $input
+        t add +read +next +@home $input
     else
         set title (webpage_title $url)
 
@@ -46,7 +33,7 @@ function _read
         else
             echo $title
             set descr "Read: \"$title\""
-            task add +read +next +@computer url:$url $descr
+            t add +read +next +@computer url:$url $descr
         end
     end
 end
@@ -54,7 +41,7 @@ alias rd _read
 
 function _open_task_to_read
     set id $argv[1]
-    set url (task _get $id.url)
+    set url (t _get $id.url)
     if test -z $url
         echo "No url for task $id!"
     else
