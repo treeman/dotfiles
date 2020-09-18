@@ -117,6 +117,8 @@ Plug 'https://github.com/tpope/vim-endwise'
 Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
 " nvim in Firefox
 Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" Peek registry contents, for easy use of " and @
+Plug 'https://github.com/junegunn/vim-peekaboo'
 call plug#end()
 
 "{{{ Plugins to check
@@ -353,6 +355,10 @@ augroup markdowngroup
   autocmd FileType markdown setlocal foldexpr=MarkdownLevel()
   autocmd FileType markdown setlocal foldmethod=expr
   autocmd FileType markdown :normal zR
+
+  autocmd FileType vimwiki setlocal foldexpr=MarkdownLevel()
+  autocmd FileType vimwiki setlocal foldmethod=expr
+  autocmd FileType vimwiki :normal zR
 augroup END
 
 " }}}
