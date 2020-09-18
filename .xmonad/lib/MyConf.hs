@@ -41,7 +41,7 @@ gb_background = "#1d2021"
 gb_background_soft = "#32302f"
 -- random colors
 gb_purple = "#8f3f71"
-gb_darkorange = "#b57614"
+gb_darkorange = "#d65d0e"
 gb_orange = "#fe8019"
 gb_light0 = "#fdf4c1"
 gb_light1 = "#ebdbb2"
@@ -121,12 +121,12 @@ myManageHook = composeAll
 
 myDzenPP h = defaultPP
     { ppOutput = hPutStrLn h
-    , ppCurrent = wrapFg gb_magenta . dropId            -- Current workspace
+    , ppCurrent = wrapFgBg gb_orange gb_background . dropId -- Current workspace
     , ppVisible = wrapFg gb_darkmagenta . dropId            -- Workspace for other screen
-    , ppHidden = wrapFg gb_white . dropId              -- Hidden workspace with windows
-    , ppHiddenNoWindows = wrapFg gb_darkgrey . dropId  -- Hidden workspace without windows
-    , ppUrgent = wrapFg gb_darkred . dropId            -- Signaling workspace
-    , ppTitle = wrap "< " " > " . wrapFg gb_white      -- Window title
+    , ppHidden = wrapFg gb_white . dropId                   -- Hidden workspace with windows
+    , ppHiddenNoWindows = wrapFg gb_darkgrey . dropId       -- Hidden workspace without windows
+    , ppUrgent = wrapFg gb_darkred . dropId                 -- Signaling workspace
+    , ppTitle = wrap "< " " > " . wrapFg gb_white           -- Window title
     , ppSep = " "
     , ppLayout = wrapFg normalStatusFG .
         (\x -> case x of
