@@ -121,8 +121,8 @@ myManageHook = composeAll
 
 myDzenPP h = defaultPP
     { ppOutput = hPutStrLn h
-    , ppCurrent = wrapFgBg gb_orange gb_background . dropId -- Current workspace
-    , ppVisible = wrapFg gb_darkmagenta . dropId            -- Workspace for other screen
+    , ppCurrent = wrapFg gb_yellow . dropId                 -- Current workspace
+    , ppVisible = wrapFg gb_magenta . dropId                -- Workspace for other screen
     , ppHidden = wrapFg gb_white . dropId                   -- Hidden workspace with windows
     , ppHiddenNoWindows = wrapFg gb_darkgrey . dropId       -- Hidden workspace without windows
     , ppUrgent = wrapFg gb_darkred . dropId                 -- Signaling workspace
