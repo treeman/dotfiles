@@ -119,6 +119,8 @@ Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
 Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " Peek registry contents, for easy use of " and @
 Plug 'https://github.com/junegunn/vim-peekaboo'
+" Preview colors
+Plug 'https://github.com/chrisbra/Colorizer'
 call plug#end()
 
 "{{{ Plugins to check

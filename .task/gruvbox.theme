@@ -56,7 +56,7 @@ color.uda.priority.L=color7
 
 # Project
 color.project.none=
-color.project.cryptobook=color2
+#color.project.cryptobook=color2
 color.project.keyboard=color14
 color.project.vim=color3
 
@@ -65,8 +65,14 @@ color.tag.none=
 color.tagged=
 color.tag.next=
 color.tag.read=color12
-color.tag.rnd=color6
+color.tag.rnd=color4
+color.tag.watch=color14
+color.tag.listen=color6
 color.tag.in=color7
+color.tag.home=color5
+color.tag.web=color2
+color.tag.book=color10
+color.tag.ebook=color6
 
 # Due
 color.due=color168

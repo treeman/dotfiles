@@ -65,6 +65,18 @@ report.rnd.labels = ID,Description
 report.rnd.description = R&D
 report.rnd.filter = status:pending limit:page (+rnd)
 
+# Watch report
+report.watch.columns = id,description
+report.watch.labels = ID,Description
+report.watch.description = Watch
+report.watch.filter = status:pending limit:page (+watch)
+
+# Listen report
+report.listen.columns = id,description
+report.listen.labels = ID,Description
+report.listen.description = Listen
+report.listen.filter = status:pending limit:page (+listen)
+
 uda.url.type = string
 uda.url.label = url
 
