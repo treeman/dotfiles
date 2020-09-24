@@ -24,10 +24,8 @@
 #
 ###############################################################################
 
-rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
-
-# This is a theme that disables all default colors
-# It can be used as template for other themes
+rule.precedence.color=deleted,completed,active,overdue,due.today,blocked,uda.,due,tag.,project.,recurring,blocking
+#rule.precedence.color=deleted,completed,active,overdue,due.today,blocked,uda.,due,project.,tag.,recurring,blocking
 
 # General decoration
 color.label=color250
@@ -50,13 +48,17 @@ color.blocked=color8 on color0
 color.blocking=color15 on color0
 
 # Priority
-color.uda.priority.H=color96
-color.uda.priority.M=color5
-color.uda.priority.L=color7
+color.uda.priority.H=color130
+color.uda.priority.M=color208
+color.uda.priority.L=color8
+
+# Due
+color.due=color168
+color.due.today=color9 on color235
+color.overdue=color1 on color235
 
 # Project
 color.project.none=
-#color.project.cryptobook=color2
 color.project.keyboard=color14
 color.project.vim=color3
 
@@ -73,11 +75,7 @@ color.tag.home=color5
 color.tag.web=color2
 color.tag.book=color10
 color.tag.ebook=color6
-
-# Due
-color.due=color168
-color.due.today=color9
-color.overdue=color1
+color.tag.email=color12
 
 # Report: burndown
 color.burndown.done=color0 on color2
