@@ -114,13 +114,23 @@ Plug 'https://github.com/tpope/vim-endwise'
 " See doc :help lsp
 "Plug 'https://github.com/neovim/nvim-lsp'
 " coc.vim, intellisense engine
-Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
 " nvim in Firefox
 Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " Peek registry contents, for easy use of " and @
 Plug 'https://github.com/junegunn/vim-peekaboo'
 " Preview colors
 Plug 'https://github.com/chrisbra/Colorizer'
+
+" Collection of common configurations
+Plug 'neovim/nvim-lspconfig'
+" Extensions to built-in LSP, like type inlay hints
+Plug 'tjdevries/lsp_extensions.nvim'
+" Automcompletion framework for built-in LSP
+Plug 'nvim-lua/completion-nvim'
+" Diagnostic navigation and settings for built-in LSP
+Plug 'nvim-lua/diagnostic-nvim'
+
 call plug#end()
 
 "{{{ Plugins to check
@@ -441,4 +451,34 @@ if exists('g:started_by_firenvim') && g:started_by_firenvim
   augroup END
 endif
 "}}}
+" LSP {{{
+
+" Better completion experience?
+" menuone: Popup even when there's only one match
+" noinsert: Do not insert text until a selection is made
+" noselect: Do not select, force user to select one from the menu
+set completeopt=menuone,noinsert,noselect
+" Avoid showing extra messages when using completion
+set shortmess+=c
+
+" Configure LSP
+" https://github.com/neovim/nvim-lspconfig#rust_analyzer
+lua <<EOF
+
+-- nvim_lsp object
+local nvim_lsp = require'nvim_lsp'
+
+-- function to attach comnpletion and diagnostics
+-- when setting up lsp
+local on_attach = function(client)
+  require'completion'.on_attach(client)
+  require'diagnostic'.on_attach(client)
+end
+
+-- Enable rust_analyzer
+nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
+
+EOF
+" }}}
+
 " vim:set sw=2 sts=2:

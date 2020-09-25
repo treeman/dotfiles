@@ -11,8 +11,8 @@ set -x TZ Europe/Stockholm
 # git message editor and other things
 set -x EDITOR vim
 
-# alias vim nvim
-# alias v nvim
+alias vim nvim
+alias v nvim
 alias g git
 alias t "task rc:/mnt/c/CetDev/10.5git/personal/profile/jonhi/.taskrc"
 
