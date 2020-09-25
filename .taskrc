@@ -42,7 +42,17 @@ context.consulting=+@consulting
 context.house=+@home -@computer
 context.home=+@home or +@computer
 
-urgency.user.tag.next.coefficient=0
+weekstart=monday
+nag=
+
+urgency.annotations.coefficient = 0
+urgency.project.coefficient = 0
+urgency.tags.coefficient = 0
+urgency.user.tag.next.coefficient = 0
+urgency.uda.priority.H.coefficient = 15
+urgency.due.coefficient = 10
+urgency.uda.priority.M.coefficient = 5
+urgency.uda.priority.L.coefficient = -5
 
 # Inbox report
 report.in.columns = id,description
@@ -50,8 +60,13 @@ report.in.labels = ID,Description
 report.in.description = Inbox
 report.in.filter = status:pending limit:page (+in)
 
-# Next report
-report.next.filter = status:pending limit:page (+next)
+# GTD next report
+default.command = gtd
+report.gtd.columns  = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description
+report.gtd.labels = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description
+report.gtd.description = Next actions
+report.gtd.filter = status:pending limit:page (+next)
+report.gtd.sort = project+,due+,urgency-
 
 # Read report
 report.rd.columns = id,description,url
@@ -60,22 +75,28 @@ report.rd.description = Read
 report.rd.filter = status:pending limit:page (+read)
 
 # R&D report
-report.rnd.columns = id,description
-report.rnd.labels = ID,Description
+report.rnd.columns = id,description,url
+report.rnd.labels = ID,Description,Url
 report.rnd.description = R&D
 report.rnd.filter = status:pending limit:page (+rnd)
 
 # Watch report
-report.watch.columns = id,description
-report.watch.labels = ID,Description
+report.watch.columns = id,description,url
+report.watch.labels = ID,Description,Url
 report.watch.description = Watch
 report.watch.filter = status:pending limit:page (+watch)
 
 # Listen report
-report.listen.columns = id,description
-report.listen.labels = ID,Description
+report.listen.columns = id,description,url
+report.listen.labels = ID,Description,Url
 report.listen.description = Listen
 report.listen.filter = status:pending limit:page (+listen)
+
+# Email
+report.email.columns = id,description
+report.email.labels = ID,Description
+report.email.description = Email
+report.email.filter = status:pending limit:page (+email)
 
 uda.url.type = string
 uda.url.label = url
