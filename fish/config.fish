@@ -4,6 +4,7 @@ set -x PATH ~/.cabal/bin $PATH
 set -x PATH ~/.cargo/bin ~/.cargo/env $PATH
 set -x PATH ~/.local/bin $PATH
 set -x PATH ~/bin ~/dotfiles/bin $PATH
+set -x PATH ~/.linuxbrew/bin $PATH
 
 # Beancount module finding for importers
 set -x PYTHONPATH $PYTHONPATH ~/vimwiki/money/accounting/
@@ -17,7 +18,6 @@ set -x EDITOR nvim
 alias vim nvim
 alias v nvim
 alias g git
-alias t task
 
 # zlip decompress
 alias zinflate='ruby -r zlib -e "STDOUT.write Zlib::Inflate.inflate(STDIN.read)"'
@@ -32,4 +32,3 @@ end
 gruvbox
 
 source ~/.config/fish/gtd.fish
-

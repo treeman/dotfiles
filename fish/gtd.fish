@@ -1,5 +1,5 @@
 # Easily add to GTD inbox
-alias in 'task add +in'
+abbr -a -g in t add +in
 
 # Easy handling of tickler files
 # Either supports adding a new task:
@@ -14,13 +14,17 @@ end
 alias tick tickle
 
 # Sleep on a task...
-alias think 'tickle +1d'
+abbr -a -g think tickle +1d
 
 # Add a next task
-alias next 'task add +next'
+function next
+    _mod_or_add $argv +next
+end
 
 # Track larger email things in taskwarrior too
-alias email 'task add +next +email'
+function email
+    _mod_or_add $argv +next +email
+end
 
 # Easy add to lists
 # Can either add a new task:
@@ -59,9 +63,9 @@ function _mod_or_add
     set flags $argv[2..-1]
 
     if _single_num $input
-        task mod $input -in $flags
+        t mod $input -in $flags
     else
-        task add $flags $input
+        t add $flags $input
     end
 end
 
@@ -88,7 +92,7 @@ function _with_url
             echo "No title found from url!"
         else
             echo $title
-            task add $flags url:$url $title
+            t add $flags url:$url $title
         end
     end
 end
@@ -117,4 +121,11 @@ function _note
   vim "$file"
 end
 alias n _note
+
+if test -z "$JONHI"
+    alias t task
+else
+    # WSL settings
+    alias t "task rc:$JONHI/.taskrc"
+end
 
