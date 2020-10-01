@@ -16,6 +16,9 @@ alias tick tickle
 # Sleep on a task...
 alias think 'tickle +1d'
 
+# Add a next task
+alias next 'task add +next'
+
 # Track larger email things in taskwarrior too
 alias email 'task add +next +email'
 
