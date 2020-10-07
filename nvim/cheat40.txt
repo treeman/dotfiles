@@ -215,28 +215,24 @@ Expand tab               yot           N
 Vimscript {{{1
 }}}
 LSP {{{1
-Implementation           -i            N
-Definition               -d            N
-Hover                    -h            N
-Signature help           -H            N
-Type def                 -td           N
-References               -r            N
-Symbols in doc           -r            N
-search forSymbols in doc -r            N
-}}}
-coc.vim {{{1
-Navigate diagnostics     [g ]g         N
-Definition               gd            N
 Declaration              gD            N
-Type definition          gy            N
-Implementation           gi            N
+Definition               gd            N
 References               gr            N
-# Text objects, inside and around
-Function object          f             T
-Class object             c             T
+Implementation           gi            N
+Type definition          gt            N
+Hover                    K             N
+Rename                   \ar           N
+Incoming calls           \ai           N
+Outgoing calls           \ao           N
+Document symbol          \gw           N
+Workspace symbol         \gW           N
+Jump through diagnostics [d ]d         N
 }}}
 git {{{1
+# Hunks from git gutter
 Navigate hunks           [h ]h         N
+Stage hunk               \hs           N
+Undo hunk                \hu           N
 }}}
 commentary {{{1
 Comment line             gcc           N
