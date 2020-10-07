@@ -44,7 +44,7 @@ default.command = gtd
 report.gtd.columns  = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description
 report.gtd.labels = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description
 report.gtd.description = Next actions
-report.gtd.filter = status:pending limit:page (+next)
+report.gtd.filter = status:pending (+next)
 report.gtd.sort = project+,due+,urgency-
 
 # Read report

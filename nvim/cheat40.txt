@@ -235,6 +235,9 @@ References               gr            N
 Function object          f             T
 Class object             c             T
 }}}
+git {{{1
+Navigate hunks           [h ]h         N
+}}}
 commentary {{{1
 Comment line             gcc           N
 Comment                  gc‹Move›      M
