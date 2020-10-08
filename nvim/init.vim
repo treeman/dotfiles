@@ -408,12 +408,14 @@ endif
 "LSP {{{
 lua require("lsp_config")
 "}}}
-"Git gutter {{{
+"Git {{{
 " Jump between changed hunks
 nmap ]c <Plug>(GitGutterNextHunk)
 nmap [c <Plug>(GitGutterPrevHunk)
 " FIXME many more things we can do. See here:
 " https://github.com/airblade/vim-gitgutter
+
 nmap gs :Git<CR>
+nmap g<space> :Git 
 "}}}
 " vim:set sw=2 sts=2:
