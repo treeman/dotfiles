@@ -90,6 +90,8 @@ Prev local list          [l            N
 Next local list          ]l            N
 First local list         [L            N
 Last local list          ]L            N
+Toggle quickfix window   \q            N
+Toggle local list window \l            N
 }}}
 Registers {{{1
 # Use with "<register>
