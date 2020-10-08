@@ -124,6 +124,9 @@ Plug 'https://github.com/chrisbra/Colorizer'
 call plug#end()
 
 "{{{ Plugins to check
+" Lightweight statusline:
+" https://github.com/itchyny/lightline.vim
+"
 " File handling plugins:
 " https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html#fernvim
 " CHADTree
@@ -137,9 +140,6 @@ call plug#end()
 " Phoenix:
 " smathy/vim-pheonix
 " vim-projectionist
-"
-"
-" Plugins recommended by Practical vim:
 "
 " More fuzzy funding examples:
 "https://github.com/junegunn/fzf/wiki/Examples-(vim)
@@ -162,13 +162,6 @@ call plug#end()
 "https://kodi.wiki/view/Add-on:VimCasts
 "https://github.com/lambdalisue/gina.vim/blob/master/README.md
 "https://github.com/tpope/vim-dispatch/blob/master/README.markdown
-
-" nvim-lsp for rust
-"https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
-
-"
-" Plug 'Chiel92/vim-autoformat'
-" KKPMW/vim-send-to-window
 "
 " Better f/F
 " https://github.com/rhysd/clever-f.vim
