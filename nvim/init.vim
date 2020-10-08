@@ -116,6 +116,9 @@ Plug 'nvim-lua/completion-nvim'
 " Diagnostic navigation and settings for built-in LSP
 Plug 'nvim-lua/diagnostic-nvim'
 
+" Autoformat for different languages
+Plug 'Chiel92/vim-autoformat'
+
 " Git plugins
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/tpope/vim-fugitive'
@@ -352,6 +355,14 @@ augroup pollengroup
   autocmd FileType pollen setlocal linebreak
 augroup END
 
+" }}}
+" Rust {{{
+augroup rustgroup
+  autocmd!
+  autocmd Filetype rust autocmd BufWrite * :Autoformat
+  " FIXME more intelligent clippy stuff
+  autocmd Filetype rust nnoremap <leader>c :!cargo clippy<CR>
+augroup END
 " }}}
 " Web {{{
 
