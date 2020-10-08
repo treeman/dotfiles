@@ -40,6 +40,15 @@ local custom_attach = function(client)
     -- Omnicompletion support
     vim.api.nvim_command('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 
+
+    -- Set completeopt to have a better completion experience
+    -- together with LSP. Otherwise it automatically insert stuff when typing.
+    -- :help completeopt
+    -- menuone: popup even when there's only one match
+    -- noinsert: Do not insert text until a selection is made
+    -- noselect: Do not select, force user to select one from the menu
+    vim.o.completeopt="menuone,noinsert,noselect"
+
     -- Show diagnostics on hover
     vim.o.updatetime = 300
     autocmd('Cursorhold', '*', 'lua vim.lsp.util.show_line_diagnostics()')

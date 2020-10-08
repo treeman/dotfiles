@@ -45,7 +45,7 @@ set smarttab " insert tabs on the start according to shiftwidth, not tabstop
 " UI
 set relativenumber " display relative line numbers
 set number " show line numbers
-set statusline=%<%t%m%r%h%w%y%=%{FugitiveStatusline()}%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
+set statusline=%<%{FugitiveStatusline()}%=%t\ %m%r%h%w%y%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
 set laststatus=2 " always show the status line
 set linespace=0 " don't insert any extra pixel lines between rows
 set report=0 " tell us when anything is changed via :...
@@ -53,12 +53,7 @@ set shortmess=aOstTc " shortens messages to aviod 'perss a key' prompt
 set ruler " always show current positions along the bottom
 set showcmd " show the command being typed
 set signcolumn=yes " Use a gutter for git-gutter and LSP messages
-" Set completeopt to have a better completion experience
-" :help completeopt
-" menuone: popup even when there's only one match
-" noinsert: Do not insert text until a selection is made
-" noselect: Do not select, force user to select one from the menu
-set completeopt=menuone,noselect
+set completeopt=menuone " Popup completion menu even with only one option
 
 " Must set leaders before plugins
 let mapleader = " "
