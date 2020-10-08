@@ -82,10 +82,10 @@ Find in files            \fg           N
 Reload file              :e            N
 }}}
 Quickfix locallist {{{1
-Prev quickfix            [c            N
-Next quickfix            ]c            N
-First quickfix           [C            N
-Last quickfix            ]C            N
+Prev quickfix            [q            N
+Next quickfix            ]q            N
+First quickfix           [Q            N
+Last quickfix            ]Q            N
 Prev local list          [l            N
 Next local list          ]l            N
 First local list         [L            N
@@ -230,9 +230,34 @@ Jump through diagnostics [d ]d         N
 }}}
 git {{{1
 # Hunks from git gutter
-Navigate hunks           [h ]h         N
+Navigate hunks           [c ]c         N
 Stage hunk               \hs           N
 Undo hunk                \hu           N
+# Fugitive
+Git status               gs            N
+Stage current            GWrite        C
+Checkout current         GRead         C
+# Fugitive buffer shortcuts
+Navigate hunks           [c ]c         N
+Stage file               s             *
+Unstage file             u             *
+Stage/unstage file       -             *
+Unstage everything       U             *
+Discard change           X             *
+Toggle inline diff       =             *
+Open file                <CR>          *
+Open file in new split   o             *
+Open file in new vsplit  g0            *
+Prev hunk, file, rev     (             *
+Next hunk, file, rev     )             *
+Prev file                [m            *
+Next file                ]m            *
+Next file or hunk        i             *
+Commit                   cc            *
+Amend and edit msg       ca            *
+Amend skip edit msg      ce            *
+Amend skip edit msg      ce            *
+
 }}}
 commentary {{{1
 Comment line             gcc           N

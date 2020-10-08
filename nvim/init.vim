@@ -1,18 +1,5 @@
 ﻿" Future ideas and TODOs {{{
-
-" Pretty format XML, JSON
-" ??
-"
-" nvim-lsp for rust
-" https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
-"
-" Maybe use an LSP settings handler?
-" https://github.com/mattn/vim-lsp-settings
-"
-" Add back <leader>n (or similar) to turn search highlight off until next time
-"
 " Move out file specific into ftplugin
-" Create an easily accessible cheat sheet
 " }}}
 " Basic {{{
 " Difficult to use fish as a default shell as plugins may depend on POSIX
@@ -58,7 +45,7 @@ set smarttab " insert tabs on the start according to shiftwidth, not tabstop
 " UI
 set relativenumber " display relative line numbers
 set number " show line numbers
-set statusline=%<%t%m%r%h%w%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
+set statusline=%<%t%m%r%h%w%y%=%{FugitiveStatusline()}%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
 set laststatus=2 " always show the status line
 set linespace=0 " don't insert any extra pixel lines between rows
 set report=0 " tell us when anything is changed via :...
@@ -131,6 +118,7 @@ Plug 'nvim-lua/diagnostic-nvim'
 
 " Git plugins
 Plug 'https://github.com/airblade/vim-gitgutter'
+Plug 'https://github.com/tpope/vim-fugitive'
 
 " nvim in Firefox
 Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
@@ -149,7 +137,6 @@ call plug#end()
 " https://github.com/tpope/vim-dispatch ?
 "
 " Git plugins:
-" https://github.com/tpope/vim-fugitive
 " https://github.com/jreybert/vimagit/blob/master/README.md
 "
 " Phoenix:
@@ -290,7 +277,7 @@ nnoremap <leader>tw :silent! %s/\s\+$//<CR>:retab<CR>
 " Next/prev from unimpaired.vim {{{
 " [b, ]b, [B, ]B       :bprev, :bnext, :bfirst, :blast
 " [l, ]l, [L, ]L       :lprev, :lnext, :lfirst, :llast
-" [q, ]q, [Q, ]Q       :qprev, :qnext, :qfirst, :qlast
+" [q, ]q, [Q, ]Q       :cprev, :cnext, :cfirst, :clast
 " Goto next/prev files by name in current folder:
 " [f, ]f
 "
@@ -423,9 +410,10 @@ lua require("lsp_config")
 "}}}
 "Git gutter {{{
 " Jump between changed hunks
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
+nmap ]c <Plug>(GitGutterNextHunk)
+nmap [c <Plug>(GitGutterPrevHunk)
 " FIXME many more things we can do. See here:
 " https://github.com/airblade/vim-gitgutter
+nmap gs :Git<CR>
 "}}}
 " vim:set sw=2 sts=2:
