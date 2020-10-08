@@ -277,6 +277,30 @@ map <leader>u :call HandleURL()<cr>
 " FIXME Should create a map for it to trim only the selection
 nnoremap <leader>tw :silent! %s/\s\+$//<CR>:retab<CR>
 
+command -bang -nargs=? QFix call QFixToggle(<bang>0)
+function! QFixToggle(forced)
+  if exists("g:qfix_win") && a:forced == 0
+    cclose
+    unlet g:qfix_win
+  else
+    copen 10
+    let g:qfix_win = bufnr("$")
+  endif
+endfunction
+nmap <silent><leader>q :QFix<CR>
+
+command -bang -nargs=? LList call LListToggle(<bang>0)
+function! LListToggle(forced)
+  if exists("g:llist_win") && a:forced == 0
+    lclose
+    unlet g:llist_win
+  else
+    lopen 10
+    let g:llist_win = bufnr("$")
+  endif
+endfunction
+nmap <silent><leader>l :LList<CR>
+
 " Next/prev from unimpaired.vim {{{
 " [b, ]b, [B, ]B       :bprev, :bnext, :bfirst, :blast
 " [l, ]l, [L, ]L       :lprev, :lnext, :lfirst, :llast
@@ -359,7 +383,7 @@ augroup END
 " Rust {{{
 augroup rustgroup
   autocmd!
-  autocmd Filetype rust autocmd BufWrite * :Autoformat
+  autocmd BufWrite *.rs :Autoformat
   " FIXME more intelligent clippy stuff
   autocmd Filetype rust nnoremap <leader>c :!cargo clippy<CR>
 augroup END
