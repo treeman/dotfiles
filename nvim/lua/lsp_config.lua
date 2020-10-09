@@ -40,8 +40,16 @@ local custom_attach = function(client)
     -- Omnicompletion support
     vim.api.nvim_command('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 
+    -- Set completeopt to have a better completion experience
+    -- together with LSP. Otherwise it automatically insert stuff when typing.
+    -- :help completeopt
+    -- menuone: popup even when there's only one match
+    -- noinsert: Do not insert text until a selection is made
+    -- noselect: Do not select, force user to select one from the menu
+    vim.api.nvim_command('setlocal completeopt=menuone,noinsert,noselect')
+
     -- Show diagnostics on hover
-    vim.o.updatetime = 300
+    vim.api.nvim_command('setlocal updatetime=300')
     autocmd('Cursorhold', '*', 'lua vim.lsp.util.show_line_diagnostics()')
 
     -- Enable type inlay hints
@@ -54,3 +62,7 @@ local custom_attach = function(client)
 end
 
 require'nvim_lsp'.rust_analyzer.setup({ on_attach=custom_attach })
+
+vim.api.nvim_command('command! LspStop :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>')
+vim.api.nvim_command('command! LspStarted :lua print(vim.inspect(vim.lsp.buf_get_clients()))<CR>')
+
