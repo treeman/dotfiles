@@ -452,5 +452,13 @@ nmap [c <Plug>(GitGutterPrevHunk)
 
 nmap gs :Git<CR>
 nmap g<space> :Git 
+" FIXME oneline doesn't support color highlighting for some reason, so be
+" satisfied with this for now
+nmap gll :Git log
+
+" FIXME for files we can do
+" :Git log -- %
+" How to do lines in files?
+
 "}}}
 " vim:set sw=2 sts=2:
