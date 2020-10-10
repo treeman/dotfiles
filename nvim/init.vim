@@ -189,26 +189,29 @@ endif
 set background=dark
 let g:gruvbox_italic = 1
 
-" FIXME this has grays too similar
-" let g:lightline.colorscheme = 'gruvbox'
-"
+" To avoid the low contrast gray on 2nd left side
+let g:lightline_gruvbox_style = 'hard_left'
+
 " For more info see:
 " :h statusline
 " :h g:lightline.component
 let g:lightline = {
-  \ 'colorscheme': 'jellybeans',
+  \ 'colorscheme': 'gruvbox',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'gitbranch', 'gitstatus', 'readonly', 'modified' ],
   \             [ 'filename' ] ],
-  \   'right': [
-  \              [ 'cursorinfo' ],
+  \   'right': [ [ 'lineinfo' ],
   \              [ 'charvaluehex' ],
   \              [ 'spell', 'fileformat', 'fileencoding', 'filetype' ] ]
   \ },
+  \ 'inactive': {
+  \   'left': [ [ 'filename' ] ],
+  \   'right': [ [ 'lineinfo' ] ]
+  \ },
   \ 'component': {
   \   'charvaluehex': '0x%0B',
-  \   'cursorinfo': '%c:%l/%L%<'
+  \   'lineinfo': '%c:%l/%L%<'
   \ },
   \ 'component_function': {
   \   'gitbranch': 'FugitiveHead',
@@ -223,7 +226,7 @@ let g:lightline = {
 
 " These functions truncates away a bunch of stuff when width is smaller
 function! LightlineGitStatus()
-  if winwidth(0) < 80
+  if winwidth(0) <= 95
     return ""
   endif
 
@@ -244,7 +247,7 @@ function! LightlineGitStatus()
 endfunction
 
 function! LightlineFilename()
-  return winwidth(0) > 50 ? expand('%:F') : expand('%:t')
+  return winwidth(0) > 95 ? expand('%:F') : expand('%:t')
 endfunction
 
 function! LightlineSpell()
@@ -338,7 +341,7 @@ map <leader>u :call HandleURL()<cr>
 " FIXME Should create a map for it to trim only the selection
 nnoremap <leader>tw :silent! %s/\s\+$//<CR>:retab<CR>
 
-command -bang -nargs=? QFix call QFixToggle(<bang>0)
+command! -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
   if exists("g:qfix_win") && a:forced == 0
     cclose
@@ -350,7 +353,7 @@ function! QFixToggle(forced)
 endfunction
 nmap <silent><leader>q :QFix<CR>
 
-command -bang -nargs=? LList call LListToggle(<bang>0)
+command! -bang -nargs=? LList call LListToggle(<bang>0)
 function! LListToggle(forced)
   if exists("g:llist_win") && a:forced == 0
     lclose
