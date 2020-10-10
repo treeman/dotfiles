@@ -99,6 +99,9 @@ Plug 'https://github.com/otherjoel/vim-pollen.git'
 Plug 'https://github.com/elixir-editors/vim-elixir.git'
 " Automatically insert end in insert mode for some languages
 Plug 'https://github.com/tpope/vim-endwise'
+" Light statusbar
+Plug 'https://github.com/itchyny/lightline.vim'
+Plug 'shinchu/lightline-gruvbox.vim'
 
 " LSP support
 " See doc :help lsp
@@ -127,9 +130,6 @@ Plug 'https://github.com/chrisbra/Colorizer'
 call plug#end()
 
 "{{{ Plugins to check
-" Lightweight statusline:
-" https://github.com/itchyny/lightline.vim
-"
 " File handling plugins:
 " https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html#fernvim
 " CHADTree
@@ -188,6 +188,73 @@ if $TERM == "xterm-kitty"
 endif
 set background=dark
 let g:gruvbox_italic = 1
+
+function! GitStatus()
+  let [a,m,r] = GitGutterGetHunkSummary()
+
+  let info = []
+  if a != 0
+    call add(info, printf('+%d', a))
+  end
+  if m != 0
+    call add(info, printf('~%d', m))
+  end
+  if r != 0
+    call add(info, printf('-%d', r))
+  end
+
+  return join(info)
+endfunction
+
+" FIXME reduce visible info for narrow windows
+" FIXME 
+
+" FIXME this has grays too similar
+" let g:lightline.colorscheme = 'gruvbox'
+let g:lightline = {
+  \ 'colorscheme': 'jellybeans',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'gitbranch', 'gitstatus', 'readonly', 'modified' ],
+  \             [ 'absolutepath' ] ],
+  \   'right': [
+  \              [ 'cursorinfo' ],
+  \              [ 'charvaluehex' ],
+  \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+  \ },
+  \ 'component': {
+  \   'charvaluehex': '0x%0B',
+  \   'cursorinfo': '%c:%l/%L'
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'FugitiveHead',
+  \   'gitstatus': 'GitStatus'
+  \ },
+\ }
+"set statusline=%<%{FugitiveStatusline()}%=%t\ %m%r%h%w%y%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
+"
+" Info that we want:
+" mode
+" filename %t
+" modified %m
+" readonly %r
+" help %h
+" preview %w
+" filetype %y
+" column number %c
+" virtual column number %V
+" line number %l
+" number o flines in buffer %L
+" argument list status %a
+" charvaluehex 0x%0B
+" percentage through files in lines
+" See :h statusline
+"
+" Default lightline components:
+" :h g:lightline.component
+"
+" git branch/status
+"
 
 " }}}
 " Mapping {{{
