@@ -297,6 +297,20 @@ nnoremap <silent> <leader>/ :execute 'Rg ' . input('Rg/')<CR>
 " Find from open buffers
 nnoremap <silent> <leader>fb :Buffers<CR>
 
+" CTRL-A CTRL-Q to select all and build quickfix list
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
+
 " Special chars
 inoremap <C-l> λ
 inoremap <C-e> ◊
