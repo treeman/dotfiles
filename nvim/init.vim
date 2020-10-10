@@ -189,7 +189,44 @@ endif
 set background=dark
 let g:gruvbox_italic = 1
 
-function! GitStatus()
+" FIXME this has grays too similar
+" let g:lightline.colorscheme = 'gruvbox'
+"
+" For more info see:
+" :h statusline
+" :h g:lightline.component
+let g:lightline = {
+  \ 'colorscheme': 'jellybeans',
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'gitbranch', 'gitstatus', 'readonly', 'modified' ],
+  \             [ 'filename' ] ],
+  \   'right': [
+  \              [ 'cursorinfo' ],
+  \              [ 'charvaluehex' ],
+  \              [ 'spell', 'fileformat', 'fileencoding', 'filetype' ] ]
+  \ },
+  \ 'component': {
+  \   'charvaluehex': '0x%0B',
+  \   'cursorinfo': '%c:%l/%L%<'
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'FugitiveHead',
+  \   'gitstatus': 'LightlineGitStatus',
+  \   'spell': 'LightlineSpell',
+  \   'filename': 'LightlineFilename',
+  \   'fileformat': 'LightlineFileformat',
+  \   'filetype': 'LightlineFiletype',
+  \   'fileencoding': 'LightlineFileEncoding',
+  \ },
+\ }
+
+" These functions truncates away a bunch of stuff when width is smaller
+function! LightlineGitStatus()
+  if winwidth(0) < 80
+    return ""
+  endif
+
   let [a,m,r] = GitGutterGetHunkSummary()
 
   let info = []
@@ -206,56 +243,25 @@ function! GitStatus()
   return join(info)
 endfunction
 
-" FIXME reduce visible info for narrow windows
-" FIXME 
+function! LightlineFilename()
+  return winwidth(0) > 50 ? expand('%:F') : expand('%:t')
+endfunction
 
-" FIXME this has grays too similar
-" let g:lightline.colorscheme = 'gruvbox'
-let g:lightline = {
-  \ 'colorscheme': 'jellybeans',
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'gitbranch', 'gitstatus', 'readonly', 'modified' ],
-  \             [ 'absolutepath' ] ],
-  \   'right': [
-  \              [ 'cursorinfo' ],
-  \              [ 'charvaluehex' ],
-  \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-  \ },
-  \ 'component': {
-  \   'charvaluehex': '0x%0B',
-  \   'cursorinfo': '%c:%l/%L'
-  \ },
-  \ 'component_function': {
-  \   'gitbranch': 'FugitiveHead',
-  \   'gitstatus': 'GitStatus'
-  \ },
-\ }
-"set statusline=%<%{FugitiveStatusline()}%=%t\ %m%r%h%w%y%=%c%V,\ %l/%L\ %a\ 0x%0B\ %p%%
-"
-" Info that we want:
-" mode
-" filename %t
-" modified %m
-" readonly %r
-" help %h
-" preview %w
-" filetype %y
-" column number %c
-" virtual column number %V
-" line number %l
-" number o flines in buffer %L
-" argument list status %a
-" charvaluehex 0x%0B
-" percentage through files in lines
-" See :h statusline
-"
-" Default lightline components:
-" :h g:lightline.component
-"
-" git branch/status
-"
+function! LightlineSpell()
+  return winwidth(0) > 70 ? (&spell ? &spelllang : '') : ''
+endfunction
 
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightlineFileEncoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
 " }}}
 " Mapping {{{
 
