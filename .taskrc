@@ -32,6 +32,7 @@ urgency.uda.priority.H.coefficient = 15
 urgency.due.coefficient = 10
 urgency.uda.priority.M.coefficient = 5
 urgency.uda.priority.L.coefficient = -5
+urgency.age.coefficient = 0
 
 # Inbox report
 report.in.columns = id,description
@@ -45,7 +46,7 @@ report.gtd.columns  = id,start.age,entry.age,depends,priority,project,tags,recur
 report.gtd.labels = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description
 report.gtd.description = Next actions
 report.gtd.filter = status:pending (+next)
-report.gtd.sort = project+,due+,urgency-
+report.gtd.sort = project+,due+,urgency-,description+
 
 # Read report
 report.rd.columns = id,description,url
