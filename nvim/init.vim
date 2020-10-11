@@ -415,8 +415,8 @@ endfunction
 " Block vimwiki from hijacking markdown files
 let g:vimwiki_global_ext = 0
 " Set markdown as default syntax
-"let g:vimwiki_list = [{'path': '~/vimwiki/',
-"                      \ 'syntax': 'markdown', 'ext': '.markdown'}]
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.markdown'}]
 
 " }}}
 " Markdown {{{
