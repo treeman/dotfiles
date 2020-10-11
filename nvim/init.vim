@@ -418,6 +418,13 @@ let g:vimwiki_global_ext = 0
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.markdown'}]
 
+let g:vimwiki_folding = 'custom'
+augroup VimrcAuGroup
+  autocmd!
+  autocmd FileType vimwiki setlocal foldmethod=expr |
+    \ setlocal foldenable | set foldexpr=MarkdownLevel()
+augroup END
+
 " }}}
 " Markdown {{{
 
@@ -426,10 +433,6 @@ augroup markdowngroup
   autocmd FileType markdown setlocal foldexpr=MarkdownLevel()
   autocmd FileType markdown setlocal foldmethod=expr
   autocmd FileType markdown :normal zR
-
-  autocmd FileType vimwiki setlocal foldexpr=MarkdownLevel()
-  autocmd FileType vimwiki setlocal foldmethod=expr
-  autocmd FileType vimwiki :normal zR
 augroup END
 
 " }}}
