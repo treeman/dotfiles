@@ -102,6 +102,8 @@ Plug 'https://github.com/tpope/vim-endwise'
 " Light statusbar
 Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
+" Treesitter syntax highlighting
+Plug 'nvim-treesitter/nvim-treesitter'
 
 " LSP support
 " See doc :help lsp
@@ -541,5 +543,8 @@ nmap gll :Git log
 " :Git log -- %
 " How to do lines in files?
 
+"}}}
+" Treesitter{{{
+lua require("treesitter_config")
 "}}}
 " vim:set sw=2 sts=2:
