@@ -72,6 +72,13 @@ report.listen.labels = ID,Description,Url
 report.listen.description = Listen
 report.listen.filter = status:pending limit:page (+listen)
 
+# External report
+report.ext.columns = id,tags,description,url
+report.ext.labels = ID,Tags,Description,Url
+report.ext.description = Read, R&D, Watch, Listen
+report.ext.filter = status:pending limit:page (+read or +rnd or +watch or +listen)
+report.ext.sort = tags+,urgency-,description+
+
 # Email
 report.email.columns = id,description
 report.email.labels = ID,Description
