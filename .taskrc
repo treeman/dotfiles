@@ -24,14 +24,18 @@ taskd.trust=strict
 weekstart=monday
 nag=
 
+uda.brain.type = string
+uda.brain.label = Brain
+uda.brain.values = H,M,L
+
 urgency.annotations.coefficient = 0
 urgency.project.coefficient = 0
 urgency.tags.coefficient = 0
 urgency.user.tag.next.coefficient = 2
 urgency.uda.priority.H.coefficient = 15
-urgency.due.coefficient = 10
 urgency.uda.priority.M.coefficient = 5
 urgency.uda.priority.L.coefficient = -5
+urgency.due.coefficient = 10
 urgency.age.coefficient = 0
 
 # Inbox report
@@ -42,8 +46,8 @@ report.in.filter = status:pending limit:page (+in)
 
 # GTD next report
 default.command = gtd
-report.gtd.columns  = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description
-report.gtd.labels = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description
+report.gtd.columns  = id,start.age,entry.age,depends,priority,brain,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description
+report.gtd.labels = ID,Active,Age,Deps,P,B,Project,Tag,Recur,S,Due,Until,Description
 report.gtd.description = Next actions
 report.gtd.filter = status:pending (+next)
 report.gtd.sort = project+,due+,urgency-,description+
