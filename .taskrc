@@ -26,7 +26,7 @@ nag=
 
 uda.brain.type = string
 uda.brain.label = Brain
-uda.brain.values = H,M,L
+uda.brain.values = h,m,l
 
 urgency.annotations.coefficient = 0
 urgency.project.coefficient = 0

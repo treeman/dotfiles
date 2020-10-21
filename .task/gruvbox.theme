@@ -48,9 +48,9 @@ color.blocked=color8 on color0
 color.blocking=color15 on color0
 
 # Brainpower
-color.uda.brain.H=color5
-color.uda.brain.M=color97
-color.uda.brain.L=color98
+color.uda.brain.h=color5
+color.uda.brain.m=color97
+color.uda.brain.l=color98
 
 # Priority
 color.uda.priority.H=color130
