@@ -4,8 +4,8 @@ function fish_greeting
     end
 
     set projects (projects_without_next)
-    if test -z $projects
-    else
+
+    if test "x-$projects" != "x-"
         echo "Attention: The following projects don't currently have a next action:"
         echo $projects
         echo
