@@ -1,0 +1,17 @@
+#!/bin/sh
+brightness_file="/sys/class/backlight/amdgpu_bl0/brightness"
+
+if ! test -f "$(readlink --canonicalize $brightness_file)" ; then
+  printf '\033[31mERROR:\033[0m Could not find a `brightness` file.\n' 1>&2
+  exit 2
+fi
+
+if test "$#" -eq 0 ; then
+  printf 'Set brightness to: '
+  read -r input
+  brightness="$input"
+else
+  brightness="$1"
+fi 
+
+printf '%s' "$brightness" > $brightness_file

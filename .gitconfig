@@ -35,17 +35,13 @@
     a = add
     co = checkout
     b = branch
-    #l = "!source ~/.githelpers && pretty_git_log"
-    l = log
+    l = "!pretty_git_log"
     f = fetch
     p = push
     pu = pull
     sw = switch
     re = restore
 
-[branch "master"]
-    remote = origin
-    merge = refs/heads/master
 [core]
     pager = less -r
     excludesfile = *.swp

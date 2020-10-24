@@ -12,24 +12,7 @@
 
 # Files
 data.location=~/.task
-
 include ~/dotfiles/.task/gruvbox.theme
-
-# Color theme (uncomment one to use)
-#include /usr/share/doc/task/rc/light-16.theme
-#include /usr/share/doc/task/rc/light-256.theme
-#include /usr/share/doc/task/rc/dark-16.theme
-#include /usr/share/doc/task/rc/dark-256.theme
-#include /usr/share/doc/task/rc/dark-red-256.theme
-#include /usr/share/doc/task/rc/dark-green-256.theme
-#include /usr/share/doc/task/rc/dark-blue-256.theme
-#include /usr/share/doc/task/rc/dark-violets-256.theme
-#include /usr/share/doc/task/rc/dark-yellow-green.theme
-#include /usr/share/doc/task/rc/dark-gray-256.theme
-#include /usr/share/doc/task/rc/dark-gray-blue-256.theme
-#include /usr/share/doc/task/rc/solarized-dark-256.theme
-#include /usr/share/doc/task/rc/solarized-light-256.theme
-#include /usr/share/doc/task/rc/no-color.theme
 
 taskd.certificate=\/home\/tree\/.task\/freecinc_d9d3d68a.cert.pem
 taskd.key=\/home\/tree\/.task\/freecinc_d9d3d68a.key.pem
@@ -38,21 +21,22 @@ taskd.credentials=FreeCinc\/freecinc_d9d3d68a\/48d6af2e-fab6-4843-99fa-707f7b6e4
 taskd.server=freecinc.com:53589
 taskd.trust=strict
 
-context.consulting=+@consulting
-context.house=+@home -@computer
-context.home=+@home or +@computer
-
 weekstart=monday
 nag=
+
+uda.brain.type = string
+uda.brain.label = Brain
+uda.brain.values = h,m,l
 
 urgency.annotations.coefficient = 0
 urgency.project.coefficient = 0
 urgency.tags.coefficient = 0
-urgency.user.tag.next.coefficient = 0
+urgency.user.tag.next.coefficient = 2
 urgency.uda.priority.H.coefficient = 15
-urgency.due.coefficient = 10
 urgency.uda.priority.M.coefficient = 5
 urgency.uda.priority.L.coefficient = -5
+urgency.due.coefficient = 10
+urgency.age.coefficient = 0
 
 # Inbox report
 report.in.columns = id,description
@@ -62,11 +46,11 @@ report.in.filter = status:pending limit:page (+in)
 
 # GTD next report
 default.command = gtd
-report.gtd.columns  = id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description
-report.gtd.labels = ID,Active,Age,Deps,P,Project,Tag,Recur,S,Due,Until,Description
+report.gtd.columns  = id,start.age,entry.age,depends,priority,brain,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description
+report.gtd.labels = ID,Active,Age,Deps,P,B,Project,Tag,Recur,S,Due,Until,Description
 report.gtd.description = Next actions
-report.gtd.filter = status:pending limit:page (+next)
-report.gtd.sort = project+,due+,urgency-
+report.gtd.filter = status:pending (+next)
+report.gtd.sort = project+,due+,urgency-,description+
 
 # Read report
 report.rd.columns = id,description,url
@@ -91,6 +75,13 @@ report.listen.columns = id,description,url
 report.listen.labels = ID,Description,Url
 report.listen.description = Listen
 report.listen.filter = status:pending limit:page (+listen)
+
+# External report
+report.ext.columns = id,tags,description,url
+report.ext.labels = ID,Tags,Description,Url
+report.ext.description = Read, R&D, Watch, Listen
+report.ext.filter = status:pending limit:page (+read or +rnd or +watch or +listen)
+report.ext.sort = tags+,urgency-,description+
 
 # Email
 report.email.columns = id,description

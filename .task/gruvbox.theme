@@ -47,6 +47,11 @@ color.until=
 color.blocked=color8 on color0
 color.blocking=color15 on color0
 
+# Brainpower
+color.uda.brain.h=color5
+color.uda.brain.m=color97
+color.uda.brain.l=color98
+
 # Priority
 color.uda.priority.H=color130
 color.uda.priority.M=color208
@@ -71,7 +76,7 @@ color.tag.rnd=color4
 color.tag.watch=color14
 color.tag.listen=color6
 color.tag.in=color7
-color.tag.home=color5
+color.tag.home=color214
 color.tag.web=color2
 color.tag.book=color10
 color.tag.ebook=color6

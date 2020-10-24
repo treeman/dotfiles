@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# This file is stolen from Gary Bernhardt's dotfiles:
+# https://github.com/garybernhardt/dotfiles/
+
+# Log output:
+#
+# * 51c333e (12 days) <Gary Bernhardt> add vim-eunuch
+#
+# The time massaging regexes start with ^[^<]* because that ensures that they
+# only operate before the first "<". That "<" will be the beginning of the
+# author name, ensuring that we don't destroy anything in the commit message
+# that looks like time.
+#
+# Modified to decrease horizontal growth. Also fixed sed error.
+
+pretty_git_log -1
+git show -p --pretty-"tformat:"
