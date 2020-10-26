@@ -349,6 +349,13 @@ nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
 " Create splits with <C-w>v and <C-w>s, or :sp and :vs
 
+" Command autocomplete from the given prefix
+cnoremap <C-n> <Down>
+cnoremap <C-p> <Up>
+" Maybe consider remapping up/down to C-n/C-p I guess...
+cnoremap <Down> <nop>
+cnoremap <Up> <nop>
+
 " Open url under cursor
 " FIXME better keybinding?
 map <leader>u :call HandleURL()<cr>
