@@ -104,6 +104,8 @@ Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
 " Treesitter syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter'
+" Dispatch async things
+Plug 'https://github.com/tpope/vim-dispatch'
 
 " LSP support
 " See doc :help lsp
@@ -479,8 +481,8 @@ augroup END
 augroup rustgroup
   autocmd!
   autocmd BufWrite *.rs :Autoformat
-  " FIXME more intelligent clippy stuff
-  autocmd Filetype rust nnoremap <leader>c :!cargo clippy<CR>
+  autocmd Filetype rust nnoremap <leader>c :Dispatch cargo clippy<CR>
+  autocmd FileType rust let b:dispatch = 'cargo check'
 augroup END
 " }}}
 " Web {{{

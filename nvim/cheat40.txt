@@ -272,6 +272,10 @@ Delete delimiters        ds‹c›         N
 Add delimiters           ys‹to›‹c›     N
 Add delimiters           S…            V
 }}}
+Make/Check/Building/Dispatching {{{1
+Default dispatch         `<CR>         N
+Copen/Close              dispatch win  C
+}}}
 
 
 
