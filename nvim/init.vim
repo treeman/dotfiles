@@ -124,6 +124,7 @@ Plug 'Chiel92/vim-autoformat'
 " Git plugins
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/rhysd/git-messenger.vim'
 
 " nvim in Firefox
 Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
@@ -138,12 +139,8 @@ call plug#end()
 " https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html#fernvim
 " CHADTree
 "
-" Quality of life plugins:
-" https://github.com/tpope/vim-dispatch ?
-"
 " Git plugins:
-" https://github.com/jreybert/vimagit/blob/master/README.md
-" https://github.com/f-person/git-blame.nvim
+" https://github.com/jreybert/vimagit
 "
 " Phoenix:
 " smathy/vim-pheonix
@@ -356,12 +353,15 @@ nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
 " Create splits with <C-w>v and <C-w>s, or :sp and :vs
 
+" Goto previous buffer
+nnoremap <leader>b :edit #<CR>
+
 " Command autocomplete from the given prefix
-cnoremap <C-n> <Down>
-cnoremap <C-p> <Up>
+" cnoremap <C-n> <Down>
+" cnoremap <C-p> <Up>
 " Maybe consider remapping up/down to C-n/C-p I guess...
-cnoremap <Down> <nop>
-cnoremap <Up> <nop>
+" cnoremap <Down> <nop>
+" cnoremap <Up> <nop>
 
 " Open url under cursor
 " FIXME better keybinding?
@@ -549,13 +549,18 @@ nmap [c <Plug>(GitGutterPrevHunk)
 
 nmap gs :Git<CR>
 nmap g<space> :Git 
-" FIXME oneline doesn't support color highlighting for some reason, so be
-" satisfied with this for now
-nmap gll :Git log
+" FIXME graph/oneline doesn't support syntax highlighting, and neither does
+" our custom log. Meh, maybe add our own syntax highlighting for this?
+" See:
+" https://github.com/tpope/vim-fugitive/blob/master/autoload/fugitive.vim
+" https://github.com/MTDL9/vim-log-highlighting/tree/master/syntax
+nmap gll :Git log --graph --pretty="tformat:%h (%ar) <%an> %d %s"<CR>
+" FIXME how to do lines in files?
+nmap glf :Git log --graph --pretty="tformat:%h (%ar) <%an> %d %s" -- %<CR>
 
-" FIXME for files we can do
-" :Git log -- %
-" How to do lines in files?
+let g:git_messenger_no_default_mappings = v:true
+nmap g? <Plug>(git-messenger)
+
 
 "}}}
 " Treesitter{{{

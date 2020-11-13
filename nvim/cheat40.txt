@@ -230,7 +230,9 @@ Document symbol          \gw           N
 Workspace symbol         \gW           N
 Jump through diagnostics [d ]d         N
 }}}
-git {{{1
+Git {{{1
+# Misc
+g?                       last commit   N
 # Hunks from git gutter
 Navigate hunks           [c ]c         N
 Stage hunk               \hs           N
@@ -239,6 +241,10 @@ Undo hunk                \hu           N
 Git status               gs            N
 Stage current            GWrite        C
 Checkout current         GRead         C
+Blame                    Gblame        C
+Log                      gll           N
+Log file                 glf           N
+g …                      Git …         N
 # Fugitive buffer shortcuts
 Navigate hunks           [c ]c         N
 Stage file               s             *
