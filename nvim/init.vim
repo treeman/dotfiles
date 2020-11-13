@@ -141,6 +141,7 @@ call plug#end()
 "
 " Git plugins:
 " https://github.com/jreybert/vimagit/blob/master/README.md
+" https://github.com/f-person/git-blame.nvim
 "
 " Phoenix:
 " smathy/vim-pheonix

@@ -29,7 +29,7 @@ local custom_attach = function(client)
 
     -- Goto previous/next diagnostic warning/error
     map('n','[d','<cmd>PrevDiagnosticCycle<cr>')
-    map('n',']d','cmd>NextDiagnosticCycle<cr>')
+    map('n',']d','<cmd>NextDiagnosticCycle<cr>')
 
     -- Visualize diagnostics
     vim.g.diagnostic_enable_virtual_text = 1
