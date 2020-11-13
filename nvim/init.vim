@@ -10,6 +10,8 @@ set shell=/bin/bash
 set mouse=a
 " Use CLIPBOARD register + as default
 " Remember to install "xsel" for this to work!
+" For Neovim in WSL see:
+" https://github.com/neovim/neovim/wiki/FAQ#how-to-use-the-windows-clipboard-from-wsl
 set clipboard+=unnamedplus
 
 " Kill annoying beep sound
@@ -124,6 +126,7 @@ Plug 'Chiel92/vim-autoformat'
 " Git plugins
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/rbong/vim-flog'
 Plug 'https://github.com/rhysd/git-messenger.vim'
 
 " nvim in Firefox
@@ -141,6 +144,7 @@ call plug#end()
 "
 " Git plugins:
 " https://github.com/jreybert/vimagit
+" https://github.com/tpope/vim-rhubarb
 "
 " Phoenix:
 " smathy/vim-pheonix
@@ -166,7 +170,7 @@ call plug#end()
 "https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
 "https://kodi.wiki/view/Add-on:VimCasts
 "https://github.com/lambdalisue/gina.vim/blob/master/README.md
-"https://github.com/tpope/vim-dispatch/blob/master/README.markdown
+"https://medium.com/@huntie/10-essential-vim-plugins-for-2018-39957190b7a9
 "
 " Better f/F
 " https://github.com/rhysd/clever-f.vim
@@ -365,7 +369,7 @@ nnoremap <leader>b :edit #<CR>
 
 " Open url under cursor
 " FIXME better keybinding?
-map <leader>u :call HandleURL()<cr>
+nnoremap <leader>u :call HandleURL()<cr>
 
 " Trim whitespaces
 " FIXME Should create a map for it to trim only the selection
@@ -381,7 +385,7 @@ function! QFixToggle(forced)
     let g:qfix_win = bufnr("$")
   endif
 endfunction
-nmap <silent><leader>q :QFix<CR>
+nnoremap <silent><leader>q :QFix<CR>
 
 command! -bang -nargs=? LList call LListToggle(<bang>0)
 function! LListToggle(forced)
@@ -393,7 +397,7 @@ function! LListToggle(forced)
     let g:llist_win = bufnr("$")
   endif
 endfunction
-nmap <silent><leader>l :LList<CR>
+nnoremap <silent><leader>l :LList<CR>
 
 " Next/prev from unimpaired.vim {{{
 " [b, ]b, [B, ]B       :bprev, :bnext, :bfirst, :blast
@@ -542,24 +546,29 @@ lua require("lsp_config")
 "}}}
 "Git {{{
 " Jump between changed hunks
-nmap ]c <Plug>(GitGutterNextHunk)
-nmap [c <Plug>(GitGutterPrevHunk)
+nnoremap ]c <Plug>(GitGutterNextHunk)
+nnoremap [c <Plug>(GitGutterPrevHunk)
 " FIXME many more things we can do. See here:
 " https://github.com/airblade/vim-gitgutter
 
-nmap gs :Git<CR>
-nmap g<space> :Git 
-" FIXME graph/oneline doesn't support syntax highlighting, and neither does
-" our custom log. Meh, maybe add our own syntax highlighting for this?
-" See:
-" https://github.com/tpope/vim-fugitive/blob/master/autoload/fugitive.vim
-" https://github.com/MTDL9/vim-log-highlighting/tree/master/syntax
-nmap gll :Git log --graph --pretty="tformat:%h (%ar) <%an> %d %s"<CR>
-" FIXME how to do lines in files?
-nmap glf :Git log --graph --pretty="tformat:%h (%ar) <%an> %d %s" -- %<CR>
+nnoremap gs :Git<CR>
+nnoremap g<space> :Git 
+nnoremap gll :Flogsplit<CR>
+" FIXME how to show commits only for selection in file?
+nnoremap glf :Flogsplit -path=%<CR>
+"vnoremap glf :Flogsplit -- -L '<,'>:%<CR>
+" -L <start>,<end>:<file>
+
+function! FlogSelectedLines()
+  let start = getpos("'<")[1]
+  let end = getpos("'>")[1]
+  let file = expand("%:p")
+  execute 'silent! Flogsplit -- --no-patch -L'.start.','.end.':'.file
+endfunction
+vnoremap glf :call FlogSelectedLines()<CR>
 
 let g:git_messenger_no_default_mappings = v:true
-nmap g? <Plug>(git-messenger)
+nnoremap g? <Plug>(git-messenger)
 
 
 "}}}
