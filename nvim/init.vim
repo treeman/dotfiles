@@ -171,6 +171,10 @@ call plug#end()
 "
 " Better f/F
 " https://github.com/rhysd/clever-f.vim
+"
+" LSP diagnostics:
+" https://www.reddit.com/r/neovim/comments/jt9tqm/new_builtin_lsp_diagnostics_module/
+" But requires us to update neovim
 "}}}
 "{{{ cheat40
 " Don't use default cheat sheet
