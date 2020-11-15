@@ -61,7 +61,7 @@ local custom_attach = function(client)
             }]])
 end
 
-require'nvim_lsp'.rust_analyzer.setup({ on_attach=custom_attach })
+require'lspconfig'.rust_analyzer.setup({ on_attach=custom_attach })
 
 vim.api.nvim_command('command! LspStop :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>')
 vim.api.nvim_command('command! LspStarted :lua print(vim.inspect(vim.lsp.buf_get_clients()))<CR>')
