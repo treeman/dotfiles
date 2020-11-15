@@ -7,17 +7,12 @@
     # Stuff mostly taken from
     # http://www.metacircus.com/hacking/2011/02/18/play-git-like-a-violin.html
 
-    # Interactive mode to make complex commits
-    ai = add --interactive
-
     # Commits
     c = commit
     cm = commit -m
-    ca = commit -a
     cam = commit -a -m
     # Amend to previous commit
-    #ca = commit --amend
-    #caa = commit -a --amend -C HEAD
+    ca = commit --amend
 
     # Resets
     # Soft

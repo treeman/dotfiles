@@ -554,22 +554,37 @@ nnoremap [c <Plug>(GitGutterPrevHunk)
 nnoremap gs :Git<CR>
 nnoremap g<space> :Git 
 nnoremap gll :Flogsplit<CR>
-" FIXME how to show commits only for selection in file?
 nnoremap glf :Flogsplit -path=%<CR>
-"vnoremap glf :Flogsplit -- -L '<,'>:%<CR>
-" -L <start>,<end>:<file>
-
-function! FlogSelectedLines()
-  let start = getpos("'<")[1]
-  let end = getpos("'>")[1]
-  let file = expand("%:p")
-  execute 'silent! Flogsplit -- --no-patch -L'.start.','.end.':'.file
-endfunction
-vnoremap glf :call FlogSelectedLines()<CR>
+xnoremap glf :Flogsplit -- --no-patch<CR>
 
 let g:git_messenger_no_default_mappings = v:true
 nnoremap g? <Plug>(git-messenger)
 
+" Toggle --no-patch for all commits.
+" Toggling for specific commits isn't supported, but maybe will be later.
+" https://github.com/rbong/vim-flog/issues/39
+function ToggleFlogNoPatch() abort
+    let l:state = flog#get_state()
+    let l:raw_args = l:state['raw_args']
+    if empty(l:raw_args)
+        let l:raw_args = ''
+    endif
+    let l:split_raw_args = split(l:raw_args)
+    let l:no_patch_arg_index = index(l:split_raw_args, '--no-patch')
+    if l:no_patch_arg_index >= 0
+        if len(l:split_raw_args) == 1
+            let l:raw_args = v:null
+        else
+            call remove(l:split_raw_args, l:no_patch_arg_index)
+            let l:raw_args = join(l:split_raw_args, ' ')
+        endif
+    else
+        let l:raw_args .= ' --no-patch'
+    endif
+    let l:state['raw_args'] = l:raw_args
+    call flog#populate_graph_buffer()
+endfunction
+autocmd FileType floggraph nnoremap <buffer> <silent> = :<C-U>call ToggleFlogNoPatch()<CR>
 
 "}}}
 " Treesitter{{{
