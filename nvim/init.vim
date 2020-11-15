@@ -1,4 +1,11 @@
-﻿" Future ideas and TODOs {{{
+﻿" Installation {{{
+" Update treesitter parsers:
+" :TSUpdate
+"
+" Update plugins
+" :PlugUpdate
+" }}}
+" Future ideas and TODOs {{{
 " Move out file specific into ftplugin
 " }}}
 " Basic {{{
@@ -275,6 +282,11 @@ endfunction
 function! LightlineFileEncoding()
   return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
+
+" This is too verbose unfortunately
+" function! LightlineTreesitter()
+"   return winwidth(0) > 70 ? nvim_treesitter#statusline(40) : ''
+" endfunction
 " }}}
 " Mapping {{{
 
@@ -544,6 +556,9 @@ endif
 "LSP {{{
 lua require("lsp_config")
 "}}}
+" Treesitter{{{
+lua require("treesitter_config")
+"}}}
 "Git {{{
 " Jump between changed hunks
 nnoremap ]c <Plug>(GitGutterNextHunk)
@@ -586,8 +601,5 @@ function ToggleFlogNoPatch() abort
 endfunction
 autocmd FileType floggraph nnoremap <buffer> <silent> = :<C-U>call ToggleFlogNoPatch()<CR>
 
-"}}}
-" Treesitter{{{
-lua require("treesitter_config")
 "}}}
 " vim:set sw=2 sts=2:
