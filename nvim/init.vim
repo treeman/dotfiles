@@ -341,7 +341,6 @@ nnoremap <leader>tv :vs <bar> :call FishTerm()<CR>
 nnoremap <leader>ts :sp <bar> :call FishTerm()<CR>
 
 " Clear screen and turn off search highlighting until the next time we search
-" FIXME maybe use C-l here and move window switching functions to M-l?
 nnoremap <silent> <M-l> :<C-u>nohlsearch<CR><C-l>
 
 " Happy window switching
@@ -369,6 +368,7 @@ nnoremap <leader>b :edit #<CR>
 
 " Open url under cursor
 " FIXME better keybinding?
+" FIXME better url identification
 nnoremap <leader>u :call HandleURL()<cr>
 
 " Trim whitespaces

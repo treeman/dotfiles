@@ -122,10 +122,9 @@ function _note
 end
 alias n _note
 
+alias t task
 if test -z "$JONHI"
-    alias t task
 else
-    # WSL settings
-    alias t "task rc:$JONHI/.taskrc"
+    alias wt "task rc:$JONHI/.taskrc"
 end
 
