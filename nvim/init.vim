@@ -156,6 +156,7 @@ call plug#end()
 " Git plugins:
 " https://github.com/jreybert/vimagit
 " https://github.com/tpope/vim-rhubarb
+" https://github.com/wfxr/forgit
 "
 " Phoenix:
 " smathy/vim-pheonix
