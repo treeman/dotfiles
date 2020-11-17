@@ -1,4 +1,15 @@
-﻿" Future ideas and TODOs {{{
+﻿" Installation dependencies things{{{
+" Update plugins
+" :PlugUpdate
+"
+" Update treesitter:
+" :TSUpdate
+"
+" Dependencies:
+" git, ripgrep, fd, bat
+"
+" }}}
+" Future ideas and TODOs {{{
 " Move out file specific into ftplugin
 " }}}
 " Basic {{{
@@ -275,6 +286,28 @@ endfunction
 function! LightlineFileEncoding()
   return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
+" }}}
+" FZF {{{
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Default fzf layout
+" - Popup window
+let g:fzf_layout = { 'window': '-tabnew' }
 " }}}
 " Mapping {{{
 
@@ -556,6 +589,7 @@ nnoremap g<space> :Git
 nnoremap gll :Flogsplit<CR>
 nnoremap glf :Flogsplit -path=%<CR>
 xnoremap glf :Flogsplit -- --no-patch<CR>
+nnoremap <silent> <leader>fc :Commits<CR>
 
 let g:git_messenger_no_default_mappings = v:true
 nnoremap g? <Plug>(git-messenger)
