@@ -29,7 +29,7 @@ local custom_attach = function(client)
 
     -- Goto previous/next diagnostic warning/error
     map('n','[d','<cmd>PrevDiagnosticCycle<cr>')
-    map('n',']d','cmd>NextDiagnosticCycle<cr>')
+    map('n',']d','<cmd>NextDiagnosticCycle<cr>')
 
     -- Visualize diagnostics
     vim.g.diagnostic_enable_virtual_text = 1
@@ -61,7 +61,7 @@ local custom_attach = function(client)
             }]])
 end
 
-require'nvim_lsp'.rust_analyzer.setup({ on_attach=custom_attach })
+require'lspconfig'.rust_analyzer.setup({ on_attach=custom_attach })
 
 vim.api.nvim_command('command! LspStop :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>')
 vim.api.nvim_command('command! LspStarted :lua print(vim.inspect(vim.lsp.buf_get_clients()))<CR>')

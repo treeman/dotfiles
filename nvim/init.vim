@@ -1,4 +1,11 @@
-﻿" Future ideas and TODOs {{{
+﻿" Installation {{{
+" Update treesitter parsers:
+" :TSUpdate
+"
+" Update plugins
+" :PlugUpdate
+" }}}
+" Future ideas and TODOs {{{
 " Move out file specific into ftplugin
 " }}}
 " Basic {{{
@@ -10,6 +17,8 @@ set shell=/bin/bash
 set mouse=a
 " Use CLIPBOARD register + as default
 " Remember to install "xsel" for this to work!
+" For Neovim in WSL see:
+" https://github.com/neovim/neovim/wiki/FAQ#how-to-use-the-windows-clipboard-from-wsl
 set clipboard+=unnamedplus
 
 " Kill annoying beep sound
@@ -104,6 +113,8 @@ Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
 " Treesitter syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter'
+" Dispatch async things
+Plug 'https://github.com/tpope/vim-dispatch'
 
 " LSP support
 " See doc :help lsp
@@ -122,6 +133,8 @@ Plug 'Chiel92/vim-autoformat'
 " Git plugins
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/rbong/vim-flog'
+Plug 'https://github.com/rhysd/git-messenger.vim'
 
 " nvim in Firefox
 Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
@@ -136,11 +149,9 @@ call plug#end()
 " https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html#fernvim
 " CHADTree
 "
-" Quality of life plugins:
-" https://github.com/tpope/vim-dispatch ?
-"
 " Git plugins:
-" https://github.com/jreybert/vimagit/blob/master/README.md
+" https://github.com/jreybert/vimagit
+" https://github.com/tpope/vim-rhubarb
 "
 " Phoenix:
 " smathy/vim-pheonix
@@ -166,10 +177,14 @@ call plug#end()
 "https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
 "https://kodi.wiki/view/Add-on:VimCasts
 "https://github.com/lambdalisue/gina.vim/blob/master/README.md
-"https://github.com/tpope/vim-dispatch/blob/master/README.markdown
+"https://medium.com/@huntie/10-essential-vim-plugins-for-2018-39957190b7a9
 "
 " Better f/F
 " https://github.com/rhysd/clever-f.vim
+"
+" LSP diagnostics:
+" https://www.reddit.com/r/neovim/comments/jt9tqm/new_builtin_lsp_diagnostics_module/
+" But requires us to update neovim
 "}}}
 "{{{ cheat40
 " Don't use default cheat sheet
@@ -267,6 +282,11 @@ endfunction
 function! LightlineFileEncoding()
   return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
+
+" This is too verbose unfortunately
+" function! LightlineTreesitter()
+"   return winwidth(0) > 70 ? nvim_treesitter#statusline(40) : ''
+" endfunction
 " }}}
 " Mapping {{{
 
@@ -333,7 +353,6 @@ nnoremap <leader>tv :vs <bar> :call FishTerm()<CR>
 nnoremap <leader>ts :sp <bar> :call FishTerm()<CR>
 
 " Clear screen and turn off search highlighting until the next time we search
-" FIXME maybe use C-l here and move window switching functions to M-l?
 nnoremap <silent> <M-l> :<C-u>nohlsearch<CR><C-l>
 
 " Happy window switching
@@ -349,9 +368,20 @@ nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
 " Create splits with <C-w>v and <C-w>s, or :sp and :vs
 
+" Goto previous buffer
+nnoremap <leader>b :edit #<CR>
+
+" Command autocomplete from the given prefix
+" cnoremap <C-n> <Down>
+" cnoremap <C-p> <Up>
+" Maybe consider remapping up/down to C-n/C-p I guess...
+" cnoremap <Down> <nop>
+" cnoremap <Up> <nop>
+
 " Open url under cursor
 " FIXME better keybinding?
-map <leader>u :call HandleURL()<cr>
+" FIXME better url identification
+nnoremap <leader>u :call HandleURL()<cr>
 
 " Trim whitespaces
 " FIXME Should create a map for it to trim only the selection
@@ -367,7 +397,7 @@ function! QFixToggle(forced)
     let g:qfix_win = bufnr("$")
   endif
 endfunction
-nmap <silent><leader>q :QFix<CR>
+nnoremap <silent><leader>q :QFix<CR>
 
 command! -bang -nargs=? LList call LListToggle(<bang>0)
 function! LListToggle(forced)
@@ -379,7 +409,7 @@ function! LListToggle(forced)
     let g:llist_win = bufnr("$")
   endif
 endfunction
-nmap <silent><leader>l :LList<CR>
+nnoremap <silent><leader>l :LList<CR>
 
 " Next/prev from unimpaired.vim {{{
 " [b, ]b, [B, ]B       :bprev, :bnext, :bfirst, :blast
@@ -467,8 +497,8 @@ augroup END
 augroup rustgroup
   autocmd!
   autocmd BufWrite *.rs :Autoformat
-  " FIXME more intelligent clippy stuff
-  autocmd Filetype rust nnoremap <leader>c :!cargo clippy<CR>
+  autocmd Filetype rust nnoremap <leader>c :Dispatch cargo clippy<CR>
+  autocmd FileType rust let b:dispatch = 'cargo check'
 augroup END
 " }}}
 " Web {{{
@@ -526,25 +556,50 @@ endif
 "LSP {{{
 lua require("lsp_config")
 "}}}
+" Treesitter{{{
+lua require("treesitter_config")
+"}}}
 "Git {{{
 " Jump between changed hunks
-nmap ]c <Plug>(GitGutterNextHunk)
-nmap [c <Plug>(GitGutterPrevHunk)
+nnoremap ]c <Plug>(GitGutterNextHunk)
+nnoremap [c <Plug>(GitGutterPrevHunk)
 " FIXME many more things we can do. See here:
 " https://github.com/airblade/vim-gitgutter
 
-nmap gs :Git<CR>
-nmap g<space> :Git 
-" FIXME oneline doesn't support color highlighting for some reason, so be
-" satisfied with this for now
-nmap gll :Git log
+nnoremap gs :Git<CR>
+nnoremap g<space> :Git 
+nnoremap gll :Flogsplit<CR>
+nnoremap glf :Flogsplit -path=%<CR>
+xnoremap glf :Flogsplit -- --no-patch<CR>
 
-" FIXME for files we can do
-" :Git log -- %
-" How to do lines in files?
+let g:git_messenger_no_default_mappings = v:true
+nnoremap g? <Plug>(git-messenger)
 
-"}}}
-" Treesitter{{{
-lua require("treesitter_config")
+" Toggle --no-patch for all commits.
+" Toggling for specific commits isn't supported, but maybe will be later.
+" https://github.com/rbong/vim-flog/issues/39
+function ToggleFlogNoPatch() abort
+    let l:state = flog#get_state()
+    let l:raw_args = l:state['raw_args']
+    if empty(l:raw_args)
+        let l:raw_args = ''
+    endif
+    let l:split_raw_args = split(l:raw_args)
+    let l:no_patch_arg_index = index(l:split_raw_args, '--no-patch')
+    if l:no_patch_arg_index >= 0
+        if len(l:split_raw_args) == 1
+            let l:raw_args = v:null
+        else
+            call remove(l:split_raw_args, l:no_patch_arg_index)
+            let l:raw_args = join(l:split_raw_args, ' ')
+        endif
+    else
+        let l:raw_args .= ' --no-patch'
+    endif
+    let l:state['raw_args'] = l:raw_args
+    call flog#populate_graph_buffer()
+endfunction
+autocmd FileType floggraph nnoremap <buffer> <silent> = :<C-U>call ToggleFlogNoPatch()<CR>
+
 "}}}
 " vim:set sw=2 sts=2:
