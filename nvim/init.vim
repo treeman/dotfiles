@@ -117,6 +117,7 @@ Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
 " Treesitter syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'romgrk/nvim-treesitter-context'
 " Dispatch async things
 Plug 'https://github.com/tpope/vim-dispatch'
 
@@ -223,7 +224,7 @@ let g:lightline = {
   \             [ 'filename' ] ],
   \   'right': [ [ 'lineinfo' ],
   \              [ 'charvaluehex' ],
-  \              [ 'spell', 'fileformat', 'fileencoding', 'filetype' ] ]
+  \              [ 'lsp', 'spell', 'fileformat', 'fileencoding', 'filetype' ] ]
   \ },
   \ 'inactive': {
   \   'left': [ [ 'filename' ] ],
@@ -241,6 +242,7 @@ let g:lightline = {
   \   'fileformat': 'LightlineFileformat',
   \   'filetype': 'LightlineFiletype',
   \   'fileencoding': 'LightlineFileEncoding',
+  \   'lsp': 'LightlineLSP',
   \ },
 \ }
 
@@ -284,6 +286,15 @@ endfunction
 
 function! LightlineFileEncoding()
   return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineLSP()
+  let no_lsp = luaeval('next(vim.lsp.buf_get_clients()) == nil')
+  if no_lsp
+    return ''
+  else
+    return 'LSP'
+  endif
 endfunction
 
 " This is too verbose unfortunately
