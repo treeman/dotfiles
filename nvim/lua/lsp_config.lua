@@ -9,7 +9,6 @@ end
 local custom_attach = function(client)
     print("LSP started.");
     require'completion'.on_attach(client)
-    require'diagnostic'.on_attach(client)
 
     map('n','gD','<cmd>lua vim.lsp.buf.declaration()<CR>')
     map('n','gd','<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -25,17 +24,10 @@ local custom_attach = function(client)
     --map('n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>')
     --map('n','<leader>af','<cmd>lua vim.lsp.buf.code_action()<CR>')
     --map('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-    --map('n','<leader>ee','<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>')
 
     -- Goto previous/next diagnostic warning/error
-    map('n','[d','<cmd>PrevDiagnosticCycle<cr>')
-    map('n',']d','<cmd>NextDiagnosticCycle<cr>')
-
-    -- Visualize diagnostics
-    vim.g.diagnostic_enable_virtual_text = 1
-    vim.g.diagnostic_trimmed_virtual_text = '40'
-    -- Don't show diagnostics while in insert mode
-    vim.g.diagnostic_insert_delay = 1
+    map('n',']d','<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+    map('n','[d','<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 
     -- Omnicompletion support
     vim.api.nvim_command('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
@@ -50,7 +42,7 @@ local custom_attach = function(client)
 
     -- Show diagnostics on hover
     vim.api.nvim_command('setlocal updatetime=300')
-    autocmd('Cursorhold', '*', 'lua vim.lsp.util.show_line_diagnostics()')
+    autocmd('Cursorhold', '*', 'lua vim.lsp.diagnostic.show_line_diagnostics()')
 
     -- Enable type inlay hints
     autocmd('CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost',
@@ -65,4 +57,19 @@ require'lspconfig'.rust_analyzer.setup({ on_attach=custom_attach })
 
 vim.api.nvim_command('command! LspStop :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>')
 vim.api.nvim_command('command! LspStarted :lua print(vim.inspect(vim.lsp.buf_get_clients()))<CR>')
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = true,
+
+    -- This is similar to:
+    -- let g:diagnostic_show_sign = 1
+    -- To configure sign display,
+    --  see: ":help vim.lsp.diagnostic.set_signs()"
+    signs = true,
+
+    -- Don't show diagnostics while in insert mode
+    update_in_insert = false,
+  }
+)
 
