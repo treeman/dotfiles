@@ -120,6 +120,8 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'romgrk/nvim-treesitter-context'
 " Dispatch async things
 Plug 'https://github.com/tpope/vim-dispatch'
+" Maximize for windows
+Plug 'https://github.com/szw/vim-maximizer'
 
 " LSP support
 " See doc :help lsp
@@ -201,17 +203,19 @@ let g:cheat40_foldlevel = 0
 
 syntax enable
 
-colorscheme gruvbox
 let g:gruvbox_contrast_dark = "hard"
 let g:gruvbox_contrast_light = "soft"
-if $TERM == "xterm-kitty"
+if $TERM == "xterm-kitty" || $TERM == "alacritty"
   set termguicolors
 endif
 set background=dark
 let g:gruvbox_italic = 1
+let g:gruvbox_bold = 1
+let g:gruvbox_italicize_comments = 1
 
 " To avoid the low contrast gray on 2nd left side
 let g:lightline_gruvbox_style = 'hard_left'
+colorscheme gruvbox
 
 " For more info see:
 " :h statusline
@@ -403,6 +407,9 @@ nnoremap <C-j> <c-w>j
 nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
 " Create splits with <C-w>v and <C-w>s, or :sp and :vs
+
+let g:maximizer_set_default_mapping = 0
+nnoremap <silent><C-w>o :MaximizerToggle<CR>
 
 " Goto previous buffer
 nnoremap <leader>b :edit #<CR>

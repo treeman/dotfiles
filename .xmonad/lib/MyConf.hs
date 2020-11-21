@@ -56,7 +56,8 @@ myIconDir = "/home/tree/dotfiles/icons/"
 normalStatusFG = gb_darkgrey
 normalStatusBG = gb_background
 
-term = "kitty"
+--term = "kitty"
+term = "alacritty"
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
