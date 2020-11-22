@@ -7,7 +7,6 @@ local autocmd = function(event, pat, cmd)
 end
 
 local custom_attach = function(client)
-    print("LSP started.");
     require'completion'.on_attach(client)
 
     map('n','gD','<cmd>lua vim.lsp.buf.declaration()<CR>')
@@ -54,6 +53,10 @@ local custom_attach = function(client)
 end
 
 require'lspconfig'.rust_analyzer.setup({ on_attach=custom_attach })
+require'lspconfig'.elixirls.setup({
+    on_attach = custom_attach;
+    cmd = { os.getenv("ELIXIR_LS_LANGUAGE_SERVER") };
+})
 
 vim.api.nvim_command('command! LspStop :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>')
 vim.api.nvim_command('command! LspStarted :lua print(vim.inspect(vim.lsp.buf_get_clients()))<CR>')

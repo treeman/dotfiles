@@ -8,6 +8,16 @@
 " Dependencies:
 " git, ripgrep, fd, bat
 "
+" rust-analyzer:
+"   https://github.com/rust-analyzer/rust-analyzer
+"   cargo xtask install --server
+"
+" elixir-ls:
+"   https://github.com/elixir-lsp/elixir-ls.git
+"   mix compile
+"   mix elixir_ls.release -o release
+"   Ensure that $ELIXIR_LS_LANGUAGE_SERVER points to release/language_server.sh
+"
 " }}}
 " Future ideas and TODOs {{{
 " Move out file specific into ftplugin
