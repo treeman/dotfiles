@@ -78,6 +78,9 @@ set showcmd " show the command being typed
 set signcolumn=yes " Use a gutter for git-gutter and LSP messages
 set completeopt=menuone " Popup completion menu even with only one option
 
+" Use gx to open urls in firefox
+let g:netrw_browsex_viewer = "firefox"
+
 " Must set leaders before plugins
 let mapleader = " "
 let maplocalleader = "-"
@@ -163,6 +166,9 @@ call plug#end()
 " File handling plugins:
 " https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html#fernvim
 " CHADTree
+"
+" Quick substitutions:
+" https://github.com/svermeulen/vim-subversive
 "
 " Git plugins:
 " https://github.com/jreybert/vimagit
@@ -383,6 +389,14 @@ let g:fzf_action = {
 
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
 
+" Copy/paste to mouse clipboard quickly
+nnoremap <silent> <leader>p "*p
+nnoremap <silent> <leader>P "*P
+nnoremap <silent> <leader>y "*y
+nnoremap <silent> <leader>Y "*Y
+" Don't overwrite register when pasting in visual selection
+xnoremap p "_dP
+
 " Special chars
 inoremap <C-l> λ
 inoremap <C-e> ◊
@@ -430,11 +444,6 @@ nnoremap <leader>b :edit #<CR>
 " Maybe consider remapping up/down to C-n/C-p I guess...
 " cnoremap <Down> <nop>
 " cnoremap <Up> <nop>
-
-" Open url under cursor
-" FIXME better keybinding?
-" FIXME better url identification
-nnoremap <leader>u :call HandleURL()<cr>
 
 " Trim whitespaces
 " FIXME Should create a map for it to trim only the selection
