@@ -8,6 +8,7 @@ set -x PATH ~/.linuxbrew/bin $PATH
 
 # Beancount module finding for importers
 set -x PYTHONPATH $PYTHONPATH ~/vimwiki/money/accounting/
+set -x ELIXIR_LS_LANGUAGE_SERVER $HOME/src/elixir-ls/release/language_server.sh
 
 # Workaround for local timezone discovery
 set -x TZ Europe/Stockholm

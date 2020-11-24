@@ -34,16 +34,16 @@ end
 # And they accepts an url and parses the title from the website:
 #   rnd https://github.com/fish-shell/fish-shell/issues/5186
 function rnd
-    _with_url $argv +rnd +next
+    _with_url $argv +rnd
 end
 function watch
-    _with_url $argv +watch +next
+    _with_url $argv +watch
 end
 function listen
-    _with_url $argv +listen +next
+    _with_url $argv +listen
 end
 function rd
-    _with_url $argv +read +next
+    _with_url $argv +read
 end
 
 # Returns 0 if $argv only contains a single integer, and 1 otherwise
