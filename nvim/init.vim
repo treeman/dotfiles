@@ -221,7 +221,7 @@ syntax enable
 
 let g:gruvbox_contrast_dark = "hard"
 let g:gruvbox_contrast_light = "soft"
-if $TERM == "xterm-kitty" || $TERM == "alacritty"
+if $TERM == "xterm-kitty" || $TERM == "alacritty" || $TERM == "xterm-256color"
   set termguicolors
 endif
 set background=dark
