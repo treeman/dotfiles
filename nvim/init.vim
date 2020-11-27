@@ -623,8 +623,8 @@ lua require("treesitter_config")
 "}}}
 "Git {{{
 " Jump between changed hunks
-nnoremap ]c <Plug>(GitGutterNextHunk)
-nnoremap [c <Plug>(GitGutterPrevHunk)
+nnoremap ]c :GitGutterNextHun<CR>
+nnoremap [c :GitGutterPrevHunk<CR>
 " FIXME many more things we can do. See here:
 " https://github.com/airblade/vim-gitgutter
 
