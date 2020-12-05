@@ -289,7 +289,7 @@ function! LightlineGitStatus()
 endfunction
 
 function! LightlineFilename()
-  return winwidth(0) > 95 ? expand('%:F') : expand('%:t')
+  return winwidth(0) > 95 ? expand('%:f') : expand('%:t')
 endfunction
 
 function! LightlineSpell()
@@ -297,15 +297,15 @@ function! LightlineSpell()
 endfunction
 
 function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) > 95 ? &fileformat : ''
 endfunction
 
 function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  return winwidth(0) > 95 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
 endfunction
 
 function! LightlineFileEncoding()
-  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+  return winwidth(0) > 95 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 
 function! LightlineLSP()
@@ -398,8 +398,8 @@ nnoremap <silent> <leader>Y "*Y
 xnoremap p "_dP
 
 " Special chars
-inoremap <C-l> λ
-inoremap <C-e> ◊
+"inoremap <C-l> λ
+"inoremap <C-e> ◊
 "inoremap <C-v>l λ
 "inoremap <C-v>e ◊
 
@@ -552,6 +552,15 @@ augroup pollengroup
   autocmd FileType pollen setlocal wrap
   " Wrap on word-breaks only
   autocmd FileType pollen setlocal linebreak
+
+  autocmd FileType pollen inoremap <C-l> λ
+  autocmd FileType pollen inoremap <C-e> ◊
+augroup END
+
+augroup racket
+  autocmd!
+  autocmd FileType pollen inoremap <C-l> λ
+  autocmd FileType pollen inoremap <C-e> ◊
 augroup END
 
 " }}}

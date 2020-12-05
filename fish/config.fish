@@ -35,3 +35,4 @@ end
 gruvbox
 
 source ~/.config/fish/gtd.fish
+source ~/.env.secrets.fish
