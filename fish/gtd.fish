@@ -34,16 +34,16 @@ end
 # And they accepts an url and parses the title from the website:
 #   rnd https://github.com/fish-shell/fish-shell/issues/5186
 function rnd
-    _with_url $argv +rnd +next
+    _with_url $argv +rnd
 end
 function watch
-    _with_url $argv +watch +next
+    _with_url $argv +watch
 end
 function listen
-    _with_url $argv +listen +next
+    _with_url $argv +listen
 end
 function rd
-    _with_url $argv +read +next
+    _with_url $argv +read
 end
 
 # Returns 0 if $argv only contains a single integer, and 1 otherwise
@@ -73,7 +73,10 @@ end
 # For things to read
 function webpage_title
     # Requires the html-xml-utils package
-    wget -qO- $argv | hxclean | hxselect -s '\n' -c  'title' 2>/dev/null
+    # wget -qO- $argv | hxclean | hxselect -s '\n' -c  'title' 2>/dev/null
+
+    # Sometimes webpages are broken, this seem to handle them better
+    wget -qO- $argv | hxclean | rg '<title>([^<]+)</title>' -o -r '$1' | head -n 1
 end
 
 # Like _mod_or_add but if the input is an url it creates a new task with the url: parameter

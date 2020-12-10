@@ -13,6 +13,7 @@
     cam = commit -a -m
     # Amend to previous commit
     ca = commit --amend
+    caa = commit -a --amend
 
     # Resets
     # Soft

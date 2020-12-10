@@ -1,9 +1,23 @@
-﻿" Installation {{{
-" Update treesitter parsers:
-" :TSUpdate
-"
+" Installation {{{
 " Update plugins
 " :PlugUpdate
+"
+" Update treesitter:
+" :TSUpdate
+"
+" Dependencies:
+" git, ripgrep, fd, bat
+"
+" rust-analyzer:
+"   https://github.com/rust-analyzer/rust-analyzer
+"   cargo xtask install --server
+"
+" elixir-ls:
+"   https://github.com/elixir-lsp/elixir-ls.git
+"   mix compile
+"   mix elixir_ls.release -o release
+"   Ensure that $ELIXIR_LS_LANGUAGE_SERVER points to release/language_server.sh
+"
 " }}}
 " Future ideas and TODOs {{{
 " Move out file specific into ftplugin
@@ -64,6 +78,9 @@ set showcmd " show the command being typed
 set signcolumn=yes " Use a gutter for git-gutter and LSP messages
 set completeopt=menuone " Popup completion menu even with only one option
 
+" Use gx to open urls in firefox
+let g:netrw_browsex_viewer = "firefox"
+
 " Must set leaders before plugins
 let mapleader = " "
 let maplocalleader = "-"
@@ -113,8 +130,11 @@ Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
 " Treesitter syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'romgrk/nvim-treesitter-context'
 " Dispatch async things
 Plug 'https://github.com/tpope/vim-dispatch'
+" Maximize for windows
+Plug 'https://github.com/szw/vim-maximizer'
 
 " LSP support
 " See doc :help lsp
@@ -124,8 +144,6 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'tjdevries/lsp_extensions.nvim'
 " Autocompletion framework for built-in LSP
 Plug 'nvim-lua/completion-nvim'
-" Diagnostic navigation and settings for built-in LSP
-Plug 'nvim-lua/diagnostic-nvim'
 
 " Autoformat for different languages
 Plug 'Chiel92/vim-autoformat'
@@ -149,9 +167,13 @@ call plug#end()
 " https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html#fernvim
 " CHADTree
 "
+" Quick substitutions:
+" https://github.com/svermeulen/vim-subversive
+"
 " Git plugins:
 " https://github.com/jreybert/vimagit
 " https://github.com/tpope/vim-rhubarb
+" https://github.com/wfxr/forgit
 "
 " Phoenix:
 " smathy/vim-pheonix
@@ -197,17 +219,19 @@ let g:cheat40_foldlevel = 0
 
 syntax enable
 
-colorscheme gruvbox
 let g:gruvbox_contrast_dark = "hard"
 let g:gruvbox_contrast_light = "soft"
-if $TERM == "xterm-kitty"
+if $TERM == "xterm-kitty" || $TERM == "alacritty" || $TERM == "xterm-256color"
   set termguicolors
 endif
 set background=dark
 let g:gruvbox_italic = 1
+let g:gruvbox_bold = 1
+let g:gruvbox_italicize_comments = 1
 
 " To avoid the low contrast gray on 2nd left side
 let g:lightline_gruvbox_style = 'hard_left'
+colorscheme gruvbox
 
 " For more info see:
 " :h statusline
@@ -220,7 +244,7 @@ let g:lightline = {
   \             [ 'filename' ] ],
   \   'right': [ [ 'lineinfo' ],
   \              [ 'charvaluehex' ],
-  \              [ 'spell', 'fileformat', 'fileencoding', 'filetype' ] ]
+  \              [ 'lsp', 'spell', 'fileformat', 'fileencoding', 'filetype' ] ]
   \ },
   \ 'inactive': {
   \   'left': [ [ 'filename' ] ],
@@ -238,6 +262,7 @@ let g:lightline = {
   \   'fileformat': 'LightlineFileformat',
   \   'filetype': 'LightlineFiletype',
   \   'fileencoding': 'LightlineFileEncoding',
+  \   'lsp': 'LightlineLSP',
   \ },
 \ }
 
@@ -264,7 +289,7 @@ function! LightlineGitStatus()
 endfunction
 
 function! LightlineFilename()
-  return winwidth(0) > 95 ? expand('%:F') : expand('%:t')
+  return winwidth(0) > 95 ? expand('%:f') : expand('%:t')
 endfunction
 
 function! LightlineSpell()
@@ -272,21 +297,52 @@ function! LightlineSpell()
 endfunction
 
 function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) > 95 ? &fileformat : ''
 endfunction
 
 function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+  return winwidth(0) > 95 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
 endfunction
 
 function! LightlineFileEncoding()
-  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+  return winwidth(0) > 95 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineLSP()
+  let no_lsp = luaeval('next(vim.lsp.buf_get_clients()) == nil')
+  if no_lsp
+    return ''
+  else
+    return 'LSP'
+  endif
 endfunction
 
 " This is too verbose unfortunately
 " function! LightlineTreesitter()
 "   return winwidth(0) > 70 ? nvim_treesitter#statusline(40) : ''
 " endfunction
+" }}}
+" FZF {{{
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Default fzf layout
+" - Popup window
+let g:fzf_layout = { 'window': '-tabnew' }
 " }}}
 " Mapping {{{
 
@@ -333,9 +389,17 @@ let g:fzf_action = {
 
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
 
+" Copy/paste to mouse clipboard quickly
+nnoremap <silent> <leader>p "*p
+nnoremap <silent> <leader>P "*P
+nnoremap <silent> <leader>y "*y
+nnoremap <silent> <leader>Y "*Y
+" Don't overwrite register when pasting in visual selection
+xnoremap p "_dP
+
 " Special chars
-inoremap <C-l> λ
-inoremap <C-e> ◊
+"inoremap <C-l> λ
+"inoremap <C-e> ◊
 "inoremap <C-v>l λ
 "inoremap <C-v>e ◊
 
@@ -368,6 +432,9 @@ nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
 " Create splits with <C-w>v and <C-w>s, or :sp and :vs
 
+let g:maximizer_set_default_mapping = 0
+nnoremap <silent><C-w>o :MaximizerToggle<CR>
+
 " Goto previous buffer
 nnoremap <leader>b :edit #<CR>
 
@@ -377,11 +444,6 @@ nnoremap <leader>b :edit #<CR>
 " Maybe consider remapping up/down to C-n/C-p I guess...
 " cnoremap <Down> <nop>
 " cnoremap <Up> <nop>
-
-" Open url under cursor
-" FIXME better keybinding?
-" FIXME better url identification
-nnoremap <leader>u :call HandleURL()<cr>
 
 " Trim whitespaces
 " FIXME Should create a map for it to trim only the selection
@@ -490,6 +552,15 @@ augroup pollengroup
   autocmd FileType pollen setlocal wrap
   " Wrap on word-breaks only
   autocmd FileType pollen setlocal linebreak
+
+  autocmd FileType pollen inoremap <C-l> λ
+  autocmd FileType pollen inoremap <C-e> ◊
+augroup END
+
+augroup racket
+  autocmd!
+  autocmd FileType pollen inoremap <C-l> λ
+  autocmd FileType pollen inoremap <C-e> ◊
 augroup END
 
 " }}}
@@ -561,8 +632,8 @@ lua require("treesitter_config")
 "}}}
 "Git {{{
 " Jump between changed hunks
-nnoremap ]c <Plug>(GitGutterNextHunk)
-nnoremap [c <Plug>(GitGutterPrevHunk)
+nnoremap ]c :GitGutterNextHun<CR>
+nnoremap [c :GitGutterPrevHunk<CR>
 " FIXME many more things we can do. See here:
 " https://github.com/airblade/vim-gitgutter
 
@@ -571,6 +642,7 @@ nnoremap g<space> :Git
 nnoremap gll :Flogsplit<CR>
 nnoremap glf :Flogsplit -path=%<CR>
 xnoremap glf :Flogsplit -- --no-patch<CR>
+nnoremap <silent> <leader>fc :Commits<CR>
 
 let g:git_messenger_no_default_mappings = v:true
 nnoremap g? <Plug>(git-messenger)
