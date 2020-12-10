@@ -264,6 +264,19 @@ let g:lightline = {
   \   'fileencoding': 'LightlineFileEncoding',
   \   'lsp': 'LightlineLSP',
   \ },
+  \ 'mode_map': {
+  \   'n' : 'N',
+  \   'i' : 'I',
+  \   'R' : 'R',
+  \   'v' : 'V',
+  \   'V' : 'VL',
+  \   "\<C-v>": 'VB',
+  \   'c' : 'C',
+  \   's' : 'S',
+  \   'S' : 'SL',
+  \   "\<C-s>": 'SB',
+  \   't': 'T',
+  \ },
 \ }
 
 " These functions truncates away a bunch of stuff when width is smaller
