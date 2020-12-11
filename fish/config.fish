@@ -35,4 +35,8 @@ end
 gruvbox
 
 source ~/.config/fish/gtd.fish
-source ~/.env.secrets.fish
+
+set secret_file ~/.env.secrets.fish
+if test -e $secret_file
+    source $secret_file
+end
