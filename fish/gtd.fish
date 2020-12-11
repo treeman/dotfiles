@@ -73,7 +73,10 @@ end
 # For things to read
 function webpage_title
     # Requires the html-xml-utils package
-    wget -qO- $argv | hxclean | hxselect -s '\n' -c  'title' 2>/dev/null
+    # wget -qO- $argv | hxclean | hxselect -s '\n' -c  'title' 2>/dev/null
+
+    # Sometimes webpages are broken, this seem to handle them better
+    wget -qO- $argv | hxclean | rg '<title>([^<]+)</title>' -o -r '$1' | head -n 1
 end
 
 # Like _mod_or_add but if the input is an url it creates a new task with the url: parameter
