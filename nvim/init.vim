@@ -19,9 +19,6 @@
 "   Ensure that $ELIXIR_LS_LANGUAGE_SERVER points to release/language_server.sh
 "
 " }}}
-" Future ideas and TODOs {{{
-" Move out file specific into ftplugin
-" }}}
 " Basic {{{
 " Difficult to use fish as a default shell as plugins may depend on POSIX
 " Instead launch terminal with fish
@@ -162,58 +159,6 @@ Plug 'https://github.com/junegunn/vim-peekaboo'
 Plug 'https://github.com/chrisbra/Colorizer'
 call plug#end()
 
-"{{{ Plugins to check
-" File handling plugins:
-" https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html#fernvim
-" CHADTree
-"
-" Quick substitutions:
-" https://github.com/svermeulen/vim-subversive
-"
-" Git plugins:
-" https://github.com/jreybert/vimagit
-" https://github.com/tpope/vim-rhubarb
-" https://github.com/wfxr/forgit
-"
-" Phoenix:
-" smathy/vim-pheonix
-" vim-projectionist
-"
-" More fuzzy funding examples:
-"https://github.com/junegunn/fzf/wiki/Examples-(vim)
-"use enter key, CTRL-T, CTRL-X or CTRL-V to open selected files in the current window, in new tabs, in horizontal splits, or in vertical splits respectively.
-
-" Random unsorted plugins
-"https://www.reddit.com/r/vim/comments/gbhvlo/what_am_i_missing_by_not_using_fzf/
-"https://www.reddit.com/r/vim/comments/8riofp/airlinelightline_not_useful/
-"https://www.reddit.com/r/vim/comments/775n4o/is_there_any_way_to_switch_statusbar_color_or/
-"https://www.reddit.com/r/neovim/comments/gjz5cx/whats_a_plugin_that_does_something_you_didnt/
-"https://www.reddit.com/r/vim/comments/gk53u1/just_discovered_ca_and_cx/
-"https://www.reddit.com/r/vim/comments/gjz27p/whats_a_plugin_that_does_something_you_didnt/
-"https://www.reddit.com/r/vim/comments/gib54k/anyone_has_a_copy_of_custom_vim_refactorings/
-"https://www.reddit.com/r/vim/comments/a0q8dv/id_like_to_update_to_modern_vim_practices_what/
-"https://stackoverflow.com/questions/13337618/how-to-use-customized-key-to-start-visual-block-selection-in-vim
-"https://blog.usejournal.com/a-detailed-guide-to-writing-your-first-neovim-plugin-in-rust-a81604c606b1?gi=2c1f7e07ec18
-"https://medium.com/@caleb89taylor/a-guide-to-modern-web-development-with-neo-vim-333f7efbf8e2
-"https://github.com/Shougo/denite.nvim/blob/master/README.md
-"https://dev.to/drmason13/configure-neovim-for-rust-development-1fjn
-"https://kodi.wiki/view/Add-on:VimCasts
-"https://github.com/lambdalisue/gina.vim/blob/master/README.md
-"https://medium.com/@huntie/10-essential-vim-plugins-for-2018-39957190b7a9
-"
-" Better f/F
-" https://github.com/rhysd/clever-f.vim
-"
-" LSP diagnostics:
-" https://www.reddit.com/r/neovim/comments/jt9tqm/new_builtin_lsp_diagnostics_module/
-" But requires us to update neovim
-"}}}
-"{{{ cheat40
-" Don't use default cheat sheet
-let g:cheat40_use_default = 0
-" Hide folds
-let g:cheat40_foldlevel = 0
-"}}}
 " }}}
 " Appearance {{{
 
@@ -688,5 +633,11 @@ function ToggleFlogNoPatch() abort
 endfunction
 autocmd FileType floggraph nnoremap <buffer> <silent> = :<C-U>call ToggleFlogNoPatch()<CR>
 
+"}}}
+"{{{ cheat40
+" Don't use default cheat sheet
+let g:cheat40_use_default = 0
+" Hide folds
+let g:cheat40_foldlevel = 0
 "}}}
 " vim:set sw=2 sts=2:
