@@ -556,6 +556,7 @@ augroup END
 
 " }}}
 " Rust {{{
+
 augroup rustgroup
   autocmd!
   autocmd BufWrite *.rs :Autoformat
@@ -570,6 +571,7 @@ augroup web
   autocmd Filetype html setlocal ts=2 sts=2 sw=2
   autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
   autocmd Filetype json setlocal ts=2 sts=2 sw=2
+  autocmd FileType typescriptreact let b:dispatch = 'yarn next build'
 augroup END
 
 " }}}
