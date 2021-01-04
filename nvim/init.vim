@@ -156,8 +156,8 @@ Plug 'https://github.com/rhysd/git-messenger.vim'
 Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " Peek registry contents, for easy use of " and @
 Plug 'https://github.com/junegunn/vim-peekaboo'
-" Preview colors
-Plug 'https://github.com/chrisbra/Colorizer'
+" Display colors
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 call plug#end()
 
 " }}}
@@ -640,5 +640,10 @@ autocmd FileType floggraph nnoremap <buffer> <silent> = :<C-U>call ToggleFlogNoP
 let g:cheat40_use_default = 0
 " Hide folds
 let g:cheat40_foldlevel = 0
+"}}}
+"{{{ hexokinase
+let g:Hexokinase_highlighters = [ 'virtual' ]
+" Filetypes to match
+let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript', 'scss', 'markdown', 'vimwiki', 'json']
 "}}}
 " vim:set sw=2 sts=2:
