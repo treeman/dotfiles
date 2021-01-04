@@ -644,6 +644,7 @@ let g:cheat40_foldlevel = 0
 "{{{ hexokinase
 let g:Hexokinase_highlighters = [ 'virtual' ]
 " Filetypes to match
+" Because it's async maybe this is completely unnecessary...
 let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript', 'scss', 'markdown', 'vimwiki', 'json']
 "}}}
 " vim:set sw=2 sts=2:
