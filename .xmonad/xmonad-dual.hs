@@ -12,11 +12,6 @@ import qualified XMonad.StackSet as W
 import MyConf
 
 dualKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm .|. shiftMask,     xK_t), spawn "urxvt")
-    ]
-
-    ++
-
     -- mod-e, mod-w switch workspaces (I've got flipped monitors, flip e and w from standard
     [ ((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_e, xK_w] [0..]
@@ -44,7 +39,7 @@ main = do
         , normalBorderColor = gb_background
         , focusedBorderColor = gb_background_soft
         , borderWidth = 1
-        , terminal = "kitty"
+        , terminal = term
         , keys = \k -> dualKeys k `M.union` myKeys k `M.union` keys defaultConfig k
         , logHook = dynamicLogWithPP $ myDzenPP topLeft
         , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
