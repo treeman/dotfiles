@@ -74,7 +74,12 @@ set ruler " always show current positions along the bottom
 set showcmd " show the command being typed
 set signcolumn=yes " Use a gutter for git-gutter and LSP messages
 set completeopt=menuone " Popup completion menu even with only one option
-set cursorline
+
+augroup CursorLineOnlyInActiveWindow
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END
 
 " Use gx to open urls in firefox
 let g:netrw_browsex_viewer = "firefox"
