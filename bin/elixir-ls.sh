@@ -1,0 +1,1 @@
+/home/tree/src/elixir-ls/release/language_server.sh
