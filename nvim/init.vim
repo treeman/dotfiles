@@ -163,6 +163,8 @@ Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0)
 Plug 'https://github.com/junegunn/vim-peekaboo'
 " Display colors
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+" File manager
+Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 call plug#end()
 
 " }}}
@@ -401,6 +403,9 @@ nnoremap <silent><C-w>o :MaximizerToggle<CR>
 
 " Goto previous buffer
 nnoremap <leader>b :edit #<CR>
+
+" Toggle chadtree
+nnoremap <leader>v <cmd>CHADopen<cr>
 
 " Command autocomplete from the given prefix
 " cnoremap <C-n> <Down>
