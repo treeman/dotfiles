@@ -117,7 +117,8 @@ Plug 'https://github.com/wellle/targets.vim'
 Plug 'https://github.com/machakann/vim-highlightedyank'
 " Vim cheat sheet
 Plug 'https://github.com/lifepillar/vim-cheat40'
-" These are just for highlighting specific files
+
+" Specific file support
 Plug 'https://github.com/nathangrigg/vim-beancount'
 Plug 'https://github.com/dag/vim-fish.git'
 Plug 'https://github.com/rust-lang/rust.vim'
@@ -126,6 +127,8 @@ Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
 Plug 'https://github.com/elixir-editors/vim-elixir.git'
+Plug 'mhinz/vim-mix-format'
+
 " Automatically insert end in insert mode for some languages
 Plug 'https://github.com/tpope/vim-endwise'
 " Light statusbar
@@ -165,6 +168,8 @@ Plug 'https://github.com/junegunn/vim-peekaboo'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 " File manager
 Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
+" Sudo write for neovim
+Plug 'https://github.com/lambdalisue/suda.vim'
 call plug#end()
 
 " }}}
@@ -331,6 +336,13 @@ endfunction
 nnoremap <leader>ec :call EditCheat40()<CR>
 " Edit file with prefilled path from the current file
 nnoremap <leader>ef :e <C-R>=expand('%:p:h') . '/'<CR>
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+"cmap w!! w !sudo tee > /dev/null %
+"com -bar W exe 'w !sudo tee >/dev/null %:p:S' | setl nomod
+cmap w!! SudaWrite
+
+" Load notes
+nnoremap <leader>n :e ~/vimwiki/projects/
 
 " Find files
 nnoremap <silent> <leader>ff :Files<CR>
@@ -542,6 +554,11 @@ augroup rustgroup
   autocmd FileType rust let b:dispatch = 'cargo check'
 augroup END
 " }}}
+" Elixir {{{
+let g:mix_format_on_save = 1
+let g:mix_format_options = '--check-equivalent'
+let g:mix_format_silent_errors = 1
+" }}}
 " Web {{{
 
 augroup web
@@ -581,7 +598,7 @@ if exists('g:started_by_firenvim') && g:started_by_firenvim
               \ 'cmdline': 'firenvim',
               \ 'priority': 0,
               \ 'selector': 'textarea',
-              \ 'takeover': 'once',
+              \ 'takeover': 'never',
           \ },
       \ }
   \ }
