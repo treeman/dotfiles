@@ -1,5 +1,5 @@
 # Paths
-set -x PATH $PATH /usr/local/sbin /usr/sbin /sbin
+set -x PATH $PATH /usr/local/sbin /usr/sbin /sbin /usr/local/bin
 set -x PATH ~/.cabal/bin $PATH
 set -x PATH ~/.cargo/bin ~/.cargo/env $PATH
 set -x PATH ~/.local/bin $PATH
@@ -35,6 +35,8 @@ end
 gruvbox
 
 source ~/.config/fish/gtd.fish
+
+alias ww 'nvim ~/vimwiki/index.markdown'
 
 set secret_file ~/.env.secrets.fish
 if test -e $secret_file

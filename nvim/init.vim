@@ -75,6 +75,12 @@ set showcmd " show the command being typed
 set signcolumn=yes " Use a gutter for git-gutter and LSP messages
 set completeopt=menuone " Popup completion menu even with only one option
 
+augroup CursorLineOnlyInActiveWindow
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END
+
 " Use gx to open urls in firefox
 let g:netrw_browsex_viewer = "firefox"
 
@@ -111,7 +117,8 @@ Plug 'https://github.com/wellle/targets.vim'
 Plug 'https://github.com/machakann/vim-highlightedyank'
 " Vim cheat sheet
 Plug 'https://github.com/lifepillar/vim-cheat40'
-" These are just for highlighting specific files
+
+" Specific file support
 Plug 'https://github.com/nathangrigg/vim-beancount'
 Plug 'https://github.com/dag/vim-fish.git'
 Plug 'https://github.com/rust-lang/rust.vim'
@@ -120,6 +127,8 @@ Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
 Plug 'https://github.com/elixir-editors/vim-elixir.git'
+Plug 'mhinz/vim-mix-format'
+
 " Automatically insert end in insert mode for some languages
 Plug 'https://github.com/tpope/vim-endwise'
 " Light statusbar
@@ -155,8 +164,12 @@ Plug 'https://github.com/rhysd/git-messenger.vim'
 Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " Peek registry contents, for easy use of " and @
 Plug 'https://github.com/junegunn/vim-peekaboo'
-" Preview colors
-Plug 'https://github.com/chrisbra/Colorizer'
+" Display colors
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+" File manager
+Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
+" Sudo write for neovim
+Plug 'https://github.com/lambdalisue/suda.vim'
 call plug#end()
 
 " }}}
@@ -323,6 +336,13 @@ endfunction
 nnoremap <leader>ec :call EditCheat40()<CR>
 " Edit file with prefilled path from the current file
 nnoremap <leader>ef :e <C-R>=expand('%:p:h') . '/'<CR>
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+"cmap w!! w !sudo tee > /dev/null %
+"com -bar W exe 'w !sudo tee >/dev/null %:p:S' | setl nomod
+cmap w!! SudaWrite
+
+" Load notes
+nnoremap <leader>n :e ~/vimwiki/projects/
 
 " Find files
 nnoremap <silent> <leader>ff :Files<CR>
@@ -395,6 +415,9 @@ nnoremap <silent><C-w>o :MaximizerToggle<CR>
 
 " Goto previous buffer
 nnoremap <leader>b :edit #<CR>
+
+" Toggle chadtree
+nnoremap <leader>v <cmd>CHADopen<cr>
 
 " Command autocomplete from the given prefix
 " cnoremap <C-n> <Down>
@@ -531,6 +554,11 @@ augroup rustgroup
   autocmd FileType rust let b:dispatch = 'cargo check'
 augroup END
 " }}}
+" Elixir {{{
+let g:mix_format_on_save = 1
+let g:mix_format_options = '--check-equivalent'
+let g:mix_format_silent_errors = 1
+" }}}
 " Web {{{
 
 augroup web
@@ -570,7 +598,7 @@ if exists('g:started_by_firenvim') && g:started_by_firenvim
               \ 'cmdline': 'firenvim',
               \ 'priority': 0,
               \ 'selector': 'textarea',
-              \ 'takeover': 'once',
+              \ 'takeover': 'never',
           \ },
       \ }
   \ }
@@ -639,5 +667,11 @@ autocmd FileType floggraph nnoremap <buffer> <silent> = :<C-U>call ToggleFlogNoP
 let g:cheat40_use_default = 0
 " Hide folds
 let g:cheat40_foldlevel = 0
+"}}}
+"{{{ hexokinase
+let g:Hexokinase_highlighters = [ 'virtual' ]
+" Filetypes to match
+" Because it's async maybe this is completely unnecessary...
+let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript', 'scss', 'markdown', 'vimwiki', 'json']
 "}}}
 " vim:set sw=2 sts=2:

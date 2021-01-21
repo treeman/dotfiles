@@ -1,0 +1,3 @@
+#!/bin/bash
+
+spotifyd -b alsa -d winterfell -u jonashietala -p "$SPOTIFY_PASS" --no-daemon
