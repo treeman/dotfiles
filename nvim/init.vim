@@ -550,7 +550,7 @@ augroup END
 augroup rustgroup
   autocmd!
   autocmd BufWrite *.rs :Autoformat
-  autocmd Filetype rust nnoremap <leader>c :Dispatch cargo clippy<CR>
+  autocmd Filetype rust nnoremap <leader>c :Dispatch cargo clippy --all-targets --all-features -- -D warnings<CR>
   autocmd FileType rust let b:dispatch = 'cargo check'
 augroup END
 " }}}
@@ -587,7 +587,7 @@ command! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.min
 " }}}
 " json {{{
 " FIXME can we make this work on visual selection?
-command! FormatJSON :%!python -m json.tool
+command! FormatJSON :%!python3 -m json.tool
 " }}}
 " }}}
 "Firenvim {{{
