@@ -52,7 +52,18 @@ local custom_attach = function(client)
             }]])
 end
 
-require'lspconfig'.rust_analyzer.setup({ on_attach=custom_attach })
+require'lspconfig'.rust_analyzer.setup({
+    on_attach = custom_attach;
+    settings = {
+        ["rust-analyzer"] = {
+            diagnostics = {
+                -- Disables 'proc macro `Serialize` not expanded and similar
+                -- https://github.com/rust-analyzer/rust-analyzer/pull/6645
+                disabled = {"unresolved-proc-macro"}
+            }
+        }
+    }
+})
 require'lspconfig'.elixirls.setup({
     on_attach = custom_attach;
     cmd = { os.getenv("ELIXIR_LS_LANGUAGE_SERVER") };
