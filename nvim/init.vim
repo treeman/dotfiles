@@ -6,7 +6,7 @@
 " :TSUpdate
 "
 " Dependencies:
-" git, ripgrep, fd, bat
+" git, ripgrep, fd, bat, go
 "
 " rust-analyzer:
 "   https://github.com/rust-analyzer/rust-analyzer
@@ -673,5 +673,13 @@ let g:Hexokinase_highlighters = [ 'virtual' ]
 " Filetypes to match
 " Because it's async maybe this is completely unnecessary...
 let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript', 'scss', 'markdown', 'vimwiki', 'json']
+" Patterns to match
+let g:Hexokinase_optInPatterns = 'full_hex,triple_hex,rgb,rgba,hsl,hsla'
+" Filetype specific patterns to match
+let g:Hexokinase_ftOptInPatterns = {
+\     'css': 'full_hex,triple_hex,rgb,rgba,hsl,hsla,colour_names',
+\     'scss': 'full_hex,triple_hex,rgb,rgba,hsl,hsla,colour_names',
+\     'html': 'full_hex,triple_hex,rgb,rgba,hsl,hsla,colour_names'
+\ }
 "}}}
 " vim:set sw=2 sts=2:
