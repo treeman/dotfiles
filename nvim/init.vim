@@ -7,6 +7,7 @@
 "
 " Dependencies:
 " git, ripgrep, fd, bat, go
+" pip3 install --upgrade pynvim
 "
 " rust-analyzer:
 "   https://github.com/rust-analyzer/rust-analyzer
@@ -99,7 +100,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'https://github.com/treeman/gruvbox.git'
 " Excellent fuzzy finder
 Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'https://github.com/junegunn/fzf.vim'
 " Personal wiki
 Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
 " Avoid mistyping filenames, ask which file to open if file not find
@@ -107,6 +107,8 @@ Plug 'https://github.com/EinfachToll/DidYouMean.git'
 " Easy way to comment things
 Plug 'https://github.com/tomtom/tcomment_vim'
 " For many more features see tcomment_vim
+" This is also an option
+" Plug 'https://github.com/b3nj5m1n/kommentary', { 'branch': 'main' }
 " Enhance the '.' operator
 Plug 'https://github.com/tpope/vim-repeat'
 " Easily surround things
@@ -170,6 +172,8 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 " Sudo write for neovim
 Plug 'https://github.com/lambdalisue/suda.vim'
+" Kill buffers smartly
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 call plug#end()
 
 " }}}
@@ -409,6 +413,8 @@ nnoremap <C-j> <c-w>j
 nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
 " Create splits with <C-w>v and <C-w>s, or :sp and :vs
+" Close the current buffer if it's not shown in another window, but keep the window itself
+nnoremap <leader>s :Sayonara!<CR>
 
 let g:maximizer_set_default_mapping = 0
 nnoremap <silent><C-w>o :MaximizerToggle<CR>
