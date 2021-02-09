@@ -100,6 +100,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'https://github.com/treeman/gruvbox.git'
 " Excellent fuzzy finder
 Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'https://github.com/junegunn/fzf.vim'
 " Personal wiki
 Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
 " Avoid mistyping filenames, ask which file to open if file not find
