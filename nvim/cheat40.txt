@@ -159,6 +159,12 @@ To prev jump position    «C-o»         N
 To next jump position    «C-i»         N
 To start of next fold    zj            N
 To end of previous fold  zk            N
+Move screen up one line  «C-y»         N
+Move screen down one ln  «C-e»         N
+Move screen up ½ page    «C-u»         N
+Move screen down ½ page  «C-d»         N
+Move screen up 1 page    «C-b»         N
+Move screen down 1 page  «C-f»         N
 }}}
 Text Objects {{{1
 # Delmited text objects (block)
