@@ -27,6 +27,8 @@ alias scp='rsync --verbose --progress --partial'
 
 set -x FZF_DEFAULT_COMMAND 'fd --type file --hidden --exclude .git'
 
+zoxide init fish | source
+
 function reload
     source ~/.config/fish/config.fish
 end
