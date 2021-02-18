@@ -533,6 +533,7 @@ augroup pollengroup
   autocmd FileType pollen setlocal wrap
   " Wrap on word-breaks only
   autocmd FileType pollen setlocal linebreak
+  autocmd FileType pollen setlocal ts=2 sts=2 sw=2
 
   autocmd FileType pollen inoremap <C-l> λ
   autocmd FileType pollen inoremap <C-e> ◊
