@@ -62,11 +62,9 @@ term = "alacritty"
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
     , ((modm .|. controlMask,   xK_c), spawn "chromium")
-
     , ((modm .|. controlMask,   xK_m), spawn "spotify")
 
-    , ((modm .|. shiftMask,     xK_t), spawn "urxvt")
-    --, ((modm .|. shiftMask,     xK_t), spawn "kitty") -- Nice but has some memory leaks/excessive usage.
+    , ((modm .|. controlMask,   xK_t), spawn "urxvt")
     , ((modm .|. controlMask,   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
 
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")

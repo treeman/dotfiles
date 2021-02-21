@@ -18,6 +18,14 @@ dualKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
+    ++
+
+    -- mod sth for RSTHD layout
+    -- keep in mind the flipped monitors
+    [ ((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_t, xK_s, xK_h] [0..]
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
 myDzen = " dzen2 -xs 1 -dock -h 20 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++
     normalStatusFG ++ "' -bg '" ++ normalStatusBG ++ "' "
 
