@@ -59,6 +59,8 @@ normalStatusBG = gb_background
 --term = "kitty"
 term = "alacritty"
 
+-- See default keybindings here: 
+-- https://github.com/xmonad/xmonad/blob/master/src/XMonad/Config.hs
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. controlMask,   xK_f), spawn "firefox")
     , ((modm .|. controlMask,   xK_c), spawn "chromium")
@@ -74,9 +76,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask,     xK_b), sendMessage $ ToggleStrut U)
     , ((modm,                   xK_y), focusUrgent)
 
-
     -- Do not leave useless conky, dzen and after restart
     , ((modm,                   xK_q), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
+
+    , ((modm,                   xK_Down), windows W.focusDown)
+    , ((modm,                   xK_Up), windows W.focusUp)
+    , ((modm,                   xK_Right), windows W.focusMaster)
+
+    , ((modm .|. shiftMask,     xK_Down), windows W.swapDown)
+    , ((modm .|. shiftMask,     xK_Up), windows W.swapUp)
+    , ((modm .|. shiftMask,     xK_Right), windows W.swapMaster)
     ]
 
     ++

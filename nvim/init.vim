@@ -408,11 +408,19 @@ tnoremap <C-h> <c-\><c-n><c-w>h
 tnoremap <C-j> <c-\><c-n><c-w>j
 tnoremap <C-k> <c-\><c-n><c-w>k
 tnoremap <C-l> <c-\><c-n><c-w>l
+tnoremap <C-left> <c-w>h
+tnoremap <C-down> <c-w>j
+tnoremap <C-up> <c-w>k
+tnoremap <C-right> <c-w>l
 " Normal mode:
 nnoremap <C-h> <c-w>h
 nnoremap <C-j> <c-w>j
 nnoremap <C-k> <c-w>k
 nnoremap <C-l> <c-w>l
+nnoremap <C-left> <c-w>h
+nnoremap <C-down> <c-w>j
+nnoremap <C-up> <c-w>k
+nnoremap <C-right> <c-w>l
 " Create splits with <C-w>v and <C-w>s, or :sp and :vs
 " Close the current buffer if it's not shown in another window, but keep the window itself
 nnoremap <leader>s :Sayonara!<CR>
