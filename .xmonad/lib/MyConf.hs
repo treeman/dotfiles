@@ -56,18 +56,21 @@ myIconDir = "/home/tree/dotfiles/icons/"
 normalStatusFG = gb_darkgrey
 normalStatusBG = gb_background
 
---term = "kitty"
 term = "alacritty"
 
 -- See default keybindings here: 
 -- https://github.com/xmonad/xmonad/blob/master/src/XMonad/Config.hs
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm .|. controlMask,   xK_f), spawn "firefox")
-    , ((modm .|. controlMask,   xK_c), spawn "chromium")
-    , ((modm .|. controlMask,   xK_m), spawn "spotify")
-
+    [
+      ((modm,                   xK_Return), spawn $ term)
     , ((modm .|. controlMask,   xK_t), spawn "urxvt")
-    , ((modm .|. controlMask,   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
+
+    , ((modm,                   xK_f), spawn "firefox")
+    , ((modm,                   xK_m), spawn "spotify")
+
+    , ((modm,                   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
+
+    , ((modm,                   xK_c), kill)
 
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
@@ -79,10 +82,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Do not leave useless conky, dzen and after restart
     , ((modm,                   xK_q), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
 
+    -- Move focus with arrows, for split keyboard
     , ((modm,                   xK_Down), windows W.focusDown)
     , ((modm,                   xK_Up), windows W.focusUp)
     , ((modm,                   xK_Right), windows W.focusMaster)
-
     , ((modm .|. shiftMask,     xK_Down), windows W.swapDown)
     , ((modm .|. shiftMask,     xK_Up), windows W.swapUp)
     , ((modm .|. shiftMask,     xK_Right), windows W.swapMaster)
