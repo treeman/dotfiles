@@ -56,40 +56,39 @@ myIconDir = "/home/tree/dotfiles/icons/"
 normalStatusFG = gb_darkgrey
 normalStatusBG = gb_background
 
---term = "kitty"
 term = "alacritty"
 
+-- See default keybindings here: 
+-- https://github.com/xmonad/xmonad/blob/master/src/XMonad/Config.hs
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm .|. controlMask,   xK_f), spawn "firefox")
-    , ((modm .|. controlMask,   xK_c), spawn "chromium")
+    [
+      ((modm,                   xK_Return), spawn $ term)
+    , ((modm .|. controlMask,   xK_t), spawn "urxvt")
 
-    , ((modm .|. controlMask,   xK_e), spawn "emacs")
+    , ((modm,                   xK_f), spawn "firefox")
+    , ((modm,                   xK_m), spawn "spotify")
 
-    , ((modm .|. controlMask,   xK_s), spawn "skype")
-    , ((modm .|. controlMask,   xK_i), spawn "start_irc")
+    , ((modm,                   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
 
-    , ((modm .|. controlMask,   xK_m), spawn "spotify")
-    , ((modm .|. controlMask,   xK_t), spawn "mtpaint")
-    , ((modm .|. controlMask,   xK_a), spawn "anki")
-
-    , ((modm .|. shiftMask,     xK_t), spawn "urxvt")
-    --, ((modm .|. shiftMask,     xK_t), spawn "kitty") -- Nice but has some memory leaks/excessive usage.
-    , ((modm .|. controlMask,   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
+    , ((modm,                   xK_c), kill)
 
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
 
-    , ((modm .|. shiftMask,     xK_p), spawn "pom --continue")
-    , ((modm .|. shiftMask,     xK_o), spawn "pom --stop")
-
     , ((modm .|. controlMask,   xK_b), withAll toggleBorder)
-    , ((modm .|. shiftMask,     xK_b), withFocused toggleBorder)
-    , ((modm,                   xK_y), focusUrgent)
-
     , ((modm .|. shiftMask,     xK_b), sendMessage $ ToggleStrut U)
+    , ((modm,                   xK_y), focusUrgent)
 
     -- Do not leave useless conky, dzen and after restart
     , ((modm,                   xK_q), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
+
+    -- Move focus with arrows, for split keyboard
+    , ((modm,                   xK_Down), windows W.focusDown)
+    , ((modm,                   xK_Up), windows W.focusUp)
+    , ((modm,                   xK_Right), windows W.focusMaster)
+    , ((modm .|. shiftMask,     xK_Down), windows W.swapDown)
+    , ((modm .|. shiftMask,     xK_Up), windows W.swapUp)
+    , ((modm .|. shiftMask,     xK_Right), windows W.swapMaster)
     ]
 
     ++
