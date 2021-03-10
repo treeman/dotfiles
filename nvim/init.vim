@@ -19,6 +19,8 @@
 "   mix elixir_ls.release -o release
 "   Ensure that $ELIXIR_LS_LANGUAGE_SERVER points to release/language_server.sh
 "
+" tsserver:
+"   npm install -g typescript typescript-language-server
 " }}}
 " Basic {{{
 " Difficult to use fish as a default shell as plugins may depend on POSIX
@@ -265,7 +267,7 @@ function! LightlineGitStatus()
 endfunction
 
 function! LightlineFilename()
-  return winwidth(0) > 95 ? expand('%:f') : expand('%:t')
+  return winwidth(0) > 110 ? expand('%:f') : expand('%:t')
 endfunction
 
 function! LightlineSpell()
@@ -418,7 +420,7 @@ nnoremap <C-l> <c-w>l
 nnoremap <leader>s :Sayonara!<CR>
 
 let g:maximizer_set_default_mapping = 0
-nnoremap <silent><C-w>o :MaximizerToggle<CR>
+nnoremap <silent><C-w>m :MaximizerToggle<CR>
 
 " Goto previous buffer
 nnoremap <leader>b :edit #<CR>
@@ -638,6 +640,11 @@ nnoremap gll :Flogsplit<CR>
 nnoremap glf :Flogsplit -path=%<CR>
 xnoremap glf :Flogsplit -- --no-patch<CR>
 nnoremap <silent> <leader>fc :Commits<CR>
+
+" Fugitive Conflict Resolution
+nnoremap gds :Gdiffsplit!<CR>
+nnoremap gdh :diffget //2<CR>
+nnoremap gdl :diffget //3<CR>
 
 let g:git_messenger_no_default_mappings = v:true
 nnoremap g? <Plug>(git-messenger)
