@@ -49,6 +49,7 @@ set hlsearch " highlight search terms
 set incsearch " show search mathes as you type
 set inccommand=split " live update for subtitute commands
 let g:highlightedyank_highlight_duration = 500 " shorter highlighting for yank
+set lazyredraw " speed up macros
 
 " Text display
 set list " show tabs

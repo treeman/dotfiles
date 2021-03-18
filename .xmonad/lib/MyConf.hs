@@ -49,7 +49,7 @@ gb_light2 = "#d5c4a1"
 gb_light3 = "#bdae93"
 gb_light4 = "#a89984"
 
-myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+myWorkspaces = ["6", "4", "0", "2", "8", "9", "3", "1", "5", "7"]
 myFont = "Consolasi:size=9"
 myIconDir = "/home/tree/dotfiles/icons/"
 
@@ -97,7 +97,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-shift-[1..9, 0], Move client to workspace N
     -- non greedy view, changed from default!
     [ ((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
+        | (i, k) <- zip (XMonad.workspaces conf) ([xK_6, xK_4, xK_0, xK_2, xK_8, xK_9, xK_3, xK_1, xK_5, xK_7])
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
