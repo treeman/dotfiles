@@ -91,16 +91,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask,     xK_Right), windows W.swapMaster)
     ]
 
-    ++
-
-    -- mod-[1..9, 0], Switch to workspace N
-    -- mod-shift-[1..9, 0], Move client to workspace N
-    -- non greedy view, changed from default!
-    [ ((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) ([xK_6, xK_4, xK_0, xK_2, xK_8, xK_9, xK_3, xK_1, xK_5, xK_7])
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
-    ]
-
 resizeAndMove w =  withDisplay $ \d -> do
                focus w
                io $ resizeWindow d w 800 600
