@@ -133,12 +133,12 @@ call s:map('n', '[f', '<Plug>unimpairedDirectoryPrevious')
 " }}}
 " Section: Diff {{{
 
-"call s:map('n', '[n', '<Plug>unimpairedContextPrevious')
-"call s:map('n', ']n', '<Plug>unimpairedContextNext')
-"call s:map('x', '[n', '<Plug>unimpairedContextPrevious')
-"call s:map('x', ']n', '<Plug>unimpairedContextNext')
-"call s:map('o', '[n', '<Plug>unimpairedContextPrevious')
-"call s:map('o', ']n', '<Plug>unimpairedContextNext')
+call s:map('n', '[n', '<Plug>unimpairedContextPrevious')
+call s:map('n', ']n', '<Plug>unimpairedContextNext')
+call s:map('x', '[n', '<Plug>unimpairedContextPrevious')
+call s:map('x', ']n', '<Plug>unimpairedContextNext')
+call s:map('o', '[n', '<Plug>unimpairedContextPrevious')
+call s:map('o', ']n', '<Plug>unimpairedContextNext')
 
 nnoremap <silent> <Plug>unimpairedContextPrevious :<C-U>call <SID>Context(1)<CR>
 nnoremap <silent> <Plug>unimpairedContextNext     :<C-U>call <SID>Context(0)<CR>

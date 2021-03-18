@@ -69,6 +69,10 @@ require'lspconfig'.elixirls.setup({
     cmd = { os.getenv("ELIXIR_LS_LANGUAGE_SERVER") };
 })
 
+require'lspconfig'.tsserver.setup{
+    on_attach = custom_attach;
+}
+
 vim.api.nvim_command('command! LspStop :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>')
 vim.api.nvim_command('command! LspStarted :lua print(vim.inspect(vim.lsp.buf_get_clients()))<CR>')
 

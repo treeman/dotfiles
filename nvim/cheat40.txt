@@ -72,6 +72,8 @@ Last buffer              ]B            N
 Find buffer              \fb           N
 }}}
 Windows {{{1
+Close all other panes    <C-w>o        N
+Maximize current pane    <C-w>m        N
 }}}
 Files {{{1
 Find file pwd            \ff           N
@@ -251,6 +253,11 @@ Blame                    Gblame        C
 Log                      gll           N
 Log file                 glf           N
 g …                      Git …         N
+# Merging diff
+Open up a split diff     gds           N
+Navigate conflicts       [n ]n         N
+Use HEAD                 gdh           N
+Use master               gdl           N
 # Fugitive buffer shortcuts
 Navigate hunks           [c ]c         N
 Stage file               s             *
