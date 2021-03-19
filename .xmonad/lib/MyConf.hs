@@ -70,7 +70,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     , ((modm,                   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
 
-    , ((modm,                   xK_c), kill)
+    , ((modm .|. shiftMask,     xK_c), kill)
 
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
@@ -89,16 +89,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask,     xK_Down), windows W.swapDown)
     , ((modm .|. shiftMask,     xK_Up), windows W.swapUp)
     , ((modm .|. shiftMask,     xK_Right), windows W.swapMaster)
-    ]
-
-    ++
-
-    -- mod-[1..9, 0], Switch to workspace N
-    -- mod-shift-[1..9, 0], Move client to workspace N
-    -- non greedy view, changed from default!
-    [ ((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) ([xK_6, xK_4, xK_0, xK_2, xK_8, xK_9, xK_3, xK_1, xK_5, xK_7])
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
 resizeAndMove w =  withDisplay $ \d -> do

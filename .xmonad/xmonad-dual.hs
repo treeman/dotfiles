@@ -18,6 +18,17 @@ dualKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
     ]
 
+    ++
+
+    -- mod-N, Switch to workspace N
+    -- mod-shift-N, Move client to workspace N
+    -- Organized to match the janky keyboard num row!
+    -- non greedy view, changed from default!
+    [ ((m .|. modm, k), windows $ f i)
+        | (i, k) <- zip (XMonad.workspaces conf) ([xK_6, xK_4, xK_0, xK_2, xK_8, xK_9, xK_3, xK_1, xK_5, xK_7])
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+    ]
+
 myDzen = " dzen2 -xs 1 -dock -h 20 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++
     normalStatusFG ++ "' -bg '" ++ normalStatusBG ++ "' "
 
