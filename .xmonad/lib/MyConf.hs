@@ -70,7 +70,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     , ((modm,                   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
 
-    , ((modm,                   xK_c), kill)
+    , ((modm .|. shiftMask,     xK_c), kill)
 
     , ((modm .|. controlMask,   xK_u), spawn "setxkbmap us; xmodmap .xmodmap")
     , ((modm .|. controlMask,   xK_space), spawn "setxkbmap se; xmodmap .xmodmap")
