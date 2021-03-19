@@ -78,6 +78,7 @@ set ruler " always show current positions along the bottom
 set showcmd " show the command being typed
 set signcolumn=yes " Use a gutter for git-gutter and LSP messages
 set completeopt=menuone " Popup completion menu even with only one option
+set completeopt=menuone,noinsert,noselect " Workaround for failing LSP...
 
 augroup CursorLineOnlyInActiveWindow
   autocmd!
@@ -173,7 +174,7 @@ Plug 'https://github.com/junegunn/vim-peekaboo'
 " Display colors
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 " File manager
-Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
+Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 " Sudo write for neovim
 Plug 'https://github.com/lambdalisue/suda.vim'
 " Kill buffers smartly

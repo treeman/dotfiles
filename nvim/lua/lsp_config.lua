@@ -44,12 +44,12 @@ local custom_attach = function(client)
     autocmd('Cursorhold', '*', 'lua vim.lsp.diagnostic.show_line_diagnostics()')
 
     -- Enable type inlay hints
-    autocmd('CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost',
-            '*',
-            [[lua require'lsp_extensions'.inlay_hints{
-                prefix = '',
-                highlight = 'Comment'
-            }]])
+    -- autocmd('CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost',
+    --         '*',
+    --         [[lua require'lsp_extensions'.inlay_hints{
+    --             prefix = '',
+    --             highlight = 'Comment'
+    --         }]])
 end
 
 require'lspconfig'.rust_analyzer.setup({
