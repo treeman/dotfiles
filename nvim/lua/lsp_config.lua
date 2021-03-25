@@ -1,5 +1,5 @@
 local map = function(type, key, value)
-    vim.fn.nvim_buf_set_keymap(0,type,key,value,{noremap = true, silent = true});
+    vim.api.nvim_buf_set_keymap(0,type,key,value,{noremap = true, silent = true});
 end
 
 local autocmd = function(event, pat, cmd)
@@ -44,12 +44,12 @@ local custom_attach = function(client)
     autocmd('Cursorhold', '*', 'lua vim.lsp.diagnostic.show_line_diagnostics()')
 
     -- Enable type inlay hints
-    -- autocmd('CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost',
-    --         '*',
-    --         [[lua require'lsp_extensions'.inlay_hints{
-    --             prefix = '',
-    --             highlight = 'Comment'
-    --         }]])
+    autocmd('CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost',
+            '*',
+            [[lua require'lsp_extensions'.inlay_hints{
+                prefix = '',
+                highlight = 'Comment'
+            }]])
 end
 
 require'lspconfig'.rust_analyzer.setup({

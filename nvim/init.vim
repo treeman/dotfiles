@@ -1,9 +1,9 @@
 " Installation {{{
-" Update plugins
+" Update plugins:
 " :PlugUpdate
 "
-" Update treesitter:
-" :TSUpdate
+" Install all available treesitter parsers:
+" :TSInstall all
 "
 " Dependencies:
 " git, ripgrep, fd, bat, go
@@ -78,7 +78,6 @@ set ruler " always show current positions along the bottom
 set showcmd " show the command being typed
 set signcolumn=yes " Use a gutter for git-gutter and LSP messages
 set completeopt=menuone " Popup completion menu even with only one option
-set completeopt=menuone,noinsert,noselect " Workaround for failing LSP...
 
 augroup CursorLineOnlyInActiveWindow
   autocmd!
@@ -142,7 +141,7 @@ Plug 'https://github.com/tpope/vim-endwise'
 Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
 " Treesitter syntax highlighting
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'romgrk/nvim-treesitter-context'
 " Dispatch async things
 Plug 'https://github.com/tpope/vim-dispatch'
