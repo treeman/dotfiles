@@ -123,6 +123,10 @@ Plug 'https://github.com/wellle/targets.vim'
 Plug 'https://github.com/machakann/vim-highlightedyank'
 " Vim cheat sheet
 Plug 'https://github.com/lifepillar/vim-cheat40'
+" Generic lua plugin, required by gitsigns
+Plug 'nvim-lua/plenary.nvim'
+" Indentation lines for visual aid 
+Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 
 " Specific file support
 Plug 'https://github.com/nathangrigg/vim-beancount'
@@ -161,7 +165,7 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'Chiel92/vim-autoformat'
 
 " Git plugins
-Plug 'https://github.com/airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/rbong/vim-flog'
 Plug 'https://github.com/rhysd/git-messenger.vim'
@@ -251,20 +255,7 @@ function! LightlineGitStatus()
     return ""
   endif
 
-  let [a,m,r] = GitGutterGetHunkSummary()
-
-  let info = []
-  if a != 0
-    call add(info, printf('+%d', a))
-  end
-  if m != 0
-    call add(info, printf('~%d', m))
-  end
-  if r != 0
-    call add(info, printf('-%d', r))
-  end
-
-  return join(info)
+  return get(b:,'gitsigns_status','')
 endfunction
 
 function! LightlineFilename()
@@ -631,19 +622,12 @@ if exists('g:started_by_firenvim') && g:started_by_firenvim
   augroup END
 endif
 "}}}
-"LSP {{{
+" Lua configs {{{
+lua require("generic")
 lua require("lsp_config")
-"}}}
-" Treesitter{{{
 lua require("treesitter_config")
 "}}}
 "Git {{{
-" Jump between changed hunks
-nnoremap ]c :GitGutterNextHun<CR>
-nnoremap [c :GitGutterPrevHunk<CR>
-" FIXME many more things we can do. See here:
-" https://github.com/airblade/vim-gitgutter
-
 nnoremap gs :Git<CR>
 nnoremap g<space> :Git 
 nnoremap gll :Flogsplit<CR>
@@ -705,5 +689,9 @@ let g:Hexokinase_ftOptInPatterns = {
 \     'scss': 'full_hex,triple_hex,rgb,rgba,hsl,hsla,colour_names',
 \     'html': 'full_hex,triple_hex,rgb,rgba,hsl,hsla,colour_names'
 \ }
+"}}}
+"{{{ indent_blankline
+" Prefer treesitter if available
+let g:indent_blankline_use_treesitter = v:true
 "}}}
 " vim:set sw=2 sts=2:
