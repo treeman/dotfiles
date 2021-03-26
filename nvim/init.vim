@@ -128,6 +128,13 @@ Plug 'https://github.com/lifepillar/vim-cheat40'
 Plug 'nvim-lua/plenary.nvim'
 " Indentation lines for visual aid
 Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
+" Make * and # search visually
+Plug 'https://github.com/nelstrom/vim-visual-star-search'
+
+" File explorer
+Plug 'https://github.com/lambdalisue/fern.vim'
+" Fixes some performance issues
+Plug 'antoinemadec/FixCursorHold.nvim'
 
 " Specific file support
 Plug 'https://github.com/nathangrigg/vim-beancount'
@@ -177,8 +184,6 @@ Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0)
 Plug 'https://github.com/junegunn/vim-peekaboo'
 " Display colors
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-" File manager
-Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 " Sudo write for neovim
 Plug 'https://github.com/lambdalisue/suda.vim'
 " Kill buffers smartly
@@ -430,7 +435,9 @@ nnoremap <silent><C-w>m :MaximizerToggle<CR>
 nnoremap <leader>b :edit #<CR>
 
 " Toggle chadtree
-nnoremap <leader>v <cmd>CHADopen<cr>
+"nnoremap <leader>v <cmd>CHADopen<cr>
+"nnoremap <leader>t :NvimTreeToggle<CR>
+nnoremap <leader>t :Fern . -drawer<CR>
 
 " Completion
 inoremap <silent><expr> <C-Space> compe#complete()
@@ -699,5 +706,13 @@ let g:Hexokinase_ftOptInPatterns = {
 let g:indent_blankline_use_treesitter = v:true
 " Ignore some unnecessary lines
 let g:indent_blankline_show_trailing_blankline_indent = v:false
+"}}}
+"{{{ fern
+let g:fern#mark_symbol                       = '●'
+let g:fern#renderer#default#collapsed_symbol = '▷ '
+let g:fern#renderer#default#expanded_symbol  = '▼ '
+let g:fern#renderer#default#leading          = ' '
+let g:fern#renderer#default#leaf_symbol      = ' '
+let g:fern#renderer#default#root_symbol      = '~ '
 "}}}
 " vim:set sw=2 sts=2:
