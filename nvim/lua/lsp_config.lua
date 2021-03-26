@@ -7,7 +7,7 @@ local autocmd = function(event, pat, cmd)
 end
 
 local custom_attach = function(client)
-    require'completion'.on_attach(client)
+    -- require'completion'.on_attach(client)
 
     map('n','gD','<cmd>lua vim.lsp.buf.declaration()<CR>')
     map('n','gd','<cmd>lua vim.lsp.buf.definition()<CR>')
@@ -31,14 +31,6 @@ local custom_attach = function(client)
     -- Omnicompletion support
     vim.api.nvim_command('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 
-    -- Set completeopt to have a better completion experience
-    -- together with LSP. Otherwise it automatically insert stuff when typing.
-    -- :help completeopt
-    -- menuone: popup even when there's only one match
-    -- noinsert: Do not insert text until a selection is made
-    -- noselect: Do not select, force user to select one from the menu
-    vim.api.nvim_command('setlocal completeopt=menuone,noinsert,noselect')
-
     -- Show diagnostics on hover
     vim.api.nvim_command('setlocal updatetime=300')
     autocmd('Cursorhold', '*', 'lua vim.lsp.diagnostic.show_line_diagnostics()')
@@ -52,8 +44,16 @@ local custom_attach = function(client)
             }]])
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require'lspconfig'.rust_analyzer.setup {
+  capabilities = capabilities,
+}
+
 require'lspconfig'.rust_analyzer.setup({
-    on_attach = custom_attach;
+    on_attach = custom_attach,
+    capabilities = capabilities,
     settings = {
         ["rust-analyzer"] = {
             diagnostics = {
@@ -65,12 +65,13 @@ require'lspconfig'.rust_analyzer.setup({
     }
 })
 require'lspconfig'.elixirls.setup({
-    on_attach = custom_attach;
-    cmd = { os.getenv("ELIXIR_LS_LANGUAGE_SERVER") };
+    on_attach = custom_attach,
+    capabilities = capabilities,
+    cmd = { os.getenv("ELIXIR_LS_LANGUAGE_SERVER") },
 })
-
 require'lspconfig'.tsserver.setup{
-    on_attach = custom_attach;
+    on_attach = custom_attach,
+    capabilities = capabilities,
 }
 
 vim.api.nvim_command('command! LspStop :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>')

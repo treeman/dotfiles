@@ -1,26 +1,27 @@
 " Installation {{{
 " Update plugins:
-" :PlugUpdate
+"   :PlugUpdate
 "
 " Install all available treesitter parsers:
-" :TSInstall all
+"   :TSInstall all
 "
 " Dependencies:
-" git, ripgrep, fd, bat, go
-" pip3 install --upgrade pynvim
+"   git, ripgrep, fd, bat, go
+"   pip3 install --upgrade pynvim
 "
-" rust-analyzer:
-"   https://github.com/rust-analyzer/rust-analyzer
-"   cargo xtask install --server
+" LSP servers:
+"   rust-analyzer:
+"     https://github.com/rust-analyzer/rust-analyzer
+"     cargo xtask install --server
 "
-" elixir-ls:
-"   https://github.com/elixir-lsp/elixir-ls.git
-"   mix compile
-"   mix elixir_ls.release -o release
-"   Ensure that $ELIXIR_LS_LANGUAGE_SERVER points to release/language_server.sh
+"   elixir-ls:
+"     https://github.com/elixir-lsp/elixir-ls.git
+"     mix compile
+"     mix elixir_ls.release -o release
+"     Ensure that $ELIXIR_LS_LANGUAGE_SERVER points to release/language_server.sh
 "
-" tsserver:
-"   npm install -g typescript typescript-language-server
+"   tsserver:
+"     npm install -g typescript typescript-language-server
 " }}}
 " Basic {{{
 " Difficult to use fish as a default shell as plugins may depend on POSIX
@@ -77,7 +78,7 @@ set shortmess=aOstTc " shortens messages to aviod 'perss a key' prompt
 set ruler " always show current positions along the bottom
 set showcmd " show the command being typed
 set signcolumn=yes " Use a gutter for git-gutter and LSP messages
-set completeopt=menuone " Popup completion menu even with only one option
+set completeopt=menuone,noselect " Required settings for nvim-compe
 
 augroup CursorLineOnlyInActiveWindow
   autocmd!
@@ -125,7 +126,7 @@ Plug 'https://github.com/machakann/vim-highlightedyank'
 Plug 'https://github.com/lifepillar/vim-cheat40'
 " Generic lua plugin, required by gitsigns
 Plug 'nvim-lua/plenary.nvim'
-" Indentation lines for visual aid 
+" Indentation lines for visual aid
 Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 
 " Specific file support
@@ -151,6 +152,8 @@ Plug 'romgrk/nvim-treesitter-context'
 Plug 'https://github.com/tpope/vim-dispatch'
 " Maximize for windows
 Plug 'https://github.com/szw/vim-maximizer'
+" Autocompletion framework with a ton of support
+Plug 'https://github.com/hrsh7th/nvim-compe'
 
 " LSP support
 " See doc :help lsp
@@ -158,8 +161,6 @@ Plug 'https://github.com/szw/vim-maximizer'
 Plug 'neovim/nvim-lspconfig'
 " Extensions to built-in LSP, for example, providing type inlay hints
 Plug 'tjdevries/lsp_extensions.nvim'
-" Autocompletion framework for built-in LSP
-Plug 'nvim-lua/completion-nvim'
 
 " Autoformat for different languages
 Plug 'Chiel92/vim-autoformat'
@@ -286,6 +287,9 @@ function! LightlineLSP()
     return 'LSP'
   endif
 endfunction
+
+" Workaround for https://github.com/lukas-reineke/indent-blankline.nvim/issues/59
+set colorcolumn=99999
 
 " This is too verbose unfortunately
 " function! LightlineTreesitter()
@@ -428,12 +432,12 @@ nnoremap <leader>b :edit #<CR>
 " Toggle chadtree
 nnoremap <leader>v <cmd>CHADopen<cr>
 
-" Command autocomplete from the given prefix
-" cnoremap <C-n> <Down>
-" cnoremap <C-p> <Up>
-" Maybe consider remapping up/down to C-n/C-p I guess...
-" cnoremap <Down> <nop>
-" cnoremap <Up> <nop>
+" Completion
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <C-e> compe#close('<C-e>')
+"inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+"inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+"inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " Trim whitespaces
 " FIXME Should create a map for it to trim only the selection
@@ -693,5 +697,7 @@ let g:Hexokinase_ftOptInPatterns = {
 "{{{ indent_blankline
 " Prefer treesitter if available
 let g:indent_blankline_use_treesitter = v:true
+" Ignore some unnecessary lines
+let g:indent_blankline_show_trailing_blankline_indent = v:false
 "}}}
 " vim:set sw=2 sts=2:
