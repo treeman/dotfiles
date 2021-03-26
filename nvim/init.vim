@@ -105,6 +105,8 @@ Plug 'https://github.com/treeman/gruvbox.git'
 " Excellent fuzzy finder
 Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'https://github.com/junegunn/fzf.vim'
+" Another fuzzy finder
+Plug 'nvim-telescope/telescope.nvim'
 " Personal wiki
 Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
 " Avoid mistyping filenames, ask which file to open if file not find
@@ -124,7 +126,8 @@ Plug 'https://github.com/wellle/targets.vim'
 Plug 'https://github.com/machakann/vim-highlightedyank'
 " Vim cheat sheet
 Plug 'https://github.com/lifepillar/vim-cheat40'
-" Generic lua plugin, required by gitsigns
+" Generic lua plugins
+Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 " Indentation lines for visual aid
 Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
