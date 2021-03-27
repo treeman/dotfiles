@@ -304,28 +304,6 @@ set colorcolumn=99999
 "   return winwidth(0) > 70 ? nvim_treesitter#statusline(40) : ''
 " endfunction
 " }}}
-" FZF {{{
-" Customize fzf colors to match your color scheme
-" - fzf#wrap translates this to a set of `--color` options
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-
-" Default fzf layout
-" - Popup window
-let g:fzf_layout = { 'window': '-tabnew' }
-" }}}
 " Mapping {{{
 
 " Reload vimrc
@@ -356,7 +334,8 @@ cmap w!! SudaWrite
 nnoremap <leader>n :e ~/vimwiki/projects/
 
 " Find files
-nnoremap <silent> <leader>ff :Files<CR>
+"nnoremap <silent> <leader>ff :Files<CR>
+nnoremap <silent> <leader>ff :Telescope find_files<CR>
 " Find files relative to current file
 nnoremap <silent> <leader>fe :call fzf#run({'sink': 'e', 'dir': expand('%:p:h') . '/'})<CR>
 " Find in files
@@ -440,7 +419,7 @@ nnoremap <leader>b :edit #<CR>
 " Toggle chadtree
 "nnoremap <leader>v <cmd>CHADopen<cr>
 "nnoremap <leader>t :NvimTreeToggle<CR>
-nnoremap <leader>t :Fern . -drawer<CR>
+nnoremap <leader>v :Fern . -drawer<CR>
 
 " Completion
 inoremap <silent><expr> <C-Space> compe#complete()
@@ -640,6 +619,7 @@ endif
 lua require("generic")
 lua require("lsp_config")
 lua require("treesitter_config")
+lua require("telescope")
 "}}}
 "Git {{{
 nnoremap gs :Git<CR>
@@ -718,4 +698,26 @@ let g:fern#renderer#default#leading          = ' '
 let g:fern#renderer#default#leaf_symbol      = ' '
 let g:fern#renderer#default#root_symbol      = '~ '
 "}}}
+" FZF {{{
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Default fzf layout
+" - Popup window
+let g:fzf_layout = { 'window': '-tabnew' }
+" }}}
 " vim:set sw=2 sts=2:
