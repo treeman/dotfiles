@@ -133,6 +133,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 " Make * and # search visually
 Plug 'https://github.com/nelstrom/vim-visual-star-search'
+" Change f, F, t and T to be smarter
+Plug 'https://github.com/rhysd/clever-f.vim'
 
 " File explorer
 Plug 'https://github.com/lambdalisue/fern.vim'
