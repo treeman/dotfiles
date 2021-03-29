@@ -135,9 +135,13 @@ Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua'
 Plug 'https://github.com/nelstrom/vim-visual-star-search'
 " Change f, F, t and T to be smarter
 Plug 'https://github.com/rhysd/clever-f.vim'
+" Use s as a two-char f
+Plug 'https://github.com/justinmk/vim-sneak'
 
 " File explorer
 Plug 'https://github.com/lambdalisue/fern.vim'
+Plug 'https://github.com/lambdalisue/nerdfont.vim'
+Plug 'https://github.com/lambdalisue/fern-renderer-nerdfont.vim'
 " Fixes some performance issues
 Plug 'antoinemadec/FixCursorHold.nvim'
 
@@ -693,12 +697,24 @@ let g:indent_blankline_use_treesitter = v:true
 let g:indent_blankline_show_trailing_blankline_indent = v:false
 "}}}
 "{{{ fern
-let g:fern#mark_symbol                       = '●'
-let g:fern#renderer#default#collapsed_symbol = '▷ '
-let g:fern#renderer#default#expanded_symbol  = '▼ '
-let g:fern#renderer#default#leading          = ' '
-let g:fern#renderer#default#leaf_symbol      = ' '
-let g:fern#renderer#default#root_symbol      = '~ '
+let g:fern#renderer = "nerdfont"
+
+function! s:init_fern() abort
+  " Expand and collapse with arrows
+  nmap <buffer><nowait> <right> <Plug>(fern-action-expand)
+  nmap <buffer><nowait> <left> <Plug>(fern-action-collapse)
+
+  " Don't overwrite window switching
+  nnoremap <buffer><nowait> <C-h> <c-w>h
+  nnoremap <buffer><nowait> <C-l> <c-w>l
+  nnoremap <buffer><nowait><silent> <M-l><Plug>(fern-action-redraw)
+endfunction
+
+augroup my-fern
+  autocmd! *
+  autocmd FileType fern call s:init_fern()
+augroup END
+
 "}}}
 " FZF {{{
 " Customize fzf colors to match your color scheme
@@ -721,5 +737,9 @@ let g:fzf_colors =
 " Default fzf layout
 " - Popup window
 let g:fzf_layout = { 'window': '-tabnew' }
+" }}}
+" Sneak {{{
+" Use seank as a minimalist alternative to EasyMotion
+"let g:sneak#label = 1
 " }}}
 " vim:set sw=2 sts=2:
