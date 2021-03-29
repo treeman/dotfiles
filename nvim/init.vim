@@ -142,6 +142,8 @@ Plug 'https://github.com/justinmk/vim-sneak'
 Plug 'https://github.com/lambdalisue/fern.vim'
 Plug 'https://github.com/lambdalisue/nerdfont.vim'
 Plug 'https://github.com/lambdalisue/fern-renderer-nerdfont.vim'
+Plug 'https://github.com/lambdalisue/fern-git-status.vim'
+Plug 'https://github.com/lambdalisue/glyph-palette.vim'
 " Fixes some performance issues
 Plug 'antoinemadec/FixCursorHold.nvim'
 
@@ -713,6 +715,7 @@ endfunction
 augroup my-fern
   autocmd! *
   autocmd FileType fern call s:init_fern()
+  autocmd FileType fern call glyph_palette#apply()
 augroup END
 
 "}}}
