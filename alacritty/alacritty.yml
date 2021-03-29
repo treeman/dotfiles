@@ -12,6 +12,9 @@ font:
     style: BoldItalic
   size: 12.0
 
+
+custom_cursor_colors: true
+
 # Colors (Gruvbox dark)
 colors:
   # Default colors
@@ -20,6 +23,10 @@ colors:
     background: '0x1d2021'
     # soft contrast: background = '0x32302f'
     foreground: '0xebdbb2'
+
+  cursor:
+    text:   '0x1d2021'
+    cursor: '0xfabd2f'
 
   # Normal colors
   normal:
