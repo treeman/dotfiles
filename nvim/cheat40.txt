@@ -1,4 +1,7 @@
 Press q to dismiss, <Tab> to lose focus
+Working on {{{1
+File drawer
+}}}
 About {{{1
   Abbreviations used in descriptions:
 
@@ -290,6 +293,16 @@ Change delimiters        cs‹c›‹c›      N
 Delete delimiters        ds‹c›         N
 Add delimiters           ys‹to›‹c›     N
 Add delimiters           S…            V
+}}}
+Fern {{{1
+Open file drawer         \v            N
+Open, select window      s             N
+Move                     m             N
+Rename (edit in buffer)  R             N
+New dir                  K             N
+New file                 N             N
+Toggle hidden files      !             N
+Mark                     -             N
 }}}
 Make/Check/Building/Dispatching {{{1
 Default dispatch         `<CR>         N
