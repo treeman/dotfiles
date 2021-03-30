@@ -173,6 +173,7 @@ Plug 'https://github.com/hrsh7th/nvim-compe'
 Plug 'neovim/nvim-lspconfig'
 " Extensions to built-in LSP, for example, providing type inlay hints
 Plug 'tjdevries/lsp_extensions.nvim'
+Plug 'https://github.com/onsails/lspkind-nvim'
 
 " Autoformat for different languages
 Plug 'Chiel92/vim-autoformat'
