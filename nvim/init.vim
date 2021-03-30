@@ -157,6 +157,8 @@ Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
 Plug 'https://github.com/elixir-editors/vim-elixir.git'
 Plug 'mhinz/vim-mix-format'
+" Autoformat for different languages
+Plug 'Chiel92/vim-autoformat'
 
 " Automatically insert end in insert mode for some languages
 Plug 'https://github.com/tpope/vim-endwise'
@@ -181,8 +183,9 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'tjdevries/lsp_extensions.nvim'
 Plug 'https://github.com/onsails/lspkind-nvim'
 
-" Autoformat for different languages
-Plug 'Chiel92/vim-autoformat'
+" Snippets
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 
 " Git plugins
 Plug 'lewis6991/gitsigns.nvim'
@@ -436,6 +439,24 @@ inoremap <silent><expr> <C-e> compe#close('<C-e>')
 "inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 "inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 "inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
+" Snippets
+" Expand
+"imap <expr> <C-right>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-right>'
+"smap <expr> <C-right>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-right>'
+" Expand or jump
+imap <expr> <tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<tab>'
+smap <expr> <tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<tab>'
+" Jump forward or backward
+"imap <expr> <C-down>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<C-down>'
+"smap <expr> <C-down>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<C-down>'
+imap <expr> <s-tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<s-tab>'
+smap <expr> <s-tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<s-tab>'
+" Selet text for snippets
+nmap <leader>s <Plug>(vsnip-select-text)
+xmap <leader>s <Plug>(vsnip-select-text)
+nmap <leader>S <Plug>(vsnip-cut-text)
+xmap <leader>S <Plug>(vsnip-cut-text)
 
 " Trim whitespaces
 " FIXME Should create a map for it to trim only the selection
