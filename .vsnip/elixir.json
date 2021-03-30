@@ -1,0 +1,25 @@
+{
+  "defmodule": {
+    "prefix": ["defmodule"],
+    "body": [
+      "defmodule $1 do",
+      "    ",
+      "end"
+    ]
+  },
+  "GenServer": {
+    "prefix": ["genserver"],
+    "body": [
+      "use GenServer",
+      "",
+      "def start_link(opts) do",
+        "GenServer.start_link(__MODULE__, opts, name: __MODULE__)",
+      "end",
+      "",
+      "def init(init_args) do",
+        "{:ok, init_args}",
+      "end"
+    ]
+  }
+}
+
