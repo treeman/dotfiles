@@ -431,7 +431,7 @@ nnoremap <leader>b :edit #<CR>
 " Toggle chadtree
 "nnoremap <leader>v <cmd>CHADopen<cr>
 "nnoremap <leader>t :NvimTreeToggle<CR>
-nnoremap <leader>v :Fern . -drawer<CR>
+nnoremap <leader>v :Fern . -drawer -toggle<CR>
 
 " Completion
 inoremap <silent><expr> <C-Space> compe#complete()
