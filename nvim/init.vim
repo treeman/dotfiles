@@ -660,9 +660,10 @@ xnoremap glf :Flogsplit -- --no-patch<CR>
 nnoremap <silent> <leader>fc :Commits<CR>
 
 " Fugitive Conflict Resolution
-nnoremap gds :Gdiffsplit!<CR>
-nnoremap gdh :diffget //2<CR>
-nnoremap gdl :diffget //3<CR>
+" Overwrites gd goto definition
+" nnoremap gds :Gdiffsplit!<CR>
+" nnoremap gdh :diffget //2<CR>
+" nnoremap gdl :diffget //3<CR>
 
 let g:git_messenger_no_default_mappings = v:true
 nnoremap g? <Plug>(git-messenger)
