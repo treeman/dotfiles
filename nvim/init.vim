@@ -6,8 +6,8 @@
 "   :TSInstall all
 "
 " Dependencies:
-"   git, ripgrep, fd, bat, go
-"   pip3 install --upgrade pynvim
+"   git, ripgrep, fd, bat, go, trash-cli (for trashing via Fern)
+"   pip3 install --upgrade pynvim (but I try not to use any python plugins...)
 "
 " LSP servers:
 "   rust-analyzer:
@@ -107,6 +107,7 @@ Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --al
 Plug 'https://github.com/junegunn/fzf.vim'
 " Another fuzzy finder
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'https://github.com/gbrlsnchs/telescope-lsp-handlers.nvim'
 " Personal wiki
 Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
 " Avoid mistyping filenames, ask which file to open if file not find
@@ -350,11 +351,14 @@ nnoremap <leader>n :e ~/vimwiki/projects/
 "nnoremap <silent> <leader>ff :Files<CR>
 nnoremap <silent> <leader>f :Telescope find_files<CR>
 " Find files relative to current file
-nnoremap <silent> <leader>F :call fzf#run({'sink': 'e', 'dir': expand('%:p:h') . '/'})<CR>
+nnoremap <silent> <leader>F :lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>
 " Find in files
 nnoremap <silent> <leader>/ :execute 'Rg ' . input('Rg/')<CR>
+" Would be nice to use live updating grep, but it feels very slow as it blocks.
+" Tracking issue: https://github.com/nvim-telescope/telescope.nvim/issues/392
+"nnoremap <silent> <leader>/ :Telescope live_grep<CR>
 " Find from open buffers
-nnoremap <silent> <leader>B :Buffers<CR>
+nnoremap <silent> <leader>B :Telescope buffers<CR>
 " File drawer
 nnoremap <leader>d :Fern . -drawer -toggle<CR>
 
@@ -454,29 +458,35 @@ inoremap <silent><expr> <C-e> compe#close('<C-e>')
 " FIXME Should create a map for it to trim only the selection
 nnoremap <leader>tw :silent! %s/\s\+$//<CR>:retab<CR>
 
-command! -bang -nargs=? QFix call QFixToggle(<bang>0)
-function! QFixToggle(forced)
-  if exists("g:qfix_win") && a:forced == 0
-    cclose
-    unlet g:qfix_win
-  else
-    copen 10
-    let g:qfix_win = bufnr("$")
-  endif
-endfunction
-nnoremap <silent><leader>q :QFix<CR>
+" Supercharged spell correction!
+nnoremap <silent> z= :Telescope spell_suggest<CR>
 
-command! -bang -nargs=? LList call LListToggle(<bang>0)
-function! LListToggle(forced)
-  if exists("g:llist_win") && a:forced == 0
-    lclose
-    unlet g:llist_win
-  else
-    lopen 10
-    let g:llist_win = bufnr("$")
-  endif
-endfunction
-nnoremap <silent><leader>l :LList<CR>
+nnoremap <silent> <leader>q :Telescope quickfix<CR>
+nnoremap <silent> <leader>l :Telescope loclist<CR>
+
+" command! -bang -nargs=? QFix call QFixToggle(<bang>0)
+" function! QFixToggle(forced)
+"   if exists("g:qfix_win") && a:forced == 0
+"     cclose
+"     unlet g:qfix_win
+"   else
+"     copen 10
+"     let g:qfix_win = bufnr("$")
+"   endif
+" endfunction
+" nnoremap <silent><leader>q :QFix<CR>
+"
+" command! -bang -nargs=? LList call LListToggle(<bang>0)
+" function! LListToggle(forced)
+"   if exists("g:llist_win") && a:forced == 0
+"     lclose
+"     unlet g:llist_win
+"   else
+"     lopen 10
+"     let g:llist_win = bufnr("$")
+"   endif
+" endfunction
+" nnoremap <silent><leader>l :LList<CR>
 
 " Next/prev from unimpaired.vim {{{
 " [b, ]b, [B, ]B       :bprev, :bnext, :bfirst, :blast
@@ -650,12 +660,12 @@ nnoremap gll :Flogsplit<CR>
 nnoremap glf :Flogsplit -path=%<CR>
 xnoremap glf :Flogsplit -- --no-patch<CR>
 nnoremap <silent> <leader>C :Commits<CR>
+nnoremap gb :Telescope git_branches<CR>
 
 " Fugitive Conflict Resolution
-" Overwrites gd goto definition
-" nnoremap gds :Gdiffsplit!<CR>
-" nnoremap gdh :diffget //2<CR>
-" nnoremap gdl :diffget //3<CR>
+nnoremap gds :Gdiffsplit!<CR>
+nnoremap gdh :diffget //2<CR>
+nnoremap gdl :diffget //3<CR>
 
 let g:git_messenger_no_default_mappings = v:true
 nnoremap g? <Plug>(git-messenger)

@@ -85,6 +85,8 @@ Outgoing calls           -O            N
 Document symbol          -w            N
 Workspace symbol         -W            N
 Jump through diagnostics [d ]d         N
+Document diagnostics     -e            N
+Workspace diagnostics    -W            N
 }}}
 Leader {{{1
 Reload vimrc             \sv           N
@@ -121,9 +123,11 @@ Show line diagnostics    -l            N
 Rename                   -ar           N
 Incoming calls           -I            N
 Outgoing calls           -O            N
-Document symbol          -w            N
-Workspace symbol         -W            N
+Document symbols         -w            N
+Workspace symbols        -W            N
 Jump through diagnostics [d ]d         N
+Document diagnostics     -e            N
+Workspace diagnostics    -W            N
 }}}
 Fold {{{1
 Fold                     zc           *N

@@ -11,6 +11,7 @@ local custom_attach = function(client)
 
     -- Different keyboard layouts on laptop and main computer
     for i, prefix in ipairs({'_', '-'}) do
+        -- Most here go through telescope via the lsp-handlers plugin
         map('n',prefix .. 'D','<cmd>lua vim.lsp.buf.declaration()<CR>')
         map('n',prefix .. 'd','<cmd>lua vim.lsp.buf.definition()<CR>')
         map('n',prefix .. 'r','<cmd>lua vim.lsp.buf.references()<CR>')
@@ -25,6 +26,8 @@ local custom_attach = function(client)
         map('n',prefix .. 'O','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
         map('n',prefix .. 'w','<cmd>lua vim.lsp.buf.document_symbol()<CR>')
         map('n',prefix .. 'W','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
+        map('n',prefix .. 'e','<cmd>:Telescope lsp_document_diagnostics<CR>')
+        map('n',prefix .. 'E','<cmd>:Telescope lsp_workspace_diagnostics<CR>')
         -- map('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
     end
 
@@ -93,6 +96,8 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     update_in_insert = false,
   }
 )
+
+require('telescope').load_extension('lsp_handlers')
 
 -- commented options are defaults
 require('lspkind').init({
