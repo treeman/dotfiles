@@ -25,6 +25,32 @@
       "  {:ok, init_args}",
       "end"
     ]
+  },
+  "handle_call": {
+    "prefix": ["handle_call"],
+    "body": [
+      "@impl true",
+      "def handle_call($1, _from, state) do",
+      "  $2",
+      "  {:reply, $3, state}",
+      "end"
+    ]
+  },
+  "handle_info": {
+    "prefix": ["handle_info"],
+    "body": [
+      "@impl true",
+      "def handle_info($1, state) do",
+      "  $2",
+      "  {:noreply, state}",
+      "end"
+    ]
+  },
+  "inspect": {
+    "prefix": ["inspect"],
+    "body": [
+      "IO.inspect($1, label: \"$2\")"
+    ]
   }
 }
 
