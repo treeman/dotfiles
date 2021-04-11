@@ -182,6 +182,7 @@ Plug 'neovim/nvim-lspconfig'
 " Extensions to built-in LSP, for example, providing type inlay hints
 Plug 'tjdevries/lsp_extensions.nvim'
 Plug 'https://github.com/onsails/lspkind-nvim'
+Plug 'kosayoda/nvim-lightbulb'
 
 " Snippets
 Plug 'hrsh7th/vim-vsnip'
@@ -347,13 +348,15 @@ nnoremap <leader>n :e ~/vimwiki/projects/
 
 " Find files
 "nnoremap <silent> <leader>ff :Files<CR>
-nnoremap <silent> <leader>ff :Telescope find_files<CR>
+nnoremap <silent> <leader>f :Telescope find_files<CR>
 " Find files relative to current file
-nnoremap <silent> <leader>fe :call fzf#run({'sink': 'e', 'dir': expand('%:p:h') . '/'})<CR>
+nnoremap <silent> <leader>F :call fzf#run({'sink': 'e', 'dir': expand('%:p:h') . '/'})<CR>
 " Find in files
 nnoremap <silent> <leader>/ :execute 'Rg ' . input('Rg/')<CR>
 " Find from open buffers
-nnoremap <silent> <leader>fb :Buffers<CR>
+nnoremap <silent> <leader>B :Buffers<CR>
+" File drawer
+nnoremap <leader>d :Fern . -drawer -toggle<CR>
 
 " CTRL-A CTRL-Q to select all and build quickfix list
 function! s:build_quickfix_list(lines)
@@ -384,17 +387,17 @@ xnoremap p "_dP
 "inoremap <C-v>e ◊
 
 " Easy way to launch terminal
-function! FishTerm()
-  execute 'e term://fish'
-  " Make escape enter normal mode in terminal as well
-  tnoremap <buffer> <Esc> <C-\><C-n>
-  tnoremap <buffer> <C-v><Esc> <Esc>
-  setlocal nonumber
-  setlocal norelativenumber
-endfunction
-nnoremap <leader>tt :call FishTerm()<CR>
-nnoremap <leader>tv :vs <bar> :call FishTerm()<CR>
-nnoremap <leader>ts :sp <bar> :call FishTerm()<CR>
+" function! FishTerm()
+"   execute 'e term://fish'
+"   " Make escape enter normal mode in terminal as well
+"   tnoremap <buffer> <Esc> <C-\><C-n>
+"   tnoremap <buffer> <C-v><Esc> <Esc>
+"   setlocal nonumber
+"   setlocal norelativenumber
+" endfunction
+" nnoremap <leader>tt :call FishTerm()<CR>
+" nnoremap <leader>tv :vs <bar> :call FishTerm()<CR>
+" nnoremap <leader>ts :sp <bar> :call FishTerm()<CR>
 
 " Clear screen and turn off search highlighting until the next time we search
 nnoremap <silent> <M-l> :<C-u>nohlsearch<CR><C-l>
@@ -420,18 +423,13 @@ nnoremap <C-up> <c-w>k
 nnoremap <C-right> <c-w>l
 " Create splits with <C-w>v and <C-w>s, or :sp and :vs
 " Close the current buffer if it's not shown in another window, but keep the window itself
-nnoremap <leader>s :Sayonara!<CR>
+nnoremap <leader>Q :Sayonara!<CR>
 
 let g:maximizer_set_default_mapping = 0
 nnoremap <silent><C-w>m :MaximizerToggle<CR>
 
 " Goto previous buffer
 nnoremap <leader>b :edit #<CR>
-
-" Toggle chadtree
-"nnoremap <leader>v <cmd>CHADopen<cr>
-"nnoremap <leader>t :NvimTreeToggle<CR>
-nnoremap <leader>v :Fern . -drawer -toggle<CR>
 
 " Completion
 inoremap <silent><expr> <C-Space> compe#complete()
@@ -441,22 +439,16 @@ inoremap <silent><expr> <C-e> compe#close('<C-e>')
 "inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " Snippets
-" Expand
-"imap <expr> <C-right>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-right>'
-"smap <expr> <C-right>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-right>'
 " Expand or jump
-imap <expr> <tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<tab>'
-smap <expr> <tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<tab>'
+" FIXME  cannot use  leader  key,  as  space  stops  everything  flat!
+"imap <expr> <leader>s   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<leader>s'
+"smap <expr> <leader>s   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<leader>s'
 " Jump forward or backward
-"imap <expr> <C-down>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<C-down>'
-"smap <expr> <C-down>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<C-down>'
-imap <expr> <s-tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<s-tab>'
-smap <expr> <s-tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<s-tab>'
-" Selet text for snippets
-nmap <leader>s <Plug>(vsnip-select-text)
-xmap <leader>s <Plug>(vsnip-select-text)
-nmap <leader>S <Plug>(vsnip-cut-text)
-xmap <leader>S <Plug>(vsnip-cut-text)
+"imap <expr> <leader>S   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<leader>b'
+"smap <expr> <leader>S   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<leader>b'
+" Select text for snippets
+"xmap <leader>s <Plug>(vsnip-select-text)
+"xmap <leader>S <Plug>(vsnip-cut-text)
 
 " Trim whitespaces
 " FIXME Should create a map for it to trim only the selection
@@ -657,7 +649,7 @@ nnoremap g<space> :Git
 nnoremap gll :Flogsplit<CR>
 nnoremap glf :Flogsplit -path=%<CR>
 xnoremap glf :Flogsplit -- --no-patch<CR>
-nnoremap <silent> <leader>fc :Commits<CR>
+nnoremap <silent> <leader>C :Commits<CR>
 
 " Fugitive Conflict Resolution
 " Overwrites gd goto definition

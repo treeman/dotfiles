@@ -9,20 +9,24 @@ end
 local custom_attach = function(client)
     -- require'completion'.on_attach(client)
 
-    map('n','gD','<cmd>lua vim.lsp.buf.declaration()<CR>')
-    map('n','gd','<cmd>lua vim.lsp.buf.definition()<CR>')
-    map('n','gr','<cmd>lua vim.lsp.buf.references()<CR>')
-    map('n','gi','<cmd>lua vim.lsp.buf.implementation()<CR>')
-    map('n','gt','<cmd>lua vim.lsp.buf.type_definition()<CR>')
-    map('n','K','<cmd>lua vim.lsp.buf.hover()<CR>')
-    map('n','<leader>ar','<cmd>lua vim.lsp.buf.rename()<CR>')
-    map('n','<leader>ai','<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
-    map('n','<leader>ao','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
-    map('n','<leader>gw','<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-    map('n','<leader>gW','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
-    --map('n','gs','<cmd>lua vim.lsp.buf.signature_help()<CR>')
-    --map('n','<leader>af','<cmd>lua vim.lsp.buf.code_action()<CR>')
-    --map('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+    -- Different keyboard layouts on laptop and main computer
+    for i, prefix in ipairs({'_', '-'}) do
+        map('n',prefix .. 'D','<cmd>lua vim.lsp.buf.declaration()<CR>')
+        map('n',prefix .. 'd','<cmd>lua vim.lsp.buf.definition()<CR>')
+        map('n',prefix .. 'r','<cmd>lua vim.lsp.buf.references()<CR>')
+        map('n',prefix .. 'i','<cmd>lua vim.lsp.buf.implementation()<CR>')
+        map('n',prefix .. 't','<cmd>lua vim.lsp.buf.type_definition()<CR>')
+        map('n',prefix .. 'h','<cmd>lua vim.lsp.buf.hover()<CR>')
+        map('n',prefix .. 's','<cmd>lua vim.lsp.buf.signature_help()<CR>')
+        map('n',prefix .. 'x','<cmd>lua vim.lsp.buf.code_action()<CR>')
+        map('n',prefix .. 'l','<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+        map('n',prefix .. 'ar','<cmd>lua vim.lsp.buf.rename()<CR>')
+        map('n',prefix .. 'I','<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
+        map('n',prefix .. 'O','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
+        map('n',prefix .. 'w','<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+        map('n',prefix .. 'W','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
+        -- map('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+    end
 
     -- Goto previous/next diagnostic warning/error
     map('n',']d','<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
@@ -35,6 +39,8 @@ local custom_attach = function(client)
     vim.api.nvim_command('setlocal updatetime=150')
     autocmd('Cursorhold', '*', 'lua vim.lsp.diagnostic.show_line_diagnostics()')
 
+    autocmd('Cursorhold', '*', "lua require'nvim-lightbulb'.update_lightbulb()")
+
     -- Enable type inlay hints
     autocmd('CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost',
             '*',
@@ -46,10 +52,6 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-require'lspconfig'.rust_analyzer.setup {
-  capabilities = capabilities,
-}
 
 require'lspconfig'.rust_analyzer.setup({
     on_attach = custom_attach,

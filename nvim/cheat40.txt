@@ -1,7 +1,4 @@
 Press q to dismiss, <Tab> to lose focus
-Working on {{{1
-File drawer
-}}}
 About {{{1
   Abbreviations used in descriptions:
 
@@ -56,6 +53,77 @@ About {{{1
   O    Operator (use in Visual mode, or
        before a motion or a text object)
   *    Acts on text under/after cursor
+}}}
+Working on {{{1
+# Surround
+Change delimiters        cs‹c›‹c›      N
+Delete delimiters        ds‹c›         N
+Add delimiters           ys‹to›‹c›     N
+Add delimiters           S…            V
+# File handling
+Find files               \f            N
+Find files w rel path    \F            N
+Find commits             \C            N
+Find open buffers        \B            N
+Open file drawer         \d            N
+# Snippets
+Snippet jumping          \s \S        IN
+Select text for snippets \s \S        *V
+# LSP
+Declaration              -D            N
+Definition               -d            N
+References               -r            N
+Implementation           -i            N
+Type definition          -t            N
+Hover                    -h            N
+Signature help           -s            N
+Code action              -x            N
+Show line diagnostics    -l            N
+Rename                   -ar           N
+Incoming calls           -I            N
+Outgoing calls           -O            N
+Document symbol          -w            N
+Workspace symbol         -W            N
+Jump through diagnostics [d ]d         N
+}}}
+Leader {{{1
+Reload vimrc             \sv           N
+Edit vimrc               \ev           N
+Edit cheat40             \ec           N
+Edit file w rel path     \ef           N
+Notes                    \n            N
+Find files               \f            N
+Find files w rel path    \F            N
+Find commits             \C            N
+Grep in files            \/            N
+Find open buffers        \B            N
+Paste from mouse         \p \P         N
+Copy to mouse            \y \Y         N
+Close buffer, keep win   \Q            N
+Goto previous buffer     \b            N
+Open file drawer         \d            N
+Trim whitespaces         \tw           N
+Toggle quickfix          \q            N
+Toggle locallist         \l            N
+Snippet jumping          \s \S        IN
+Select text for snippets \s \S        *V
+}}}
+LSP {{{1
+Declaration              -D            N
+Definition               -d            N
+References               -r            N
+Implementation           -i            N
+Type definition          -t            N
+Hover                    -h            N
+Signature help           -s            N
+Code action              -x            N
+Show line diagnostics    -l            N
+Rename                   -ar           N
+Incoming calls           -I            N
+Outgoing calls           -O            N
+Document symbol          -w            N
+Workspace symbol         -W            N
+Jump through diagnostics [d ]d         N
 }}}
 Fold {{{1
 Fold                     zc           *N
@@ -193,14 +261,6 @@ Separators               | * _ - ,     T
 }}}
 Commands {{{1
 Change line from cursor  C             N
-Change character         s   cl        N
-Change line              S   ^C        N
-}}}
-Insert mode {{{1
-}}}
-Visual mode {{{1
-}}}
-Command mode {{{1
 }}}
 Reversing {{{1
 # Act                      Repeat  Undo
@@ -209,10 +269,6 @@ f,t,F,T                  ;       ,
 / and ?                  n       N
 :s/target/replace/       &       u
 qx{changes}q             @x      u
-}}}
-Spell checking {{{1
-}}}
-Autocomplete {{{1
 }}}
 Settings and options {{{1
 # Turn on settings with [ox
@@ -224,22 +280,6 @@ Hidden chars (list)      yol           N
 Spell                    yos           N
 Wrap                     yow           N
 Expand tab               yot           N
-}}}
-Vimscript {{{1
-}}}
-LSP {{{1
-Declaration              gD            N
-Definition               gd            N
-References               gr            N
-Implementation           gi            N
-Type definition          gt            N
-Hover                    K             N
-Rename                   \ar           N
-Incoming calls           \ai           N
-Outgoing calls           \ao           N
-Document symbol          \gw           N
-Workspace symbol         \gW           N
-Jump through diagnostics [d ]d         N
 }}}
 Git {{{1
 # Misc
