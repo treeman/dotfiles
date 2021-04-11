@@ -32,7 +32,7 @@ local custom_attach = function(client)
     vim.api.nvim_command('setlocal omnifunc=v:lua.vim.lsp.omnifunc')
 
     -- Show diagnostics on hover
-    vim.api.nvim_command('setlocal updatetime=300')
+    vim.api.nvim_command('setlocal updatetime=150')
     autocmd('Cursorhold', '*', 'lua vim.lsp.diagnostic.show_line_diagnostics()')
 
     -- Enable type inlay hints
