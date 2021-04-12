@@ -47,6 +47,13 @@ set directory=~/.config/nvim/tmp,~/tmp,/tmp " store swaps here if we do enable i
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.o,*.obj,*.ali " ignore files for file handling
 set hidden " Can change buffers without saving
 
+" Shada/viminfo
+" Also used to store marks to quickly edit files:
+"   C     cheat sheet
+"   V     vimrc
+set shada=!,'1000,<100,s100,h,f1
+set shadafile=~/.config/nvim/.shada
+
 " Interactivity
 set hlsearch " highlight search terms
 set incsearch " show search mathes as you type
