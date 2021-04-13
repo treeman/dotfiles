@@ -67,8 +67,8 @@ Find commits             \C            N
 Find open buffers        \B            N
 Open file drawer         \d            N
 # Snippets
-Snippet jumping          \s \S        IN
-Select text for snippets \s \S        *V
+Snippet jumping          C-s C-t      IN
+Select text for snippets yv           *V
 # LSP
 Declaration              -D            N
 Definition               -d            N
@@ -84,7 +84,6 @@ Incoming calls           -I            N
 Outgoing calls           -O            N
 Document symbol          -w            N
 Workspace symbol         -W            N
-Jump through diagnostics [d ]d         N
 Document diagnostics     -e            N
 Workspace diagnostics    -W            N
 }}}
