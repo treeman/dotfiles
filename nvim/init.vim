@@ -145,6 +145,32 @@ Plug 'https://github.com/nelstrom/vim-visual-star-search'
 Plug 'https://github.com/rhysd/clever-f.vim'
 " Use s as a two-char f
 Plug 'https://github.com/justinmk/vim-sneak'
+" nvim in Firefox
+Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" Peek registry contents, for easy use of " and @
+Plug 'https://github.com/junegunn/vim-peekaboo'
+" Display colors
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+" Sudo write for neovim
+Plug 'https://github.com/lambdalisue/suda.vim'
+" Kill buffers smartly
+Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
+" Scratch buffer
+Plug 'https://github.com/idbrii/itchy.vim'
+" Automatically insert end in insert mode for some languages
+Plug 'https://github.com/tpope/vim-endwise'
+" Light statusbar
+Plug 'https://github.com/itchyny/lightline.vim'
+Plug 'shinchu/lightline-gruvbox.vim'
+" Treesitter syntax highlighting
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'romgrk/nvim-treesitter-context'
+" Dispatch async things
+Plug 'https://github.com/tpope/vim-dispatch'
+" Maximize for windows
+Plug 'https://github.com/szw/vim-maximizer'
+" Autocompletion framework with a ton of support
+Plug 'https://github.com/hrsh7th/nvim-compe'
 
 " File explorer
 Plug 'https://github.com/lambdalisue/fern.vim'
@@ -168,21 +194,6 @@ Plug 'mhinz/vim-mix-format'
 " Autoformat for different languages
 Plug 'Chiel92/vim-autoformat'
 
-" Automatically insert end in insert mode for some languages
-Plug 'https://github.com/tpope/vim-endwise'
-" Light statusbar
-Plug 'https://github.com/itchyny/lightline.vim'
-Plug 'shinchu/lightline-gruvbox.vim'
-" Treesitter syntax highlighting
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'romgrk/nvim-treesitter-context'
-" Dispatch async things
-Plug 'https://github.com/tpope/vim-dispatch'
-" Maximize for windows
-Plug 'https://github.com/szw/vim-maximizer'
-" Autocompletion framework with a ton of support
-Plug 'https://github.com/hrsh7th/nvim-compe'
-
 " LSP support
 " See doc :help lsp
 " Collection of common configurations for the Nvim LSP client
@@ -201,17 +212,6 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/rbong/vim-flog'
 Plug 'https://github.com/rhysd/git-messenger.vim'
-
-" nvim in Firefox
-Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-" Peek registry contents, for easy use of " and @
-Plug 'https://github.com/junegunn/vim-peekaboo'
-" Display colors
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-" Sudo write for neovim
-Plug 'https://github.com/lambdalisue/suda.vim'
-" Kill buffers smartly
-Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 call plug#end()
 
 " }}}
@@ -329,27 +329,15 @@ set colorcolumn=99999
 
 " Reload vimrc
 nnoremap <leader>sv :so $MYVIMRC<CR>
-" Easy way to edit vimrc
-nnoremap <leader>ev :e $MYVIMRC<CR>
-" Edit my cheat sheet
-function! EditCheat40()
-  let path = stdpath("config")."/cheat40.txt"
-  execute 'e '.path
-  " Taken from cheat40#open in vim-cheat40
-  setlocal foldmethod=marker foldtext=substitute(getline(v:foldstart),'\\s\\+{.*$','','')
-  execute 'setlocal foldlevel='.get(g:, 'cheat40_foldlevel', 1)
-  setlocal concealcursor=nc conceallevel=3
-  setlocal expandtab nospell nowrap textwidth=40
-  setlocal fileencoding=utf-8 filetype=cheat40
-  setlocal iskeyword=@,48-57,-,/,.,192-255
-endfunction
-nnoremap <leader>ec :call EditCheat40()<CR>
+
 " Edit file with prefilled path from the current file
 nnoremap <leader>ef :e <C-R>=expand('%:p:h') . '/'<CR>
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 "cmap w!! w !sudo tee > /dev/null %
 "com -bar W exe 'w !sudo tee >/dev/null %:p:S' | setl nomod
 cmap w!! SudaWrite
+" Open a scratch buffer
+nmap <Leader>ss <Plug>(itchy-open-scratch)
 
 " Load notes
 nnoremap <leader>n :e ~/vimwiki/projects/
@@ -451,15 +439,14 @@ inoremap <silent><expr> <C-e> compe#close('<C-e>')
 
 " Snippets
 " Expand or jump
-" FIXME  cannot use  leader  key,  as  space  stops  everything  flat!
-"imap <expr> <leader>s   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<leader>s'
-"smap <expr> <leader>s   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<leader>s'
-" Jump forward or backward
-"imap <expr> <leader>S   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<leader>b'
-"smap <expr> <leader>S   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<leader>b'
+imap <expr> <C-s>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-s>'
+smap <expr> <C-s>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-s>'
+" Jump backward
+imap <expr> <C-t>   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<C-t>'
+smap <expr> <C-t>   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<C-t>'
 " Select text for snippets
-"xmap <leader>s <Plug>(vsnip-select-text)
-"xmap <leader>S <Plug>(vsnip-cut-text)
+xmap yv <Plug>(vsnip-select-text)
+"xmap yv <Plug>(vsnip-cut-text)
 
 " Trim whitespaces
 " FIXME Should create a map for it to trim only the selection
@@ -709,6 +696,21 @@ autocmd FileType floggraph nnoremap <buffer> <silent> = :<C-U>call ToggleFlogNoP
 let g:cheat40_use_default = 0
 " Hide folds
 let g:cheat40_foldlevel = 0
+
+function! EditCheat40()
+  " Taken from cheat40#open in vim-cheat40
+  setlocal foldmethod=marker foldtext=substitute(getline(v:foldstart),'\\s\\+{.*$','','')
+  execute 'setlocal foldlevel='.get(g:, 'cheat40_foldlevel', 1)
+  setlocal concealcursor=nc conceallevel=3
+  setlocal expandtab nospell nowrap textwidth=40
+  setlocal fileencoding=utf-8 filetype=cheat40
+  setlocal iskeyword=@,48-57,-,/,.,192-255
+endfunction
+
+augroup cheatgroup
+  autocmd!
+  au! BufRead,BufNewFile cheat40.txt call EditCheat40()
+augroup END
 "}}}
 "{{{ hexokinase
 let g:Hexokinase_highlighters = [ 'virtual' ]
