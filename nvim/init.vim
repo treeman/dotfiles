@@ -171,6 +171,8 @@ Plug 'https://github.com/tpope/vim-dispatch'
 Plug 'https://github.com/szw/vim-maximizer'
 " Autocompletion framework with a ton of support
 Plug 'https://github.com/hrsh7th/nvim-compe'
+" Align text around
+Plug 'junegunn/vim-easy-align'
 
 " File explorer
 Plug 'https://github.com/lambdalisue/fern.vim'
@@ -439,13 +441,13 @@ inoremap <silent><expr> <C-e> compe#close('<C-e>')
 
 " Snippets
 " Expand or jump
-imap <expr> <C-s>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-s>'
-smap <expr> <C-s>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-s>'
+imap <expr> <C-t>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-t>'
+smap <expr> <C-t>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-t>'
 " Jump backward
-imap <expr> <C-t>   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<C-t>'
-smap <expr> <C-t>   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<C-t>'
+imap <expr> <C-s>   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<C-s>'
+smap <expr> <C-s>   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<C-s>'
 " Select text for snippets
-xmap yv <Plug>(vsnip-select-text)
+xmap <C-y> <Plug>(vsnip-select-text)
 "xmap yv <Plug>(vsnip-cut-text)
 
 " Trim whitespaces
@@ -457,6 +459,11 @@ nnoremap <silent> z= :Telescope spell_suggest<CR>
 
 nnoremap <silent> <leader>q :Telescope quickfix<CR>
 nnoremap <silent> <leader>l :Telescope loclist<CR>
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " command! -bang -nargs=? QFix call QFixToggle(<bang>0)
 " function! QFixToggle(forced)

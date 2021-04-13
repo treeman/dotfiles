@@ -60,6 +60,9 @@ Change delimiters        cs‹c›‹c›      N
 Delete delimiters        ds‹c›         N
 Add delimiters           ys‹to›‹c›     N
 Add delimiters           S…            V
+# Align
+Easy align               ga‹c›         V
+Easy align motion        ga‹Move›      N
 # File handling
 Find files               \f            N
 Find files w rel path    \F            N
@@ -67,8 +70,8 @@ Find commits             \C            N
 Find open buffers        \B            N
 Open file drawer         \d            N
 # Snippets
-Snippet jumping          C-s C-t      IN
-Select text for snippets yv           *V
+Snippet jumping          «C-t» «C-s»   IN
+Select text for snippets «C-y»          V
 # LSP
 Declaration              -D            N
 Definition               -d            N
