@@ -46,6 +46,12 @@
       "end"
     ]
   },
+  "puts": {
+    "prefix": ["puts"],
+    "body": [
+      "IO.puts(\"$1\")"
+    ]
+  },
   "inspect": {
     "prefix": ["inspect"],
     "body": [

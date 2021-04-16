@@ -291,7 +291,8 @@ function! LightlineGitStatus()
 endfunction
 
 function! LightlineFilename()
-  return winwidth(0) > 110 ? expand('%:f') : expand('%:t')
+  return expand('%:t')
+  "return winwidth(0) > 110 ? expand('%:f') : expand('%:t')
 endfunction
 
 function! LightlineSpell()
@@ -355,7 +356,7 @@ nnoremap <silent> <leader>/ :execute 'Rg ' . input('Rg/')<CR>
 " Tracking issue: https://github.com/nvim-telescope/telescope.nvim/issues/392
 "nnoremap <silent> <leader>/ :Telescope live_grep<CR>
 " Find from open buffers
-nnoremap <silent> <leader>B :Telescope buffers<CR>
+nnoremap <silent> <leader>b :Telescope buffers<CR>
 " File drawer
 nnoremap <leader>d :Fern . -drawer -toggle<CR>
 
@@ -430,7 +431,7 @@ let g:maximizer_set_default_mapping = 0
 nnoremap <silent><C-w>m :MaximizerToggle<CR>
 
 " Goto previous buffer
-nnoremap <leader>b :edit #<CR>
+nnoremap <leader>B :edit #<CR>
 
 " Completion
 inoremap <silent><expr> <C-Space> compe#complete()
@@ -594,6 +595,10 @@ augroup END
 let g:mix_format_on_save = 1
 let g:mix_format_options = '--check-equivalent'
 let g:mix_format_silent_errors = 1
+augroup elixir_group
+  autocmd!
+  autocmd FileType elixir normal zR
+augroup END
 " }}}
 " Web {{{
 

@@ -71,7 +71,7 @@ Find open buffers        \B            N
 Open file drawer         \d            N
 # Snippets
 Snippet jumping          «C-t» «C-s»   IN
-Select text for snippets «C-y»          V
+Select text for snippets «C-y»         V
 # LSP
 Declaration              -D            N
 Definition               -d            N
