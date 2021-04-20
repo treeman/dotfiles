@@ -13,6 +13,10 @@ feh --bg-scale ~/.backgrounds/curr/war_is_hell.jpg
 # Set mouse pointer
 xsetroot -cursor_name left_ptr
 
+# GPG
+gpg-agent --daemon
+keychain --gpg2
+
 # Start xmonad yay!
 exec xmonad
 
