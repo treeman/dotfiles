@@ -54,3 +54,5 @@
     renamelimit = 3000
 [commit]
 	gpgSign = true
+[gpg]
+	program = gpg2
