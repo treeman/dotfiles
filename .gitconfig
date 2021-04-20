@@ -52,3 +52,5 @@
     rebase = false
 [merge]
     renamelimit = 3000
+[commit]
+	gpgSign = true
