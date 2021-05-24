@@ -15,6 +15,10 @@ setxkbmap -option caps:escape
 # Kill beep?
 xset b off
 
+# GPG
+gpg-agent --daemon
+keychain --gpg2
+
 # Start xmonad yay!
 exec xmonad
 
