@@ -45,12 +45,12 @@ local custom_attach = function(client)
     autocmd('Cursorhold', '*', "lua require'nvim-lightbulb'.update_lightbulb()")
 
     -- Enable type inlay hints
-    autocmd('CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost',
-            '*',
-            [[lua require'lsp_extensions'.inlay_hints{
-                prefix = '',
-                highlight = 'Comment'
-            }]])
+    -- autocmd('CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost',
+    --         '*',
+    --         [[lua require'lsp_extensions'.inlay_hints{
+    --             prefix = '',
+    --             highlight = 'Comment'
+    --         }]])
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

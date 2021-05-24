@@ -356,7 +356,8 @@ nnoremap <silent> <leader>/ :execute 'Rg ' . input('Rg/')<CR>
 " Tracking issue: https://github.com/nvim-telescope/telescope.nvim/issues/392
 "nnoremap <silent> <leader>/ :Telescope live_grep<CR>
 " Find from open buffers
-nnoremap <silent> <leader>b :Telescope buffers<CR>
+" nnoremap <silent> <leader>b :Telescope buffers<CR>
+nnoremap <silent> <leader>b :lua require('telescope_extra').my_buffer()<CR>
 " File drawer
 nnoremap <leader>d :Fern . -drawer -toggle<CR>
 
@@ -401,8 +402,22 @@ xnoremap p "_dP
 " nnoremap <leader>tv :vs <bar> :call FishTerm()<CR>
 " nnoremap <leader>ts :sp <bar> :call FishTerm()<CR>
 
+" Use ( as a toggle prefix everywhere
+nmap ( [
+nmap ) ]
+omap ( [
+omap ) ]
+xmap ( [
+xmap ) ]
+
 " Clear screen and turn off search highlighting until the next time we search
 nnoremap <silent> <M-l> :<C-u>nohlsearch<CR><C-l>
+
+" Use hjkl on split keyboard instead!
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
 
 " Happy window switching
 " Terminal mode:
