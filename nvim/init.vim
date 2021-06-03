@@ -8,6 +8,7 @@
 " Dependencies:
 "   git, ripgrep, fd, bat, go, trash-cli (for trashing via Fern)
 "   pip3 install --upgrade pynvim (but I try not to use any python plugins...)
+"   go get github.com/mattn/efm-langserver
 "
 " LSP servers:
 "   rust-analyzer:
@@ -141,8 +142,6 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 " Make * and # search visually
 Plug 'https://github.com/nelstrom/vim-visual-star-search'
-" Change f, F, t and T to be smarter
-Plug 'https://github.com/rhysd/clever-f.vim'
 " Use s as a two-char f
 Plug 'https://github.com/justinmk/vim-sneak'
 " nvim in Firefox
@@ -164,7 +163,6 @@ Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
 " Treesitter syntax highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'romgrk/nvim-treesitter-context'
 " Dispatch async things
 Plug 'https://github.com/tpope/vim-dispatch'
 " Maximize for windows
@@ -451,7 +449,7 @@ nnoremap <leader>B :edit #<CR>
 " Completion
 inoremap <silent><expr> <C-Space> compe#complete()
 inoremap <silent><expr> <C-e> compe#close('<C-e>')
-"inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> ; compe#confirm(';')
 "inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 "inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 

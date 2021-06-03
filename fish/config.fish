@@ -5,6 +5,7 @@ set -x PATH ~/.cargo/bin ~/.cargo/env $PATH
 set -x PATH ~/.local/bin $PATH
 set -x PATH ~/bin ~/dotfiles/bin $PATH
 set -x PATH ~/.linuxbrew/bin $PATH
+set -x PATH ~/go/bin $PATH
 
 # Beancount module finding for importers
 set -x PYTHONPATH $PYTHONPATH ~/vimwiki/money/accounting/
