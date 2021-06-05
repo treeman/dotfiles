@@ -24,7 +24,7 @@ alias g git
 # zlip decompress
 alias zinflate='ruby -r zlib -e "STDOUT.write Zlib::Inflate.inflate(STDIN.read)"'
 
-alias scp='rsync --verbose --progress --partial'
+alias rcp='rsync --verbose --progress --partial'
 
 set -x FZF_DEFAULT_COMMAND 'fd --type file --hidden --exclude .git'
 
