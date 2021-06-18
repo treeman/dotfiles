@@ -138,3 +138,8 @@ require'lspconfig'.efm.setup({
   on_attach = on_attach,
   filetypes = {"elixir"}
 })
+
+require("lsp-rooter").setup({
+  -- Table of lsp clients to ignore by name
+  ignore_lsp = {},
+})

@@ -171,6 +171,8 @@ Plug 'https://github.com/szw/vim-maximizer'
 Plug 'https://github.com/hrsh7th/nvim-compe'
 " Align text around
 Plug 'junegunn/vim-easy-align'
+" Repalce text inside quickfix
+Plug 'gabrielpoca/replacer.nvim'
 
 " File explorer
 Plug 'https://github.com/lambdalisue/fern.vim'
@@ -202,6 +204,8 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'tjdevries/lsp_extensions.nvim'
 Plug 'https://github.com/onsails/lspkind-nvim'
 Plug 'kosayoda/nvim-lightbulb'
+" Automatically change root to current file
+Plug 'ahmedkhalf/lsp-rooter.nvim'
 
 " Snippets
 Plug 'hrsh7th/vim-vsnip'
@@ -442,6 +446,9 @@ nnoremap <leader>Q :Sayonara!<CR>
 
 let g:maximizer_set_default_mapping = 0
 nnoremap <silent><C-w>m :MaximizerToggle<CR>
+
+" Replace things in quickfix
+nmap <leader>r :lua require("replacer").run()<cr>
 
 " Goto previous buffer
 nnoremap <leader>B :edit #<CR>
