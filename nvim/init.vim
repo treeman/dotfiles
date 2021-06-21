@@ -23,6 +23,10 @@
 "
 "   tsserver:
 "     npm install -g typescript typescript-language-server
+"
+"   Others via nvim-lspinstall:
+"     https://github.com/kabouzeid/nvim-lspinstall
+"     :LspInstall <server>
 " }}}
 " Basic {{{
 " Difficult to use fish as a default shell as plugins may depend on POSIX
@@ -200,6 +204,8 @@ Plug 'Chiel92/vim-autoformat'
 " See doc :help lsp
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
+" Help to install language servers
+Plug 'kabouzeid/nvim-lspinstall'
 " Extensions to built-in LSP, for example, providing type inlay hints
 Plug 'tjdevries/lsp_extensions.nvim'
 Plug 'https://github.com/onsails/lspkind-nvim'
