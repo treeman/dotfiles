@@ -569,6 +569,7 @@ augroup markdowngroup
   autocmd!
   autocmd FileType markdown setlocal foldexpr=MarkdownLevel()
   autocmd FileType markdown setlocal foldmethod=expr
+  autocmd FileType markdown call compe#setup({ 'source': { 'spell': v:true } }, 0)
   autocmd FileType markdown :normal zR
 augroup END
 
@@ -579,6 +580,7 @@ augroup beancountgroup
   autocmd!
   autocmd FileType beancount setlocal foldexpr=MarkdownLevel()
   autocmd FileType beancount setlocal foldmethod=expr
+  autocmd FileType beancount call compe#setup({ 'source': { 'spell': v:true, 'omni': v:true } }, 0)
 augroup END
 
 " }}}
@@ -597,6 +599,7 @@ augroup pollengroup
   autocmd FileType pollen setlocal linebreak
   autocmd FileType pollen setlocal ts=2 sts=2 sw=2
 
+  autocmd FileType pollen call compe#setup({ 'source': { 'spell': v:true } }, 0)
   autocmd FileType pollen inoremap <C-l> λ
   autocmd FileType pollen inoremap <C-e> ◊
 augroup END
