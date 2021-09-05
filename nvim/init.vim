@@ -177,6 +177,8 @@ Plug 'https://github.com/hrsh7th/nvim-compe'
 Plug 'junegunn/vim-easy-align'
 " Repalce text inside quickfix
 Plug 'gabrielpoca/replacer.nvim'
+" Markdown previewer
+Plug 'ellisonleao/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
 
 " File explorer
 Plug 'https://github.com/lambdalisue/fern.vim'
@@ -242,6 +244,8 @@ let g:gruvbox_italicize_comments = 1
 " To avoid the low contrast gray on 2nd left side
 let g:lightline_gruvbox_style = 'hard_left'
 colorscheme gruvbox
+
+set guifont=Iosevka\ Custom\ Medium:h12
 
 " For more info see:
 " :h statusline
