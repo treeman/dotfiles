@@ -42,14 +42,14 @@ urgency.age.coefficient = 0
 report.in.columns = id,description
 report.in.labels = ID,Description
 report.in.description = Inbox
-report.in.filter = status:pending limit:page (+in)
+report.in.filter = status:pending limit:page (+in -work)
 
 # GTD next report
 default.command = gtd
 report.gtd.columns  = id,start.age,entry.age,depends,priority,brain,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description
 report.gtd.labels = ID,Active,Age,Deps,P,B,Project,Tag,Recur,S,Due,Until,Description
 report.gtd.description = Next actions
-report.gtd.filter = status:pending (+next)
+report.gtd.filter = status:pending (+next -work)
 report.gtd.sort = project+,due+,urgency-,description+
 
 # Read report
@@ -88,6 +88,19 @@ report.email.columns = id,description
 report.email.labels = ID,Description
 report.email.description = Email
 report.email.filter = status:pending limit:page (+email)
+
+# Work
+report.work.columns  = id,start.age,entry.age,depends,priority,brain,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description
+report.work.labels = ID,Active,Age,Deps,P,B,Project,Tag,Recur,S,Due,Until,Description
+report.work.description = Next work actions
+report.work.filter = status:pending (+next +work)
+report.work.sort = project+,due+,urgency-,description+
+
+# Work inbox
+report.win.columns = id,description
+report.win.labels = ID,Description
+report.win.description = Inbox
+report.win.filter = status:pending limit:page (+in +work)
 
 uda.url.type = string
 uda.url.label = url

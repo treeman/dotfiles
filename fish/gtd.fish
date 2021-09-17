@@ -1,5 +1,6 @@
 # Easily add to GTD inbox
 abbr -a -g in t add +in
+abbr -a -g win t add +in +work
 
 # Easy handling of tickler files
 # Either supports adding a new task:
@@ -24,6 +25,10 @@ end
 # Track larger email things in taskwarrior too
 function email
     _mod_or_add $argv +next +email
+end
+
+function wnext
+    _mod_or_add $argv +next +work
 end
 
 # Easy add to lists

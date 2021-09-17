@@ -71,6 +71,7 @@ color.project.vim=color3
 color.tag.none=
 color.tagged=
 color.tag.next=
+color.tag.work=color12
 color.tag.read=color12
 color.tag.rnd=color4
 color.tag.watch=color14
