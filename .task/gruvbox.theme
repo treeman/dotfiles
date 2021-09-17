@@ -66,6 +66,7 @@ color.overdue=color1 on color235
 color.project.none=
 color.project.keyboard=color14
 color.project.vim=color3
+color.project.bitpal=color4
 
 # Tags
 color.tag.none=
