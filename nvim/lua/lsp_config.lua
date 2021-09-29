@@ -92,6 +92,9 @@ local rust_settings = {
             -- Disables 'proc macro `Serialize` not expanded and similar
             -- https://github.com/rust-analyzer/rust-analyzer/pull/6645
             disabled = {"unresolved-proc-macro"}
+        },
+        checkOnSave = {
+            extraArgs={"--target-dir", "/tmp/rust-analyzer-check"}
         }
     }
 }

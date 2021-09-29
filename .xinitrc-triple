@@ -3,8 +3,8 @@
 # Load X settings
 xrdb -load $HOME/.Xdefaults
 
-# Remap caps and escape
-xmodmap $HOME/.xmodmap
+# Use Swedish layout
+setxkbmap se
 
 # Setup screens
 xrandr --output DisplayPort-1 --mode 2560x1440 --pos 0x0 --rotate left \
