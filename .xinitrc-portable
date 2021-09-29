@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Pipewire for sound/video
+# Launching them manually didn't quite work...
+/home/tree/bin/run-pipewire
+
 # Load X settings
 xrdb -load $HOME/.Xdefaults
 
