@@ -11,6 +11,9 @@ set -x PATH ~/go/bin $PATH
 set -x PYTHONPATH $PYTHONPATH ~/vimwiki/money/accounting/
 set -x ELIXIR_LS_LANGUAGE_SERVER $HOME/src/elixir-ls/release/language_server.sh
 
+# Some things requires this
+set -x XDG_RUNTIME_DIR /tmp/(id -u)
+
 # Workaround for local timezone discovery
 set -x TZ Europe/Stockholm
 
