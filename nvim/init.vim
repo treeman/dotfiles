@@ -589,10 +589,10 @@ augroup beancountgroup
   autocmd FileType beancount setlocal foldmethod=expr
   autocmd FileType beancount lua require'cmp'.setup.buffer {
   \   sources = {
-  \     { name = 'spell' },
-  \     { name = 'omni' },
-  \     { name = 'buffer' },
   \     { name = 'calc' },
+  \     { name = 'omni' },
+  \     { name = 'spell' },
+  \     { name = 'buffer' },
   \   },
   \ }
 augroup END
