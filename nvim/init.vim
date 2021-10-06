@@ -90,7 +90,7 @@ set shortmess=aOstTc " shortens messages to aviod 'perss a key' prompt
 set ruler " always show current positions along the bottom
 set showcmd " show the command being typed
 set signcolumn=yes " Use a gutter for git-gutter and LSP messages
-set completeopt=menuone,noselect " Required settings for nvim-compe
+set completeopt=menu,menuone,noselect " Required settings for nvim-cmp
 
 augroup CursorLineOnlyInActiveWindow
   autocmd!
@@ -172,7 +172,13 @@ Plug 'https://github.com/tpope/vim-dispatch'
 " Maximize for windows
 Plug 'https://github.com/szw/vim-maximizer'
 " Autocompletion framework with a ton of support
-Plug 'https://github.com/hrsh7th/nvim-compe'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'https://github.com/f3fora/cmp-spell'
+Plug 'https://github.com/hrsh7th/cmp-calc'
+Plug 'https://github.com/hrsh7th/cmp-path'
+Plug 'https://github.com/hrsh7th/cmp-omni'
 " Align text around
 Plug 'junegunn/vim-easy-align'
 " Repalce text inside quickfix
@@ -216,8 +222,9 @@ Plug 'kosayoda/nvim-lightbulb'
 Plug 'ahmedkhalf/lsp-rooter.nvim'
 
 " Snippets
+Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+"Plug 'hrsh7th/vim-vsnip-integ'
 
 " Git plugins
 Plug 'lewis6991/gitsigns.nvim'
@@ -422,9 +429,6 @@ omap ) ]
 xmap ( [
 xmap ) ]
 
-" Clear screen and turn off search highlighting until the next time we search
-nnoremap <silent> <M-l> :<C-u>nohlsearch<CR><C-l>
-
 " Use hjkl on split keyboard instead!
 noremap <Up> <Nop>
 noremap <Down> <Nop>
@@ -432,24 +436,31 @@ noremap <Left> <Nop>
 noremap <Right> <Nop>
 
 " Happy window switching
-" Terminal mode:
-tnoremap <C-h> <c-\><c-n><c-w>h
-tnoremap <C-j> <c-\><c-n><c-w>j
-tnoremap <C-k> <c-\><c-n><c-w>k
-tnoremap <C-l> <c-\><c-n><c-w>l
-tnoremap <C-left> <c-w>h
-tnoremap <C-down> <c-w>j
-tnoremap <C-up> <c-w>k
-tnoremap <C-right> <c-w>l
-" Normal mode:
-nnoremap <C-h> <c-w>h
-nnoremap <C-j> <c-w>j
-nnoremap <C-k> <c-w>k
-nnoremap <C-l> <c-w>l
-nnoremap <C-left> <c-w>h
-nnoremap <C-down> <c-w>j
-nnoremap <C-up> <c-w>k
-nnoremap <C-right> <c-w>l
+if $NORMAL_KEYBOARD == 1
+  tnoremap <C-h> <c-\><c-n><c-w>h
+  tnoremap <C-j> <c-\><c-n><c-w>j
+  tnoremap <C-k> <c-\><c-n><c-w>k
+  tnoremap <C-l> <c-\><c-n><c-w>l
+
+  nnoremap <C-h> <c-w>h
+  nnoremap <C-j> <c-w>j
+  nnoremap <C-k> <c-w>k
+  nnoremap <C-l> <c-w>l
+
+  " Clear screen and turn off search highlighting until the next time we search
+  nnoremap <silent> <M-l> :<C-u>nohlsearch<CR><C-l>
+else
+  tnoremap <C-left> <c-w>h
+  tnoremap <C-down> <c-w>j
+  tnoremap <C-up> <c-w>k
+  tnoremap <C-right> <c-w>l
+
+  nnoremap <C-left> <c-w>h
+  nnoremap <C-down> <c-w>j
+  nnoremap <C-up> <c-w>k
+  nnoremap <C-right> <c-w>l
+end
+
 " Create splits with <C-w>v and <C-w>s, or :sp and :vs
 " Close the current buffer if it's not shown in another window, but keep the window itself
 nnoremap <leader>Q :Sayonara!<CR>
@@ -462,13 +473,6 @@ nmap <leader>r :lua require("replacer").run()<cr>
 
 " Goto previous buffer
 nnoremap <leader>B :edit #<CR>
-
-" Completion
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <C-e> compe#close('<C-e>')
-inoremap <silent><expr> ; compe#confirm(';')
-"inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-"inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " Snippets
 " Expand or jump
@@ -573,7 +577,6 @@ augroup markdowngroup
   autocmd!
   autocmd FileType markdown setlocal foldexpr=MarkdownLevel()
   autocmd FileType markdown setlocal foldmethod=expr
-  autocmd FileType markdown call compe#setup({ 'source': { 'spell': v:true } }, 0)
   autocmd FileType markdown :normal zR
 augroup END
 
@@ -584,7 +587,14 @@ augroup beancountgroup
   autocmd!
   autocmd FileType beancount setlocal foldexpr=MarkdownLevel()
   autocmd FileType beancount setlocal foldmethod=expr
-  autocmd FileType beancount call compe#setup({ 'source': { 'spell': v:true, 'omni': v:true } }, 0)
+  autocmd FileType beancount lua require'cmp'.setup.buffer {
+  \   sources = {
+  \     { name = 'calc' },
+  \     { name = 'omni' },
+  \     { name = 'spell' },
+  \     { name = 'buffer' },
+  \   },
+  \ }
 augroup END
 
 " }}}
@@ -603,7 +613,6 @@ augroup pollengroup
   autocmd FileType pollen setlocal linebreak
   autocmd FileType pollen setlocal ts=2 sts=2 sw=2
 
-  autocmd FileType pollen call compe#setup({ 'source': { 'spell': v:true } }, 0)
   autocmd FileType pollen inoremap <C-l> λ
   autocmd FileType pollen inoremap <C-e> ◊
 augroup END
