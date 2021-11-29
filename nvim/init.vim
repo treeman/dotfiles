@@ -24,8 +24,7 @@
 "   tsserver:
 "     npm install -g typescript typescript-language-server
 "
-"   Others via nvim-lspinstall:
-"     https://github.com/kabouzeid/nvim-lspinstall
+"   Others via nvim-lsp-install:
 "     :LspInstall <server>
 " }}}
 " Basic {{{
@@ -90,7 +89,7 @@ set shortmess=aOstTc " shortens messages to aviod 'perss a key' prompt
 set ruler " always show current positions along the bottom
 set showcmd " show the command being typed
 set signcolumn=yes " Use a gutter for git-gutter and LSP messages
-set completeopt=menu,menuone,noselect " Required settings for nvim-cmp
+set completeopt=menuone,noselect " Required settings for nvim-cmp
 
 augroup CursorLineOnlyInActiveWindow
   autocmd!
@@ -204,16 +203,20 @@ Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
 Plug 'https://github.com/elixir-editors/vim-elixir.git'
+Plug 'simrat39/rust-tools.nvim'
 Plug 'mhinz/vim-mix-format'
 " Autoformat for different languages
 Plug 'Chiel92/vim-autoformat'
+
+" Debugger
+Plug 'mfussenegger/nvim-dap'
 
 " LSP support
 " See doc :help lsp
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
 " Help to install language servers
-Plug 'kabouzeid/nvim-lspinstall'
+Plug 'williamboman/nvim-lsp-installer'
 " Extensions to built-in LSP, for example, providing type inlay hints
 Plug 'tjdevries/lsp_extensions.nvim'
 Plug 'https://github.com/onsails/lspkind-nvim'
@@ -459,6 +462,8 @@ else
   nnoremap <C-down> <c-w>j
   nnoremap <C-up> <c-w>k
   nnoremap <C-right> <c-w>l
+
+  nnoremap <C-l> :<C-u>nohlsearch<CR><C-l>
 end
 
 " Create splits with <C-w>v and <C-w>s, or :sp and :vs
@@ -646,10 +651,11 @@ augroup END
 
 augroup web
   autocmd!
-  autocmd Filetype html setlocal ts=2 sts=2 sw=2
+  autocmd Filetype html setlocal ts=2 sts=2 sw=2 expandtab
   autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
-  autocmd Filetype json setlocal ts=2 sts=2 sw=2
+  autocmd Filetype json setlocal ts=2 sts=2 sw=2 noexpandtab
   autocmd FileType typescriptreact let b:dispatch = 'yarn next build'
+  autocmd BufWrite *.json,*.js :Autoformat
 augroup END
 
 " }}}
@@ -663,6 +669,12 @@ augroup vim_filetype
   "autocmd FileType vim :normal zM
 augroup END
 
+augroup lua_filetype
+  autocmd!
+  autocmd Filetype lua setlocal ts=2 sts=2 sw=2
+  autocmd BufWrite *.lua :Autoformat
+augroup END
+
 " }}}
 " XML {{{
 " FIXME can we make this work on visual selection?
@@ -671,7 +683,6 @@ command! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.min
 " json {{{
 " FIXME can we make this work on visual selection?
 command! FormatJSON :%!python3 -m json.tool
-" }}}
 " }}}
 "Firenvim {{{
 if exists('g:started_by_firenvim') && g:started_by_firenvim
