@@ -137,7 +137,9 @@ Plug 'https://github.com/wellle/targets.vim'
 " Highlight what was yanked
 Plug 'https://github.com/machakann/vim-highlightedyank'
 " Vim cheat sheet
-Plug 'https://github.com/lifepillar/vim-cheat40'
+" Plug 'https://github.com/lifepillar/vim-cheat40'
+" Telescope powered cheat sheet
+Plug 'sudormrfbin/cheatsheet.nvim'
 " Generic lua plugins
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -148,7 +150,6 @@ Plug 'https://github.com/nelstrom/vim-visual-star-search'
 " Use s as a two-char f
 Plug 'https://github.com/justinmk/vim-sneak'
 " nvim in Firefox
-Plug 'https://github.com/glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " Peek registry contents, for easy use of " and @
 Plug 'https://github.com/junegunn/vim-peekaboo'
 " Display colors
@@ -164,8 +165,11 @@ Plug 'https://github.com/tpope/vim-endwise'
 " Light statusbar
 Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
-" Treesitter syntax highlighting
+" Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'RRethy/nvim-treesitter-textsubjects'
+" Interactively swap parameters
+Plug 'mizlan/iswap.nvim'
 " Dispatch async things
 Plug 'https://github.com/tpope/vim-dispatch'
 " Maximize for windows
@@ -362,7 +366,7 @@ nnoremap <leader>ef :e <C-R>=expand('%:p:h') . '/'<CR>
 "com -bar W exe 'w !sudo tee >/dev/null %:p:S' | setl nomod
 cmap w!! SudaWrite
 " Open a scratch buffer
-nmap <Leader>ss <Plug>(itchy-open-scratch)
+nmap <leader>ss <Plug>(itchy-open-scratch)
 
 " Load notes
 nnoremap <leader>n :e ~/vimwiki/projects/
@@ -479,13 +483,16 @@ nmap <leader>r :lua require("replacer").run()<cr>
 " Goto previous buffer
 nnoremap <leader>B :edit #<CR>
 
+" Swap parameters (if treesitter exists)
+nnoremap <leader>S :ISwapWith<CR>
+
 " Snippets
 " Expand or jump
-imap <expr> <C-t>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-t>'
-smap <expr> <C-t>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-t>'
+imap <expr> <C-t> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-t>'
+smap <expr> <C-t> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-t>'
 " Jump backward
-imap <expr> <C-s>   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<C-s>'
-smap <expr> <C-s>   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<C-s>'
+imap <expr> <C-s> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)'      : '<C-s>'
+smap <expr> <C-s> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)'      : '<C-s>'
 " Select text for snippets
 xmap <C-y> <Plug>(vsnip-select-text)
 "xmap yv <Plug>(vsnip-cut-text)
@@ -726,8 +733,8 @@ nnoremap gds :Gdiffsplit!<CR>
 nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
 
-let g:git_messenger_no_default_mappings = v:true
-nnoremap g? <Plug>(git-messenger)
+" let g:git_messenger_no_default_mappings = v:true
+" nnoremap g? <Plug>(git-messenger)
 
 " Toggle --no-patch for all commits.
 " Toggling for specific commits isn't supported, but maybe will be later.

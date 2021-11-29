@@ -1,0 +1,104 @@
+# Shorthand explanations (taken from cheat40)
+# »      Forwards/rightwards
+# «      Backwards/leftwards
+# WORD   Space-delimited word
+# 
+# Notation for key sequences:
+# 
+# \      Leader (see `<leader>`)
+# -      Localleader (see `<localleader>`)
+# ‹r›    A register (", *, 0, 1, …)
+#        See `registers`
+# ‹Move› A motion or a text object
+#        See `$VIMRUNTIME/doc/motion.txt`
+#        See `text-objects`
+# ‹P›    A regular expression (pattern)
+#        See `$VIMRUNTIME/doc/pattern.txt`
+# ‹Cmd›  An Ex command
+#        See `$VIMRUNTIME/doc/cmdline.txt`
+# ‹Var›  A variable or option name
+#        See `variables`
+#        See `$VIMRUNTIME/doc/options.txt`
+# ‹n›    A (possibly optional) number
+# ‹c›    A single character
+# …      Any text
+# «C-…»  Press ctrl and … together
+# «Spc»  Press space bar
+# «CR»   Press Enter
+# 
+# Labels:
+# 
+# N    Type in Normal mode
+# C    Type in Command mode
+# I    Type in Insert mode
+# V    Type in Visual mode
+# M    Motion (may be used by itself or
+#      after an operator)
+# T    Text object (use in Visual mode
+#      or after an operator)
+# O    Operator (use in Visual mode, or
+#      before a motion or a text object)
+# *    Acts on text under/after cursor
+## working-on
+Change delimiters                   | cs‹c›‹c›      N
+Delete delimiters                   | ds‹c›         N
+Add delimiters                      | ys‹to›‹c›     N
+Add delimiters                      | S…            V
+argument text object                | a             T
+minor smart select                  | ,             T
+large smart select                  | ;             T
+Scratch buffer                      | \ss           N
+Swap parameters                     | \S            N
+## surround
+Change delimiters                   | cs‹c›‹c›      N
+Delete delimiters                   | ds‹c›         N
+Add delimiters                      | ys‹to›‹c›     N
+Add delimiters                      | S…            V
+## easy align
+Easy align                          | ga‹c›         V
+Easy align motion                   | ga‹Move›      N
+## snippets
+Snippet jumping                     | «C-t» «C-s»   IN
+Select text for snippets            | «C-y»         V
+## LSP
+Declaration                         | _D            N
+Definition                          | _d            N
+References                          | _r            N
+Implementation                      | _i            N
+Type definition                     | _t            N
+Hover                               | _h            N
+Signature help                      | _s            N
+Code action                         | _x            N
+Show line diagnostics               | _l            N
+Rename                              | _ar           N
+Incoming calls                      | _I            N
+Outgoing calls                      | _O            N
+Document symbol                     | _w            N
+Workspace symbol                    | _W            N
+Document diagnostics                | _e            N
+Workspace diagnostics               | _W            N
+## configuration
+Reload vimrc                        | \sv           N
+Edit vimrc                          | 'V            N
+Edit cheat sheet                    | 'C            N
+## extra-text-objects
+tags                                | t             T
+argument                            | a             T
+brackets                            | b             T
+any quote                           | q             T
+minor smart select                  | ,             T
+large smart select                  | ;             T
+## settings-options
+Turn on settings                    | [ox           N
+Turn off settings with              | ]ox           N
+Toggle settings                     | yox           N
+Background                          | yob           N
+Cursorline                          | yoc           N
+Hidden chars (list)                 | yol           N
+Spell                               | yos           N
+Wrap                                | yow           N
+Expand tab                          | yot           N
+## buffers
+Scratch buffer                      | \ss           N
+## treesitter
+Swap parameters                     | \S            N

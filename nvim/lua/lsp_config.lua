@@ -79,9 +79,6 @@ local auto_lsp_servers = {
   'cssls',
   'html'
 }
-local manual_lsp_servers = {
-  -- 'rust_analyzer',
-}
 
 local lsp_setup_opts = {}
 lsp_setup_opts['rust_analyzer'] = {
@@ -147,15 +144,11 @@ lsp_installer.on_server_ready(function(server)
   vim.cmd [[ do User LspAttachBuffers ]]
 end)
 
-for _, lsp_name in ipairs(manual_lsp_servers) do
-  local config = make_config()
-
-  config = vim.tbl_extend("error", config, lsp_setup_opts[lsp_name] or {})
-  print(lsp_name)
-  print(vim.inspect(config))
-
-  require'lspconfig'[lsp_name].setup(config)
-end
+-- for _, lsp_name in ipairs(manual_lsp_servers) do
+--   local config = make_config()
+--   config = vim.tbl_extend("error", config, lsp_setup_opts[lsp_name] or {})
+--   require'lspconfig'[lsp_name].setup(config)
+-- end
 
 -- Automatically install if a required LSP server is missing.
 for _, lsp_name in ipairs(auto_lsp_servers) do
