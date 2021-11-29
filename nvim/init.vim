@@ -238,6 +238,9 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/rbong/vim-flog'
 Plug 'https://github.com/rhysd/git-messenger.vim'
+
+" Stop the jjjj spam kthx
+Plug 'takac/vim-hardtime'
 call plug#end()
 
 " }}}
@@ -850,5 +853,18 @@ let g:fzf_layout = { 'window': '-tabnew' }
 " Sneak {{{
 " Use seank as a minimalist alternative to EasyMotion
 "let g:sneak#label = 1
+" }}}
+" Hard time {{{
+" On for every buffer
+let g:hardtime_default_on = 1
+let g:list_of_normal_keys = ["h", "j", "k", "l"]
+let g:list_of_visual_keys = ["h", "j", "k", "l"]
+let g:list_of_insert_keys = ["<UP>", "<DOWN>", "<LEFT>", "<RIGHT>"]
+let g:list_of_disabled_keys = []
+let g:hardtime_showmsg = 1
+" Allow "jh" but not "jj"
+let g:hardtime_allow_different_key = 1
+" Allow "jj" but not "jjj"
+let g:hardtime_maxcount = 2
 " }}}
 " vim:set sw=2 sts=2:
