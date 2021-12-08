@@ -15,15 +15,6 @@
 "     https://github.com/rust-analyzer/rust-analyzer
 "     cargo xtask install --server
 "
-"   elixir-ls:
-"     https://github.com/elixir-lsp/elixir-ls.git
-"     mix compile
-"     mix elixir_ls.release -o release
-"     Ensure that $ELIXIR_LS_LANGUAGE_SERVER points to release/language_server.sh
-"
-"   tsserver:
-"     npm install -g typescript typescript-language-server
-"
 "   Others via nvim-lsp-install:
 "     :LspInstall <server>
 " }}}
@@ -240,7 +231,7 @@ Plug 'https://github.com/rbong/vim-flog'
 Plug 'https://github.com/rhysd/git-messenger.vim'
 
 " Stop the jjjj spam kthx
-Plug 'takac/vim-hardtime'
+" Plug 'takac/vim-hardtime'
 call plug#end()
 
 " }}}

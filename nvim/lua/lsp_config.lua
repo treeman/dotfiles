@@ -214,11 +214,20 @@ require("lsp-rooter").setup({
   ignore_lsp = {},
 })
 
--- FIXME can we get the nice inlay hints here too?
 local rust_opts = {
   -- rust-tools options
-  tools = { },
+  tools = {
+    autoSetHints = true,
+    inlay_hints = {
+      show_parameter_hints = true,
+      parameter_hints_prefix = "ρ ",
+      other_hints_prefix = "τ "
+    }
+  },
   -- rust-analyzer options
   server = vim.tbl_extend("error", make_config(), lsp_setup_opts['rust_analyzer'])
 }
 require('rust-tools').setup(rust_opts)
+
+autocmd('FileType', 'rust', "nnoremap <leader>x :RustRunnables<CR>")
+autocmd('FileType', 'rust', "nnoremap <leader>m :RustExpandMacro<CR>")

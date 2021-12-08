@@ -7,6 +7,8 @@ set -x PATH ~/bin ~/dotfiles/bin $PATH
 set -x PATH ~/.linuxbrew/bin $PATH
 set -x PATH ~/go/bin $PATH
 
+set -x PERL5LIB ~/perl5/lib/perl5 $PERL5LIB
+
 # Beancount module finding for importers
 set -x PYTHONPATH $PYTHONPATH ~/vimwiki/money/accounting/
 set -x ELIXIR_LS_LANGUAGE_SERVER $HOME/src/elixir-ls/release/language_server.sh
