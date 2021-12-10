@@ -42,14 +42,15 @@ urgency.age.coefficient = 0
 report.in.columns = id,description
 report.in.labels = ID,Description
 report.in.description = Inbox
-report.in.filter = status:pending limit:page (+in -work)
+report.in.filter = status:pending limit:page (+in)
+report.in.context = 0
 
 # GTD next report
 default.command = gtd
 report.gtd.columns  = id,start.age,entry.age,depends,priority,brain,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description
 report.gtd.labels = ID,Active,Age,Deps,P,B,Project,Tag,Recur,S,Due,Until,Description
 report.gtd.description = Next actions
-report.gtd.filter = status:pending (+next -work)
+report.gtd.filter = status:pending (+next)
 report.gtd.sort = project+,due+,urgency-,description+
 
 # Read report
@@ -57,24 +58,28 @@ report.rd.columns = id,description,url
 report.rd.labels = ID,Description,Url
 report.rd.description = Read
 report.rd.filter = status:pending limit:page (+read)
+report.rd.context = 0
 
 # R&D report
 report.rnd.columns = id,description,url
 report.rnd.labels = ID,Description,Url
 report.rnd.description = R&D
 report.rnd.filter = status:pending limit:page (+rnd)
+report.rnd.context = 0
 
 # Watch report
 report.watch.columns = id,description,url
 report.watch.labels = ID,Description,Url
 report.watch.description = Watch
 report.watch.filter = status:pending limit:page (+watch)
+report.watch.context = 0
 
 # Listen report
 report.listen.columns = id,description,url
 report.listen.labels = ID,Description,Url
 report.listen.description = Listen
 report.listen.filter = status:pending limit:page (+listen)
+report.listen.context = 0
 
 # External report
 report.ext.columns = id,tags,description,url
@@ -82,6 +87,7 @@ report.ext.labels = ID,Tags,Description,Url
 report.ext.description = Read, R&D, Watch, Listen
 report.ext.filter = status:pending limit:page (+read or +rnd or +watch or +listen)
 report.ext.sort = tags+,urgency-,description+
+report.ext.context = 0
 
 # Email
 report.email.columns = id,description
@@ -89,19 +95,14 @@ report.email.labels = ID,Description
 report.email.description = Email
 report.email.filter = status:pending limit:page (+email)
 
-# Work
-report.work.columns  = id,start.age,entry.age,depends,priority,brain,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description
-report.work.labels = ID,Active,Age,Deps,P,B,Project,Tag,Recur,S,Due,Until,Description
-report.work.description = Next work actions
-report.work.filter = status:pending (+next +work)
-report.work.sort = project+,due+,urgency-,description+
-
-# Work inbox
-report.win.columns = id,description
-report.win.labels = ID,Description
-report.win.description = Inbox
-report.win.filter = status:pending limit:page (+in +work)
-
 uda.url.type = string
 uda.url.label = url
 
+# Contexts
+context.work.read=+work
+context.work.write=+work
+context.personal.read=-work -bitpal
+news.version=2.6.0
+context.bitpal.read=+bitpal
+context.bitpal.write=+bitpal
+context=personal

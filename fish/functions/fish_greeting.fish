@@ -11,10 +11,10 @@ function fish_greeting
         echo
     end
 
-    set waiting (task +waiting +PENDING count)
+    set waiting (task +WAITING +PENDING count)
     if test $waiting != "0"
         echo "Any progress on these waiting-fors?"
-        task +waiting +PENDING ls
+        task +WAITING +PENDING ls
     end
 end
 

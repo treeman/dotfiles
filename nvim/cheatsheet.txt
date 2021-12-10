@@ -44,11 +44,14 @@ Change delimiters                   | cs‹c›‹c›      N
 Delete delimiters                   | ds‹c›         N
 Add delimiters                      | ys‹to›‹c›     N
 Add delimiters                      | S…            V
-argument text object                | a             T
-minor smart select                  | ,             T
-large smart select                  | ;             T
+Argument text object                | a             T
+Minor smart select                  | ,             T
+Large smart select                  | ;             T
 Scratch buffer                      | \ss           N
 Swap parameters                     | \S            N
+Back to last insert mode            | gi            N
+Reselect last selection             | gv            N
+Change from inside word             | ciw           N
 ## surround
 Change delimiters                   | cs‹c›‹c›      N
 Delete delimiters                   | ds‹c›         N
