@@ -254,6 +254,7 @@ let g:lightline_gruvbox_style = 'hard_left'
 colorscheme gruvbox
 
 set guifont=Iosevka\ Custom\ Medium:h12
+let g:neovide_cursor_animation_length=0.13
 
 " For more info see:
 " :h statusline

@@ -26,6 +26,9 @@ alias vim nvim
 alias v nvim
 alias g git
 
+# Always use neovide multigrid mode
+set -x NEOVIDE_MULTIGRID
+
 # zlip decompress
 alias zinflate='ruby -r zlib -e "STDOUT.write Zlib::Inflate.inflate(STDIN.read)"'
 
