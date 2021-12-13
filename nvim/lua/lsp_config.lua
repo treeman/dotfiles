@@ -18,7 +18,7 @@ local custom_attach = function(_)
     map('n',prefix .. 'h','<cmd>lua vim.lsp.buf.hover()<CR>')
     map('n',prefix .. 's','<cmd>lua vim.lsp.buf.signature_help()<CR>')
     map('n',prefix .. 'x','<cmd>lua vim.lsp.buf.code_action()<CR>')
-    map('n',prefix .. 'l','<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })<CR>')
+    map('n',prefix .. 'l','<cmd>lua vim.diagnostic.open_float({ focusable = false })<CR>')
     map('n',prefix .. 'ar','<cmd>lua vim.lsp.buf.rename()<CR>')
     map('n',prefix .. 'I','<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
     map('n',prefix .. 'O','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
@@ -38,13 +38,14 @@ local custom_attach = function(_)
 
   -- Show diagnostics on hover
   vim.api.nvim_command('setlocal updatetime=150')
-  autocmd('Cursorhold', '*', 'lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })')
+  autocmd('Cursorhold', '*', 'lua vim.diagnostic.open_float({ focusable = false })')
 
   autocmd('Cursorhold', '*', "lua require'nvim-lightbulb'.update_lightbulb()")
 
   -- Enable type inlay hints
-  autocmd('InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost', '*',
-  "lua require'lsp_extensions'.inlay_hints{prefix = '', highlight = 'Comment'}")
+  -- Note: This only works for certain LSPs, so it shouldn't be configured here
+  -- autocmd('InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost', '*',
+  -- "lua require'lsp_extensions'.inlay_hints{prefix = '', highlight = 'Comment'}")
 end
 
 -- config that activates keymaps and enables snippet support

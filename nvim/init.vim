@@ -246,7 +246,7 @@ if $TERM == "xterm-kitty" || $TERM == "alacritty" || $TERM == "xterm-256color"
 endif
 set background=dark
 let g:gruvbox_italic = 1
-let g:gruvbox_bold = 1
+let g:gruvbox_bold = 0
 let g:gruvbox_italicize_comments = 1
 
 " To avoid the low contrast gray on 2nd left side
