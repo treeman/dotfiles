@@ -10,6 +10,11 @@
 "   pip3 install --upgrade pynvim (but I try not to use any python plugins...)
 "   go get github.com/mattn/efm-langserver
 "
+"
+" Formating
+"   prettier (many languages)   sudo npm install -g prettier
+"   lua                         cargo install stylua
+"
 " LSP servers:
 "   rust-analyzer:
 "     https://github.com/rust-analyzer/rust-analyzer
@@ -201,7 +206,8 @@ Plug 'https://github.com/elixir-editors/vim-elixir.git'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'mhinz/vim-mix-format'
 " Autoformat for different languages
-Plug 'Chiel92/vim-autoformat'
+" Plug 'Chiel92/vim-autoformat'
+Plug 'sbdchd/neoformat'
 
 " Debugger
 Plug 'mfussenegger/nvim-dap'
@@ -254,7 +260,10 @@ let g:lightline_gruvbox_style = 'hard_left'
 colorscheme gruvbox
 
 set guifont=Iosevka\ Custom\ Medium:h12
-let g:neovide_cursor_animation_length=0.13
+let g:neovide_cursor_animation_length = 0.13
+let g:neovide_transparency = 1
+let g:neovide_window_floating_opacity = 0
+let g:neovide_floating_blur = 1
 
 " For more info see:
 " :h statusline
@@ -561,6 +570,12 @@ function! MarkdownLevel()
 endfunction
 
 " }}}
+" Lua configs {{{
+lua require("generic")
+lua require("lsp_config")
+lua require("treesitter_config")
+lua require("telescope")
+" }}}
 " File specific {{{
 " Vimwiki {{{
 
@@ -635,7 +650,7 @@ augroup END
 
 augroup rustgroup
   autocmd!
-  autocmd BufWrite *.rs :Autoformat
+  autocmd BufWritePre *.rs undojoin | Neoformat
   autocmd Filetype rust nnoremap <leader>c :Dispatch cargo clippy --all-targets --all-features -- -D warnings<CR>
   autocmd FileType rust let b:dispatch = 'cargo check'
 augroup END
@@ -657,7 +672,7 @@ augroup web
   autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
   autocmd Filetype json setlocal ts=2 sts=2 sw=2 noexpandtab
   autocmd FileType typescriptreact let b:dispatch = 'yarn next build'
-  autocmd BufWrite *.json,*.js :Autoformat
+  autocmd BufWritePre *.json,*.js,*.ts,*.css,*.html,*.scss undojoin | Neoformat
 augroup END
 
 " }}}
@@ -669,12 +684,6 @@ augroup vim_filetype
   autocmd Filetype vim setlocal nofoldenable
   autocmd Filetype vim setlocal ts=2 sts=2 sw=2
   "autocmd FileType vim :normal zM
-augroup END
-
-augroup lua_filetype
-  autocmd!
-  autocmd Filetype lua setlocal ts=2 sts=2 sw=2
-  autocmd BufWrite *.lua :Autoformat
 augroup END
 
 " }}}
@@ -708,11 +717,12 @@ if exists('g:started_by_firenvim') && g:started_by_firenvim
   augroup END
 endif
 "}}}
-" Lua configs {{{
-lua require("generic")
-lua require("lsp_config")
-lua require("treesitter_config")
-lua require("telescope")
+" Lua {{{
+augroup luagroup
+  autocmd!
+  autocmd Filetype lua setlocal ts=2 sts=2 sw=2
+  autocmd BufWritePre *.lua undojoin | Neoformat
+augroup END
 "}}}
 "Git {{{
 nnoremap gs :Git<CR>

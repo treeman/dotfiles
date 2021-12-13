@@ -67,6 +67,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     , ((modm,                   xK_f), spawn "firefox")
     , ((modm,                   xK_m), spawn "spotify")
+    , ((modm,                   xK_v), spawn "neovide")
 
     , ((modm,                   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
 
