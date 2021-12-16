@@ -206,7 +206,6 @@ Plug 'https://github.com/elixir-editors/vim-elixir.git'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'mhinz/vim-mix-format'
 " Autoformat for different languages
-" Plug 'Chiel92/vim-autoformat'
 Plug 'sbdchd/neoformat'
 
 " Debugger
@@ -609,6 +608,8 @@ augroup beancountgroup
   autocmd!
   autocmd FileType beancount setlocal foldexpr=MarkdownLevel()
   autocmd FileType beancount setlocal foldmethod=expr
+  " Weirdly enough, this is too slow...
+  " autocmd BufWritePre *.beancount undojoin | Neoformat
   autocmd FileType beancount lua require'cmp'.setup.buffer {
   \   sources = {
   \     { name = 'calc' },
@@ -686,14 +687,6 @@ augroup vim_filetype
   "autocmd FileType vim :normal zM
 augroup END
 
-" }}}
-" XML {{{
-" FIXME can we make this work on visual selection?
-command! FormatXML :%!python3 -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
-" }}}
-" json {{{
-" FIXME can we make this work on visual selection?
-command! FormatJSON :%!python3 -m json.tool
 " }}}
 "Firenvim {{{
 if exists('g:started_by_firenvim') && g:started_by_firenvim
