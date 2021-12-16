@@ -673,7 +673,7 @@ augroup web
   autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
   autocmd Filetype json setlocal ts=2 sts=2 sw=2 noexpandtab
   autocmd FileType typescriptreact let b:dispatch = 'yarn next build'
-  autocmd BufWritePre *.json,*.js,*.ts,*.css,*.html,*.scss undojoin | Neoformat
+  autocmd BufWritePre *.json,*.js,*.ts,*.tsx,*.css,*.html,*.scss undojoin | Neoformat
 augroup END
 
 " }}}

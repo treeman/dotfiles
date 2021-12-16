@@ -57,35 +57,35 @@ report.gtd.sort = project+,due+,urgency-,description+
 report.rd.columns = id,description,url
 report.rd.labels = ID,Description,Url
 report.rd.description = Read
-report.rd.filter = status:pending limit:page (+read)
+report.rd.filter = status:pending (+read)
 report.rd.context = 0
 
 # R&D report
 report.rnd.columns = id,description,url
 report.rnd.labels = ID,Description,Url
 report.rnd.description = R&D
-report.rnd.filter = status:pending limit:page (+rnd)
+report.rnd.filter = status:pending (+rnd)
 report.rnd.context = 0
 
 # Watch report
 report.watch.columns = id,description,url
 report.watch.labels = ID,Description,Url
 report.watch.description = Watch
-report.watch.filter = status:pending limit:page (+watch)
+report.watch.filter = status:pending (+watch)
 report.watch.context = 0
 
 # Listen report
 report.listen.columns = id,description,url
 report.listen.labels = ID,Description,Url
 report.listen.description = Listen
-report.listen.filter = status:pending limit:page (+listen)
+report.listen.filter = status:pending (+listen)
 report.listen.context = 0
 
 # External report
 report.ext.columns = id,tags,description,url
 report.ext.labels = ID,Tags,Description,Url
 report.ext.description = Read, R&D, Watch, Listen
-report.ext.filter = status:pending limit:page (+read or +rnd or +watch or +listen)
+report.ext.filter = status:pending (+read or +rnd or +watch or +listen)
 report.ext.sort = tags+,urgency-,description+
 report.ext.context = 0
 
