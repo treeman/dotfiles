@@ -108,7 +108,13 @@ filetype plugin indent on
 " See :Plug* for commands
 call plug#begin('~/.config/nvim/plugged')
 " Colorscheme
-Plug 'https://github.com/treeman/gruvbox.git'
+" Plug 'https://github.com/treeman/gruvbox.git'
+Plug 'https://github.com/folke/tokyonight.nvim'
+" Plug 'https://github.com/ellisonleao/gruvbox.nvim'
+" This conflicts with above gruvbox
+Plug 'https://github.com/eddyekofo94/gruvbox-flat.nvim'
+Plug 'https://github.com/ful1e5/onedark.nvim'
+Plug 'https://github.com/EdenEast/nightfox.nvim/'
 " Excellent fuzzy finder
 Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'https://github.com/junegunn/fzf.vim'
@@ -139,6 +145,7 @@ Plug 'sudormrfbin/cheatsheet.nvim'
 " Generic lua plugins
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'rktjmp/lush.nvim'
 " Indentation lines for visual aid
 Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 " Make * and # search visually
@@ -254,9 +261,18 @@ let g:gruvbox_italic = 1
 let g:gruvbox_bold = 0
 let g:gruvbox_italicize_comments = 1
 
+let g:gruvbox_flat_style = "hard"
+
 " To avoid the low contrast gray on 2nd left side
+"
 let g:lightline_gruvbox_style = 'hard_left'
-colorscheme gruvbox
+" let g:lightline = {'colorscheme': 'gruvbox-flat'}
+
+" let g:tokyonight_style = "night"
+
+colorscheme gruvbox-flat
+" colorscheme gruvbox
+" colorscheme tokyonight
 
 set guifont=Iosevka\ Custom\ Medium:h12
 let g:neovide_cursor_animation_length = 0.13
