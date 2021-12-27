@@ -115,6 +115,7 @@ Plug 'https://github.com/folke/tokyonight.nvim'
 Plug 'https://github.com/eddyekofo94/gruvbox-flat.nvim'
 Plug 'https://github.com/ful1e5/onedark.nvim'
 Plug 'https://github.com/EdenEast/nightfox.nvim/'
+Plug 'rebelot/kanagawa.nvim'
 " Excellent fuzzy finder
 Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'https://github.com/junegunn/fzf.vim'
@@ -191,6 +192,9 @@ Plug 'junegunn/vim-easy-align'
 Plug 'gabrielpoca/replacer.nvim'
 " Markdown previewer
 Plug 'ellisonleao/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
+" zoxide, a smart cd
+Plug 'https://github.com/nanotee/zoxide.vim'
+Plug 'https://github.com/jvgrootveld/telescope-zoxide'
 
 " File explorer
 Plug 'https://github.com/lambdalisue/fern.vim'
@@ -273,6 +277,7 @@ let g:lightline_gruvbox_style = 'hard_left'
 colorscheme gruvbox-flat
 " colorscheme gruvbox
 " colorscheme tokyonight
+" colorscheme kanagawa
 
 set guifont=Iosevka\ Custom\ Medium:h12
 let g:neovide_cursor_animation_length = 0.13
@@ -664,6 +669,10 @@ augroup END
 
 " }}}
 " Rust {{{
+" let g:neoformat_python_rustfmt = {
+"             \ 'args': ['--edition 2021'],
+"             \ }
+" let g:neoformat_enabled_rust = ['rustfmt']
 
 augroup rustgroup
   autocmd!

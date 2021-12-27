@@ -120,9 +120,6 @@ lsp_setup_opts["sumneko_lua"] = {
 		},
 	},
 }
-lsp_setup_opts["elixirls"] = {
-	cmd = { os.getenv("ELIXIR_LS_LANGUAGE_SERVER") },
-}
 lsp_setup_opts["clangd"] = {
 	filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
 }
