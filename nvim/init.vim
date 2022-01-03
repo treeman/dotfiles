@@ -281,9 +281,10 @@ colorscheme gruvbox-flat
 
 set guifont=Iosevka\ Custom\ Medium:h12
 let g:neovide_cursor_animation_length = 0.13
-let g:neovide_transparency = 1
-let g:neovide_window_floating_opacity = 0
-let g:neovide_floating_blur = 1
+let g:neovide_transparency = 1.0
+let g:neovide_window_floating_opacity = 1.0
+let g:neovide_floating_opacity = 1.0
+let g:neovide_floating_blur = 1.0
 
 " For more info see:
 " :h statusline
