@@ -55,3 +55,6 @@ set secret_file ~/.env.secrets.fish
 if test -e $secret_file
     source $secret_file
 end
+
+set -gx PNPM_HOME "/home/tree/.local/share/pnpm"
+set -gx PATH "$PNPM_HOME" $PATH

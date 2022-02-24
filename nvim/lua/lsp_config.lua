@@ -180,31 +180,31 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 require("telescope").load_extension("lsp_handlers")
 
 -- commented options are defaults
-require("lspkind").init({
-	with_text = true,
-	symbol_map = {
-		Text = "",
-		Method = "ƒ",
-		Function = "",
-		Constructor = "",
-		Variable = "",
-		Class = "",
-		Interface = "ﰮ",
-		Module = "",
-		Property = "",
-		Unit = "",
-		Value = "",
-		Enum = "了",
-		Keyword = "",
-		Snippet = "﬌",
-		Color = "",
-		File = "",
-		Folder = "",
-		EnumMember = "",
-		Constant = "",
-		Struct = "",
-	},
-})
+-- require("lspkind").init({
+-- 	with_text = true,
+-- 	symbol_map = {
+-- 		Text = "",
+-- 		Method = "ƒ",
+-- 		Function = "",
+-- 		Constructor = "",
+-- 		Variable = "",
+-- 		Class = "",
+-- 		Interface = "ﰮ",
+-- 		Module = "",
+-- 		Property = "",
+-- 		Unit = "",
+-- 		Value = "",
+-- 		Enum = "了",
+-- 		Keyword = "",
+-- 		Snippet = "﬌",
+-- 		Color = "",
+-- 		File = "",
+-- 		Folder = "",
+-- 		EnumMember = "",
+-- 		Constant = "",
+-- 		Struct = "",
+-- 	},
+-- })
 
 require("lsp-rooter").setup({
 	-- Table of lsp clients to ignore by name

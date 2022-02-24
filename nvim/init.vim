@@ -148,7 +148,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'rktjmp/lush.nvim'
 " Indentation lines for visual aid
-Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
+" Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 " Make * and # search visually
 Plug 'https://github.com/nelstrom/vim-visual-star-search'
 " Use s as a two-char f
@@ -631,7 +631,7 @@ augroup beancountgroup
   autocmd FileType beancount setlocal foldexpr=MarkdownLevel()
   autocmd FileType beancount setlocal foldmethod=expr
   " Weirdly enough, this is too slow...
-  " autocmd BufWritePre *.beancount undojoin | Neoformat
+  " autocmd BufWritePre *.beancount Neoformat
   autocmd FileType beancount lua require'cmp'.setup.buffer {
   \   sources = {
   \     { name = 'calc' },
@@ -677,7 +677,7 @@ augroup END
 
 augroup rustgroup
   autocmd!
-  autocmd BufWritePre *.rs undojoin | Neoformat
+  autocmd BufWritePre *.rs Neoformat
   autocmd Filetype rust nnoremap <leader>c :Dispatch cargo clippy --all-targets --all-features -- -D warnings<CR>
   autocmd FileType rust let b:dispatch = 'cargo check'
 augroup END
@@ -690,6 +690,15 @@ augroup elixir_group
   autocmd!
   autocmd FileType elixir normal zR
 augroup END
+
+" let g:neoformat_verbose = 1
+
+augroup eelixir_group
+  autocmd!
+  autocmd BufWritePost *.heex silent :!mix format %
+  " autoread doesn't work, so this is a workaround
+  autocmd BufWritePost *.heex silent :e
+augroup END
 " }}}
 " Web {{{
 
@@ -699,7 +708,7 @@ augroup web
   autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
   autocmd Filetype json setlocal ts=2 sts=2 sw=2 noexpandtab
   autocmd FileType typescriptreact let b:dispatch = 'yarn next build'
-  autocmd BufWritePre *.json,*.js,*.ts,*.tsx,*.css,*.html,*.scss undojoin | Neoformat
+  autocmd BufWritePre *.json,*.js,*.ts,*.tsx,*.css,*.html,*.scss Neoformat
 augroup END
 
 " }}}
@@ -740,7 +749,7 @@ endif
 augroup luagroup
   autocmd!
   autocmd Filetype lua setlocal ts=2 sts=2 sw=2
-  autocmd BufWritePre *.lua undojoin | Neoformat
+  autocmd BufWritePre *.lua Neoformat
 augroup END
 "}}}
 "Git {{{
