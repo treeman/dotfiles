@@ -30,8 +30,8 @@ local custom_attach = function(_)
 	end
 
 	-- Goto previous/next diagnostic warning/error
-	map("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
-	map("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
+	map("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+	map("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 
 	-- Omnicompletion support
 	vim.api.nvim_command("setlocal omnifunc=v:lua.vim.lsp.omnifunc")

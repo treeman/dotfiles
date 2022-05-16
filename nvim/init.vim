@@ -712,6 +712,14 @@ augroup web
 augroup END
 
 " }}}
+" Python {{{
+
+augroup python
+  autocmd!
+  autocmd BufWritePre *.py Neoformat
+augroup END
+
+" }}}
 " Vim {{{
 
 augroup vim_filetype
