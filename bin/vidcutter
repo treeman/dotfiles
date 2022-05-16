@@ -1,4 +1,0 @@
-#!/bin/bash
-
-cd /home/tree/src/vidcutter
-python3 -m vidcutter
