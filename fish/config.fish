@@ -6,6 +6,7 @@ set -x PATH ~/.local/bin $PATH
 set -x PATH ~/bin ~/dotfiles/bin $PATH
 set -x PATH ~/.linuxbrew/bin $PATH
 set -x PATH ~/go/bin $PATH
+set -x PATH ~/.yarn/bin $PATH
 
 set -x PERL5LIB ~/perl5/lib/perl5 $PERL5LIB
 

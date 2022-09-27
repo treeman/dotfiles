@@ -105,4 +105,4 @@ context.personal.read=-work -bitpal
 news.version=2.6.0
 context.bitpal.read=+bitpal
 context.bitpal.write=+bitpal
-context=personal
+context=work
