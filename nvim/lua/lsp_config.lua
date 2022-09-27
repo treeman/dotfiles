@@ -24,6 +24,7 @@ local custom_attach = function(_)
 		map("n", prefix .. "O", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>")
 		map("n", prefix .. "w", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
 		map("n", prefix .. "W", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>")
+		--- FIXME these doesn't work
 		map("n", prefix .. "e", "<cmd>:Telescope lsp_document_diagnostics<CR>")
 		map("n", prefix .. "E", "<cmd>:Telescope lsp_workspace_diagnostics<CR>")
 		-- map('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
@@ -80,6 +81,7 @@ local auto_lsp_servers = {
 	"pylsp",
 	"cssls",
 	"html",
+	"tailwindcss",
 }
 
 local lsp_setup_opts = {}
@@ -125,6 +127,15 @@ lsp_setup_opts["clangd"] = {
 }
 lsp_setup_opts["efm"] = {
 	filetypes = { "elixir" },
+}
+lsp_setup_opts["tailwindcss"] = {
+	init_options = {
+		userLanguages = {
+			-- A bit weird, as heex is a supported filetype, but otherwise I can't get
+			-- autocomplete to show up...
+			heex = "html-eex",
+		},
+	},
 }
 
 -- lsp-install
