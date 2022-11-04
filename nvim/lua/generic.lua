@@ -33,11 +33,27 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 		{ name = "vsnip" },
 		{ name = "buffer" },
-		{ name = "spell" },
+		{
+			name = "spell",
+			option = {
+				enable_in_context = function()
+					return require("cmp.config.context").in_treesitter_capture("spell")
+				end,
+			},
+		},
 		{ name = "calc" },
 		{ name = "path" },
+		{
+			name = "beancount",
+			option = {
+				account = "/home/tree/vimwiki/money/accounting/personal.beancount",
+			},
+		},
 	},
 })
+
+vim.opt.spell = true
+vim.opt.spelllang = { "en_us" }
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline("/", {

@@ -10,7 +10,6 @@
 "   pip3 install --upgrade pynvim (but I try not to use any python plugins...)
 "   go get github.com/mattn/efm-langserver
 "
-"
 " Formating
 "   prettier (many languages)   sudo npm install -g prettier
 "   lua                         cargo install stylua
@@ -186,6 +185,7 @@ Plug 'https://github.com/f3fora/cmp-spell'
 Plug 'https://github.com/hrsh7th/cmp-calc'
 Plug 'https://github.com/hrsh7th/cmp-path'
 Plug 'https://github.com/hrsh7th/cmp-omni'
+Plug 'crispgm/cmp-beancount'
 " Align text around
 Plug 'junegunn/vim-easy-align'
 " Repalce text inside quickfix
@@ -197,7 +197,7 @@ Plug 'https://github.com/nanotee/zoxide.vim'
 Plug 'https://github.com/jvgrootveld/telescope-zoxide'
 
 " File explorer
-Plug 'https://github.com/lambdalisue/fern.vim'
+Plug 'https://github.com/lambdalisue/fern.vim', {'branch': 'main'}
 Plug 'https://github.com/lambdalisue/nerdfont.vim'
 Plug 'https://github.com/lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'https://github.com/lambdalisue/fern-git-status.vim'
@@ -632,14 +632,14 @@ augroup beancountgroup
   autocmd FileType beancount setlocal foldmethod=expr
   " Weirdly enough, this is too slow...
   " autocmd BufWritePre *.beancount Neoformat
-  autocmd FileType beancount lua require'cmp'.setup.buffer {
-  \   sources = {
-  \     { name = 'calc' },
-  \     { name = 'omni' },
-  \     { name = 'spell' },
-  \     { name = 'buffer' },
-  \   },
-  \ }
+  " autocmd FileType beancount lua require'cmp'.setup.buffer {
+  " \   sources = {
+  " \     { name = 'calc' },
+  " \     { name = 'omni' },
+  " \     { name = 'spell' },
+  " \     { name = 'buffer' },
+  " \   },
+  " \ }
 augroup END
 
 " }}}
