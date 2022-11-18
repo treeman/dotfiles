@@ -62,18 +62,6 @@ cmp.setup.cmdline("/", {
 	},
 })
 
-local actions = require("telescope.actions")
-require("telescope").setup({
-	defaults = {
-		file_ignore_patterns = { "node_modules" },
-		mappings = {
-			i = {
-				["<esc>"] = actions.close,
-			},
-		},
-	},
-})
-
 require("cheatsheet").setup({
 	bundled_cheatsheets = false,
 	bundled_plugin_cheatsheets = false,

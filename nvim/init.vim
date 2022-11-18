@@ -120,6 +120,7 @@ Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --al
 Plug 'https://github.com/junegunn/fzf.vim'
 " Another fuzzy finder
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 Plug 'https://github.com/gbrlsnchs/telescope-lsp-handlers.nvim'
 " Personal wiki
 Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
@@ -394,7 +395,6 @@ cmap w!! SudaWrite
 nmap <leader>ss <Plug>(itchy-open-scratch)
 
 " Find files
-"nnoremap <silent> <leader>ff :Files<CR>
 nnoremap <silent> <leader>f :Telescope find_files<CR>
 " Find files relative to current file
 nnoremap <silent> <leader>F :lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>
@@ -597,6 +597,7 @@ lua require("generic")
 lua require("lsp_config")
 lua require("treesitter_config")
 lua require("telescope")
+lua require("telescope_config")
 " }}}
 " File specific {{{
 " Vimwiki {{{
