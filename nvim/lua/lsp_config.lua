@@ -79,9 +79,10 @@ local auto_lsp_servers = {
 	"elixirls",
 	"clangd",
 	"pylsp",
-	"cssls",
+	-- "cssls",
+	"emmet_ls",
 	"html",
-	"tailwindcss",
+	-- "tailwindcss",
 }
 
 local lsp_setup_opts = {}
