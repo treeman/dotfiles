@@ -393,9 +393,6 @@ cmap w!! SudaWrite
 " Open a scratch buffer
 nmap <leader>ss <Plug>(itchy-open-scratch)
 
-" Load notes
-nnoremap <leader>n :e ~/vimwiki/projects/
-
 " Find files
 "nnoremap <silent> <leader>ff :Files<CR>
 nnoremap <silent> <leader>f :Telescope find_files<CR>
@@ -411,6 +408,10 @@ nnoremap <silent> <leader>/ :execute 'Rg ' . input('Rg/')<CR>
 nnoremap <silent> <leader>b :lua require('telescope_extra').my_buffer()<CR>
 " File drawer
 nnoremap <leader>d :Fern . -drawer -toggle<CR>
+
+" Notes and vimwiki editing
+nnoremap <leader>w :lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('~/vimwiki') })<CR>
+nnoremap <leader>ew :e <C-R>=expand('~/vimwiki/')<CR>
 
 " CTRL-A CTRL-Q to select all and build quickfix list
 function! s:build_quickfix_list(lines)
@@ -607,10 +608,21 @@ let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.markdown'}]
 
 let g:vimwiki_folding = 'custom'
-augroup VimrcAuGroup
+
+" Vimwiki registers tons of keybindings. I don't use the vast majority,
+" and some override my own, so do things manually instead.
+let g:vimwiki_key_mappings = { 'all_maps': 0 }
+
+augroup vimwikigroup
   autocmd!
   autocmd FileType vimwiki setlocal foldmethod=expr |
     \ setlocal foldenable | set foldexpr=MarkdownLevel()
+
+  autocmd FileType vimwiki nnoremap <buffer> <CR> :VimwikiFollowLink<CR>
+  autocmd FileType vimwiki nnoremap <buffer> <Backspace> :VimwikiGoBackLink<CR>
+  autocmd FileType vimwiki nnoremap <buffer> <Tab> :VimwikiNextLink<CR>
+  autocmd FileType vimwiki nnoremap <buffer> <S-Tab> :VimwikiPrevLink<CR>
+  autocmd FileType vimwiki nnoremap <buffer> <C-Space> :VimwikiToggleListItem<CR>
 augroup END
 
 " }}}
