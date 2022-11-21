@@ -852,12 +852,6 @@ let g:Hexokinase_ftOptInPatterns = {
 \     'html': 'full_hex,triple_hex,rgb,rgba,hsl,hsla,colour_names'
 \ }
 "}}}
-"{{{ indent_blankline
-" Prefer treesitter if available
-let g:indent_blankline_use_treesitter = v:true
-" Ignore some unnecessary lines
-let g:indent_blankline_show_trailing_blankline_indent = v:false
-"}}}
 "{{{ fern
 let g:fern#renderer = "nerdfont"
 

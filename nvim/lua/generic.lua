@@ -67,9 +67,12 @@ require("cheatsheet").setup({
 	bundled_plugin_cheatsheets = false,
 })
 
--- https://github.com/lukas-reineke/indent-blankline.nvim
 require("indent_blankline").setup({
+	use_treesitter = true,
+	use_treesitter_scope = true,
 	space_char_blankline = " ",
 	show_current_context = true,
-	show_current_context_start = true,
+	show_trailing_blankline_indent = false,
+	-- Maybe could be ok...
+	--show_current_context_start = true,
 })
