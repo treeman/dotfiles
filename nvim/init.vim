@@ -124,6 +124,7 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCM
 Plug 'https://github.com/gbrlsnchs/telescope-lsp-handlers.nvim'
 " Personal wiki
 Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
+Plug 'nvim-neorg/neorg'
 " Avoid mistyping filenames, ask which file to open if file not find
 Plug 'https://github.com/EinfachToll/DidYouMean.git'
 " Easy way to comment things
@@ -263,7 +264,7 @@ if $TERM == "xterm-kitty" || $TERM == "alacritty" || $TERM == "xterm-256color"
 endif
 set background=dark
 let g:gruvbox_italic = 1
-let g:gruvbox_bold = 0
+let g:gruvbox_bold = 1
 let g:gruvbox_italicize_comments = 1
 
 let g:gruvbox_flat_style = "hard"

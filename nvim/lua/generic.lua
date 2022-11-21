@@ -33,6 +33,7 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 		{ name = "vsnip" },
 		{ name = "buffer" },
+		{ name = "neorg" },
 		{
 			name = "spell",
 			option = {
@@ -75,4 +76,16 @@ require("indent_blankline").setup({
 	show_trailing_blankline_indent = false,
 	-- Maybe could be ok...
 	--show_current_context_start = true,
+})
+
+require("neorg").setup({
+	load = {
+		["core.defaults"] = {},
+		["core.norg.completion"] = {
+			config = { -- Note that this table is optional and doesn't need to be provided
+				engine = "nvim-cmp",
+			},
+		},
+		["core.norg.concealer"] = {},
+	},
 })
