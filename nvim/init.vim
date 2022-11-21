@@ -266,6 +266,10 @@ set background=dark
 let g:gruvbox_italic = 1
 let g:gruvbox_bold = 1
 let g:gruvbox_italicize_comments = 1
+" Need to override these
+" :hi @text.strong gui=bold
+" :hi @text.emphasis gui=italic
+" But bold isn't shown either way?
 
 let g:gruvbox_flat_style = "hard"
 
