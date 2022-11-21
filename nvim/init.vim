@@ -148,7 +148,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'rktjmp/lush.nvim'
 " Indentation lines for visual aid
-" Plug 'https://github.com/lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
+Plug 'https://github.com/lukas-reineke/indent-blankline.nvim'
 " Make * and # search visually
 Plug 'https://github.com/nelstrom/vim-visual-star-search'
 " Use s as a two-char f
@@ -593,11 +593,11 @@ endfunction
 
 " }}}
 " Lua configs {{{
-lua require("generic")
 lua require("lsp_config")
 lua require("treesitter_config")
 lua require("telescope")
 lua require("telescope_config")
+lua require("generic")
 " }}}
 " File specific {{{
 " Vimwiki {{{
