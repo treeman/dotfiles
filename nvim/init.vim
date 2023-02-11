@@ -417,6 +417,8 @@ nnoremap <leader>d :Fern . -drawer -toggle<CR>
 " Notes and vimwiki editing
 nnoremap <leader>w :lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('~/vimwiki') })<CR>
 nnoremap <leader>ew :e <C-R>=expand('~/vimwiki/')<CR>
+nnoremap <leader>j :Neorg journal today<CR>
+nnoremap <leader>J :Neorg journal yesterday<CR>
 
 " CTRL-A CTRL-Q to select all and build quickfix list
 function! s:build_quickfix_list(lines)
