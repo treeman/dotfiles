@@ -417,7 +417,7 @@ nnoremap <leader>d :Fern . -drawer -toggle<CR>
 " Notes and vimwiki editing
 nnoremap <leader>w :lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('~/vimwiki') })<CR>
 nnoremap <leader>ew :e <C-R>=expand('~/vimwiki/')<CR>
-nnoremap <leader>j call v:lua.weekly_journal()<CR>
+nnoremap <leader>j :call v:lua.weekly_journal()<CR>
 " Use a weekly journal instead.
 " nnoremap <leader>j :Neorg journal today<CR>
 " nnoremap <leader>J :Neorg journal yesterday<CR>
