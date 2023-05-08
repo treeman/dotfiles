@@ -417,7 +417,7 @@ nnoremap <leader>d :Fern . -drawer -toggle<CR>
 " Notes and vimwiki editing
 nnoremap <leader>w :lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('~/vimwiki') })<CR>
 nnoremap <leader>ew :e <C-R>=expand('~/vimwiki/')<CR>
-nnoremap <leader>j :call v:lua.weekly_journal()<CR>
+nnoremap <leader>ej :call v:lua.weekly_journal()<CR>
 " Use a weekly journal instead.
 " nnoremap <leader>j :Neorg journal today<CR>
 " nnoremap <leader>J :Neorg journal yesterday<CR>
@@ -707,7 +707,7 @@ augroup END
 " }}}
 " Elixir {{{
 let g:mix_format_on_save = 1
-let g:mix_format_options = '--check-equivalent'
+" let g:mix_format_options = '--check-equivalent'
 let g:mix_format_silent_errors = 1
 augroup elixir_group
   autocmd!
@@ -718,9 +718,9 @@ augroup END
 
 augroup eelixir_group
   autocmd!
-  autocmd BufWritePost *.heex silent :!mix format %
+  autocmd BufWritePost *.html.heex silent :!mix format %
   " autoread doesn't work, so this is a workaround
-  autocmd BufWritePost *.heex silent :e
+  autocmd BufWritePost *.html.heex silent :e
 augroup END
 " }}}
 " Web {{{
