@@ -74,7 +74,7 @@ local auto_lsp_servers = {
 	"vimls",
 	"tsserver",
 	"eslint",
-	"sumneko_lua",
+	"lua_ls",
 	"efm",
 	"elixirls",
 	"clangd",
