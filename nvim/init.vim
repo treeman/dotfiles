@@ -19,6 +19,8 @@
 "     https://github.com/rust-analyzer/rust-analyzer
 "     cargo xtask install --server
 "
+"   elixir-ls
+"
 "   Others via nvim-lsp-install:
 "     :LspInstall <server>
 " }}}
@@ -109,9 +111,9 @@ call plug#begin('~/.config/nvim/plugged')
 " Colorscheme
 " Plug 'https://github.com/treeman/gruvbox.git'
 Plug 'https://github.com/folke/tokyonight.nvim'
-" Plug 'https://github.com/ellisonleao/gruvbox.nvim'
+Plug 'https://github.com/ellisonleao/gruvbox.nvim'
 " This conflicts with above gruvbox
-Plug 'https://github.com/eddyekofo94/gruvbox-flat.nvim'
+" Plug 'https://github.com/eddyekofo94/gruvbox-flat.nvim'
 Plug 'https://github.com/ful1e5/onedark.nvim'
 Plug 'https://github.com/EdenEast/nightfox.nvim/'
 Plug 'rebelot/kanagawa.nvim'
@@ -172,6 +174,7 @@ Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 Plug 'RRethy/nvim-treesitter-textsubjects'
 " Interactively swap parameters
 Plug 'mizlan/iswap.nvim'
@@ -282,8 +285,8 @@ let g:lightline_gruvbox_style = 'hard_left'
 
 " let g:tokyonight_style = "night"
 
-colorscheme gruvbox-flat
-" colorscheme gruvbox
+" colorscheme gruvbox-flat
+colorscheme gruvbox
 " colorscheme tokyonight
 " colorscheme kanagawa
 
@@ -853,7 +856,7 @@ augroup END
 let g:Hexokinase_highlighters = [ 'virtual' ]
 " Filetypes to match
 " Because it's async maybe this is completely unnecessary...
-let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript', 'scss', 'markdown', 'vimwiki', 'json']
+let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript', 'scss', 'markdown', 'vimwiki', 'json', 'lua']
 " Patterns to match
 let g:Hexokinase_optInPatterns = 'full_hex,triple_hex,rgb,rgba,hsl,hsla'
 " Filetype specific patterns to match
