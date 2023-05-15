@@ -215,7 +215,8 @@ Plug 'https://github.com/cespare/vim-toml.git'
 Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
-Plug 'https://github.com/elixir-editors/vim-elixir.git'
+Plug 'elixir-tools/elixir-tools.nvim'
+" Plug 'https://github.com/elixir-editors/vim-elixir.git'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'mhinz/vim-mix-format'
 " Autoformat for different languages
@@ -229,7 +230,8 @@ Plug 'mfussenegger/nvim-dap'
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
 " Help to install language servers
-Plug 'williamboman/nvim-lsp-installer'
+Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+Plug 'williamboman/mason-lspconfig.nvim'
 " Extensions to built-in LSP, for example, providing type inlay hints
 Plug 'tjdevries/lsp_extensions.nvim'
 Plug 'https://github.com/onsails/lspkind-nvim'

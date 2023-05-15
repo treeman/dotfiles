@@ -1,3 +1,39 @@
+local mason_lspconfig = require("mason-lspconfig")
+local lspconfig = require("lspconfig")
+
+require("mason").setup()
+
+mason_lspconfig.setup({
+	ensure_installed = {
+		"vimls",
+		"tsserver",
+		"eslint",
+		"lua_ls",
+		-- "rust_analyzer",
+		-- "efm",
+		-- "elixirls",
+		"clangd",
+		"pylsp",
+		-- "cssls",
+		"emmet_ls",
+		"html",
+		-- "tailwindcss",
+	},
+})
+
+local capabilities
+do
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	capabilities.textDocument.completion.completionItem.snippetSupport = true
+	capabilities.textDocument.completion.completionItem.resolveSupport = {
+		properties = {
+			"documentation",
+			"detail",
+			"additionalTextEdits",
+		},
+	}
+end
+
 local map = function(type, key, value)
 	vim.api.nvim_buf_set_keymap(0, type, key, value, { noremap = true, silent = true })
 end
@@ -42,136 +78,59 @@ local custom_attach = function(_)
 	autocmd("Cursorhold", "*", "lua vim.diagnostic.open_float({ focusable = false })")
 
 	autocmd("Cursorhold", "*", "lua require'nvim-lightbulb'.update_lightbulb()")
-
-	-- Enable type inlay hints
-	-- Note: This only works for certain LSPs, so it shouldn't be configured here
-	-- autocmd('InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost', '*',
-	-- "lua require'lsp_extensions'.inlay_hints{prefix = '', highlight = 'Comment'}")
 end
 
--- config that activates keymaps and enables snippet support
-local function make_config()
-	local capabilities = vim.lsp.protocol.make_client_capabilities()
-	capabilities.textDocument.completion.completionItem.snippetSupport = true
-	capabilities.textDocument.completion.completionItem.resolveSupport = {
-		properties = {
-			"documentation",
-			"detail",
-			"additionalTextEdits",
-		},
-	}
-	return {
-		capabilities = capabilities,
-		on_attach = custom_attach,
-	}
-end
-
--- Register and activate LSP servers (managed by nvim-lsp-installer)
-local auto_lsp_servers = {
-	-- List name of LSP servers that will be automatically installed and managed by :LspInstall.
-	-- LSP servers will be installed locally at: ~/.local/share/nvim/lsp_servers
-	-- @see(lspinstall): https://github.com/williamboman/nvim-lsp-installer
-	"vimls",
-	"tsserver",
-	"eslint",
-	"lua_ls",
-	"efm",
-	"elixirls",
-	"clangd",
-	"pylsp",
-	-- "cssls",
-	"emmet_ls",
-	"html",
-	-- "tailwindcss",
+local lsp_defaults = {
+	capabilities = capabilities,
+	on_attach = custom_attach,
 }
 
-local lsp_setup_opts = {}
-lsp_setup_opts["rust_analyzer"] = {
-	settings = {
-		["rust-analyzer"] = {
-			diagnostics = {
-				-- Disables 'proc macro `Serialize` not expanded and similar
-				-- https://github.com/rust-analyzer/rust-analyzer/pull/6645
-				disabled = { "unresolved-proc-macro" },
-			},
-			checkOnSave = {
-				extraArgs = { "--target-dir", "/tmp/rust-analyzer-check" },
-				command = "clippy",
-			},
-		},
-	},
-}
-lsp_setup_opts["sumneko_lua"] = {
-	settings = {
-		Lua = {
-			runtime = {
-				-- LuaJIT in the case of Neovim
-				version = "LuaJIT",
-				path = vim.split(package.path, ";"),
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { "vim" },
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = {
-					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, lsp_defaults)
+
+-- See :help mason-lspconfig-dynamic-server-setup
+mason_lspconfig.setup_handlers({
+	function(server)
+		lspconfig[server].setup({})
+	end,
+	["lua_ls"] = function()
+		lspconfig.lua_ls.setup({
+			settings = {
+				Lua = {
+					runtime = {
+						-- LuaJIT in the case of Neovim
+						version = "LuaJIT",
+						path = vim.split(package.path, ";"),
+					},
+					diagnostics = {
+						-- Get the language server to recognize the `vim` global
+						globals = { "vim" },
+					},
+					workspace = {
+						-- Make the server aware of Neovim runtime files
+						library = {
+							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+							[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+						},
+					},
 				},
 			},
-		},
-	},
-}
-lsp_setup_opts["clangd"] = {
-	filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
-}
-lsp_setup_opts["efm"] = {
-	filetypes = { "elixir" },
-}
-lsp_setup_opts["tailwindcss"] = {
-	init_options = {
-		userLanguages = {
-			-- A bit weird, as heex is a supported filetype, but otherwise I can't get
-			-- autocomplete to show up...
-			heex = "html-eex",
-		},
-	},
-}
-
--- lsp-install
-local lsp_installer = require("nvim-lsp-installer")
-
--- FIXME what to do with rust-analyzer and elixirls?
--- Register a handler that will be called for all installed servers.
-lsp_installer.on_server_ready(function(server)
-	local opts = make_config()
-
-	opts = vim.tbl_extend("error", opts, lsp_setup_opts[server.name] or {})
-
-	-- This setup() function is exactly the same as lspconfig's setup function.
-	-- (:help lspconfig-quickstart)
-	server:setup(opts)
-	vim.cmd([[ do User LspAttachBuffers ]])
-end)
-
--- for _, lsp_name in ipairs(manual_lsp_servers) do
---   local config = make_config()
---   config = vim.tbl_extend("error", config, lsp_setup_opts[lsp_name] or {})
---   require'lspconfig'[lsp_name].setup(config)
--- end
-
--- Automatically install if a required LSP server is missing.
-for _, lsp_name in ipairs(auto_lsp_servers) do
-	local ok, lsp = require("nvim-lsp-installer.servers").get_server(lsp_name)
-	---@diagnostic disable-next-line: undefined-field
-	if ok and not lsp:is_installed() then
-		vim.defer_fn(function()
-			-- lsp:install()   -- headless
-			lsp_installer.install(lsp_name) -- with UI (so that users can be notified)
-		end, 0)
-	end
-end
+		})
+	end,
+	["clangd"] = function()
+		lspconfig.clangd.setup({
+			filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
+		})
+	end,
+	-- ["elixirls"] = function()
+	-- 	lspconfig.elixirls.setup({
+	-- 		cmd = { "/home/tree/src/elixir-ls/release/language_server.sh" },
+	-- 		dialyzerEnabled = true,
+	-- 		fetchDeps = true,
+	-- 		enableTestLenses = true,
+	-- 		suggestSpecs = true,
+	-- 	})
+	-- end,
+})
 
 vim.api.nvim_command("command! LspStop :lua vim.lsp.stop_client(vim.lsp.get_active_clients())<CR>")
 vim.api.nvim_command("command! LspStarted :lua print(vim.inspect(vim.lsp.buf_get_clients()))<CR>")
@@ -191,39 +150,15 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagn
 
 require("telescope").load_extension("lsp_handlers")
 
--- commented options are defaults
--- require("lspkind").init({
--- 	with_text = true,
--- 	symbol_map = {
--- 		Text = "",
--- 		Method = "ƒ",
--- 		Function = "",
--- 		Constructor = "",
--- 		Variable = "",
--- 		Class = "",
--- 		Interface = "ﰮ",
--- 		Module = "",
--- 		Property = "",
--- 		Unit = "",
--- 		Value = "",
--- 		Enum = "了",
--- 		Keyword = "",
--- 		Snippet = "﬌",
--- 		Color = "",
--- 		File = "",
--- 		Folder = "",
--- 		EnumMember = "",
--- 		Constant = "",
--- 		Struct = "",
--- 	},
--- })
-
 require("lsp-rooter").setup({
 	-- Table of lsp clients to ignore by name
-	ignore_lsp = {},
+	ignore_lsp = { "elixirls" },
 })
 
+-- rust-analyzer is managed outside of mason
 local rust_opts = {
+	capabilities = capabilities,
+	on_attach = custom_attach,
 	-- rust-tools options
 	tools = {
 		autoSetHints = true,
@@ -234,9 +169,55 @@ local rust_opts = {
 		},
 	},
 	-- rust-analyzer options
-	server = vim.tbl_extend("error", make_config(), lsp_setup_opts["rust_analyzer"]),
+	settings = {
+		["rust-analyzer"] = {
+			diagnostics = {
+				-- Disables 'proc macro `Serialize` not expanded and similar
+				-- https://github.com/rust-analyzer/rust-analyzer/pull/6645
+				disabled = { "unresolved-proc-macro" },
+			},
+			checkOnSave = {
+				extraArgs = { "--target-dir", "/tmp/rust-analyzer-check" },
+				command = "clippy",
+			},
+		},
+	},
 }
 require("rust-tools").setup(rust_opts)
 
 autocmd("FileType", "rust", "nnoremap <leader>x :RustRunnables<CR>")
 autocmd("FileType", "rust", "nnoremap <leader>m :RustExpandMacro<CR>")
+
+-- elixirls is managed outside of mason
+lspconfig.elixirls.setup({
+	cmd = { "/home/tree/src/elixir-ls/release/language_server.sh" },
+	dialyzerEnabled = true,
+	fetchDeps = true,
+	enableTestLenses = true,
+	suggestSpecs = true,
+})
+
+local elixir = require("elixir")
+local elixirls = require("elixir.elixirls")
+
+elixir.setup({
+	credo = {
+		capabilities = capabilities,
+		on_attach = custom_attach,
+	},
+	elixirls = {
+		enable = false,
+	},
+	-- elixirls = {
+	-- 	cmd = { "/home/tree/src/elixir-ls/release/language_server.sh" },
+	-- 	-- default settings, use the `settings` function to override settings
+	-- 	settings = elixirls.settings({
+	-- 		dialyzerEnabled = true,
+	-- 		fetchDeps = true,
+	-- 		enableTestLenses = true,
+	-- 		suggestSpecs = true,
+	-- 	}),
+	-- 	capabilities = capabilities,
+	-- 	on_attach = custom_attach,
+	-- },
+})
