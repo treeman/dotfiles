@@ -118,9 +118,10 @@ Plug 'https://github.com/junegunn/fzf.vim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 Plug 'https://github.com/gbrlsnchs/telescope-lsp-handlers.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 " Personal wiki
 Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
-Plug 'nvim-neorg/neorg'
+Plug 'nvim-neorg/neorg', { 'do': ':Neorg sync-parsers' }
 " Avoid mistyping filenames, ask which file to open if file not find
 Plug 'https://github.com/EinfachToll/DidYouMean.git'
 " Easy way to comment things
@@ -412,9 +413,16 @@ nnoremap <silent> <leader>b :lua require('telescope_extra').my_buffer()<CR>
 nnoremap <leader>d :Fern . -drawer -toggle<CR>
 
 " Notes and vimwiki editing
-nnoremap <leader>w :lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('~/vimwiki') })<CR>
-nnoremap <leader>ew :e <C-R>=expand('~/vimwiki/')<CR>
+" nnoremap <leader>w :lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('~/vimwiki') })<CR>
+" nnoremap <leader>ew :e <C-R>=expand('~/vimwiki/')<CR>
 nnoremap <leader>ej :call v:lua.weekly_journal()<CR>
+
+nnoremap <leader>n :lua require('telescope_extra').open_norg('')<CR>
+nnoremap <leader>ep :lua require('telescope_extra').open_norg('projects')<CR>
+nnoremap <leader>ea :lua require('telescope_extra').open_norg('areas')<CR>
+nnoremap <leader>er :lua require('telescope_extra').open_norg('resources')<CR>
+nnoremap <leader>eA :lua require('telescope_extra').open_norg('archive')<CR>
+
 " Use a weekly journal instead.
 " nnoremap <leader>j :Neorg journal today<CR>
 " nnoremap <leader>J :Neorg journal yesterday<CR>

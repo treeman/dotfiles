@@ -11,10 +11,11 @@ end
 
 -- Should probably make this more general in the future.
 function _G.weekly_journal()
-	local journal_file = "/home/tree/vimwiki/weekly_journal/" .. os.date("w%W") .. ".norg"
+	local pwd = vim.fn.expand("~/norg/areas/weekly_journal/")
+	local journal_file = pwd .. os.date("w%W") .. ".norg"
 
 	if not file_exists(journal_file) then
-		local res, err = vim.loop.fs_copyfile("/home/tree/vimwiki/weekly_journal/template.norg", journal_file)
+		local res, err = vim.loop.fs_copyfile(pwd .. "template.norg", journal_file)
 		if not res then
 			print("error copying template: " .. err)
 			return

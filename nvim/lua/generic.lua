@@ -81,24 +81,19 @@ require("indent_blankline").setup({
 require("neorg").setup({
 	load = {
 		["core.defaults"] = {},
+		["core.completion"] = { config = { engine = "nvim-cmp" } },
+		["core.integrations.nvim-cmp"] = {},
 		["core.dirman"] = {
 			config = {
 				workspaces = {
-					vimwiki = "~/vimwiki",
+					norg = "~/norg",
+					projects = "~/norg/projects",
+					areas = "~/norg/areas",
+					resources = "~/norg/resources",
 				},
 			},
 		},
-		["core.journal"] = {
-			config = { -- Note that this table is optional and doesn't need to be provided
-				workspace = "vimwiki",
-				strategy = "flat",
-			},
-		},
-		["core.completion"] = {
-			config = { -- Note that this table is optional and doesn't need to be provided
-				engine = "nvim-cmp",
-			},
-		},
+		-- ["core.journal"] = { config = { workspace = "norg", strategy = "flat" } },
 		["core.concealer"] = {},
 	},
 })

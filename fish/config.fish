@@ -49,8 +49,6 @@ end
 # Colorscheme
 gruvbox
 
-source ~/.config/fish/gtd.fish
-
 alias ww 'nvim ~/vimwiki/index.markdown'
 
 set secret_file ~/.env.secrets.fish
@@ -60,3 +58,5 @@ end
 
 set -gx PNPM_HOME "/home/tree/.local/share/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
+
+alias n "nvim -c \":lua require('telescope_extra').open_norg('projects')\""
