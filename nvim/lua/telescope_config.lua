@@ -7,6 +7,11 @@ require("telescope").setup({
 				["<esc>"] = actions.close,
 			},
 		},
+		pickers = {
+			find_files = {
+				hidden = true,
+			},
+		},
 	},
 })
 

@@ -1,14 +1,14 @@
 font:
   normal:
-    family: Iosevka Custom Medium
+    family: IosevkaCustom Nerd Font
   bold:
-    family: Iosevka Custom Medium
+    family: IosevkaCustom Nerd Font
     style: Bold
   italic:
-    family: Iosevka Custom Medium
+    family: IosevkaCustom Nerd Font
     style: Italic
   bold_italic:
-    family: Iosevka Custom Medium
+    family: IosevkaCustom Nerd Font
     style: BoldItalic
   size: 12.0
 

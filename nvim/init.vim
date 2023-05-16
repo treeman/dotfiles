@@ -109,14 +109,8 @@ filetype plugin indent on
 " See :Plug* for commands
 call plug#begin('~/.config/nvim/plugged')
 " Colorscheme
-" Plug 'https://github.com/treeman/gruvbox.git'
-Plug 'https://github.com/folke/tokyonight.nvim'
 Plug 'https://github.com/ellisonleao/gruvbox.nvim'
-" This conflicts with above gruvbox
-" Plug 'https://github.com/eddyekofo94/gruvbox-flat.nvim'
-Plug 'https://github.com/ful1e5/onedark.nvim'
-Plug 'https://github.com/EdenEast/nightfox.nvim/'
-Plug 'rebelot/kanagawa.nvim'
+Plug 'https://github.com/rebelot/kanagawa.nvim'
 " Excellent fuzzy finder
 Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'https://github.com/junegunn/fzf.vim'
@@ -200,6 +194,9 @@ Plug 'ellisonleao/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
 " zoxide, a smart cd
 Plug 'https://github.com/nanotee/zoxide.vim'
 Plug 'https://github.com/jvgrootveld/telescope-zoxide'
+" Show diagnostics and stuff
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'https://github.com/folke/trouble.nvim'
 
 " File explorer
 Plug 'https://github.com/lambdalisue/fern.vim', {'branch': 'main'}
@@ -284,11 +281,6 @@ let g:lightline_gruvbox_style = 'hard_left'
 " let g:lightline = {'colorscheme': 'gruvbox-flat'}
 
 " let g:tokyonight_style = "night"
-
-" colorscheme gruvbox-flat
-colorscheme gruvbox
-" colorscheme tokyonight
-" colorscheme kanagawa
 
 set guifont=Iosevka\ Custom\ Medium:h12
 let g:neovide_cursor_animation_length = 0.13
@@ -544,46 +536,30 @@ nnoremap <leader>tw :silent! %s/\s\+$//<CR>:retab<CR>
 " Supercharged spell correction!
 nnoremap <silent> z= :Telescope spell_suggest<CR>
 
-nnoremap <silent> <leader>q :Telescope quickfix<CR>
-nnoremap <silent> <leader>l :Telescope loclist<CR>
+" nnoremap <silent> <leader>q :Telescope quickfix<CR>
+" nnoremap <silent> <leader>l :Telescope loclist<CR>
+nnoremap <silent> <leader>q :TroubleToggle quickfix<CR>
+nnoremap <silent> <leader>l :TroubleToggle loclist<CR>
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" command! -bang -nargs=? QFix call QFixToggle(<bang>0)
-" function! QFixToggle(forced)
-"   if exists("g:qfix_win") && a:forced == 0
-"     cclose
-"     unlet g:qfix_win
-"   else
-"     copen 10
-"     let g:qfix_win = bufnr("$")
-"   endif
-" endfunction
-" nnoremap <silent><leader>q :QFix<CR>
-"
-" command! -bang -nargs=? LList call LListToggle(<bang>0)
-" function! LListToggle(forced)
-"   if exists("g:llist_win") && a:forced == 0
-"     lclose
-"     unlet g:llist_win
-"   else
-"     lopen 10
-"     let g:llist_win = bufnr("$")
-"   endif
-" endfunction
-" nnoremap <silent><leader>l :LList<CR>
-
-" Next/prev from unimpaired.vim {{{
-" [b, ]b, [B, ]B       :bprev, :bnext, :bfirst, :blast
-" [l, ]l, [L, ]L       :lprev, :lnext, :lfirst, :llast
-" [q, ]q, [Q, ]Q       :cprev, :cnext, :cfirst, :clast
-" Goto next/prev files by name in current folder:
-" [f, ]f
-"
-" }}}
+" Remaps to try from theprimaegen
+" Move visual selection up/down
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+" Don't move cursor when joining lines
+noremap J mzJ`z
+" Keep cursor in the middle when paging
+noremap <C-d> <C-d>zz
+noremap <C-u> <C-u>zz
+noremap <PageUp> <PageUp>zz
+noremap <PageDown> <PageDown>zz
+" Keep search terms in the midlle
+noremap n nzzzv
+noremap N Nzzzv
 
 " }}}
 " Commands {{{

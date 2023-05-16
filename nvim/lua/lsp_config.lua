@@ -18,6 +18,7 @@ mason_lspconfig.setup({
 		"emmet_ls",
 		"html",
 		-- "tailwindcss",
+		"marksman",
 	},
 })
 
@@ -47,8 +48,10 @@ local custom_attach = function(_)
 	for _, prefix in ipairs({ "_", "-" }) do
 		-- Most here go through telescope via the lsp-handlers plugin
 		map("n", prefix .. "D", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-		map("n", prefix .. "d", "<cmd>lua vim.lsp.buf.definition()<CR>")
-		map("n", prefix .. "r", "<cmd>lua vim.lsp.buf.references()<CR>")
+		-- map("n", prefix .. "d", "<cmd>lua vim.lsp.buf.definition()<CR>")
+		map("n", prefix .. "d", "<cmd>TroubleToggle lsp_definitions<CR>")
+		-- map("n", prefix .. "r", "<cmd>lua vim.lsp.buf.references()<CR>")
+		map("n", prefix .. "r", "<cmd>TroubleToggle lsp_references<CR>")
 		map("n", prefix .. "i", "<cmd>lua vim.lsp.buf.implementation()<CR>")
 		map("n", prefix .. "t", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
 		map("n", prefix .. "h", "<cmd>lua vim.lsp.buf.hover()<CR>")
@@ -58,11 +61,11 @@ local custom_attach = function(_)
 		map("n", prefix .. "ar", "<cmd>lua vim.lsp.buf.rename()<CR>")
 		map("n", prefix .. "I", "<cmd>lua vim.lsp.buf.incoming_calls()<CR>")
 		map("n", prefix .. "O", "<cmd>lua vim.lsp.buf.outgoing_calls()<CR>")
-		map("n", prefix .. "w", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
-		map("n", prefix .. "W", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>")
-		--- FIXME these doesn't work
-		map("n", prefix .. "e", "<cmd>:Telescope lsp_document_diagnostics<CR>")
-		map("n", prefix .. "E", "<cmd>:Telescope lsp_workspace_diagnostics<CR>")
+		-- map("n", prefix .. "w", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
+		-- map("n", prefix .. "W", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>")
+		--
+		map("n", prefix .. "e", "<cmd>TroubleToggle document_diagnostics<CR>")
+		map("n", prefix .. "w", "<cmd>TroubleToggle workspace_diagnostics<CR>")
 		-- map('n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 	end
 
@@ -136,7 +139,9 @@ vim.api.nvim_command("command! LspStop :lua vim.lsp.stop_client(vim.lsp.get_acti
 vim.api.nvim_command("command! LspStarted :lua print(vim.inspect(vim.lsp.buf_get_clients()))<CR>")
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	virtual_text = true,
+	-- virtual_text = true,
+	virtual_text = false,
+	float = { border = "single" },
 
 	-- This is similar to:
 	-- let g:diagnostic_show_sign = 1
@@ -191,10 +196,10 @@ autocmd("FileType", "rust", "nnoremap <leader>m :RustExpandMacro<CR>")
 -- elixirls is managed outside of mason
 lspconfig.elixirls.setup({
 	cmd = { "/home/tree/src/elixir-ls/release/language_server.sh" },
-	dialyzerEnabled = true,
+	dialyzerEnabled = false,
 	fetchDeps = true,
-	enableTestLenses = true,
-	suggestSpecs = true,
+	enableTestLenses = false,
+	suggestSpecs = false,
 })
 
 local elixir = require("elixir")

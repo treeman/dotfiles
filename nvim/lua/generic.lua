@@ -102,6 +102,22 @@ require("neorg").setup({
 		["core.concealer"] = {},
 	},
 })
+require("trouble").setup({
+	auto_jump = { "lsp_definitions", "lsp_references" },
+	-- We really should make icons work...
+	icons = false,
+	fold_open = "v", -- icon used for open folds
+	fold_closed = ">", -- icon used for closed folds
+	indent_lines = false, -- add an indent guide below the fold icons
+	signs = {
+		-- icons / text used for a diagnostic
+		error = "error",
+		warning = "warn",
+		hint = "hint",
+		information = "info",
+	},
+	use_diagnostic_signs = false,
+})
 
 require("gruvbox").setup({
 	contrast = "hard", -- can be "hard", "soft" or empty string
@@ -123,6 +139,7 @@ require("gruvbox").setup({
 		bright_red = "#ea6962",
 		neutral_red = "#c14a4a",
 	},
+	transparent_mode = true,
 	overrides = {
 		SignColumn = { link = "dark0" },
 		-- ["@variable"] = { fg = "#ea6962" },
@@ -131,4 +148,28 @@ require("gruvbox").setup({
 		["@symbol"] = { link = "GruvboxPurple" },
 	},
 })
+require("kanagawa").setup({
+	statementStyle = { bold = false },
+	transparent = false,
+	colors = {
+		palette = {},
+		theme = {
+			all = {
+				ui = {
+					bg_gutter = "none",
+				},
+			},
+		},
+	},
+	overrides = function(colors) -- add/modify highlights
+		return {}
+	end,
+	theme = "wave", -- Load "wave" theme when 'background' option is not set
+	background = { -- map the value of 'background' option to a theme
+		dark = "wave", -- try "dragon" !
+		light = "lotus",
+	},
+})
+
 vim.cmd("colorscheme gruvbox")
+-- vim.cmd("colorscheme kanagawa")
