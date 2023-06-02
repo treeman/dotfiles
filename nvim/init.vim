@@ -110,6 +110,7 @@ filetype plugin indent on
 call plug#begin('~/.config/nvim/plugged')
 " Colorscheme
 Plug 'https://github.com/ellisonleao/gruvbox.nvim'
+Plug 'https://github.com/sainnhe/gruvbox-material'
 Plug 'https://github.com/rebelot/kanagawa.nvim'
 " Excellent fuzzy finder
 Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -217,7 +218,7 @@ Plug 'https://github.com/hail2u/vim-css3-syntax.git'
 Plug 'https://github.com/wlangstroth/vim-racket'
 Plug 'https://github.com/otherjoel/vim-pollen.git'
 Plug 'elixir-tools/elixir-tools.nvim'
-" Plug 'https://github.com/elixir-editors/vim-elixir.git'
+Plug 'https://github.com/elixir-editors/vim-elixir.git'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'mhinz/vim-mix-format'
 " Autoformat for different languages
@@ -276,12 +277,17 @@ let g:gruvbox_italicize_comments = 1
 
 let g:gruvbox_flat_style = "hard"
 
+let g:gruvbox_material_background = 'hard'
+" let g:gruvbox_material_better_performance = 1
+" colorscheme gruvbox-material
+
 " To avoid the low contrast gray on 2nd left side
 "
 let g:lightline_gruvbox_style = 'hard_left'
 " let g:lightline = {'colorscheme': 'gruvbox-flat'}
 
 " let g:tokyonight_style = "night"
+
 
 set guifont=Iosevka\ Custom\ Medium:h12
 let g:neovide_cursor_animation_length = 0.13

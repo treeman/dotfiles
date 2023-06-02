@@ -48,10 +48,10 @@ local custom_attach = function(_)
 	for _, prefix in ipairs({ "_", "-" }) do
 		-- Most here go through telescope via the lsp-handlers plugin
 		map("n", prefix .. "D", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-		-- map("n", prefix .. "d", "<cmd>lua vim.lsp.buf.definition()<CR>")
-		map("n", prefix .. "d", "<cmd>TroubleToggle lsp_definitions<CR>")
-		-- map("n", prefix .. "r", "<cmd>lua vim.lsp.buf.references()<CR>")
-		map("n", prefix .. "r", "<cmd>TroubleToggle lsp_references<CR>")
+		map("n", prefix .. "d", "<cmd>lua vim.lsp.buf.definition()<CR>")
+		-- map("n", prefix .. "d", "<cmd>TroubleToggle lsp_definitions<CR>")
+		map("n", prefix .. "r", "<cmd>lua vim.lsp.buf.references()<CR>")
+		-- map("n", prefix .. "r", "<cmd>TroubleToggle lsp_references<CR>")
 		map("n", prefix .. "i", "<cmd>lua vim.lsp.buf.implementation()<CR>")
 		map("n", prefix .. "t", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
 		map("n", prefix .. "h", "<cmd>lua vim.lsp.buf.hover()<CR>")
@@ -139,9 +139,9 @@ vim.api.nvim_command("command! LspStop :lua vim.lsp.stop_client(vim.lsp.get_acti
 vim.api.nvim_command("command! LspStarted :lua print(vim.inspect(vim.lsp.buf_get_clients()))<CR>")
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-	-- virtual_text = true,
-	virtual_text = false,
-	float = { border = "single" },
+	virtual_text = true,
+	-- virtual_text = false,
+	-- float = { border = "single" },
 
 	-- This is similar to:
 	-- let g:diagnostic_show_sign = 1

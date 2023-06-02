@@ -94,7 +94,20 @@ require("neorg").setup({
 			},
 		},
 		-- ["core.journal"] = { config = { workspace = "norg", strategy = "flat" } },
-		["core.concealer"] = {},
+		["core.concealer"] = {
+			config = {
+				icons = {
+					todo = {
+						done = { icon = "✓" },
+						pending = { icon = "▶" },
+						uncertain = { icon = "⁇" },
+						on_hold = { icon = "⏸" },
+						cancelled = { icon = "⏏" },
+						undone = { icon = " " },
+					},
+				},
+			},
+		},
 	},
 })
 require("trouble").setup({

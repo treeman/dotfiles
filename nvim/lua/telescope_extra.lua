@@ -39,7 +39,7 @@ m.open_norg = function(base_folder)
 			local create_file = function()
 				-- It ain't pretty... But maybe it's good enough...? T.T
 				local current_picker = action_state.get_current_picker(prompt_bufnr)
-				local input = cwd .. current_picker:_get_prompt() .. ".norg"
+				local input = folder .. current_picker:_get_prompt() .. ".norg"
 
 				local file = Path:new(input)
 				if file:exists() then
@@ -54,7 +54,7 @@ m.open_norg = function(base_folder)
 			map("i", "<C-e>", create_file)
 			return true
 		end,
-		search_dirs = { folder },
+		cwd = folder,
 	})
 end
 
