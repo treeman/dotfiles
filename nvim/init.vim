@@ -162,7 +162,7 @@ Plug 'https://github.com/lambdalisue/suda.vim'
 " Kill buffers smartly
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 " Scratch buffer
-Plug 'https://github.com/idbrii/itchy.vim'
+" Plug 'https://github.com/idbrii/itchy.vim'
 " Automatically insert end in insert mode for some languages
 Plug 'https://github.com/tpope/vim-endwise'
 " Light statusbar
@@ -400,8 +400,8 @@ nnoremap <leader>ef :e <C-R>=expand('%:p:h') . '/'<CR>
 "cmap w!! w !sudo tee > /dev/null %
 "com -bar W exe 'w !sudo tee >/dev/null %:p:S' | setl nomod
 cmap w!! SudaWrite
-" Open a scratch buffer
-nmap <leader>ss <Plug>(itchy-open-scratch)
+" Open scratch file
+nmap <leader>ss :e ~/norg/scratch.norg<CR>
 
 " Find files
 nnoremap <silent> <leader>f :Telescope find_files<CR>
