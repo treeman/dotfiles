@@ -1,4 +1,7 @@
 #!/bin/sh
 
 pipewire &
+sleep 0.1
 pipewire-pulse &
+sleep 0.1
+wireplumber &

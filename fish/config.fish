@@ -10,6 +10,7 @@ set -x PATH ~/.yarn/bin $PATH
 set -x PATH ~/.fly/bin $PATH
 set -x PATH ~/.fly/bin $PATH
 set -x PATH ~/src/bitcoin-cash-node/build/src $PATH
+set -x PATH /usr/lib/psql15/bin $PATH
 
 set -x PERL5LIB ~/perl5/lib/perl5 $PERL5LIB
 

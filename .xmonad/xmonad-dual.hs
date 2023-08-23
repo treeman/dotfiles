@@ -44,19 +44,18 @@ main = do
     -- TODO make ticker work first!
     -- conkyTicker <- spawnPipe "conky -c ~/.conky/conky_ticker"
 
-    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
+    -- docks is necessary for dzen struts to be considered
+    xmonad $ withUrgencyHook NoUrgencyHook . docks $ def {
         modMask = mod4Mask
         , workspaces = myWorkspaces
         , normalBorderColor = gb_background
         , focusedBorderColor = gb_background_soft
         , borderWidth = 1
         , terminal = term
-        , keys = \k -> dualKeys k `M.union` myKeys k `M.union` keys defaultConfig k
+        , keys = \k -> dualKeys k `M.union` myKeys k `M.union` keys def k
         , logHook = dynamicLogWithPP $ myDzenPP topLeft
-        , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
+        , layoutHook = avoidStrutsOn[U] $ layoutHook def
         , manageHook = manageDocks <+> myManageHook
-        -- Necessary to recognize struts for dzen
-        , handleEventHook = docksEventHook <+> handleEventHook defaultConfig
 
         -- Trick java apps like minecraft to correctly recognize windowed screen
         -- resolution in dual screen mode

@@ -195,7 +195,7 @@ autocmd("FileType", "rust", "nnoremap <leader>m :RustExpandMacro<CR>")
 
 -- elixirls is managed outside of mason
 lspconfig.elixirls.setup({
-	cmd = { "/home/tree/src/elixir-ls/release/language_server.sh" },
+	-- cmd = { "/home/tree/src/elixir-ls/release/language_server.sh" },
 	dialyzerEnabled = false,
 	fetchDeps = true,
 	enableTestLenses = false,

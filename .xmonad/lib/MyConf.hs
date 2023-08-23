@@ -110,7 +110,7 @@ myManageHook = composeAll
     , title =? "plasma-desktop"  --> doIgnore
     , manageDocks]
 
-myDzenPP h = defaultPP
+myDzenPP h = def
     { ppOutput = hPutStrLn h
     , ppCurrent = wrapFg gb_orange . dropId                 -- Current workspace
     , ppVisible = wrapFg gb_yellow . dropId                 -- Workspace for other screen
