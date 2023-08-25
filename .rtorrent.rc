@@ -1,8 +1,0 @@
-port_range = 7188-7188
-session = ./.rtorrent_session
-
-# No hash check on finish
-check_hash = no
-
-encryption = allow_incoming,try_outgoing,enable_retry
-
