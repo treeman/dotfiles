@@ -20,9 +20,6 @@ filetype plugin indent on
 " See :Plug* for commands
 call plug#begin('~/.config/nvim/plugged')
 " Colorscheme
-Plug 'https://github.com/ellisonleao/gruvbox.nvim'
-Plug 'https://github.com/sainnhe/gruvbox-material'
-Plug 'https://github.com/rebelot/kanagawa.nvim'
 " Excellent fuzzy finder
 Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'https://github.com/junegunn/fzf.vim'
@@ -74,25 +71,12 @@ Plug 'https://github.com/tpope/vim-endwise'
 " Light statusbar
 Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
-" Treesitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/playground'
-Plug 'RRethy/nvim-treesitter-textsubjects'
 " Interactively swap parameters
 Plug 'mizlan/iswap.nvim'
 " Dispatch async things
 Plug 'https://github.com/tpope/vim-dispatch'
 " Maximize for windows
 Plug 'https://github.com/szw/vim-maximizer'
-" Autocompletion framework with a ton of support
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'https://github.com/f3fora/cmp-spell'
-Plug 'https://github.com/hrsh7th/cmp-calc'
-Plug 'https://github.com/hrsh7th/cmp-path'
-Plug 'https://github.com/hrsh7th/cmp-omni'
-Plug 'crispgm/cmp-beancount'
 " Align text around
 Plug 'junegunn/vim-easy-align'
 " Repalce text inside quickfix
@@ -112,8 +96,6 @@ Plug 'https://github.com/lambdalisue/nerdfont.vim'
 Plug 'https://github.com/lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'https://github.com/lambdalisue/fern-git-status.vim'
 Plug 'https://github.com/lambdalisue/glyph-palette.vim'
-" Fixes some performance issues
-Plug 'antoinemadec/FixCursorHold.nvim'
 
 " Specific file support
 Plug 'https://github.com/nathangrigg/vim-beancount'

@@ -44,5 +44,7 @@ vim.opt.showcmd = true-- show the command being typed
 vim.opt.signcolumn = "yes" -- Use a gutter for git-gutter and LSP messages
 vim.opt.completeopt = "menuone,noselect" -- Required settings for nvim-cmp
 
---vim.opt.noh = true
+vim.opt.spell = true
+vim.opt.spelllang = { "en_us" }
+
 vim.opt.lazyredraw = true -- speed up macros

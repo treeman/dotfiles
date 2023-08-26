@@ -1,0 +1,107 @@
+local config = function()
+  require("nvim-treesitter.configs").setup({
+    ensure_installed = {
+      "awk",
+      "bash",
+      "beancount",
+      "c",
+      "cmake",
+      "cpp",
+      "css",
+      "csv",
+      "diff",
+      "dockerfile",
+      "dot",
+      "eex",
+      "elixir",
+      "fish",
+      "git_config",
+      "git_rebase",
+      "gitattributes",
+      "gitcommit",
+      "gitignore",
+      "gpg",
+      "heex",
+      "html",
+      "http",
+      "javascript",
+      "jq",
+      "json",
+      "jsonc",
+      "lua",
+      "luap",
+      "make",
+      "markdown",
+      "markdown_inline",
+      "norg",
+      "python",
+      "query",
+      "regex",
+      "ruby",
+      "rust",
+      "scheme",
+      "scss",
+      "sql",
+      "toml",
+      "typescript",
+      "vim",
+      "vue",
+      "xml",
+      "yaml",
+    },
+    highlight = {
+      enable = true,
+    },
+    textsubjects = {
+      enable = true,
+      prev_selection = ",",
+      keymaps = {
+        ["."] = "textsubjects-smart",
+        [";"] = "textsubjects-container-outer",
+        ["i;"] = "textsubjects-container-inner",
+      },
+    },
+    matchup = {
+      enable = true,
+    },
+    playground = {
+      enable = true,
+      disable = {},
+      updatetime = 25,
+      persist_queries = true,
+      keybindings = {
+        toggle_query_editor = "o",
+        toggle_hl_groups = "i",
+        toggle_injected_languages = "t",
+        toggle_anonymous_nodes = "a",
+        toggle_language_display = "I",
+        focus_language = "f",
+        unfocus_language = "F",
+        update = "R",
+        goto_node = "<cr>",
+        show_help = "?",
+      },
+    },
+  })
+end
+
+return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    config = config,
+    lazy = false,
+    build = ":TSUpdate",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      "RRethy/nvim-treesitter-textsubjects",
+      "nvim-treesitter/nvim-treesitter-context",
+      {
+        "nvim-treesitter/playground",
+        cmd = "TSPlaygroundToggle",
+        --keys = {
+        --m("<leader>tp", [[TSPlaygroundToggle]]),
+        --},
+      },
+    }
+  }
+}
