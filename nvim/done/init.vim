@@ -28,11 +28,6 @@ Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
 Plug 'nvim-neorg/neorg', { 'do': ':Neorg sync-parsers' }
 " Avoid mistyping filenames, ask which file to open if file not find
 Plug 'https://github.com/EinfachToll/DidYouMean.git'
-" Easy way to comment things
-Plug 'https://github.com/tomtom/tcomment_vim'
-" For many more features see tcomment_vim
-" This is also an option
-" Plug 'https://github.com/b3nj5m1n/kommentary', { 'branch': 'main' }
 " Enhance the '.' operator
 Plug 'https://github.com/tpope/vim-repeat'
 " Easily surround things
@@ -41,14 +36,6 @@ Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/wellle/targets.vim'
 " Highlight what was yanked
 Plug 'https://github.com/machakann/vim-highlightedyank'
-" Vim cheat sheet
-" Plug 'https://github.com/lifepillar/vim-cheat40'
-" Telescope powered cheat sheet
-Plug 'sudormrfbin/cheatsheet.nvim'
-" Generic lua plugins
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'rktjmp/lush.nvim'
 " Indentation lines for visual aid
 Plug 'https://github.com/lukas-reineke/indent-blankline.nvim'
 " Make * and # search visually

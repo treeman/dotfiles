@@ -89,19 +89,18 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     config = config,
-    lazy = false,
+    event = "BufReadPre",
     build = ":TSUpdate",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "RRethy/nvim-treesitter-textsubjects",
       "nvim-treesitter/nvim-treesitter-context",
-      {
-        "nvim-treesitter/playground",
-        cmd = "TSPlaygroundToggle",
-        --keys = {
-        --m("<leader>tp", [[TSPlaygroundToggle]]),
-        --},
-      },
+      "windwp/nvim-ts-autotag",
+      "JoosepAlviste/nvim-ts-context-commentstring",
     }
+  },
+  {
+      "nvim-treesitter/playground",
+      cmd = "TSPlaygroundToggle",
   }
 }
