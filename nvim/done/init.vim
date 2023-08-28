@@ -1,8 +1,6 @@
 " Kill annoying beep sound
 set visualbell
 
-let g:highlightedyank_highlight_duration = 500 " shorter highlighting for yank
-
 augroup CursorLineOnlyInActiveWindow
   autocmd!
   autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
@@ -23,32 +21,15 @@ call plug#begin('~/.config/nvim/plugged')
 " Excellent fuzzy finder
 Plug 'https://github.com/junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'https://github.com/junegunn/fzf.vim'
-" Personal wiki
-Plug 'https://github.com/vimwiki/vimwiki.git', { 'branch': 'dev' }
-Plug 'nvim-neorg/neorg', { 'do': ':Neorg sync-parsers' }
 " Avoid mistyping filenames, ask which file to open if file not find
 Plug 'https://github.com/EinfachToll/DidYouMean.git'
-" Enhance the '.' operator
-Plug 'https://github.com/tpope/vim-repeat'
-" Easily surround things
-Plug 'https://github.com/tpope/vim-surround'
 " More targets
 Plug 'https://github.com/wellle/targets.vim'
-" Highlight what was yanked
-Plug 'https://github.com/machakann/vim-highlightedyank'
-" Indentation lines for visual aid
-Plug 'https://github.com/lukas-reineke/indent-blankline.nvim'
-" Make * and # search visually
-Plug 'https://github.com/nelstrom/vim-visual-star-search'
-" Use s as a two-char f
-Plug 'https://github.com/justinmk/vim-sneak'
 " nvim in Firefox
 " Peek registry contents, for easy use of " and @
 Plug 'https://github.com/junegunn/vim-peekaboo'
 " Display colors
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-" Sudo write for neovim
-Plug 'https://github.com/lambdalisue/suda.vim'
 " Kill buffers smartly
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 " Scratch buffer
@@ -121,8 +102,6 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 "Plug 'hrsh7th/vim-vsnip-integ'
 
-" Git plugins
-Plug 'lewis6991/gitsigns.nvim'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/rbong/vim-flog'
 Plug 'https://github.com/rhysd/git-messenger.vim'

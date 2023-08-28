@@ -10,6 +10,7 @@ local opts = {
           projects = "~/norg/projects",
           areas = "~/norg/areas",
           resources = "~/norg/resources",
+          archive = "~/norg/archive",
         },
       },
     },
@@ -32,10 +33,11 @@ local opts = {
 }
 
 return {
-    {
-        "nvim-neorg/neorg",
-        -- lazy-load on filetype
-        ft = "norg",
-        opts = opts
-    }
+  {
+    "nvim-neorg/neorg",
+    build = ":Neorg sync-parsers",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    ft = "norg",
+    opts = opts
+  }
 }

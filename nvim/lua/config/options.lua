@@ -18,6 +18,10 @@ vim.opt.hidden = true -- can change buffers without saving
 vim.opt.shada = "!,'1000,<100,s100,h,f1"
 vim.opt.shadafile = vim.fn.expand("~/.config/nvim/.shada")
 
+-- Prevent <leader> from timing out
+vim.opt.timeout = false
+vim.opt.ttimeout = true
+
 -- Text display
 vim.opt.list = true -- show tabs
 vim.opt.listchars = "tab:>-,trail:-" -- show tabs and trailing spaces

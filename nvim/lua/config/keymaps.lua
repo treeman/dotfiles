@@ -30,6 +30,10 @@ else
   vim.keymap.set("n", "<C-right>", "<c-w>l")
 end
 
+-- Maximize current buffer
+vim.keymap.set("n", "<C-w>m", ":MaximizerToggle<CR>", { silent = true })
+
+
 -- Edit file with prefilled path from the current file
 vim.keymap.set("n", "<leader>ef", ":e <C-R>=expand('%:p:h') . '/'<CR>")
 
@@ -45,6 +49,13 @@ vim.keymap.set("n", "<leader>/", ":execute 'Rg ' . input('Rg/')<CR>", { silent =
 vim.keymap.set("n", "<leader>B", ":edit #<CR>")
 -- Find from open buffers
 vim.keymap.set("n", "<leader>b", ":lua require('config.telescope_actions').open_buffer()<CR>", { silent = true })
+
+vim.keymap.set("n", "<leader>o", ":Telescope oldfiles<CR>", { silent = true})
+
+-- Edit files in a buffer
+vim.keymap.set("n", "<leader>ed", ":Oil .<CR>")
+-- Edit files in within the current directory
+vim.keymap.set("n", "<leader>eD", ":Oil <C-R>=expand('%:p:h')<CR><CR>")
 
 -- Supercharged spell correction!
 vim.keymap.set("n", "z=", ":Telescope spell_suggest<CR>", { silent = true })
