@@ -1,52 +1,75 @@
 font:
   normal:
-    family: Iosevka Custom Medium
+    family: IosevkaTree Nerd Font Medium
   bold:
-    family: Iosevka Custom Medium
+    family: IosevkaTree Nerd Font Medium
     style: Bold
   italic:
-    family: Iosevka Custom Medium
+    family: IosevkaTree Nerd Font Medium
     style: Italic
   bold_italic:
-    family: Iosevka Custom Medium
+    family: IosevkaTree Nerd Font Medium
     style: BoldItalic
   size: 12.0
 
-
 custom_cursor_colors: true
 
-# gruvbox-flat Alacritty Colors
+# # gruvbox-flat Alacritty Colors
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x1d2021'
+#     foreground: '0xd4be98'
+
+#   # Normal colors
+#   normal:
+#     black: '0x1D2021'
+#     red: '0xea6962'
+#     green: '0xa9b665'
+#     yellow: '0xd8a657'
+#     blue: '0x7daea3'
+#     magenta: '0xd3869b'
+#     aqua: '0x89b482'
+#     white: '0xd4be98'
+
+#   # Bright colors
+#   bright:
+#     black: '0x17191a'
+#     red: '0xea6962'
+#     green: '0xa9b665'
+#     yellow: '0xd8a657'
+#     blue: '0x7daea3'
+#     magenta: '0xd3869b'
+#     aqua: '0x89b482'
+#     white: '0xd4be98'
+
+#   indexed_colors:
+#     - { index: 16, color: '0xe78a4e' }
+#     - { index: 17, color: '0xc14a4a' }
+
+# Melange colors
 colors:
-  # Default colors
   primary:
-    background: '0x1d2021'
-    foreground: '0xd4be98'
-
-  # Normal colors
+    foreground: '#ECE1D7'
+    background: '#292522'
   normal:
-    black:   '0x1D2021'
-    red:     '0xea6962'
-    green:   '0xa9b665'
-    yellow:  '0xd8a657'
-    blue:    '0x7daea3'
-    magenta: '0xd3869b'
-    aqua:    '0x89b482'
-    white:   '0xd4be98'
-
-  # Bright colors
+    black: '#34302C'
+    red: '#BD8183'
+    green: '#78997A'
+    yellow: '#E49B5D'
+    blue: '#7F91B2'
+    magenta: '#B380B0'
+    cyan: '#7B9695'
+    white: '#C1A78E'
   bright:
-    black:   '0x17191a'
-    red:     '0xea6962'
-    green:   '0xa9b665'
-    yellow:  '0xd8a657'
-    blue:    '0x7daea3'
-    magenta: '0xd3869b'
-    aqua:    '0x89b482'
-    white:   '0xd4be98'
-
-  indexed_colors:
-    - { index: 16, color: '0xe78a4e' }
-    - { index: 17, color: '0xc14a4a' }
+    black: '#867462'
+    red: '#D47766'
+    green: '#85B695'
+    yellow: '#EBC06D'
+    blue: '#A3A9CE'
+    magenta: '#CF9BC2'
+    cyan: '#89B3B6'
+    white: '#ECE1D7'
 
 #
 # # Colors (Gruvbox dark)

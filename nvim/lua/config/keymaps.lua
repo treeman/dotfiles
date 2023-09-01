@@ -1,71 +1,111 @@
+local map = vim.keymap.set
+
 -- Some special mappings for my T-34 layout shenanigans
 local normal_keyboard = os.getenv("NORMAL_KEYBORD") == 1
 
 -- Copy/paste to mouse clipboard quickly
-vim.keymap.set("n", "<leader>p", '"*p', { silent = true })
-vim.keymap.set("n", "<leader>P", '"*P', { silent = true })
-vim.keymap.set("n", "<leader>y", '"*y', { silent = true })
-vim.keymap.set("n", "<leader>Y", '"*Y', { silent = true })
+map("n", "<leader>p", '"*p', { silent = true })
+map("n", "<leader>P", '"*P', { silent = true })
+map("n", "<leader>y", '"*y', { silent = true })
+map("n", "<leader>Y", '"*Y', { silent = true })
 -- Don't overwrite register when pasting in visual selection
-vim.keymap.set("x", "p", '"_dP')
+map("x", "p", '"_dP')
 
 -- Use ( as a toggle prefix everywhere
-vim.keymap.set("n", "(", "[", { remap = true })
-vim.keymap.set("n", ")", "]", { remap = true })
-vim.keymap.set("o", "(", "[", { remap = true })
-vim.keymap.set("o", ")", "]", { remap = true })
-vim.keymap.set("x", "(", "[", { remap = true })
-vim.keymap.set("x", ")", "]", { remap = true })
+map("n", "(", "[", { remap = true })
+map("n", ")", "]", { remap = true })
+map("o", "(", "[", { remap = true })
+map("o", ")", "]", { remap = true })
+map("x", "(", "[", { remap = true })
+map("x", ")", "]", { remap = true })
 
 -- Happy windows switching
-if narmal_keyboard then
-  vim.keymap.set("n", "<C-h>", "<c-w>h")
-  vim.keymap.set("n", "<C-j>", "<c-w>j")
-  vim.keymap.set("n", "<C-k>", "<c-w>k")
-  vim.keymap.set("n", "<C-l>", "<c-w>l")
+if normal_keyboard then
+	map("n", "<C-h>", "<c-w>h")
+	map("n", "<C-j>", "<c-w>j")
+	map("n", "<C-k>", "<c-w>k")
+	map("n", "<C-l>", "<c-w>l")
 else
-  vim.keymap.set("n", "<C-left>", "<c-w>h")
-  vim.keymap.set("n", "<C-down>", "<c-w>j")
-  vim.keymap.set("n", "<C-up>", "<c-w>k")
-  vim.keymap.set("n", "<C-right>", "<c-w>l")
+	map("n", "<C-left>", "<c-w>h")
+	map("n", "<C-down>", "<c-w>j")
+	map("n", "<C-up>", "<c-w>k")
+	map("n", "<C-right>", "<c-w>l")
 end
 
 -- Maximize current buffer
-vim.keymap.set("n", "<C-w>m", ":MaximizerToggle<CR>", { silent = true })
-
+map("n", "<C-w>m", ":MaximizerToggle<CR>", { silent = true })
 
 -- Edit file with prefilled path from the current file
-vim.keymap.set("n", "<leader>ef", ":e <C-R>=expand('%:p:h') . '/'<CR>")
-
+map("n", "<leader>ef", ":e <C-R>=expand('%:p:h') . '/'<CR>")
 
 -- Find files
-vim.keymap.set("n", "<leader>f", ":Telescope find_files<CR>", { silent = true })
+map("n", "<leader>f", ":Telescope find_files<CR>", { silent = true })
 -- Find files relative to current file
-vim.keymap.set("n", "<leader>F", ":lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>", { silent = true })
+map(
+	"n",
+	"<leader>F",
+	":lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
+	{ silent = true }
+)
 -- Find in files
-vim.keymap.set("n", "<leader>/", ":execute 'Rg ' . input('Rg/')<CR>", { silent = true })
+-- map("n", "<leader>/", ":execute 'Rg ' . input('Rg/')<CR>", { silent = true })
+map("n", "<leader>/", ":Telescope live_grep<CR>", { silent = true })
 
 -- Goto previous buffer
-vim.keymap.set("n", "<leader>B", ":edit #<CR>")
+map("n", "<leader>B", ":edit #<CR>")
 -- Find from open buffers
-vim.keymap.set("n", "<leader>b", ":lua require('config.telescope_actions').open_buffer()<CR>", { silent = true })
+map("n", "<leader>b", ":lua require('config.telescope_actions').open_buffer()<CR>", { silent = true })
 
-vim.keymap.set("n", "<leader>o", ":Telescope oldfiles<CR>", { silent = true})
+map("n", "<leader>o", ":Telescope oldfiles<CR>", { silent = true })
 
 -- Edit files in a buffer
-vim.keymap.set("n", "<leader>ed", ":Oil .<CR>")
+map("n", "<leader>ed", ":Oil .<CR>")
 -- Edit files in within the current directory
-vim.keymap.set("n", "<leader>eD", ":Oil <C-R>=expand('%:p:h')<CR><CR>")
+map("n", "<leader>eD", ":Oil <C-R>=expand('%:p:h')<CR><CR>")
+
+map("n", "<leader>d", ":Neotree toggle=true<CR>")
 
 -- Supercharged spell correction!
-vim.keymap.set("n", "z=", ":Telescope spell_suggest<CR>", { silent = true })
+map("n", "z=", ":Telescope spell_suggest<CR>", { silent = true })
 
 -- norg mapping
 
 -- Open scratch file
-vim.keymap.set("n", "<leader>ss", ":e ~/norg/scratch.norg<CR>")
-vim.keymap.set("n", "<leader>n", ":lua require('config.telescope_actions').open_norg('')<CR>")
-vim.keymap.set("n", "<leader>ep", ":lua require('config.telescope_actions').open_norg('projects')<CR>")
-vim.keymap.set("n", "<leader>ea", ":lua require('config.telescope_actions').open_norg('areas')<CR>")
-vim.keymap.set("n", "<leader>er", ":lua require('config.telescope_actions').open_norg('resources')<CR>")
-vim.keymap.set("n", "<leader>eA", ":lua require('config.telescope_actions').open_norg('archive')<CR>")
+map("n", "<leader>ss", ":e ~/norg/scratch.norg<CR>")
+map("n", "<leader>n", ":lua require('config.telescope_actions').open_norg('')<CR>")
+map("n", "<leader>ep", ":lua require('config.telescope_actions').open_norg('projects')<CR>")
+map("n", "<leader>ea", ":lua require('config.telescope_actions').open_norg('areas')<CR>")
+map("n", "<leader>er", ":lua require('config.telescope_actions').open_norg('resources')<CR>")
+map("n", "<leader>eA", ":lua require('config.telescope_actions').open_norg('archive')<CR>")
+
+-- Git
+local neogit = require("neogit")
+map("n", "gs", ":Neogit<CR>")
+map("n", "g<space>", ":Git ")
+
+local telescope_builtin = require("telescope.builtin")
+
+map("n", "gb", telescope_builtin.git_branches)
+
+-- Ideas
+--require('telescope.builtin').git_commits()
+--require('telescope.builtin').git_bcommits()
+--require('telescope.builtin').git_bcommits_range()
+
+-- TODO
+-- Open all commits with gll (so we don't have to press gsll) ?
+-- View history of a single file
+-- View history of selection in a single file
+
+-- nnoremap gs :Git<CR>
+-- nnoremap g<space> :Git
+-- nnoremap gll :Flogsplit<CR>
+-- nnoremap glf :Flogsplit -path=%<CR>
+-- xnoremap glf :Flogsplit -- --no-patch<CR>
+-- nnoremap <silent> <leader>C :Commits<CR>
+-- nnoremap gb :Telescope git_branches<CR>
+
+-- " Fugitive Conflict Resolution
+-- nnoremap gds :Gdiffsplit!<CR>
+-- nnoremap gdh :diffget //2<CR>
+-- nnoremap gdl :diffget //3<CR>

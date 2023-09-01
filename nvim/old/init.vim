@@ -695,38 +695,14 @@ augroup END
 
 augroup rustgroup
   autocmd!
-  autocmd BufWritePre *.rs Neoformat
   autocmd Filetype rust nnoremap <leader>c :Dispatch cargo clippy --all-targets --all-features -- -D warnings<CR>
   autocmd FileType rust let b:dispatch = 'cargo check'
 augroup END
 " }}}
 " Elixir {{{
-let g:mix_format_on_save = 1
-let g:mix_format_silent_errors = 1
-augroup elixir_group
-  autocmd!
-  autocmd FileType elixir normal zR
-augroup END
 
-" let g:neoformat_verbose = 1
-
-augroup eelixir_group
-  autocmd!
-  autocmd BufWritePost *.html.heex silent :!mix format %
-  " autoread doesn't work, so this is a workaround
-  autocmd BufWritePost *.html.heex silent :e
-augroup END
 " }}}
 " Web {{{
-
-augroup web
-  autocmd!
-  autocmd Filetype html setlocal ts=2 sts=2 sw=2 expandtab
-  autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
-  autocmd Filetype json setlocal ts=2 sts=2 sw=2 noexpandtab
-  autocmd FileType typescriptreact let b:dispatch = 'yarn next build'
-  autocmd BufWritePre *.json,*.js,*.ts,*.tsx,*.css,*.html,*.scss Neoformat
-augroup END
 
 " }}}
 " Python {{{

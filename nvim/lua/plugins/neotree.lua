@@ -1,0 +1,39 @@
+-- If this doesn't work well, look at nvim-tree
+
+local opts = {
+	-- use_default_mappings = false,
+	window = {
+		mapping_options = {
+			noremap = true,
+			nowait = true,
+		},
+		mappings = {
+			["l"] = "open",
+			["h"] = "close_node",
+			["!"] = "toggle_hidden",
+			["d"] = "add_directory",
+			["X"] = "delete",
+			["space"] = "none",
+			["<Esc>"] = "close_window",
+		},
+	},
+}
+
+return {
+	"nvim-neo-tree/neo-tree.nvim",
+	branch = "v3.x",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-tree/nvim-web-devicons",
+		"MunifTanjim/nui.nvim",
+		"s1n7ax/nvim-window-picker",
+	},
+	cmd = "Neotree",
+	config = function()
+		-- See :help neo-tree-highlights
+		vim.api.nvim_set_hl(0, "NeoTreeNormal", { link = "Normal" })
+		vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { link = "WinSeparator" })
+
+		require("neo-tree").setup(opts)
+	end,
+}

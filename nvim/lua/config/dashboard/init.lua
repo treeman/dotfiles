@@ -62,7 +62,7 @@ local buttons = {
     button("c", "Config", ":lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('~/.config/nvim') })<CR>"),
     button("?", "Cheatsheet", ":CheatsheetEdit<cr>"),
     { type = "padding", val = 1 },
-    button("u", "Lazy Sync / TSUpdate / MasonToolsUpdate", ":UpdateAndSyncAll<cr>"),
+    button("u", "Update all", ":UpdateAll<cr>"),
     button("l", "Lazy", ":Lazy<cr>"),
     button("m", "Mason", ":Mason<cr>"),
     { type = "padding", val = 1 },
