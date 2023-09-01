@@ -32,6 +32,22 @@ else
 	map("n", "<C-right>", "<c-w>l")
 end
 
+-- Move visual lines
+map("n", "<up>", "gk")
+map("n", "<down>", "gj")
+
+-- Remaps to try from theprimaegen
+-- Don't move cursor when joining lines
+map("n", "J", "mzJ`z")
+-- Keep cursor in the middle when paging
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+map("n", "<PageUp>", "<PageUp>zz")
+map("n", "<PageDown>", "<PageDown>zz")
+-- Keep search terms in the middle
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+
 -- Maximize current buffer
 map("n", "<C-w>m", ":MaximizerToggle<CR>", { silent = true })
 

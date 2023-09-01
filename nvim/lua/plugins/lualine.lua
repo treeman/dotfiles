@@ -33,7 +33,7 @@ local function spell()
 end
 
 -- Note that "0x%0B" is bugged, but works with the %b prefix
-local charhex = "%b 0x%0B"
+local charhex = "%b 0x%B"
 -- Show location s column:row/total_rows
 local location = "%c:%l/%L"
 
