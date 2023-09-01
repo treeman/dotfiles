@@ -11,5 +11,5 @@ vim.o.background = "dark"
 -- vim.cmd.colorscheme("everforest")
 
 -- These rocks
-vim.cmd.colorscheme("melange")
+-- vim.cmd.colorscheme("melange")
 -- vim.cmd.colorscheme("kanagawa")
