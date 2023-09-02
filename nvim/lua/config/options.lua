@@ -37,7 +37,6 @@ vim.opt.autoindent = true -- keep indenting after newline
 vim.opt.smarttab = true -- insert tabs on the start according to shiftwidth, not tabstop
 
 -- UI
---vim.opt.statusline = "%<%{FugitiveStatusline()}%=%t %m%r%h%w%y%=%c%V, %l/%L %a 0x%0B %p%%"
 vim.opt.relativenumber = true -- display relative line numbers
 vim.opt.number = true -- show line numbers
 vim.opt.laststatus = 2 -- always show the status line

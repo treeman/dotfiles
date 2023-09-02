@@ -6,6 +6,9 @@ local opts = {
 			["="] = "Toggle",
 		},
 	},
+	commit_editor = {
+		kind = "auto",
+	},
 }
 
 return {
