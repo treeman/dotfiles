@@ -190,6 +190,17 @@ M.gitsigns = function(buffer)
 	local opts = { silent = true, buffer = buffer }
 	map("n", "]h", gitsigns.next_hunk, opts)
 	map("n", "[h", gitsigns.prev_hunk, opts)
+	map("n", "<leader>hs", gitsigns.stage_hunk, opts)
+	map("n", "<leader>hr", gitsigns.reset_hunk, opts)
+	map("v", "<leader>hs", function()
+		gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+	end, opts)
+	map("v", "<leader>hr", function()
+		gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+	end, opts)
+	map("n", "<leader>hb", function()
+		gitsigns.blame_line({ full = true })
+	end, opts)
 end
 
 return M
