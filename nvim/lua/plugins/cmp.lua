@@ -1,15 +1,42 @@
-local config = function()
+local function in_comment()
+	local context = require("cmp.config.context")
+	return context.in_treesitter_capture("comment") or context.in_syntax_group("Comment")
+end
+
+local function in_string()
+	local context = require("cmp.config.context")
+	return context.in_treesitter_capture("string") or context.in_syntax_group("String")
+end
+
+local function in_spell()
+	local context = require("cmp.config.context")
+	return context.in_treesitter_capture("spell")
+end
+
+local function disallowed_buftype()
+	local buftype = vim.bo.buftype
+	local disallowed = {
+		"prompt",
+		"nofile",
+	}
+	for _, v in pairs(disallowed) do
+		if buftype == v then
+			return true
+		end
+	end
+	return false
+end
+
+local function config()
 	local cmp = require("cmp")
 	local context = require("cmp.config.context")
 	local lspkind = require("lspkind")
+	local luasnip = require("luasnip")
 
 	cmp.setup({
-		enabled = true,
-		snippet = {
-			expand = function(args)
-				vim.fn["vsnip#anonymous"](args.body)
-			end,
-		},
+		enabled = function()
+			return not in_comment() and not disallowed_buftype()
+		end,
 		mapping = {
 			["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
 			["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
@@ -22,12 +49,17 @@ local config = function()
 			}),
 			["<Tab>"] = cmp.mapping.confirm({ select = true }),
 		},
+		snippet = {
+			expand = function(args)
+				luasnip.lsp_expand(args.body)
+			end,
+		},
 		sources = {
 			{
 				name = "luasnip",
 				group_index = 1,
 				entry_filter = function()
-					return not context.in_treesitter_capture("string") and not context.in_syntax_group("String")
+					return not in_string()
 				end,
 			},
 			{
@@ -52,9 +84,7 @@ local config = function()
 			{
 				name = "spell",
 				option = {
-					enable_in_context = function()
-						return context.in_treesitter_capture("spell")
-					end,
+					enable_in_context = in_spell,
 				},
 				group_index = 3,
 			},
@@ -133,6 +163,7 @@ return {
 			"ray-x/cmp-treesitter",
 			"saadparwaiz1/cmp_luasnip",
 			"onsails/lspkind.nvim",
+			"L3MON4D3/LuaSnip",
 		},
 		event = "InsertEnter",
 	},
