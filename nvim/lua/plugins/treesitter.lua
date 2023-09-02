@@ -1,4 +1,6 @@
 local config = function()
+	local keymaps = require("config.keymaps")
+
 	require("nvim-treesitter.configs").setup({
 		ensure_installed = {
 			"awk",
@@ -52,17 +54,31 @@ local config = function()
 		highlight = {
 			enable = true,
 		},
-		textsubjects = {
-			enable = true,
-			prev_selection = ",",
-			keymaps = {
-				["."] = "textsubjects-smart",
-				[";"] = "textsubjects-container-outer",
-				["i;"] = "textsubjects-container-inner",
-			},
-		},
 		matchup = {
 			enable = true,
+		},
+		autotag = {
+			enable = true,
+		},
+		endwise = {
+			enable = true,
+		},
+		textobjects = {
+			move = {
+				enable = true,
+				set_jumps = true,
+				-- Taken keymaps:
+				-- [d
+				-- goto_next_start = {},
+				-- goto_next_end = {},
+				-- goto_previous_start = {},
+				-- goto_previous_end = {},
+			},
+		},
+		textsubjects = {
+			enable = true,
+			prev_selection = keymaps.textsubjects.prev_selection,
+			keymaps = keymaps.textsubjects.keymaps,
 		},
 		playground = {
 			enable = true,
@@ -97,6 +113,7 @@ return {
 			"nvim-treesitter/nvim-treesitter-context",
 			"windwp/nvim-ts-autotag",
 			"JoosepAlviste/nvim-ts-context-commentstring",
+			"RRethy/nvim-treesitter-endwise",
 		},
 	},
 	{

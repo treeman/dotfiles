@@ -33,6 +33,13 @@ autocmd("FileType", {
 	command = "setlocal ts=2 sts=2 sw=2 noexpandtab",
 })
 
+autocmd("BufRead", {
+	-- I do not want the filetype to be htmldjango when it contains a {% ... %} string.
+	pattern = "*.html",
+	group = filegroup,
+	command = "set filetype=html",
+})
+
 -- Cursor line only in active window
 local cursorlinegroup = augroup("cursorlinegroup", { clear = true })
 autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {

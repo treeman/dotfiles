@@ -1,3 +1,5 @@
+local keymaps = require("config.keymaps")
+
 local opts = {
 	kind = "split_above",
 	auto_show_console = false,
