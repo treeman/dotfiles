@@ -152,34 +152,44 @@ M.textsubjects = {
 }
 
 M.global_lsp = function()
-	local key_opts = { noremap = true, silent = true }
-	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, key_opts)
-	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, key_opts)
+	local map = vim.keymap.set
+	local opts = { silent = true }
+	map("n", "]d", vim.diagnostic.goto_next, opts)
+	map("n", "[d", vim.diagnostic.goto_prev, opts)
 end
 
 M.buf_lsp = function(_, buffer)
+	local map = vim.keymap.set
+	local opts = { silent = true, buffer = buffer }
 	-- FIXME there are other cool possibilities listed in nvim-lspconfig
-	local opts = { noremap = true, silent = true, buffer = buffer }
-	vim.keymap.set("n", "<localleader>D", vim.lsp.buf.declaration, opts)
-	vim.keymap.set("n", "<localleader>d", vim.lsp.buf.definition, opts)
-	vim.keymap.set("n", "<localleader>r", vim.lsp.buf.references, opts)
-	vim.keymap.set("n", "<localleader>i", vim.lsp.buf.implementation, opts)
-	vim.keymap.set("n", "<localleader>t", vim.lsp.buf.type_definition, opts)
-	vim.keymap.set("n", "<localleader>h", vim.lsp.buf.hover, opts)
-	vim.keymap.set("n", "<localleader>s", vim.lsp.buf.signature_help, opts)
-	vim.keymap.set("n", "<localleader>x", vim.lsp.buf.code_action, opts)
+	map("n", "<localleader>D", vim.lsp.buf.declaration, opts)
+	map("n", "<localleader>d", vim.lsp.buf.definition, opts)
+	map("n", "<localleader>r", vim.lsp.buf.references, opts)
+	map("n", "<localleader>i", vim.lsp.buf.implementation, opts)
+	map("n", "<localleader>t", vim.lsp.buf.type_definition, opts)
+	map("n", "<localleader>h", vim.lsp.buf.hover, opts)
+	map("n", "<localleader>s", vim.lsp.buf.signature_help, opts)
+	map("n", "<localleader>x", vim.lsp.buf.code_action, opts)
 	-- map("n", prefix .. "l", "<cmd>lua vim.diagnostic.open_float({ focusable = false })<CR>")
-	vim.keymap.set("n", "<localleader>ar", vim.lsp.buf.rename, opts)
-	vim.keymap.set("n", "<localleader>I", vim.lsp.buf.incoming_calls, opts)
-	vim.keymap.set("n", "<localleader>O", vim.lsp.buf.outgoing_calls, opts)
-	vim.keymap.set("n", "<localleader>w", vim.lsp.buf.document_symbol, opts)
-	vim.keymap.set("n", "<localleader>W", vim.lsp.buf.workspace_symbol, opts)
+	map("n", "<localleader>ar", vim.lsp.buf.rename, opts)
+	map("n", "<localleader>I", vim.lsp.buf.incoming_calls, opts)
+	map("n", "<localleader>O", vim.lsp.buf.outgoing_calls, opts)
+	map("n", "<localleader>w", vim.lsp.buf.document_symbol, opts)
+	map("n", "<localleader>W", vim.lsp.buf.workspace_symbol, opts)
 
 	-- Trouble is okay... But we really don't want it to steal focus!
 	-- map("n", prefix .. "r", "<cmd>TroubleToggle lsp_references<CR>")
 	-- map("n", prefix .. "d", "<cmd>TroubleToggle lsp_definitions<CR>")
 	-- map("n", prefix .. "e", "<cmd>TroubleToggle document_diagnostics<CR>")
 	-- map("n", prefix .. "w", "<cmd>TroubleToggle workspace_diagnostics<CR>")
+end
+
+M.gitsigns = function(buffer)
+	local gitsigns = package.loaded.gitsigns
+	local map = vim.keymap.set
+	local opts = { silent = true, buffer = buffer }
+	map("n", "]h", gitsigns.next_hunk, opts)
+	map("n", "[h", gitsigns.prev_hunk, opts)
 end
 
 return M
