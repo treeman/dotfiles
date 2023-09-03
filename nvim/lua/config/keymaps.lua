@@ -1,8 +1,6 @@
 local function init()
 	local map = vim.keymap.set
-
-	-- Some special mappings for my T-34 layout shenanigans
-	local normal_keyboard = os.getenv("NORMAL_KEYBORD") == 1
+	local normal_keyboard = require("util").has_normal_keyboard()
 
 	-- Copy/paste to mouse clipboard quickly
 	map("n", "<leader>p", '"*p', { silent = true })

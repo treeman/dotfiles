@@ -33,7 +33,7 @@ local function spell()
 end
 
 -- Note that "0x%0B" is bugged, but works with the %b prefix
-local charhex = "%b 0x%B"
+-- local charhex = "%b 0x%B"
 -- Show location s column:row/total_rows
 local location = "%c:%l/%L"
 
@@ -97,19 +97,27 @@ local function config()
 	lualine.setup({
 		options = {
 			theme = custom_theme,
+			-- component_separators = { left = "", right = "" },
 		},
 		sections = {
-			lualine_c = { filename },
-			lualine_x = {
-				{
-					lsp_info,
-					fmt = trunc(200, 80, 80, false),
-				},
-				spell,
-				"encoding",
-				"filetype",
+			-- See current window width using :echo winwidth(0)
+			-- Laptop
+			-- full: 213
+			-- half: 106
+			-- third: 71
+			lualine_a = { "mode" },
+			lualine_b = {
+				{ "branch", fmt = trunc(80, 80, 80, true) },
+				{ "diff", fmt = trunc(80, 80, 80, true) },
+				{ "diagnostics", fmt = trunc(80, 80, 80, true) },
 			},
-			lualine_y = { charhex },
+			lualine_c = { filename },
+			lualine_x = { { lsp_info, fmt = trunc(120, 10, 60, true) } },
+			lualine_y = {
+				{ spell, fmt = trunc(120, 120, 120, true) },
+				{ "encoding", fmt = trunc(120, 120, 120, true) },
+				{ "filetype", fmt = trunc(80, 80, 80, true) },
+			},
 			lualine_z = { location },
 		},
 		inactive_sections = {
