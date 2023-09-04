@@ -149,6 +149,35 @@ M.textsubjects = {
 	prev_selection = ",",
 }
 
+-- Maps four pairs:
+-- [f, [F, ]f, ]F
+-- for the given treesitter textobject
+-- see: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+local ts_move_keys = {
+	f = "@function.outer",
+	p = "@parameter.outer",
+
+	-- Test out
+	["="] = "@assignment.outer",
+	a = "@attribute.inner", -- (html/heex)
+	b = "@block.inner", -- (or outer?)
+	c = "@class.outer",
+	x = "@comment.outer",
+	s = "@statement.outer",
+}
+
+M.ts_goto_next_start = {}
+M.ts_goto_next_end = {}
+M.ts_goto_previous_start = {}
+M.ts_goto_previous_end = {}
+
+for k, v in pairs(ts_move_keys) do
+	M.ts_goto_next_start[vim.print("]" .. k)] = v
+	M.ts_goto_next_end["]" .. string.upper(k)] = v
+	M.ts_goto_previous_start["[" .. k] = v
+	M.ts_goto_previous_end["[" .. string.upper(k)] = v
+end
+
 M.global_lsp = function()
 	local map = vim.keymap.set
 	local opts = { silent = true }

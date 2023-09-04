@@ -29,7 +29,6 @@ end
 
 local function config()
 	local cmp = require("cmp")
-	local context = require("cmp.config.context")
 	local lspkind = require("lspkind")
 	local luasnip = require("luasnip")
 
@@ -68,18 +67,18 @@ local function config()
 			},
 			{
 				name = "nvim_lua",
-				group_index = 2,
+				group_index = 3,
 			},
 			{
 				name = "neorg",
-				group_index = 2,
+				group_index = 3,
 			},
 			{
 				name = "beancount",
 				option = {
 					account = "/home/tree/vimwiki/money/accounting/personal.beancount",
 				},
-				group_index = 2,
+				group_index = 3,
 			},
 			{
 				name = "spell",
@@ -91,20 +90,20 @@ local function config()
 			{
 				name = "treesitter",
 				keyword_length = 3,
-				group_index = 3,
+				group_index = 4,
 			},
 			{
 				name = "async_path",
-				group_index = 3,
-			},
-			{
-				name = "buffer",
-				keyword_length = 3,
 				group_index = 4,
 			},
 			{
 				name = "calc",
 				group_index = 4,
+			},
+			{
+				name = "buffer",
+				keyword_length = 3,
+				group_index = 5,
 			},
 		},
 		formatting = {
@@ -154,16 +153,16 @@ return {
 		config = config,
 		dependencies = {
 			"FelipeLema/cmp-async-path",
+			"L3MON4D3/LuaSnip",
 			"crispgm/cmp-beancount",
 			"f3fora/cmp-spell",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-calc",
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-nvim-lua",
+			"onsails/lspkind.nvim",
 			"ray-x/cmp-treesitter",
 			"saadparwaiz1/cmp_luasnip",
-			"onsails/lspkind.nvim",
-			"L3MON4D3/LuaSnip",
 		},
 		event = "InsertEnter",
 	},

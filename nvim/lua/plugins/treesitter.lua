@@ -67,12 +67,10 @@ local config = function()
 			move = {
 				enable = true,
 				set_jumps = true,
-				-- Taken keymaps:
-				-- [d
-				-- goto_next_start = {},
-				-- goto_next_end = {},
-				-- goto_previous_start = {},
-				-- goto_previous_end = {},
+				goto_next_start = keymaps.ts_goto_next_start,
+				goto_next_end = keymaps.ts_goto_next_end,
+				goto_previous_start = keymaps.ts_goto_previous_start,
+				goto_previous_end = keymaps.ts_goto_previous_end,
 			},
 		},
 		textsubjects = {
