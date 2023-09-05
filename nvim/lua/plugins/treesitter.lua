@@ -72,6 +72,16 @@ local config = function()
 				goto_previous_start = keymaps.ts_goto_previous_start,
 				goto_previous_end = keymaps.ts_goto_previous_end,
 			},
+			swap = {
+				enable = true,
+				swap_next = keymaps.ts_swap_next,
+				swap_previous = keymaps.ts_swap_previous,
+			},
+			select = {
+				enable = true,
+				lookahead = true,
+				keymaps = keymaps.ts_select,
+			},
 		},
 		textsubjects = {
 			enable = true,
@@ -97,6 +107,15 @@ local config = function()
 			},
 		},
 	})
+
+	-- Make movements repeatable with ; and ,
+	local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
+	vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+	vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+	vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
+	vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
+	vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
+	vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
 end
 
 return {

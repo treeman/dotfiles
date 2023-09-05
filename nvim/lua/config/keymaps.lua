@@ -87,7 +87,7 @@ local function init()
 	-- norg mapping
 
 	-- Open scratch file
-	map("n", "<leader>ss", ":e ~/norg/scratch.norg<CR>")
+	map("n", "<leader>es", ":e ~/norg/scratch.norg<CR>")
 	map("n", "<leader>n", ":lua require('config.telescope_actions').open_norg('')<CR>")
 	map("n", "<leader>ep", ":lua require('config.telescope_actions').open_norg('projects')<CR>")
 	map("n", "<leader>ea", ":lua require('config.telescope_actions').open_norg('areas')<CR>")
@@ -154,16 +154,13 @@ M.textsubjects = {
 -- for the given treesitter textobject
 -- see: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 local ts_move_keys = {
-	f = "@function.outer",
-	p = "@parameter.outer",
-
-	-- Test out
-	["="] = "@assignment.outer",
-	a = "@attribute.inner", -- (html/heex)
-	b = "@block.inner", -- (or outer?)
-	c = "@class.outer",
-	x = "@comment.outer",
-	s = "@statement.outer",
+	f = { query = "@function.outer", descr = "goto function" },
+	w = { query = "@parameter.outer", descr = "goto parameter" },
+	a = { query = "@attribute.inner", descr = "goto attribute" },
+	b = { query = "@block.inner", descr = "goto block" },
+	c = { query = "@class.outer", descr = "goto class" },
+	x = { query = "@comment.outer", descr = "goto comment" },
+	s = { query = "@statement.outer", descr = "goto statement" },
 }
 
 M.ts_goto_next_start = {}
@@ -172,11 +169,35 @@ M.ts_goto_previous_start = {}
 M.ts_goto_previous_end = {}
 
 for k, v in pairs(ts_move_keys) do
-	M.ts_goto_next_start[vim.print("]" .. k)] = v
+	M.ts_goto_next_start["]" .. k] = v
 	M.ts_goto_next_end["]" .. string.upper(k)] = v
 	M.ts_goto_previous_start["[" .. k] = v
 	M.ts_goto_previous_end["[" .. string.upper(k)] = v
 end
+
+M.ts_swap_next = {
+	["<leader>s"] = { query = "@parameter.inner", descr = "Swap next parameter" },
+}
+M.ts_swap_previous = {
+	["<leader>S"] = { query = "@parameter.inner", descr = "Swap previous parameter" },
+}
+
+M.ts_select = {
+	["af"] = { query = "@function.outer", descr = "Select outer function" },
+	["if"] = { query = "@function.inner", descr = "Select inner function" },
+	["ac"] = { query = "@class.outer", descr = "Select outer class" },
+	["ic"] = { query = "@class.inner", descr = "Select inner class" },
+	["ab"] = { query = "@block.outer", descr = "Select outer block" },
+	["ib"] = { query = "@block.inner", descr = "Select inner block" },
+	["aa"] = { query = "@attribute.outer", descr = "Select outer attribute" },
+	["ia"] = { query = "@attribute.inner", descr = "Seect inner attribute" },
+	["ax"] = { query = "@comment.outer", descr = "Select outer comment" },
+	["ix"] = { query = "@comment.inner", descr = "Select inner comment" },
+	["as"] = { query = "@statement.outer", descr = "Select outer statement" },
+	["is"] = { query = "@statement.inner", descr = "Select inner statement" },
+	["aw"] = { query = "@parameter.outer", descr = "Select outer parameter" },
+	["iw"] = { query = "@parameter.inner", descr = "Select inner parameter" },
+}
 
 M.global_lsp = function()
 	local map = vim.keymap.set
