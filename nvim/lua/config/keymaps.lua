@@ -251,4 +251,14 @@ M.gitsigns = function(buffer)
 	end, opts)
 end
 
+M.marks = {
+	set = "m",
+	delete = "dm",
+	delete_line = "dm-",
+	delete_buf = "dm<space>",
+	next = "]m",
+	prev = "[m",
+	preview = "m:",
+}
+
 return M

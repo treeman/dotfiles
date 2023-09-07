@@ -16,9 +16,9 @@ return {
 		init = function()
 			vim.cmd.colorscheme("melange")
 		end,
-		config = function()
-			-- FIXME doesn't seem possible to do this here, but have to wait until leap is loaded
-			-- vim.api.nvim_set_hl(0, "LeapLabelPrimary", { link = "IncSearch" })
-		end,
+		-- config = function()
+		-- NOTE doesn't seem possible to do this here, but have to wait until leap is loaded
+		-- vim.api.nvim_set_hl(0, "LeapLabelPrimary", { link = "IncSearch" })
+		-- end,
 	},
 }

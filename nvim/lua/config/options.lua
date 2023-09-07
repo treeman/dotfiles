@@ -54,3 +54,4 @@ vim.opt.spelllang = { "en_us" }
 vim.opt.lazyredraw = true -- speed up macros
 
 vim.opt.termguicolors = true
+vim.opt.background = "dark"
