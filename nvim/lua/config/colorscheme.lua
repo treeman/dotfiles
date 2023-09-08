@@ -1,6 +1,7 @@
 vim.cmd.colorscheme("melange")
 
 -- See :help neo-tree-highlights
+-- See: https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#highlights
 local overrides = {
 	{ name = "NeoTreeNormal", val = { link = "Normal" } },
 	{ name = "NeoTreeWinSeparator", val = { link = "WinSeparator" } },
