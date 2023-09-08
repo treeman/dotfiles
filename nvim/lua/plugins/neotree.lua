@@ -29,11 +29,5 @@ return {
 		"s1n7ax/nvim-window-picker",
 	},
 	cmd = "Neotree",
-	config = function()
-		-- See :help neo-tree-highlights
-		vim.api.nvim_set_hl(0, "NeoTreeNormal", { link = "Normal" })
-		vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { link = "WinSeparator" })
-
-		require("neo-tree").setup(opts)
-	end,
+	opts = opts,
 }

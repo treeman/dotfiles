@@ -19,6 +19,16 @@ local function init()
 	map("x", "(", "[", { remap = true })
 	map("x", ")", "]", { remap = true })
 
+	map("n", "]q", ":cnext", { desc = "Next quickfix" })
+	map("n", "[q", ":cprevious", { desc = "Prev quickfix" })
+	map("n", "]Q", ":clast", { desc = "Last quickfix" })
+	map("n", "[Q", ":cfirst", { desc = "First quickfix" })
+
+	map("n", "]l", ":lnext", { desc = "Next loclist" })
+	map("n", "[l", ":lprevious", { desc = "Prev loclist" })
+	map("n", "]L", ":llast", { desc = "Last loclist" })
+	map("n", "[L", ":lfirst", { desc = "First loclist" })
+
 	-- Happy windows switching
 	if normal_keyboard then
 		map("n", "<C-h>", "<c-w>h")

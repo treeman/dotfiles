@@ -135,6 +135,6 @@ return {
 	},
 	{
 		"nvim-treesitter/playground",
-		cmd = "TSPlaygroundToggle",
+		cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
 	},
 }
