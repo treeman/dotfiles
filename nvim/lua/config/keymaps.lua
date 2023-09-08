@@ -3,10 +3,10 @@ local function init()
 	local normal_keyboard = require("util").has_normal_keyboard()
 
 	-- Copy/paste to mouse clipboard quickly
-	map("n", "<leader>p", '"*p', { silent = true })
-	map("n", "<leader>P", '"*P', { silent = true })
-	map("n", "<leader>y", '"*y', { silent = true })
-	map("n", "<leader>Y", '"*Y', { silent = true })
+	map("n", "<leader>p", '"*p', { silent = true, desc = "Paste from mouse" })
+	map("n", "<leader>P", '"*P', { silent = true, desc = "Paste before from mouse" })
+	map("n", "<leader>y", '"*y', { silent = true, desc = "Yank into mouse" })
+	map("n", "<leader>Y", '"*Y', { silent = true, desc = "Yank line into mouse" })
 	-- Don't overwrite register when pasting in visual selection
 	map("x", "p", '"_dP')
 
@@ -40,68 +40,88 @@ local function init()
 	-- Don't move cursor when joining lines
 	map("n", "J", "mzJ`z")
 	-- Keep cursor in the middle when paging
-	map("n", "<C-d>", "<C-d>zz")
-	map("n", "<C-u>", "<C-u>zz")
-	map("n", "<PageUp>", "<PageUp>zz")
-	map("n", "<PageDown>", "<PageDown>zz")
+	-- map("n", "<C-d>", "<C-d>zz")
+	-- map("n", "<C-u>", "<C-u>zz")
+	-- map("n", "<PageUp>", "<PageUp>zz")
+	-- map("n", "<PageDown>", "<PageDown>zz")
 	-- Keep search terms in the middle
-	map("n", "n", "nzzzv")
-	map("n", "N", "Nzzzv")
+	-- map("n", "n", "nzzzv")
+	-- map("n", "N", "Nzzzv")
+	-- TODO should probably try to align C-f, C-b / and all [] prefixes... So why bother?
 
 	-- Maximize current buffer
-	map("n", "<C-w>m", ":MaximizerToggle<CR>", { silent = true })
+	map("n", "<C-w>m", ":MaximizerToggle<CR>", { silent = true, desc = "Maximize window" })
 
 	-- Edit file with prefilled path from the current file
-	map("n", "<leader>ef", ":e <C-R>=expand('%:p:h') . '/'<CR>")
+	map("n", "<leader>ef", ":e <C-R>=expand('%:p:h') . '/'<CR>", { desc = "Edit relative file" })
 
 	-- Find files
-	map("n", "<leader>f", ":Telescope find_files<CR>", { silent = true })
+	map("n", "<leader>f", ":Telescope find_files<CR>", { silent = true, desc = "Find files" })
 	-- Find files relative to current file
 	map(
 		"n",
 		"<leader>F",
 		":lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
-		{ silent = true }
+		{ silent = true, desc = "Find relative file" }
 	)
 	-- Find in files
 	-- map("n", "<leader>/", ":execute 'Rg ' . input('Rg/')<CR>", { silent = true })
-	map("n", "<leader>/", ":Telescope live_grep<CR>", { silent = true })
+	map("n", "<leader>/", ":Telescope live_grep<CR>", { silent = true, desc = "Find in files" })
 
 	-- Goto previous buffer
-	map("n", "<leader>B", ":edit #<CR>")
+	map("n", "<leader>B", ":edit #<CR>", { desc = "Previous buffer" })
 	-- Find from open buffers
-	map("n", "<leader>b", ":lua require('config.telescope_actions').open_buffer()<CR>", { silent = true })
+	map(
+		"n",
+		"<leader>b",
+		":lua require('config.telescope_actions').open_buffer()<CR>",
+		{ silent = true, desc = "Buffers" }
+	)
 
-	map("n", "<leader>o", ":Telescope oldfiles<CR>", { silent = true })
+	map("n", "<leader>o", ":Telescope oldfiles<CR>", { silent = true, desc = "Old files" })
 
 	-- Edit files in a buffer
-	map("n", "<leader>ed", ":Oil .<CR>")
+	map("n", "<leader>ed", ":Oil .<CR>", { desc = "Edit workspace" })
 	-- Edit files in within the current directory
-	map("n", "<leader>eD", ":Oil <C-R>=expand('%:p:h')<CR><CR>")
+	map("n", "<leader>eD", ":Oil <C-R>=expand('%:p:h')<CR><CR>", { desc = "Edit relative workspace" })
 
-	map("n", "<leader>d", ":Neotree toggle=true<CR>")
+	map("n", "<leader>d", ":Neotree toggle=true<CR>", { desc = "Neotree" })
 
 	-- Supercharged spell correction!
-	map("n", "z=", ":Telescope spell_suggest<CR>", { silent = true })
+	map("n", "z=", ":Telescope spell_suggest<CR>", { silent = true, desc = "Spell suggest" })
 
 	-- norg mapping
 
 	-- Open scratch file
-	map("n", "<leader>es", ":e ~/norg/scratch.norg<CR>")
-	map("n", "<leader>n", ":lua require('config.telescope_actions').open_norg('')<CR>")
-	map("n", "<leader>ep", ":lua require('config.telescope_actions').open_norg('projects')<CR>")
-	map("n", "<leader>ea", ":lua require('config.telescope_actions').open_norg('areas')<CR>")
-	map("n", "<leader>er", ":lua require('config.telescope_actions').open_norg('resources')<CR>")
-	map("n", "<leader>eA", ":lua require('config.telescope_actions').open_norg('archive')<CR>")
+	map("n", "<leader>es", ":e ~/norg/scratch.norg<CR>", { desc = "Scratch" })
+	map("n", "<leader>n", ":lua require('config.telescope_actions').open_norg('')<CR>", { desc = "Neorg" })
+	map(
+		"n",
+		"<leader>ep",
+		":lua require('config.telescope_actions').open_norg('projects')<CR>",
+		{ desc = "Neorg projects" }
+	)
+	map("n", "<leader>ea", ":lua require('config.telescope_actions').open_norg('areas')<CR>", { desc = "Neorg areas" })
+	map(
+		"n",
+		"<leader>er",
+		":lua require('config.telescope_actions').open_norg('resources')<CR>",
+		{ desc = "Neorg resources" }
+	)
+	map(
+		"n",
+		"<leader>eA",
+		":lua require('config.telescope_actions').open_norg('archive')<CR>",
+		{ desc = "Neorg archive" }
+	)
 
 	-- Git
-	local neogit = require("neogit")
-	map("n", "gs", ":Neogit<CR>")
-	map("n", "g<space>", ":Git ")
+	-- local neogit = require("neogit")
+	map("n", "gs", ":Neogit<CR>", { desc = "Git status" })
+	map("n", "g<space>", ":Git ", { desc = "Git" })
 
 	local telescope_builtin = require("telescope.builtin")
-
-	map("n", "gb", telescope_builtin.git_branches)
+	map("n", "gb", telescope_builtin.git_branches, { desc = "Git branches" })
 
 	-- Ideas
 	--require('telescope.builtin').git_commits()
@@ -125,6 +145,10 @@ local function init()
 	-- nnoremap gds :Gdiffsplit!<CR>
 	-- nnoremap gdh :diffget //2<CR>
 	-- nnoremap gdl :diffget //3<CR>
+
+	local dial = require("dial.map")
+	vim.keymap.set("n", "<C-a>", dial.inc_normal(), { noremap = true })
+	vim.keymap.set("n", "<C-x>", dial.dec_normal(), { noremap = true })
 end
 
 -- Keymaps that are sent to plugins during configuration
@@ -154,13 +178,13 @@ M.textsubjects = {
 -- for the given treesitter textobject
 -- see: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 local ts_move_keys = {
-	f = { query = "@function.outer", descr = "goto function" },
-	w = { query = "@parameter.outer", descr = "goto parameter" },
-	a = { query = "@attribute.inner", descr = "goto attribute" },
-	b = { query = "@block.inner", descr = "goto block" },
-	c = { query = "@class.outer", descr = "goto class" },
-	x = { query = "@comment.outer", descr = "goto comment" },
-	s = { query = "@statement.outer", descr = "goto statement" },
+	f = { query = "@function.outer", desc = "goto function" },
+	w = { query = "@parameter.outer", desc = "goto parameter" },
+	a = { query = "@attribute.inner", desc = "goto attribute" },
+	b = { query = "@block.inner", desc = "goto block" },
+	c = { query = "@class.outer", desc = "goto class" },
+	x = { query = "@comment.outer", desc = "goto comment" },
+	s = { query = "@statement.outer", desc = "goto statement" },
 }
 
 M.ts_goto_next_start = {}
@@ -176,54 +200,67 @@ for k, v in pairs(ts_move_keys) do
 end
 
 M.ts_swap_next = {
-	["<leader>s"] = { query = "@parameter.inner", descr = "Swap next parameter" },
+	["<leader>s"] = { query = "@parameter.inner", desc = "Swap next parameter" },
 }
 M.ts_swap_previous = {
-	["<leader>S"] = { query = "@parameter.inner", descr = "Swap previous parameter" },
+	["<leader>S"] = { query = "@parameter.inner", desc = "Swap previous parameter" },
 }
 
 M.ts_select = {
-	["af"] = { query = "@function.outer", descr = "Select outer function" },
-	["if"] = { query = "@function.inner", descr = "Select inner function" },
-	["ac"] = { query = "@class.outer", descr = "Select outer class" },
-	["ic"] = { query = "@class.inner", descr = "Select inner class" },
-	["ab"] = { query = "@block.outer", descr = "Select outer block" },
-	["ib"] = { query = "@block.inner", descr = "Select inner block" },
-	["aa"] = { query = "@attribute.outer", descr = "Select outer attribute" },
-	["ia"] = { query = "@attribute.inner", descr = "Seect inner attribute" },
-	["ax"] = { query = "@comment.outer", descr = "Select outer comment" },
-	["ix"] = { query = "@comment.inner", descr = "Select inner comment" },
-	["as"] = { query = "@statement.outer", descr = "Select outer statement" },
-	["is"] = { query = "@statement.inner", descr = "Select inner statement" },
-	["aw"] = { query = "@parameter.outer", descr = "Select outer parameter" },
-	["iw"] = { query = "@parameter.inner", descr = "Select inner parameter" },
+	["af"] = { query = "@function.outer", desc = "Select outer function" },
+	["if"] = { query = "@function.inner", desc = "Select inner function" },
+	["ac"] = { query = "@class.outer", desc = "Select outer class" },
+	["ic"] = { query = "@class.inner", desc = "Select inner class" },
+	["ab"] = { query = "@block.outer", desc = "Select outer block" },
+	["ib"] = { query = "@block.inner", desc = "Select inner block" },
+	["aa"] = { query = "@attribute.outer", desc = "Select outer attribute" },
+	["ia"] = { query = "@attribute.inner", desc = "Seect inner attribute" },
+	["ax"] = { query = "@comment.outer", desc = "Select outer comment" },
+	["ix"] = { query = "@comment.inner", desc = "Select inner comment" },
+	["as"] = { query = "@statement.outer", desc = "Select outer statement" },
+	["is"] = { query = "@statement.inner", desc = "Select inner statement" },
+	["aw"] = { query = "@parameter.outer", desc = "Select outer parameter" },
+	["iw"] = { query = "@parameter.inner", desc = "Select inner parameter" },
 }
 
 M.global_lsp = function()
 	local map = vim.keymap.set
-	local opts = { silent = true }
-	map("n", "]d", vim.diagnostic.goto_next, opts)
-	map("n", "[d", vim.diagnostic.goto_prev, opts)
+	map("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
+	map("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Prev diagnostic" })
 end
 
 M.buf_lsp = function(_, buffer)
 	local map = vim.keymap.set
-	local opts = { silent = true, buffer = buffer }
 	-- FIXME there are other cool possibilities listed in nvim-lspconfig
-	map("n", "<localleader>D", vim.lsp.buf.declaration, opts)
-	map("n", "<localleader>d", vim.lsp.buf.definition, opts)
-	map("n", "<localleader>r", vim.lsp.buf.references, opts)
-	map("n", "<localleader>i", vim.lsp.buf.implementation, opts)
-	map("n", "<localleader>t", vim.lsp.buf.type_definition, opts)
-	map("n", "<localleader>h", vim.lsp.buf.hover, opts)
-	map("n", "<localleader>s", vim.lsp.buf.signature_help, opts)
-	map("n", "<localleader>x", vim.lsp.buf.code_action, opts)
+	map("n", "<localleader>D", vim.lsp.buf.declaration, { silent = true, buffer = buffer, desc = "Declaration" })
+	map("n", "<localleader>d", vim.lsp.buf.definition, { silent = true, buffer = buffer, desc = "Definition" })
+	map("n", "<localleader>r", vim.lsp.buf.references, { silent = true, buffer = buffer, desc = "References" })
+	map("n", "<localleader>i", vim.lsp.buf.implementation, { silent = true, buffer = buffer, desc = "Implementation" })
+	map(
+		"n",
+		"<localleader>t",
+		vim.lsp.buf.type_definition,
+		{ silent = true, buffer = buffer, desc = "Type definition" }
+	)
+	map("n", "<localleader>h", vim.lsp.buf.hover, { silent = true, buffer = buffer, desc = "Hover" })
+	map("n", "<localleader>s", vim.lsp.buf.signature_help, { silent = true, buffer = buffer, desc = "Signature help" })
+	map("n", "<localleader>x", vim.lsp.buf.code_action, { silent = true, buffer = buffer, desc = "Code action" })
 	-- map("n", prefix .. "l", "<cmd>lua vim.diagnostic.open_float({ focusable = false })<CR>")
-	map("n", "<localleader>ar", vim.lsp.buf.rename, opts)
-	map("n", "<localleader>I", vim.lsp.buf.incoming_calls, opts)
-	map("n", "<localleader>O", vim.lsp.buf.outgoing_calls, opts)
-	map("n", "<localleader>w", vim.lsp.buf.document_symbol, opts)
-	map("n", "<localleader>W", vim.lsp.buf.workspace_symbol, opts)
+	map("n", "<localleader>R", vim.lsp.buf.rename, { silent = true, buffer = buffer, desc = "Rename" })
+	map("n", "<localleader>I", vim.lsp.buf.incoming_calls, { silent = true, buffer = buffer, desc = "Incoming calls" })
+	map("n", "<localleader>O", vim.lsp.buf.outgoing_calls, { silent = true, buffer = buffer, desc = "Outgoing calls" })
+	map(
+		"n",
+		"<localleader>w",
+		vim.lsp.buf.document_symbol,
+		{ silent = true, buffer = buffer, desc = "Document symbols" }
+	)
+	map(
+		"n",
+		"<localleader>W",
+		vim.lsp.buf.workspace_symbol,
+		{ silent = true, buffer = buffer, desc = "Workspace symbols" }
+	)
 
 	-- Trouble is okay... But we really don't want it to steal focus!
 	-- map("n", prefix .. "r", "<cmd>TroubleToggle lsp_references<CR>")
@@ -235,20 +272,19 @@ end
 M.gitsigns = function(buffer)
 	local gitsigns = package.loaded.gitsigns
 	local map = vim.keymap.set
-	local opts = { silent = true, buffer = buffer }
-	map("n", "]h", gitsigns.next_hunk, opts)
-	map("n", "[h", gitsigns.prev_hunk, opts)
-	map("n", "<leader>hs", gitsigns.stage_hunk, opts)
-	map("n", "<leader>hr", gitsigns.reset_hunk, opts)
+	map("n", "]h", gitsigns.next_hunk, { silent = true, buffer = buffer, desc = "Next hunk" })
+	map("n", "[h", gitsigns.prev_hunk, { silent = true, buffer = buffer, desc = "Prev hunk" })
+	map("n", "<leader>hs", gitsigns.stage_hunk, { silent = true, buffer = buffer, desc = "Stage hunk" })
+	map("n", "<leader>hr", gitsigns.reset_hunk, { silent = true, buffer = buffer, desc = "Reset hunk" })
 	map("v", "<leader>hs", function()
 		gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-	end, opts)
+	end, { silent = true, buffer = buffer, desc = "Stage hunk" })
 	map("v", "<leader>hr", function()
 		gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-	end, opts)
+	end, { silent = true, buffer = buffer, desc = "Reset hunk" })
 	map("n", "<leader>hb", function()
 		gitsigns.blame_line({ full = true })
-	end, opts)
+	end, { silent = true, buffer = buffer, desc = "Blame hunk" })
 end
 
 M.marks = {

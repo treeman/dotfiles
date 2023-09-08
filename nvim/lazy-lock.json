@@ -14,6 +14,7 @@
   "cmp-treesitter": { "branch": "master", "commit": "389eadd48c27aa6dc0e6b992644704f026802a2e" },
   "cmp_luasnip": { "branch": "master", "commit": "18095520391186d634a0045dacaa346291096566" },
   "conform.nvim": { "branch": "master", "commit": "ff7f8fdc0946d546a5a3f0617dbbf10f660dbb58" },
+  "dial.nvim": { "branch": "master", "commit": "5b9763eaa483250650eb4f60c96db62abbb250aa" },
   "diffview.nvim": { "branch": "main", "commit": "7e5a85c186027cab1e825d018f07c350177077fc" },
   "elixir-tools.nvim": { "branch": "main", "commit": "8b13b298691ae8cfdcaf66deb43b509a49d202c0" },
   "everforest": { "branch": "master", "commit": "83b666410d7ae0eccf96dbbe3b4b6ac5b8172d38" },
