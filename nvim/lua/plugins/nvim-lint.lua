@@ -1,6 +1,7 @@
 local function config()
 	require("lint").linters_by_ft = {
-		markdown = { "vale" },
+		-- This causes errors on markdown files unless vale exists
+		-- markdown = { "vale" },
 	}
 
 	vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
@@ -14,4 +15,5 @@ return {
 	"mfussenegger/nvim-lint",
 	config = config,
 	event = "BufReadPre",
+	enabled = false, -- Not used currently
 }
