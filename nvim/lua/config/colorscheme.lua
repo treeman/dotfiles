@@ -18,9 +18,12 @@ local overrides = {
 	{ name = "@neorg.markup.inline_math.norg", val = { link = "Statement" } },
 	{ name = "@neorg.markup.spoiler.norg", val = { link = "Operator" } },
 	{ name = "@neorg.markup.variable.norg", val = { link = "@string.regex" } },
-
+	-- Markdown
 	{ name = "@text.reference.markdown_inline", val = { link = "Type" } },
 	{ name = "@text.reference.markdown", val = { link = "Type" } },
+	-- Better elixir colors
+	{ name = "@symbol.elixir", val = { link = "@label" } },
+	{ name = "@constant.elixir", val = { link = "Constant" } },
 }
 
 for _, v in pairs(overrides) do
