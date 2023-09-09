@@ -243,8 +243,20 @@ M.buf_lsp = function(_, buffer)
 	local map = vim.keymap.set
 	-- FIXME there are other cool possibilities listed in nvim-lspconfig
 	map("n", "<localleader>D", vim.lsp.buf.declaration, { silent = true, buffer = buffer, desc = "Declaration" })
-	map("n", "<localleader>d", vim.lsp.buf.definition, { silent = true, buffer = buffer, desc = "Definition" })
-	map("n", "<localleader>r", vim.lsp.buf.references, { silent = true, buffer = buffer, desc = "References" })
+	-- map("n", "<localleader>d", vim.lsp.buf.definition, { silent = true, buffer = buffer, desc = "Definition" })
+	map(
+		"n",
+		"<localleader>d",
+		":TroubleToggle lsp_definitions<CR>",
+		{ silent = true, buffer = buffer, desc = "Definitions" }
+	)
+	-- map("n", "<localleader>r", vim.lsp.buf.references, { silent = true, buffer = buffer, desc = "References" })
+	map(
+		"n",
+		"<localleader>r",
+		":TroubleToggle lsp_references<CR>",
+		{ silent = true, buffer = buffer, desc = "References" }
+	)
 	map("n", "<localleader>i", vim.lsp.buf.implementation, { silent = true, buffer = buffer, desc = "Implementation" })
 	map(
 		"n",
@@ -272,11 +284,18 @@ M.buf_lsp = function(_, buffer)
 		{ silent = true, buffer = buffer, desc = "Workspace symbols" }
 	)
 
-	-- Trouble is okay... But we really don't want it to steal focus!
-	-- map("n", prefix .. "r", "<cmd>TroubleToggle lsp_references<CR>")
-	-- map("n", prefix .. "d", "<cmd>TroubleToggle lsp_definitions<CR>")
-	-- map("n", prefix .. "e", "<cmd>TroubleToggle document_diagnostics<CR>")
-	-- map("n", prefix .. "w", "<cmd>TroubleToggle workspace_diagnostics<CR>")
+	map(
+		"n",
+		"<localleader>e",
+		":TroubleToggle document_diagnostics<CR>",
+		{ silent = true, buffer = buffer, desc = "Document diagnostics" }
+	)
+	map(
+		"n",
+		"<localleader>E",
+		":TroubleToggle workspace_diagnostics<CR>",
+		{ silent = true, buffer = buffer, desc = "Workspace diagnostics" }
+	)
 end
 
 M.gitsigns = function(buffer)
@@ -306,5 +325,23 @@ M.marks = {
 	prev = "[m",
 	preview = "m:",
 }
+
+M.trouble = function()
+	local map = vim.keymap.set
+	local trouble = require("trouble")
+	map("n", "]t", function()
+		trouble.next({ skip_groups = true, jump = true })
+	end, { desc = "Next trouble" })
+	map("n", "[t", function()
+		trouble.previous({ skip_groups = true, jump = true })
+	end, { desc = "Prev trouble" })
+	map("n", "]T", function()
+		trouble.last({ skip_groups = true, jump = true })
+	end, { desc = "Last trouble" })
+	map("n", "[T", function()
+		trouble.first({ skip_groups = true, jump = true })
+	end, { desc = "First trouble" })
+	map("n", "<leader>t", ":TroubleToggle<cr>", { desc = "Trouble" })
+end
 
 return M
