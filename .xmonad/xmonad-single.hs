@@ -45,16 +45,16 @@ main = do
     -- TODO make ticker work first!
     -- conkyTicker <- spawnPipe "conky -c ~/.conky/conky_ticker"
 
-    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
+    xmonad $ withUrgencyHook NoUrgencyHook $ def {
         modMask = mod4Mask
         , workspaces = myWorkspaces
         , normalBorderColor = gb_background
         , focusedBorderColor = gb_background_soft
         , borderWidth = 0
         , terminal = term
-        , keys = \k -> myKeys k `M.union` dualKeys k `M.union` keys defaultConfig k
+        , keys = \k -> myKeys k `M.union` dualKeys k `M.union` keys def k
         , logHook = dynamicLogWithPP $ myDzenPP topLeft
-        , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
+        , layoutHook = avoidStrutsOn[U] $ layoutHook def
         , manageHook = manageDocks <+> myManageHook
 
         -- Trick java apps like minecraft to correctly recognize windowed screen

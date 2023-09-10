@@ -43,19 +43,19 @@ main = do
     -- myTime <- spawnPipe myTime
     -- myTodo <- spawnPipe myTodo
 
-    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
+    xmonad $ withUrgencyHook NoUrgencyHook $ def {
       modMask = mod4Mask
     , workspaces = stdWorkspaces
     , normalBorderColor = gb_background
     , focusedBorderColor = gb_background_soft
     , borderWidth = 1
     , terminal = term
-    , keys = \k -> myKeys k `M.union` portableKeys k `M.union` keys defaultConfig k
+    , keys = \k -> myKeys k `M.union` portableKeys k `M.union` keys def k
     , logHook = dynamicLogWithPP $ myDzenPP topLeft
     -- Avoid struts doesn't work properly with dzen here, workaround by hardcoding a gap
-    -- , layoutHook = avoidStrutsOn[U] $ layoutHook defaultConfig
-    , layoutHook = gaps [(U,18)] $ layoutHook defaultConfig
-    , manageHook = manageDocks <+> manageHook defaultConfig
+    -- , layoutHook = avoidStrutsOn[U] $ layoutHook def
+    , layoutHook = gaps [(U,18)] $ layoutHook def
+    , manageHook = manageDocks <+> manageHook def
     , startupHook = setWMName "LG3D"
 }
 
