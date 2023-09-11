@@ -8,10 +8,10 @@ conky.config = {
 }
 
 conky.text = [[
-^fg()CPU ^fg(\#ebdbb2)${cpu cpu0}% ^fg()| \
-MEM ^fg(\#ebdbb2)${memperc}% ^fg()| \
-NET ^fg(\#ebdbb2)${downspeedf eth0}K ^fg(\#ebdbb2)${upspeedf eth0}K ^fg()| \
-^fg(\#ebdbb2)${time %Y-%m-%d} ^fg()| \
-^fg(\#b57614)${time %R} 
+^fg()CPU ^fg(\#C1A78E)${cpu cpu0}% ^fg()| \
+MEM ^fg(\#C1A78E)${memperc}% ^fg()| \
+NET ^fg(\#C1A78E)${downspeedf eth0}K ^fg(\#C1A78E)${upspeedf eth0}K ^fg()| \
+^fg(\#C1A78E)${time %Y-%m-%d} ^fg()| \
+^fg(\#E49B5D)${time %R} 
 ]]
 

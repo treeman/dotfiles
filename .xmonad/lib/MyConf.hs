@@ -20,41 +20,50 @@ import qualified XMonad.StackSet as W
 
 -- 16 bit Colors inspired from gruvbox
 -- names may differ from appearence ;)
-gb_black = "#282828"
-gb_darkgrey = "#928374"
-gb_darkred = "#cc241d"
-gb_red = "#fb4934"
-gb_darkgreen = "#98971a"
-gb_green = "#b8bb26"
-gb_darkyellow = "#d79921"
-gb_yellow = "#fabd2f"
-gb_darkblue = "#458588"
-gb_blue = "#83a598"
-gb_darkmagenta = "#b16286"
-gb_magenta = "#d3869b"
-gb_darkcyan = "#689d6a"
-gb_cyan = "#8ec07c"
-gb_lightgrey = "#a89984"
-gb_white = "#ebdbb2"
--- hard contrast background
-gb_background = "#1d2021"
-gb_background_soft = "#32302f"
--- random colors
-gb_purple = "#8f3f71"
-gb_darkorange = "#d65d0e"
-gb_orange = "#fe8019"
-gb_light0 = "#fdf4c1"
-gb_light1 = "#ebdbb2"
-gb_light2 = "#d5c4a1"
-gb_light3 = "#bdae93"
-gb_light4 = "#a89984"
+-- gb_black = "#282828"
+-- gb_darkgrey = "#928374"
+-- gb_darkred = "#cc241d"
+-- gb_red = "#fb4934"
+-- gb_darkgreen = "#98971a"
+-- gb_green = "#b8bb26"
+-- gb_darkyellow = "#d79921"
+-- gb_yellow = "#fabd2f"
+-- gb_darkblue = "#458588"
+-- gb_blue = "#83a598"
+-- gb_darkmagenta = "#b16286"
+-- gb_magenta = "#d3869b"
+-- gb_darkcyan = "#689d6a"
+-- gb_cyan = "#8ec07c"
+-- gb_lightgrey = "#a89984"
+-- gb_white = "#ebdbb2"
+-- -- hard contrast background
+-- gb_background = "#1d2021"
+-- gb_background_soft = "#32302f"
+-- -- random colors
+-- gb_purple = "#8f3f71"
+-- gb_darkorange = "#d65d0e"
+-- gb_orange = "#fe8019"
+-- gb_light0 = "#fdf4c1"
+-- gb_light1 = "#ebdbb2"
+-- gb_light2 = "#d5c4a1"
+-- gb_light3 = "#bdae93"
+-- gb_light4 = "#a89984"
+
+-- Colors from melange
+bg = "#292522"
+
+fg_title = "#867462" 
+fg_urgent ="#8f3f71"  -- gruvbox color
+fg_current_workspace = "#D47766"
+fg_other_workspace = "#EBC06D"
+fg_windowed_workspace ="#C1A78E" 
+fg_empty_workspace = "#403A36"
+fg_ui = "#867462"
+fg_sel = "#403A36"
 
 myWorkspaces = ["6", "4", "0", "2", "8", "9", "3", "1", "5", "7"]
 myFont = "Consolasi:size=9"
 myIconDir = "/home/tree/dotfiles/icons/"
-
-normalStatusFG = gb_darkgrey
-normalStatusBG = gb_background
 
 term = "alacritty"
 
@@ -112,14 +121,14 @@ myManageHook = composeAll
 
 myDzenPP h = def
     { ppOutput = hPutStrLn h
-    , ppCurrent = wrapFg gb_orange . dropId                 -- Current workspace
-    , ppVisible = wrapFg gb_yellow . dropId                 -- Workspace for other screen
-    , ppHidden = wrapFg gb_white . dropId                   -- Hidden workspace with windows
-    , ppHiddenNoWindows = wrapFg gb_darkgrey . dropId       -- Hidden workspace without windows
-    , ppUrgent = wrapFg gb_darkred . dropId                 -- Signaling workspace
-    , ppTitle = wrap "< " " > " . wrapFg gb_white           -- Window title
+    , ppCurrent = wrapFg fg_current_workspace . dropId          -- Current workspace
+    , ppVisible = wrapFg fg_other_workspace . dropId            -- Workspace for other screen
+    , ppHidden = wrapFg fg_windowed_workspace . dropId          -- Hidden workspace with windows
+    , ppHiddenNoWindows = wrapFg fg_empty_workspace . dropId    -- Hidden workspace without windows
+    , ppUrgent = wrapFg fg_urgent . dropId                      -- Signaling workspace
+    , ppTitle = wrap "< " " > " . wrapFg fg_title               -- Window title
     , ppSep = " "
-    , ppLayout = wrapFg normalStatusFG .
+    , ppLayout = wrapFg fg_title .
         (\x -> case x of
             "Tall" -> wrapBitmap "Tall.xbm"
             "Mirror Tall" -> wrapBitmap "MirrorTall.xbm"

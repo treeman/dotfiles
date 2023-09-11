@@ -30,7 +30,7 @@ dualKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ]
 
 myDzen = " dzen2 -xs 1 -dock -h 20 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++
-    normalStatusFG ++ "' -bg '" ++ normalStatusBG ++ "' "
+    fg_title ++ "' -bg '" ++ bg ++ "' "
 
 myStatusBar = myDzen ++ " -x '0' -y '0' -ta 'l' -w 800"
 myTopRight = "conky -c ~/.conky/conky_bar | " ++ myDzen ++ " -x '800' -y '0' -ta 'r' -p"
@@ -39,17 +39,12 @@ main = do
     topLeft <- spawnPipe myStatusBar
     topRight <- spawnPipe myTopRight
 
-    -- conkyKernel <- spawnPipe "conky -c ~/.conky/conky_kernel"
-    -- conkyTime <- spawnPipe "conky -c ~/.conky/conky_time"
-    -- TODO make ticker work first!
-    -- conkyTicker <- spawnPipe "conky -c ~/.conky/conky_ticker"
-
     -- docks is necessary for dzen struts to be considered
     xmonad $ withUrgencyHook NoUrgencyHook . docks $ def {
         modMask = mod4Mask
         , workspaces = myWorkspaces
-        , normalBorderColor = gb_background
-        , focusedBorderColor = gb_background_soft
+        , normalBorderColor = bg
+        , focusedBorderColor = fg_sel
         , borderWidth = 1
         , terminal = term
         , keys = \k -> dualKeys k `M.union` myKeys k `M.union` keys def k
