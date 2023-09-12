@@ -67,6 +67,7 @@
   "telescope-lsp-handlers.nvim": { "branch": "trunk", "commit": "de02085d6af1633942549a238bc7a5524fa9b201" },
   "telescope.nvim": { "branch": "master", "commit": "a19770625aed49ad2a9f591a5e3946707f7359f6" },
   "trouble.nvim": { "branch": "main", "commit": "3f85d8ed30e97ceeddbbcf80224245d347053711" },
+  "undotree": { "branch": "main", "commit": "2685ce282702ab0b79c65916f352db2265b245dd" },
   "vim-cool": { "branch": "master", "commit": "662e7b11064cbeedad17c45d2fe926e78d3cd0b6" },
   "vim-fugitive": { "branch": "master", "commit": "6fcb0ad03982de646e3fecb6915e585651b9a9fb" },
   "vim-matchup": { "branch": "master", "commit": "6dbe108230c7dbbf00555b7d4d9f6a891837ef07" },

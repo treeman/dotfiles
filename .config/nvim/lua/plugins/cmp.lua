@@ -161,6 +161,7 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-nvim-lua",
 			"onsails/lspkind.nvim",
+			"nvim-treesitter/nvim-treesitter",
 			"ray-x/cmp-treesitter",
 			"saadparwaiz1/cmp_luasnip",
 		},
