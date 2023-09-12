@@ -1,5 +1,9 @@
 require("config.leader")
 
+if vim.g.neovide then
+	require("config.neovide")
+end
+
 require("config.lazy")
 
 -- Try to set all things after plugins, as some things may possibly be overwritten.

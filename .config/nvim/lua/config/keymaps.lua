@@ -344,4 +344,10 @@ M.trouble = function()
 	map("n", "<leader>t", ":TroubleToggle<cr>", { desc = "Trouble" })
 end
 
+M.undotree = function()
+	vim.keymap.set("n", "<leader>u", function()
+		require("undotree").toggle()
+	end, { desc = "Undotree" })
+end
+
 return M
