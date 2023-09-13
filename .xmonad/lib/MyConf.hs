@@ -8,46 +8,9 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 
---import XMonad.Layout.NoBorders
---import XMonad.Actions.NoBorders
---import XMonad.Actions.WithAll
---import XMonad.Hooks.UrgencyHook
---import XMonad.Hooks.SetWMName
-
 import System.IO
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
-
--- 16 bit Colors inspired from gruvbox
--- names may differ from appearence ;)
--- gb_black = "#282828"
--- gb_darkgrey = "#928374"
--- gb_darkred = "#cc241d"
--- gb_red = "#fb4934"
--- gb_darkgreen = "#98971a"
--- gb_green = "#b8bb26"
--- gb_darkyellow = "#d79921"
--- gb_yellow = "#fabd2f"
--- gb_darkblue = "#458588"
--- gb_blue = "#83a598"
--- gb_darkmagenta = "#b16286"
--- gb_magenta = "#d3869b"
--- gb_darkcyan = "#689d6a"
--- gb_cyan = "#8ec07c"
--- gb_lightgrey = "#a89984"
--- gb_white = "#ebdbb2"
--- -- hard contrast background
--- gb_background = "#1d2021"
--- gb_background_soft = "#32302f"
--- -- random colors
--- gb_purple = "#8f3f71"
--- gb_darkorange = "#d65d0e"
--- gb_orange = "#fe8019"
--- gb_light0 = "#fdf4c1"
--- gb_light1 = "#ebdbb2"
--- gb_light2 = "#d5c4a1"
--- gb_light3 = "#bdae93"
--- gb_light4 = "#a89984"
 
 -- Colors from melange
 bg = "#292522"
@@ -77,6 +40,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,                   xK_f), spawn "firefox")
     , ((modm,                   xK_m), spawn "spotify")
     , ((modm,                   xK_v), spawn "neovide")
+    , ((modm,                   xK_c), spawn "chromium")
 
     , ((modm,                   xK_p), spawn "scrot screenshots/screen_%Y-%m-%d_%T.png")
 

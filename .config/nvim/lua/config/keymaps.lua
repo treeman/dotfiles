@@ -62,13 +62,11 @@ local function init()
 	-- Maximize current buffer
 	map("n", "<C-w>m", ":MaximizerToggle<CR>", { silent = true, desc = "Maximize window" })
 
-	-- Edit file with prefilled path from the current file
+	-- Edit file with pre-filled path from the current file
 	map("n", "<leader>ef", ":e <C-R>=expand('%:p:h') . '/'<CR>", { desc = "Edit relative file" })
 
 	-- Goto previous buffer
 	map("n", "<leader>B", ":edit #<CR>", { desc = "Previous buffer" })
-
-	map("n", "<leader>o", ":Telescope oldfiles<CR>", { silent = true, desc = "Old files" })
 
 	-- Edit files in a buffer
 	map("n", "<leader>ed", ":Oil .<CR>", { desc = "Edit workspace" })
@@ -77,12 +75,6 @@ local function init()
 
 	map("n", "<leader>d", ":Neotree toggle=true<CR>", { desc = "Neotree" })
 
-	-- Supercharged spell correction!
-	map("n", "z=", ":Telescope spell_suggest<CR>", { silent = true, desc = "Spell suggest" })
-
-	-- norg mapping
-
-	-- Open scratch file
 	map("n", "<leader>es", ":e ~/norg/scratch.norg<CR>", { desc = "Scratch" })
 
 	-- Git
@@ -104,53 +96,40 @@ M.init = init
 
 M.telescope = function()
 	local map = vim.keymap.set
+	local builtin = require("telescope.builtin")
+	local custom_actions = require("config.telescope_actions")
 
-	-- FIXME remove :lua from functions
+	map("n", "z=", builtin.spell_suggest, { silent = true, desc = "Spell suggest" })
 
-	-- Find files
-	map("n", "<leader>f", ":Telescope find_files<CR>", { silent = true, desc = "Find files" })
-	-- Find files relative to current file
-	map(
-		"n",
-		"<leader>F",
-		":lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
-		{ silent = true, desc = "Find relative file" }
-	)
+	map("n", "<leader>f", builtin.find_files, { silent = true, desc = "Find files" })
+	map("n", "<leader>F", function()
+		builtin.find_files({ cwd = vim.fn.expand("%:p:h") })
+	end, { silent = true, desc = "Find relative file" })
 
-	-- Find in files
-	map("n", "<leader>/", ":Telescope live_grep<CR>", { silent = true, desc = "Find in files" })
+	map("n", "<leader>/", builtin.live_grep, { silent = true, desc = "Find in files" })
 
-	-- Find from open buffers
-	map(
-		"n",
-		"<leader>b",
-		":lua require('config.telescope_actions').open_buffer()<CR>",
-		{ silent = true, desc = "Buffers" }
-	)
+	map("n", "<leader>b", custom_actions.open_buffer, { silent = true, desc = "Buffers" })
 
-	-- Open norg files
-	map("n", "<leader>n", ":lua require('config.telescope_actions').open_norg('')<CR>", { desc = "Neorg" })
-	map(
-		"n",
-		"<leader>ep",
-		":lua require('config.telescope_actions').open_norg('projects')<CR>",
-		{ desc = "Neorg projects" }
-	)
-	map("n", "<leader>ea", ":lua require('config.telescope_actions').open_norg('areas')<CR>", { desc = "Neorg areas" })
-	map(
-		"n",
-		"<leader>er",
-		":lua require('config.telescope_actions').open_norg('resources')<CR>",
-		{ desc = "Neorg resources" }
-	)
-	map(
-		"n",
-		"<leader>eA",
-		":lua require('config.telescope_actions').open_norg('archive')<CR>",
-		{ desc = "Neorg archive" }
-	)
+	map("n", "<leader>o", builtin.oldfiles, { silent = true, desc = "Old files" })
 
-	map("n", "gb", require("telescope.builtin").git_branches, { desc = "Git branches" })
+	-- I use neorg as a personal knowledge base. Telescoping in it makes it really pleasant.
+	map("n", "<leader>n", function()
+		custom_actions.open_norg("")
+	end, { desc = "Neorg" })
+	map("n", "<leader>ep", function()
+		custom_actions.open_norg("projects")
+	end, { desc = "Neorg projects" })
+	map("n", "<leader>ea", function()
+		custom_actions.open_norg("areas")
+	end, { desc = "Neorg areas" })
+	map("n", "<leader>er", function()
+		custom_actions.open_norg("resources")
+	end, { desc = "Neorg resources" })
+	map("n", "<leader>eA", function()
+		custom_actions.open_norg("archive")
+	end, { desc = "Neorg archive" })
+
+	map("n", "gb", builtin.git_branches, { silent = true, desc = "Git branches" })
 
 	-- Ideas
 	--require('telescope.builtin').git_commits()

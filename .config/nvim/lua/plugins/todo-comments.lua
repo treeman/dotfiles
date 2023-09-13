@@ -1,0 +1,16 @@
+-- TODO :TodoTrouble and :TodoTelescope
+local opts = {
+	highlight = {
+		-- If we don't want spaces between to be highlighted
+		-- before = "",
+		-- keyword = "bg",
+		-- after = "",
+	},
+}
+
+return {
+	"folke/todo-comments.nvim",
+	dependencies = { "nvim-lua/plenary.nvim" },
+	opts = opts,
+	event = "BufReadPre",
+}
