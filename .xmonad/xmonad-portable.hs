@@ -29,7 +29,7 @@ portableKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ]
 
 myDzen = " dzen2 -xs 1 -dock -h 18 -ta 'l' -fn '" ++ myFont ++ "' -fg '" ++
-    normalStatusFG ++ "' -bg '" ++ normalStatusBG ++ "' "
+    fg_title ++ "' -bg '" ++ bg ++ "' "
 
 myStatusBar = myDzen ++ " -x '0' -y '0' -ta 'l' -w 700"
 myTopRight = "conky -c ~/.conky/conky_bar_laptop | " ++ myDzen ++ " -x '600' -y '0' -ta 'r' -p"
@@ -46,8 +46,8 @@ main = do
     xmonad $ withUrgencyHook NoUrgencyHook $ def {
       modMask = mod4Mask
     , workspaces = stdWorkspaces
-    , normalBorderColor = gb_background
-    , focusedBorderColor = gb_background_soft
+    , normalBorderColor = bg
+    , focusedBorderColor = fg_sel
     , borderWidth = 1
     , terminal = term
     , keys = \k -> myKeys k `M.union` portableKeys k `M.union` keys def k
