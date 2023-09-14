@@ -22,6 +22,9 @@ local config = function()
 	require("telescope").load_extension("fzf")
 
 	require("telescope").load_extension("file_browser")
+
+	-- Register keymaps
+	require("config.keymaps").telescope()
 end
 
 return {
@@ -33,6 +36,7 @@ return {
 			"telescope-fzf-native.nvim",
 			"telescope-lsp-handlers.nvim",
 			"nvim-telescope/telescope-file-browser.nvim",
+			"nvim-treesitter/nvim-treesitter",
 		},
 		config = config,
 		cmd = "Telescope",

@@ -62,33 +62,11 @@ local function init()
 	-- Maximize current buffer
 	map("n", "<C-w>m", ":MaximizerToggle<CR>", { silent = true, desc = "Maximize window" })
 
-	-- Edit file with prefilled path from the current file
+	-- Edit file with pre-filled path from the current file
 	map("n", "<leader>ef", ":e <C-R>=expand('%:p:h') . '/'<CR>", { desc = "Edit relative file" })
-
-	-- Find files
-	map("n", "<leader>f", ":Telescope find_files<CR>", { silent = true, desc = "Find files" })
-	-- Find files relative to current file
-	map(
-		"n",
-		"<leader>F",
-		":lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<CR>",
-		{ silent = true, desc = "Find relative file" }
-	)
-	-- Find in files
-	-- map("n", "<leader>/", ":execute 'Rg ' . input('Rg/')<CR>", { silent = true })
-	map("n", "<leader>/", ":Telescope live_grep<CR>", { silent = true, desc = "Find in files" })
 
 	-- Goto previous buffer
 	map("n", "<leader>B", ":edit #<CR>", { desc = "Previous buffer" })
-	-- Find from open buffers
-	map(
-		"n",
-		"<leader>b",
-		":lua require('config.telescope_actions').open_buffer()<CR>",
-		{ silent = true, desc = "Buffers" }
-	)
-
-	map("n", "<leader>o", ":Telescope oldfiles<CR>", { silent = true, desc = "Old files" })
 
 	-- Edit files in a buffer
 	map("n", "<leader>ed", ":Oil .<CR>", { desc = "Edit workspace" })
@@ -97,68 +75,11 @@ local function init()
 
 	map("n", "<leader>d", ":Neotree toggle=true<CR>", { desc = "Neotree" })
 
-	-- Supercharged spell correction!
-	map("n", "z=", ":Telescope spell_suggest<CR>", { silent = true, desc = "Spell suggest" })
-
-	-- norg mapping
-
-	-- Open scratch file
 	map("n", "<leader>es", ":e ~/norg/scratch.norg<CR>", { desc = "Scratch" })
-	map("n", "<leader>n", ":lua require('config.telescope_actions').open_norg('')<CR>", { desc = "Neorg" })
-	map(
-		"n",
-		"<leader>ep",
-		":lua require('config.telescope_actions').open_norg('projects')<CR>",
-		{ desc = "Neorg projects" }
-	)
-	map("n", "<leader>ea", ":lua require('config.telescope_actions').open_norg('areas')<CR>", { desc = "Neorg areas" })
-	map(
-		"n",
-		"<leader>er",
-		":lua require('config.telescope_actions').open_norg('resources')<CR>",
-		{ desc = "Neorg resources" }
-	)
-	map(
-		"n",
-		"<leader>eA",
-		":lua require('config.telescope_actions').open_norg('archive')<CR>",
-		{ desc = "Neorg archive" }
-	)
 
 	-- Git
-	-- local neogit = require("neogit")
 	map("n", "gs", ":Neogit<CR>", { desc = "Git status" })
 	map("n", "g<space>", ":Git ", { desc = "Git" })
-
-	local telescope_builtin = require("telescope.builtin")
-	map("n", "gb", telescope_builtin.git_branches, { desc = "Git branches" })
-
-	-- Ideas
-	--require('telescope.builtin').git_commits()
-	--require('telescope.builtin').git_bcommits()
-	--require('telescope.builtin').git_bcommits_range()
-
-	-- TODO
-	-- Open all commits with gll (so we don't have to press gsll) ?
-	-- View history of a single file
-	-- View history of selection in a single file
-
-	-- nnoremap gs :Git<CR>
-	-- nnoremap g<space> :Git
-	-- nnoremap gll :Flogsplit<CR>
-	-- nnoremap glf :Flogsplit -path=%<CR>
-	-- xnoremap glf :Flogsplit -- --no-patch<CR>
-	-- nnoremap <silent> <leader>C :Commits<CR>
-	-- nnoremap gb :Telescope git_branches<CR>
-
-	-- " Fugitive Conflict Resolution
-	-- nnoremap gds :Gdiffsplit!<CR>
-	-- nnoremap gdh :diffget //2<CR>
-	-- nnoremap gdl :diffget //3<CR>
-
-	local dial = require("dial.map")
-	vim.keymap.set("n", "<C-a>", dial.inc_normal(), { noremap = true })
-	vim.keymap.set("n", "<C-x>", dial.dec_normal(), { noremap = true })
 end
 
 -- Keymaps that are sent to plugins during configuration
@@ -172,6 +93,55 @@ local M = {}
 -- Wrap it in a function to prevent requiring this file evaluates
 -- global keymaps multiple times.
 M.init = init
+
+M.telescope = function()
+	local map = vim.keymap.set
+	local builtin = require("telescope.builtin")
+	local custom_actions = require("config.telescope_actions")
+
+	map("n", "z=", builtin.spell_suggest, { silent = true, desc = "Spell suggest" })
+
+	map("n", "<leader>f", builtin.find_files, { silent = true, desc = "Find files" })
+	map("n", "<leader>F", function()
+		builtin.find_files({ cwd = vim.fn.expand("%:p:h") })
+	end, { silent = true, desc = "Find relative file" })
+
+	map("n", "<leader>/", builtin.live_grep, { silent = true, desc = "Find in files" })
+
+	map("n", "<leader>b", custom_actions.open_buffer, { silent = true, desc = "Buffers" })
+
+	map("n", "<leader>o", builtin.oldfiles, { silent = true, desc = "Old files" })
+
+	-- I use neorg as a personal knowledge base. Telescoping in it makes it really pleasant.
+	map("n", "<leader>n", function()
+		custom_actions.open_norg("")
+	end, { desc = "Neorg" })
+	map("n", "<leader>ep", function()
+		custom_actions.open_norg("projects")
+	end, { desc = "Neorg projects" })
+	map("n", "<leader>ea", function()
+		custom_actions.open_norg("areas")
+	end, { desc = "Neorg areas" })
+	map("n", "<leader>er", function()
+		custom_actions.open_norg("resources")
+	end, { desc = "Neorg resources" })
+	map("n", "<leader>eA", function()
+		custom_actions.open_norg("archive")
+	end, { desc = "Neorg archive" })
+
+	map("n", "gb", builtin.git_branches, { silent = true, desc = "Git branches" })
+
+	-- Ideas
+	--require('telescope.builtin').git_commits()
+	--require('telescope.builtin').git_bcommits()
+	--require('telescope.builtin').git_bcommits_range()
+end
+
+M.dial = function()
+	local dial = require("dial.map")
+	vim.keymap.set("n", "<C-a>", dial.inc_normal(), { noremap = true })
+	vim.keymap.set("n", "<C-x>", dial.dec_normal(), { noremap = true })
+end
 
 -- These are in visual mode
 M.textsubjects = {
@@ -243,20 +213,20 @@ M.buf_lsp = function(_, buffer)
 	local map = vim.keymap.set
 	-- FIXME there are other cool possibilities listed in nvim-lspconfig
 	map("n", "<localleader>D", vim.lsp.buf.declaration, { silent = true, buffer = buffer, desc = "Declaration" })
-	-- map("n", "<localleader>d", vim.lsp.buf.definition, { silent = true, buffer = buffer, desc = "Definition" })
-	map(
-		"n",
-		"<localleader>d",
-		":TroubleToggle lsp_definitions<CR>",
-		{ silent = true, buffer = buffer, desc = "Definitions" }
-	)
-	-- map("n", "<localleader>r", vim.lsp.buf.references, { silent = true, buffer = buffer, desc = "References" })
-	map(
-		"n",
-		"<localleader>r",
-		":TroubleToggle lsp_references<CR>",
-		{ silent = true, buffer = buffer, desc = "References" }
-	)
+	map("n", "<localleader>d", vim.lsp.buf.definition, { silent = true, buffer = buffer, desc = "Definition" })
+	-- map(
+	-- 	"n",
+	-- 	"<localleader>d",
+	-- 	":TroubleToggle lsp_definitions<CR>",
+	-- 	{ silent = true, buffer = buffer, desc = "Definitions" }
+	-- )
+	map("n", "<localleader>r", vim.lsp.buf.references, { silent = true, buffer = buffer, desc = "References" })
+	-- map(
+	-- 	"n",
+	-- 	"<localleader>r",
+	-- 	":TroubleToggle lsp_references<CR>",
+	-- 	{ silent = true, buffer = buffer, desc = "References" }
+	-- )
 	map("n", "<localleader>i", vim.lsp.buf.implementation, { silent = true, buffer = buffer, desc = "Implementation" })
 	map(
 		"n",
@@ -342,6 +312,12 @@ M.trouble = function()
 		trouble.first({ skip_groups = true, jump = true })
 	end, { desc = "First trouble" })
 	map("n", "<leader>t", ":TroubleToggle<cr>", { desc = "Trouble" })
+end
+
+M.undotree = function()
+	vim.keymap.set("n", "<leader>u", function()
+		require("undotree").toggle()
+	end, { desc = "Undotree" })
 end
 
 return M

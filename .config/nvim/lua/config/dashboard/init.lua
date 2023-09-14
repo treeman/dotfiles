@@ -32,7 +32,7 @@ local function button(sc, txt, keybind, keybind_opts)
 		cursor = 52,
 		width = 50,
 		align_shortcut = "left",
-		hl_shortcut = { { "GruvboxOrange", 0, #sc }, { "Text", #sc + 1, 20 } },
+		hl_shortcut = { { "Function", 0, #sc }, { "Text", #sc + 1, 20 } },
 	}
 	if keybind then
 		keybind_opts = if_nil(keybind_opts, { noremap = true, silent = true, nowait = true })
@@ -95,7 +95,7 @@ for k, v in pairs(working_on) do
 		val = string.format("%-50s", v),
 		opts = {
 			position = "center",
-			hl = { { "Statement", 0, cmd_width }, { "GruvboxAqua", cmd_width + 1, 50 } },
+			hl = { { "DiagnosticError", 0, cmd_width }, { "@label", cmd_width + 1, 50 } },
 		},
 	}
 end
@@ -122,7 +122,7 @@ return {
 			val = require("alpha.fortune")(60),
 			opts = {
 				position = "center",
-				hl = "Text",
+				hl = "Comment",
 			},
 		},
 	},
