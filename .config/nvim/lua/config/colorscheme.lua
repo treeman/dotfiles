@@ -1,3 +1,4 @@
+-- vim.cmd.colorscheme("kanagawa")
 vim.cmd.colorscheme("melange")
 
 -- See :help neo-tree-highlights
