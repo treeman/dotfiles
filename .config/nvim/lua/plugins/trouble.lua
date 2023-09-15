@@ -1,8 +1,8 @@
 local function config()
 	require("trouble").setup({
 		padding = false,
-		auto_open = true,
-		auto_close = true,
+		auto_open = false,
+		auto_close = false,
 	})
 
 	require("config.keymaps").trouble()

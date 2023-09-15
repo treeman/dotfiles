@@ -74,6 +74,7 @@ local function init()
 	map("n", "<leader>eD", ":Oil <C-R>=expand('%:p:h')<CR><CR>", { desc = "Edit relative workspace" })
 
 	map("n", "<leader>d", ":Neotree toggle=true<CR>", { desc = "Neotree" })
+	map("n", "<leader>t", ":TroubleToggle<cr>", { desc = "Trouble" })
 
 	map("n", "<leader>es", ":e ~/norg/scratch.norg<CR>", { desc = "Scratch" })
 
@@ -311,13 +312,18 @@ M.trouble = function()
 	map("n", "[T", function()
 		trouble.first({ skip_groups = true, jump = true })
 	end, { desc = "First trouble" })
-	map("n", "<leader>t", ":TroubleToggle<cr>", { desc = "Trouble" })
 end
 
 M.undotree = function()
 	vim.keymap.set("n", "<leader>u", function()
 		require("undotree").toggle()
 	end, { desc = "Undotree" })
+end
+
+M.pollen = function()
+	local map = vim.keymap.set
+	map("i", "<C-l>", "λ")
+	map("i", "<C-e>", "◊")
 end
 
 return M

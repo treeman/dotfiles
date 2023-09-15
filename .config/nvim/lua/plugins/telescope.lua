@@ -40,6 +40,7 @@ return {
 		},
 		config = config,
 		cmd = "Telescope",
+		event = "BufReadPre",
 	},
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",

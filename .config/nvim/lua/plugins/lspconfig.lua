@@ -87,6 +87,10 @@ local config = function()
 								[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
 							},
 						},
+						-- Do not send telemetry data containing a randomized but unique identifier
+						telemetry = {
+							enable = false,
+						},
 					},
 				},
 			})

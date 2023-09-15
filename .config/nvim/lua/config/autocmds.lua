@@ -40,6 +40,19 @@ autocmd("BufRead", {
 	command = "set filetype=html",
 })
 
+autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = "*html.pm,*html.p,*xml.p,index.ptree",
+	group = filegroup,
+	callback = function()
+		vim.cmd("set filetype=pollen")
+		vim.opt_local.wrap = true
+		vim.opt_local.ts = 2
+		vim.opt_local.sts = 2
+		vim.opt_local.sw = 2
+		require("config.keymaps").pollen()
+	end,
+})
+
 -- Cursor line only in active window
 local cursorlinegroup = augroup("cursorlinegroup", { clear = true })
 autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
@@ -64,11 +77,47 @@ autocmd("WinLeave", {
 })
 
 -- Workaround for: https://github.com/nvim-telescope/telescope.nvim/issues/2027
--- Should be fixed in a future Neovim relelase.
+-- Should be fixed in a future Neovim release.
 autocmd("WinLeave", {
 	callback = function()
 		if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
 			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
 		end
+	end,
+})
+
+local foldgroup = augroup("openfoldsgroup", { clear = true })
+autocmd({ "BufReadPost", "FileReadPost" }, {
+	group = foldgroup,
+	pattern = "*.markdown,*.md",
+	callback = function()
+		vim.opt_local.foldmethod = "expr"
+		vim.opt_local.foldexpr = "nvim_treesitter#foldexpr()"
+		-- Folds will start closed, this will force them all open
+		vim.cmd("normal zR")
+	end,
+})
+
+-- I -think- this should work, but for some reason it doesn't.
+-- Oh well, use marker instead then T.T
+-- require("util").create_cmd("BeginningStarLevel", function()
+-- 	local line = vim.fn.getline(vim.v.lnum)
+-- 	local match = string.match(line, "^%*+")
+-- 	if match then
+-- 		print(">" .. #match)
+-- 		return ">" .. #match
+-- 	else
+-- 		print("=")
+-- 		return "="
+-- 	end
+-- end)
+autocmd({ "BufReadPost", "FileReadPost" }, {
+	group = foldgroup,
+	pattern = "*.beancount",
+	callback = function()
+		vim.opt_local.foldmethod = "marker"
+		vim.opt_local.foldtext = "v:folddashes.substitute(getline(v:foldstart),';?\\s*\\d*{{{','','g')"
+		-- Sad panda
+		-- vim.opt_local.foldexpr = "BeginningStarLevel()"
 	end,
 })
