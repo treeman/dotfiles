@@ -171,5 +171,5 @@ return {
 		"nvim-lua/lsp-status.nvim",
 	},
 	config = config,
-	lazy = false,
+	event = { "BufReadPre", "BufNewFile" },
 }

@@ -29,6 +29,6 @@ local opts = {
 return {
 	"williamboman/mason-lspconfig.nvim",
 	opts = opts,
-	event = "BufReadPre",
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = "williamboman/mason.nvim",
 }

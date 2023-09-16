@@ -10,6 +10,6 @@ return {
 		leap.opts = opts
 		leap.add_default_mappings()
 	end,
-	event = "BufReadPre",
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = "tpope/vim-repeat",
 }

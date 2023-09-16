@@ -11,5 +11,5 @@ return {
 		require("undotree").setup(opts)
 		require("config.keymaps").undotree()
 	end,
-	event = "BufReadPre",
+	event = { "BufReadPre", "BufNewFile" },
 }

@@ -105,25 +105,46 @@ local focus_commands = {
 	val = working_on_transformed,
 }
 
+local section = {
+	header = header,
+	buttons = buttons,
+	focus_commands = focus_commands,
+	buttons2 = button("w", "Edit working on", ":e ~/.config/nvim/lua/config/dashboard/init.lua<CR>"),
+	fortune = {
+		type = "text",
+		val = "", -- Set during config as we can't require alpha in lazy opts
+		opts = {
+			position = "center",
+			hl = "Comment",
+		},
+	},
+	lazy = {
+		type = "text",
+		val = "", -- Set by autocommand created in lazy config
+		opts = {
+			position = "center",
+			hl = "Ignore",
+		},
+	},
+}
+
 return {
-	layout = {
-		{ type = "padding", val = 1 },
-		header,
-		{ type = "padding", val = 2 },
-		buttons,
-		{ type = "padding", val = 2 },
-		focus_commands,
-		{ type = "padding", val = 1 },
-		-- Could be more clever here I guess
-		button("w", "Edit working on", ":e ~/.config/nvim/lua/config/dashboard/init.lua<CR>"),
-		{ type = "padding", val = 1 },
-		{
-			type = "text",
-			val = require("alpha.fortune")(60),
-			opts = {
-				position = "center",
-				hl = "Comment",
-			},
+	section = section,
+	config = {
+		layout = {
+			{ type = "padding", val = 1 },
+			section.header,
+			{ type = "padding", val = 2 },
+			section.buttons,
+			{ type = "padding", val = 2 },
+			section.focus_commands,
+			{ type = "padding", val = 1 },
+			-- Could be more clever here I guess
+			section.buttons2,
+			{ type = "padding", val = 1 },
+			section.fortune,
+			{ type = "padding", val = 2 },
+			section.lazy,
 		},
 	},
 }

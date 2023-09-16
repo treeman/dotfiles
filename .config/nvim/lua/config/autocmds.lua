@@ -26,11 +26,16 @@ autocmd("FileType", {
 	group = filegroup,
 	command = "setlocal ts=2 sts=2 sw=2 expandtab",
 })
-
 autocmd("FileType", {
 	pattern = "lua",
 	group = filegroup,
 	command = "setlocal ts=2 sts=2 sw=2 noexpandtab",
+})
+-- Hide statusline on dashboard
+autocmd("FileType", {
+	pattern = "alpha",
+	group = filegroup,
+	command = "setlocal laststatus=0 noruler",
 })
 
 autocmd("BufRead", {

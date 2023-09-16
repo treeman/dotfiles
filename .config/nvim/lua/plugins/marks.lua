@@ -7,5 +7,5 @@ return {
 			default_mappings = false,
 		})
 	end,
-	event = "BufReadPre",
+	event = { "BufReadPre", "BufNewFile" },
 }

@@ -31,5 +31,5 @@ local opts = {
 return {
 	"lukas-reineke/indent-blankline.nvim",
 	opts = opts,
-	event = "BufReadPre",
+	event = { "BufReadPre", "BufNewFile" },
 }

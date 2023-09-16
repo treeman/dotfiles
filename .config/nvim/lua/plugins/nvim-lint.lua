@@ -14,6 +14,6 @@ end
 return {
 	"mfussenegger/nvim-lint",
 	config = config,
-	event = "BufReadPre",
+	event = { "BufReadPre", "BufNewFile" },
 	enabled = false, -- Not used currently
 }

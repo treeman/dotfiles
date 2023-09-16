@@ -1,6 +1,6 @@
 return {
-  "williamboman/mason.nvim",
-  opts = {},
-  cmd = "Mason",
-  event = "BufReadPre",
+	"williamboman/mason.nvim",
+	opts = {},
+	cmd = "Mason",
+	event = { "BufReadPre", "BufNewFile" },
 }

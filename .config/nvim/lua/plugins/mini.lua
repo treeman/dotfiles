@@ -3,19 +3,19 @@ local version = false
 return {
 	{
 		"echasnovski/mini.cursorword",
-		event = "BufReadPre",
+		event = { "BufReadPre", "BufNewFile" },
 		version = version,
 		opts = true,
 	},
 	{
 		"echasnovski/mini.trailspace",
-		event = "BufReadPre",
+		event = { "BufReadPre", "BufNewFile" },
 		version = version,
 		opts = true,
 	},
 	{
 		"echasnovski/mini.ai",
-		event = "BufReadPre",
+		event = { "BufReadPre", "BufNewFile" },
 		version = version,
 		opts = {
 			custom_textobjects = {
