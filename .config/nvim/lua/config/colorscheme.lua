@@ -25,6 +25,8 @@ local overrides = {
 	-- Better elixir colors
 	{ name = "@symbol.elixir", val = { link = "@label" } },
 	{ name = "@constant.elixir", val = { link = "Constant" } },
+	-- mini
+	{ name = "MiniTrailSpace", val = { link = "PmenuSel" } },
 }
 
 for _, v in pairs(overrides) do

@@ -160,12 +160,10 @@ M.textsubjects = {
 -- see: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 local ts_move_keys = {
 	f = { query = "@function.outer", desc = "goto function" },
-	w = { query = "@parameter.outer", desc = "goto parameter" },
 	a = { query = "@attribute.inner", desc = "goto attribute" },
-	b = { query = "@block.inner", desc = "goto block" },
+	d = { query = "@block.inner", desc = "goto block" },
 	c = { query = "@class.outer", desc = "goto class" },
 	x = { query = "@comment.outer", desc = "goto comment" },
-	s = { query = "@statement.outer", desc = "goto statement" },
 }
 
 M.ts_goto_next_start = {}
@@ -180,6 +178,12 @@ for k, v in pairs(ts_move_keys) do
 	M.ts_goto_previous_end["[" .. string.upper(k)] = v
 end
 
+-- Some symbolic keymaps that don't have a string.upper()
+M.ts_goto_next_start["]="] = { query = "@statement.outer", desc = "goto statement" }
+M.ts_goto_previous_start["[="] = { query = "@statement.outer", desc = "goto statement" }
+M.ts_goto_next_start["],"] = { query = "@parameter.outer", desc = "goto parameter" }
+M.ts_goto_previous_start["[,"] = { query = "@parameter.outer", desc = "goto parameter" }
+
 M.ts_swap_next = {
 	["<leader>s"] = { query = "@parameter.inner", desc = "Swap next parameter" },
 }
@@ -192,16 +196,16 @@ M.ts_select = {
 	["if"] = { query = "@function.inner", desc = "Select inner function" },
 	["ac"] = { query = "@class.outer", desc = "Select outer class" },
 	["ic"] = { query = "@class.inner", desc = "Select inner class" },
-	["ab"] = { query = "@block.outer", desc = "Select outer block" },
-	["ib"] = { query = "@block.inner", desc = "Select inner block" },
+	["ad"] = { query = "@block.outer", desc = "Select outer block" },
+	["id"] = { query = "@block.inner", desc = "Select inner block" },
 	["aa"] = { query = "@attribute.outer", desc = "Select outer attribute" },
 	["ia"] = { query = "@attribute.inner", desc = "Seect inner attribute" },
 	["ax"] = { query = "@comment.outer", desc = "Select outer comment" },
 	["ix"] = { query = "@comment.inner", desc = "Select inner comment" },
-	["as"] = { query = "@statement.outer", desc = "Select outer statement" },
-	["is"] = { query = "@statement.inner", desc = "Select inner statement" },
-	["aw"] = { query = "@parameter.outer", desc = "Select outer parameter" },
-	["iw"] = { query = "@parameter.inner", desc = "Select inner parameter" },
+	["a="] = { query = "@statement.outer", desc = "Select outer statement" },
+	["i="] = { query = "@statement.inner", desc = "Select inner statement" },
+	["a,"] = { query = "@parameter.outer", desc = "Select outer parameter" },
+	["i,"] = { query = "@parameter.inner", desc = "Select inner parameter" },
 }
 
 M.global_lsp = function()
