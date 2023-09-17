@@ -27,6 +27,10 @@ local overrides = {
 	{ name = "@constant.elixir", val = { link = "Constant" } },
 	-- mini
 	{ name = "MiniTrailSpace", val = { link = "PmenuSel" } },
+	-- beancount
+	{ name = "@property.beancount", val = { link = "Number" } }, -- SEK
+	{ name = "@field.beancount", val = { link = "Function" } }, -- Dates
+	{ name = "@constant.beancount", val = { link = "Constant" } }, -- Tags
 }
 
 for _, v in pairs(overrides) do
