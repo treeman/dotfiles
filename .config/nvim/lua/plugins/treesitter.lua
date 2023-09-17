@@ -123,6 +123,8 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		config = config,
 		build = ":TSUpdate",
+		cmd = { "TSUpdate" },
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 			"RRethy/nvim-treesitter-textsubjects",
