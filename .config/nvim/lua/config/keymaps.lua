@@ -161,7 +161,7 @@ M.textsubjects = {
 local ts_move_keys = {
 	f = { query = "@function.outer", desc = "goto function" },
 	a = { query = "@attribute.inner", desc = "goto attribute" },
-	d = { query = "@block.inner", desc = "goto block" },
+	b = { query = "@block.inner", desc = "goto block" },
 	c = { query = "@class.outer", desc = "goto class" },
 	x = { query = "@comment.outer", desc = "goto comment" },
 }
@@ -196,8 +196,8 @@ M.ts_select = {
 	["if"] = { query = "@function.inner", desc = "Select inner function" },
 	["ac"] = { query = "@class.outer", desc = "Select outer class" },
 	["ic"] = { query = "@class.inner", desc = "Select inner class" },
-	["ad"] = { query = "@block.outer", desc = "Select outer block" },
-	["id"] = { query = "@block.inner", desc = "Select inner block" },
+	["aB"] = { query = "@block.outer", desc = "Select outer block" },
+	["iB"] = { query = "@block.inner", desc = "Select inner block" },
 	["aa"] = { query = "@attribute.outer", desc = "Select outer attribute" },
 	["ia"] = { query = "@attribute.inner", desc = "Seect inner attribute" },
 	["ax"] = { query = "@comment.outer", desc = "Select outer comment" },

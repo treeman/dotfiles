@@ -1,7 +1,6 @@
 local opts = {
 	ensure_installed = {
-		-- Cannot be installed on the laptop?!
-		-- "beancount",
+		"beancount",
 		"clangd",
 		"clangd",
 		"cssls",
