@@ -445,6 +445,34 @@ M.flash = {
 	},
 }
 
+M.search_replace = {
+	-- Replace word under cursor
+	{
+		"<leader>rw",
+		"<cmd>SearchReplaceSingleBufferCWord<cr>",
+		desc = "Replace CWord",
+	},
+	-- Replace WORD under cursor
+	{
+		"<leader>rW",
+		"<cmd>SearchReplaceSingleBufferCWORD<cr>",
+		desc = "Replace CWORD",
+	},
+	-- Replace "expression" (includes dots, not sure how useful this is)
+	{
+		"<leader>re",
+		"<cmd>SearchReplaceSingleBufferCExpr<cr>",
+		desc = "Replace CExpr",
+	},
+	-- Replace visual selection
+	{
+		"<C-r>",
+		mode = "v",
+		"<CMD>SearchReplaceSingleBufferVisualSelection<CR>",
+		desc = "Replace selection",
+	},
+}
+
 M.pollen = function()
 	local map = vim.keymap.set
 	map("i", "<C-l>", "λ")
