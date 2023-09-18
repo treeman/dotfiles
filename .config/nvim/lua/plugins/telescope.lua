@@ -32,7 +32,7 @@ return {
 				"nvim-telescope/telescope-fzf-native.nvim",
 				build = "make",
 			},
-			"telescope-lsp-handlers.nvim",
+			"gbrlsnchs/telescope-lsp-handlers.nvim",
 			-- Never really used this
 			-- "nvim-telescope/telescope-file-browser.nvim",
 			"nvim-treesitter/nvim-treesitter",

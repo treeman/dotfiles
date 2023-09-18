@@ -70,11 +70,11 @@ local buttons = {
 		button("l", "Lazy", ":Lazy<cr>"),
 		button("m", "Mason", ":Mason<cr>"),
 		{ type = "padding", val = 1 },
-		button("n", "Norg", ":lua require('config.telescope_actions').open_norg('')<CR>"),
-		button("p", "Projects", ":lua require('config.telescope_actions').open_norg('projects')<CR>"),
-		button("a", "Areas", ":lua require('config.telescope_actions').open_norg('areas')<CR>"),
-		button("r", "Resources", ":lua require('config.telescope_actions').open_norg('resources')<CR>"),
-		button("A", "Archive", ":lua require('config.telescope_actions').open_norg('archive')<CR>"),
+		button("n", "Norg", ":lua require('config.norg').open_norg('')<CR>"),
+		button("p", "Projects", ":lua require('config.norg').open_norg('projects')<CR>"),
+		button("a", "Areas", ":lua require('config.norg').open_norg('areas')<CR>"),
+		button("r", "Resources", ":lua require('config.norg').open_norg('resources')<CR>"),
+		button("A", "Archive", ":lua require('config.norg').open_norg('archive')<CR>"),
 	},
 }
 

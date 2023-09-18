@@ -77,6 +77,7 @@ local function init()
 	map("n", "<leader>t", ":TroubleToggle<cr>", { desc = "Trouble" })
 
 	map("n", "<leader>es", ":e ~/norg/scratch.norg<CR>", { desc = "Scratch" })
+	map("n", "<leader>ej", require("config.norg").open_weekly_journal, { desc = "This weeks journal" })
 
 	-- Git
 	map("n", "gs", ":Neogit<CR>", { desc = "Git status" })
@@ -122,38 +123,45 @@ M.telescope = {
 	{
 		"<leader>n",
 		function()
-			require("config.telescope_actions").open_norg("")
+			require("config.norg").open_norg("")
 		end,
 		desc = "Neorg",
 	},
 	{
 		"<leader>ep",
 		function()
-			require("config.telescope_actions").open_norg("projects")
+			require("config.norg").open_norg("projects")
 		end,
 		desc = "Neorg projects",
 	},
 	{
 		"<leader>ea",
 		function()
-			require("config.telescope_actions").open_norg("areas")
+			require("config.norg").open_norg("areas")
 		end,
 		desc = "Neorg areas",
 	},
 	{
 		"<leader>er",
 		function()
-			require("config.telescope_actions").open_norg("resources")
+			require("config.norg").open_norg("resources")
 		end,
 		desc = "Neorg resources",
 	},
 	{
 		"<leader>eA",
 		function()
-			require("config.telescope_actions").open_norg("archive")
+			require("config.norg").open_norg("archive")
 		end,
 		desc = "Neorg archive",
 	},
+	-- {
+	-- 	"<leader>ej",
+	-- 	function()
+	-- 		require("config.norg").open_norg("areas/weekly_journal")
+	-- 	end,
+	-- 	desc = "Neorg archive",
+	-- },
 	{ "gb", require("telescope.builtin").git_branches, silent = true, desc = "Git branches" },
 	-- Ideas
 	--require('telescope.builtin').git_commits()

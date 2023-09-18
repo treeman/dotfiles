@@ -1,7 +1,7 @@
-local m = {}
+local M = {}
 
 -- https://github.com/nvim-telescope/telescope.nvim/issues/621
-m.open_buffer = function()
+M.open_buffer = function()
 	local action_state = require("telescope.actions.state")
 	local actions = require("telescope.actions")
 	require("telescope.builtin").buffers({
@@ -28,7 +28,7 @@ m.open_buffer = function()
 	})
 end
 
-m.open_norg = function(base_folder)
+M.open_norg = function(base_folder)
 	local action_state = require("telescope.actions.state")
 	local actions = require("telescope.actions")
 	local Path = require("plenary.path")
@@ -59,4 +59,4 @@ m.open_norg = function(base_folder)
 	})
 end
 
-return m
+return M
