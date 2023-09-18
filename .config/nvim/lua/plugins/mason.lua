@@ -1,6 +1,5 @@
 return {
 	"williamboman/mason.nvim",
 	opts = {},
-	cmd = "Mason",
-	event = { "BufReadPre", "BufNewFile" },
+	cmd = { "Mason", "MasonInstall", "MasonLog", "MasonUninstall", "MasonUninstallAll", "MasonUpdate" },
 }
