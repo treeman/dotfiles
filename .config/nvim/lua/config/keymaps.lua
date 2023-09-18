@@ -1,3 +1,4 @@
+-- TODO should
 local function init()
 	local map = vim.keymap.set
 	local normal_keyboard = require("util").has_normal_keyboard()
@@ -306,16 +307,16 @@ M.trouble = function()
 	local trouble = require("trouble")
 	map("n", "]t", function()
 		trouble.next({ skip_groups = true, jump = true })
-	end, { desc = "Next trouble" })
+	end, { desc = "Next trouble", silent = true })
 	map("n", "[t", function()
 		trouble.previous({ skip_groups = true, jump = true })
-	end, { desc = "Prev trouble" })
+	end, { desc = "Prev trouble", silent = true })
 	map("n", "]T", function()
 		trouble.last({ skip_groups = true, jump = true })
-	end, { desc = "Last trouble" })
+	end, { desc = "Last trouble", silent = true })
 	map("n", "[T", function()
 		trouble.first({ skip_groups = true, jump = true })
-	end, { desc = "First trouble" })
+	end, { desc = "First trouble", silent = true })
 end
 
 M.undotree = function()
@@ -323,6 +324,37 @@ M.undotree = function()
 		require("undotree").toggle()
 	end, { desc = "Undotree" })
 end
+
+M.hop = {
+	{
+		"s",
+		function()
+			require("hop").hint_char2({})
+		end,
+		desc = "Sneak",
+	},
+	{
+		"S",
+		function()
+			require("hop").hint_char2({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR })
+		end,
+		desc = "Sneak backwards",
+	},
+	{
+		"<leader>w",
+		function()
+			require("hop").hint_words({})
+		end,
+		desc = "Hop words",
+	},
+	{
+		"<leader>W",
+		function()
+			require("hop").hint_words({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR })
+		end,
+		desc = "Hop words backwards",
+	},
+}
 
 M.pollen = function()
 	local map = vim.keymap.set

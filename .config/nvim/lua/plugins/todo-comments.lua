@@ -5,6 +5,10 @@ local opts = {
 		-- before = "",
 		-- keyword = "bg",
 		-- after = "",
+		pattern = [[.*<(KEYWORDS)]], -- Don't require a colon.
+	},
+	search = {
+		pattern = [[\b(KEYWORDS)\b]], -- Match without the extra colon.
 	},
 }
 

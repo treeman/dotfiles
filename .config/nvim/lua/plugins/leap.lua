@@ -12,4 +12,5 @@ return {
 	end,
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = "tpope/vim-repeat",
+	enabled = false,
 }
