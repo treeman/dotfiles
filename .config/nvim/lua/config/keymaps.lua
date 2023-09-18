@@ -473,6 +473,17 @@ M.search_replace = {
 	},
 }
 
+M.replacer = {
+	{
+		"<leader>rq",
+		function()
+			require("replacer").run()
+		end,
+		silent = true,
+		desc = "Make quickfix editable for replacing in",
+	},
+}
+
 M.pollen = function()
 	local map = vim.keymap.set
 	map("i", "<C-l>", "λ")
