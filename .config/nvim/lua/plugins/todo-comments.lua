@@ -1,10 +1,6 @@
 -- TODO :TodoTrouble and :TodoTelescope
 local opts = {
 	highlight = {
-		-- If we don't want spaces between to be highlighted
-		-- before = "",
-		-- keyword = "bg",
-		-- after = "",
 		pattern = [[.*<(KEYWORDS)]], -- Don't require a colon.
 	},
 	search = {

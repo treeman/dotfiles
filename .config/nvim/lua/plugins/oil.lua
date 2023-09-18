@@ -10,6 +10,7 @@ return {
 	"stevearc/oil.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	opts = opts,
+	command = "Oil",
 	-- This is how to lazy load oil according to:
 	-- https://github.com/folke/lazy.nvim/issues/533
 	-- ... Overkill?
