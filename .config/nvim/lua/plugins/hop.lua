@@ -8,4 +8,5 @@ return {
 	version = "*",
 	opts = opts,
 	keys = require("config.keymaps").hop,
+	enabled = false,
 }
