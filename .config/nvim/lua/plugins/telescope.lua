@@ -20,11 +20,6 @@ local config = function()
 	-- Makes sorting a lot faster than the built-in one
 	-- and enables fzf syntax
 	require("telescope").load_extension("fzf")
-
-	require("telescope").load_extension("file_browser")
-
-	-- Register keymaps
-	require("config.keymaps").telescope()
 end
 
 return {
@@ -33,23 +28,18 @@ return {
 		dependencies = {
 			"nvim-lua/popup.nvim",
 			"nvim-lua/plenary.nvim",
-			"telescope-fzf-native.nvim",
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				build = "make",
+			},
 			"telescope-lsp-handlers.nvim",
-			"nvim-telescope/telescope-file-browser.nvim",
+			-- Never really used this
+			-- "nvim-telescope/telescope-file-browser.nvim",
 			"nvim-treesitter/nvim-treesitter",
 		},
 		config = config,
+		keys = require("config.keymaps").telescope,
 		cmd = "Telescope",
 		event = { "BufReadPre", "BufNewFile" },
-	},
-	{
-		"nvim-telescope/telescope-fzf-native.nvim",
-		build = "make",
-	},
-	{
-		"gbrlsnchs/telescope-lsp-handlers.nvim",
-	},
-	{
-		"nvim-telescope/telescope-file-browser.nvim",
 	},
 }

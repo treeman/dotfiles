@@ -1,4 +1,3 @@
--- TODO should
 local function init()
 	local map = vim.keymap.set
 	local normal_keyboard = require("util").has_normal_keyboard()
@@ -96,63 +95,103 @@ local M = {}
 -- global keymaps multiple times.
 M.init = init
 
-M.telescope = function()
-	local map = vim.keymap.set
-	local builtin = require("telescope.builtin")
-	local custom_actions = require("config.telescope_actions")
+M.telescope = {
+	{
+		"z=",
+		function()
+			require("telescope.builtin").spell_suggest()
+		end,
+		silent = true,
+		desc = "Spell suggest",
+	},
+	{ "<leader>f", require("telescope.builtin").find_files, silent = true, desc = "Find files" },
+	{
+		"<leader>F",
+		function()
+			require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })
+		end,
+		silent = true,
+		desc = "Find relative file",
+	},
 
-	map("n", "z=", builtin.spell_suggest, { silent = true, desc = "Spell suggest" })
+	{ "<leader>/", require("telescope.builtin").live_grep, silent = true, desc = "Find in files" },
+	{ "<leader>b", require("config.telescope_actions").open_buffer, silent = true, desc = "Buffers" },
+	{ "<leader>o", require("telescope.builtin").oldfiles, silent = true, desc = "Old files" },
 
-	map("n", "<leader>f", builtin.find_files, { silent = true, desc = "Find files" })
-	map("n", "<leader>F", function()
-		builtin.find_files({ cwd = vim.fn.expand("%:p:h") })
-	end, { silent = true, desc = "Find relative file" })
-
-	map("n", "<leader>/", builtin.live_grep, { silent = true, desc = "Find in files" })
-
-	map("n", "<leader>b", custom_actions.open_buffer, { silent = true, desc = "Buffers" })
-
-	map("n", "<leader>o", builtin.oldfiles, { silent = true, desc = "Old files" })
-
-	-- I use neorg as a personal knowledge base. Telescoping in it makes it really pleasant.
-	map("n", "<leader>n", function()
-		custom_actions.open_norg("")
-	end, { desc = "Neorg" })
-	map("n", "<leader>ep", function()
-		custom_actions.open_norg("projects")
-	end, { desc = "Neorg projects" })
-	map("n", "<leader>ea", function()
-		custom_actions.open_norg("areas")
-	end, { desc = "Neorg areas" })
-	map("n", "<leader>er", function()
-		custom_actions.open_norg("resources")
-	end, { desc = "Neorg resources" })
-	map("n", "<leader>eA", function()
-		custom_actions.open_norg("archive")
-	end, { desc = "Neorg archive" })
-
-	map("n", "gb", builtin.git_branches, { silent = true, desc = "Git branches" })
-
+	--  -- I use neorg as a personal knowledge base. Telescoping in it makes it really pleasant,
+	{
+		"<leader>n",
+		function()
+			require("config.telescope_actions").open_norg("")
+		end,
+		desc = "Neorg",
+	},
+	{
+		"<leader>ep",
+		function()
+			require("config.telescope_actions").open_norg("projects")
+		end,
+		desc = "Neorg projects",
+	},
+	{
+		"<leader>ea",
+		function()
+			require("config.telescope_actions").open_norg("areas")
+		end,
+		desc = "Neorg areas",
+	},
+	{
+		"<leader>er",
+		function()
+			require("config.telescope_actions").open_norg("resources")
+		end,
+		desc = "Neorg resources",
+	},
+	{
+		"<leader>eA",
+		function()
+			require("config.telescope_actions").open_norg("archive")
+		end,
+		desc = "Neorg archive",
+	},
+	{ "gb", require("telescope.builtin").git_branches, silent = true, desc = "Git branches" },
 	-- Ideas
 	--require('telescope.builtin').git_commits()
 	--require('telescope.builtin').git_bcommits()
 	--require('telescope.builtin').git_bcommits_range()
-end
+}
 
-M.dial = function()
-	local dial = require("dial.map")
-	vim.keymap.set("n", "<C-a>", dial.inc_normal(), { noremap = true })
-	vim.keymap.set("n", "<C-x>", dial.dec_normal(), { noremap = true })
-end
-
--- These are in visual mode
-M.textsubjects = {
-	keymaps = {
-		["."] = "textsubjects-smart",
-		[";"] = "textsubjects-container-outer",
-		["i;"] = "textsubjects-container-inner",
+M.dial = {
+	{
+		"<C-a>",
+		function()
+			require("dial.map").manipulate("increment", "normal")
+		end,
+		desc = "Increment number",
 	},
-	prev_selection = ",",
+	{
+		"<C-x>",
+		function()
+			require("dial.map").manipulate("decrement", "normal")
+		end,
+		desc = "Decrement number",
+	},
+	{
+		"<C-a>",
+		mode = { "v" },
+		function()
+			require("dial.map").manipulate("increment", "visual")
+		end,
+		desc = "Increment number",
+	},
+	{
+		"<C-x>",
+		mode = { "v" },
+		function()
+			require("dial.map").manipulate("decrement", "visual")
+		end,
+		desc = "Decrement number",
+	},
 }
 
 -- Maps four pairs:
@@ -165,6 +204,7 @@ local ts_move_keys = {
 	b = { query = "@block.inner", desc = "goto block" },
 	c = { query = "@class.outer", desc = "goto class" },
 	x = { query = "@comment.outer", desc = "goto comment" },
+	g = { query = { "@class.outer", "@function.outer" }, desc = "goto major" },
 }
 
 M.ts_goto_next_start = {}
@@ -302,28 +342,50 @@ M.marks = {
 	preview = "m:",
 }
 
-M.trouble = function()
-	local map = vim.keymap.set
-	local trouble = require("trouble")
-	map("n", "]t", function()
-		trouble.next({ skip_groups = true, jump = true })
-	end, { desc = "Next trouble", silent = true })
-	map("n", "[t", function()
-		trouble.previous({ skip_groups = true, jump = true })
-	end, { desc = "Prev trouble", silent = true })
-	map("n", "]T", function()
-		trouble.last({ skip_groups = true, jump = true })
-	end, { desc = "Last trouble", silent = true })
-	map("n", "[T", function()
-		trouble.first({ skip_groups = true, jump = true })
-	end, { desc = "First trouble", silent = true })
-end
+M.trouble = {
+	{
+		"]t",
+		function()
+			require("trouble").next({ skip_groups = true, jump = true })
+		end,
+		desc = "Next trouble",
+		silent = true,
+	},
+	{
+		"[t",
+		function()
+			require("trouble").previous({ skip_groups = true, jump = true })
+		end,
+		desc = "Prev trouble",
+		silent = true,
+	},
+	{
+		"]T",
+		function()
+			require("trouble").last({ skip_groups = true, jump = true })
+		end,
+		desc = "Last trouble",
+		silent = true,
+	},
+	{
+		"[T",
+		function()
+			require("trouble").first({ skip_groups = true, jump = true })
+		end,
+		desc = "First trouble",
+		silent = true,
+	},
+}
 
-M.undotree = function()
-	vim.keymap.set("n", "<leader>u", function()
-		require("undotree").toggle()
-	end, { desc = "Undotree" })
-end
+M.undotree = {
+	{
+		"<leader>u",
+		function()
+			require("undotree").toggle()
+		end,
+		desc = "Undotree",
+	},
+}
 
 M.hop = {
 	{

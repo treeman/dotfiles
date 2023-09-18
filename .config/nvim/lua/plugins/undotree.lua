@@ -7,9 +7,7 @@ local opts = {
 
 return {
 	"jiaoshijie/undotree",
-	config = function()
-		require("undotree").setup(opts)
-		require("config.keymaps").undotree()
-	end,
+	opts = opts,
+	keys = require("config.keymaps").undotree,
 	event = { "BufReadPre", "BufNewFile" },
 }
