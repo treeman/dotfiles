@@ -1,16 +1,14 @@
 local opts = {
 	-- T-34 adjusted comfortable keys
 	labels = "eatnhisldroyucwfgv",
-	-- jump = {
-	-- autojump = true,
-	-- },
 	label = {
 		uppercase = false,
+		current = false, -- don't add a label for the first match, use <CR> instead
 	},
 	modes = {
 		char = {
-			-- FIXME for some reason these don't show up?
-			jump_labels = true,
+			-- Maybe not so super nice?
+			jump_labels = false,
 		},
 	},
 }

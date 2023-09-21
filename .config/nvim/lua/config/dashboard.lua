@@ -80,7 +80,9 @@ local buttons = {
 
 local working_on = {
 	-- Meh, just manually align middle space. Like a grug.
+	"<leader>w                  Word flash",
 	"s<c>                       Leap",
+	"yr<target>                 Remote yank",
 	"cs<target><replacement>    Change delimiters",
 	"ds<char>                   Delete delimiters",
 	"ys<motion><char>           Add delimiters",
@@ -109,7 +111,7 @@ local section = {
 	header = header,
 	buttons = buttons,
 	focus_commands = focus_commands,
-	buttons2 = button("w", "Edit working on", ":e ~/.config/nvim/lua/config/dashboard/init.lua<CR>"),
+	buttons2 = button("w", "Edit working on", ":e ~/.config/nvim/lua/config/dashboard.lua<CR>"),
 	fortune = {
 		type = "text",
 		val = "", -- Set during config as we can't require alpha in lazy opts

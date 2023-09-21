@@ -1,4 +1,14 @@
-local function init()
+-- Keymaps that are sent to plugins during configuration
+-- Return a module here so we can keep all keymap definitions
+-- in the same place.
+-- This is only for global keys, other contexts
+-- (such as in the cmp selection menu) may be defined
+-- in their respective files.
+local M = {}
+
+-- Wrap it in a function to prevent requiring this file evaluates
+-- global keymaps multiple times.
+M.init = function()
 	local map = vim.keymap.set
 	local normal_keyboard = require("util").has_normal_keyboard()
 
@@ -83,18 +93,6 @@ local function init()
 	map("n", "gs", ":Neogit<CR>", { desc = "Git status" })
 	map("n", "g<space>", ":Git ", { desc = "Git" })
 end
-
--- Keymaps that are sent to plugins during configuration
--- Return a module here so we can keep all keymap definitions
--- in the same place.
--- This is only for global keys, other contexts
--- (such as in the cmp selection menu) may be defined
--- in their respective files.
-local M = {}
-
--- Wrap it in a function to prevent requiring this file evaluates
--- global keymaps multiple times.
-M.init = init
 
 M.telescope = {
 	{
@@ -442,6 +440,20 @@ M.flash = {
 			require("flash").remote()
 		end,
 		desc = "Remote Flash",
+	},
+	{
+		"<leader>w",
+		mode = { "n", "o", "x" },
+		function()
+			require("flash").jump({
+				search = {
+					mode = function(str)
+						return "\\<" .. str
+					end,
+				},
+			})
+		end,
+		desc = "Flash words",
 	},
 }
 
