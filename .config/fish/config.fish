@@ -27,6 +27,8 @@ set -x TZ Europe/Stockholm
 # git message editor and other things
 set -x EDITOR nvim
 
+set -x BROWSER firefox
+
 alias vim nvim
 alias v nvim
 alias g git
@@ -66,4 +68,11 @@ end
 set -gx PNPM_HOME "/home/tree/.local/share/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
 
-alias n "nvim -c \":lua require('telescope_extra').open_norg('projects')\""
+alias n "nvim -c \":lua require('config.norg').open_norg('')\""
+alias ep "nvim -c \":lua require('config.norg').open_norg('projects')\""
+alias ea "nvim -c \":lua require('config.norg').open_norg('areas')\""
+alias er "nvim -c \":lua require('config.norg').open_norg('resources')\""
+alias eA "nvim -c \":lua require('config.norg').open_norg('archive')\""
+alias ej "nvim -c \":lua require('config.norg').open_weekly_journal()\""
+# alias ej
+# 	map("n", "<leader>ej", require("config.norg").open_weekly_journal, { desc = "This weeks journal" })

@@ -50,6 +50,7 @@ vim.opt.ruler = true -- always show current positions along the bottom
 vim.opt.showcmd = true -- show the command being typed
 vim.opt.signcolumn = "yes" -- Use a gutter for git-gutter and LSP messages
 vim.opt.completeopt = "menuone,noselect" -- Required settings for nvim-cmp
+vim.opt.conceallevel = 2 -- Hide "concealed" syntax, for example in norg files
 
 vim.opt.spell = true
 vim.opt.spelllang = { "en_us" }

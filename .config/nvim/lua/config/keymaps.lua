@@ -425,6 +425,16 @@ M.hop = {
 }
 
 M.flash = {
+	-- This is bugged and always selects the text instead of jumping to it
+	-- https://github.com/folke/flash.nvim/issues/233
+	-- {
+	-- 	"S",
+	-- 	mode = { "n", "o", "x" },
+	-- 	function()
+	-- 		require("flash").treesitter()
+	-- 	end,
+	-- 	desc = "Flash Treesitter",
+	-- },
 	{
 		"s",
 		mode = { "n", "o", "x" },
