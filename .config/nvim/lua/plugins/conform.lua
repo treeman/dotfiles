@@ -1,21 +1,29 @@
+local function get_lsp_fallback() end
+
 local opts = {
 	formatters_by_ft = {
 		lua = { "stylua" },
-		javascript = { "prettier_d", "prettier" },
-		typescript = { "prettier_d", "prettier" },
-		css = { "prettier_d", "prettier" },
-		scss = { "prettier_d", "prettier" },
-		less = { "prettier_d", "prettier" },
-		html = { "prettier_d", "prettier" },
-		json = { "prettier_d", "prettier" },
-		markdown = { "prettier_d", "prettier" },
-		yaml = { "prettier_d", "prettier" },
+		javascript = { "prettierd", "prettier" },
+		typescript = { "prettierd", "prettier" },
+		css = { "prettierd", "prettier" },
+		scss = { "prettierd", "prettier" },
+		less = { "prettierd", "prettier" },
+		html = { "prettierd", "prettier" },
+		json = { "prettierd", "prettier" },
+		yaml = { "prettierd", "prettier" },
 		rust = { "rustfmt" },
+		-- This breaks my custom attributes in my blog
+		-- markdown = { "prettierd", "prettier" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
 		lsp_fallback = true,
 	},
+	-- format_afterrsave = function(bufnr)
+	-- 	return {
+	-- 		lsp_fallback = get_lsp_fallback(bufnr),
+	-- 	}
+	-- end,
 }
 
 return {

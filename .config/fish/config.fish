@@ -74,5 +74,3 @@ alias ea "nvim -c \":lua require('config.norg').open_norg('areas')\""
 alias er "nvim -c \":lua require('config.norg').open_norg('resources')\""
 alias eA "nvim -c \":lua require('config.norg').open_norg('archive')\""
 alias ej "nvim -c \":lua require('config.norg').open_weekly_journal()\""
-# alias ej
-# 	map("n", "<leader>ej", require("config.norg").open_weekly_journal, { desc = "This weeks journal" })

@@ -5,8 +5,8 @@ local opts = {
 	},
 	filetypes = {
 		"*",
-		css = { css = true },
-		sass = { css = true, tailwind = true },
+		css = { css = true, tailwind = true },
+		scss = { css = true, tailwind = true },
 	},
 }
 

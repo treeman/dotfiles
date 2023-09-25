@@ -17,6 +17,16 @@ autocmd("FileType", {
 	command = "setlocal ts=2 sts=2 sw=2 expandtab",
 })
 autocmd("FileType", {
+	pattern = "css",
+	group = filegroup,
+	command = "setlocal ts=2 sts=2 sw=2 expandtab",
+})
+autocmd("FileType", {
+	pattern = "scss",
+	group = filegroup,
+	command = "setlocal ts=2 sts=2 sw=2 expandtab",
+})
+autocmd("FileType", {
 	pattern = "javascript",
 	group = filegroup,
 	command = "setlocal ts=2 sts=2 sw=2 noexpandtab",
@@ -30,6 +40,12 @@ autocmd("FileType", {
 	pattern = "lua",
 	group = filegroup,
 	command = "setlocal ts=2 sts=2 sw=2 noexpandtab",
+})
+autocmd("FileType", {
+	pattern = "markdown",
+	group = filegroup,
+	-- Don't hide markdown elements
+	command = "setlocal conceallevel=0",
 })
 -- Hide statusline on dashboard
 autocmd("FileType", {
