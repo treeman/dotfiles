@@ -1,5 +1,3 @@
-local function get_lsp_fallback() end
-
 local opts = {
 	formatters_by_ft = {
 		lua = { "stylua" },
@@ -11,23 +9,21 @@ local opts = {
 		html = { "prettierd", "prettier" },
 		json = { "prettierd", "prettier" },
 		yaml = { "prettierd", "prettier" },
+		markdown = { "prettierd", "prettier" },
 		rust = { "rustfmt" },
-		-- This breaks my custom attributes in my blog
-		-- markdown = { "prettierd", "prettier" },
 	},
-	format_on_save = {
-		timeout_ms = 500,
-		lsp_fallback = true,
-	},
-	-- format_afterrsave = function(bufnr)
-	-- 	return {
-	-- 		lsp_fallback = get_lsp_fallback(bufnr),
-	-- 	}
-	-- end,
+	format_on_save = function(bufnr)
+		-- Disable with a global or buffer-local variable
+		if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+			return
+		end
+		return { timeout_ms = 500, lsp_fallback = true }
+	end,
 }
 
 return {
 	"stevearc/conform.nvim",
 	event = "BufWritePre",
+	cmd = "ConformInfo",
 	opts = opts,
 }
