@@ -1,14 +1,6 @@
-My config files for stuff.
+My config files for stuff. Here be dragons.
 
-Place in ~/dotfiles.
-
-```
-ln -s ~/dotfiles/fish/ ~/.config/
-ln -s ~/dotfiles/.nvim ~/.config/nvim
-ln -s ~/dotfiles/.nvimrc ~/.config/nvim/init.vim
-```
-
-And symlink others to ~.
+Run `bootstrap.sh` or setup symlinks manually.
 
 Add `~/dotfiles/bin` to path.
 
