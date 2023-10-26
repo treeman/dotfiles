@@ -21,6 +21,7 @@ local opts = {
 		"tsserver",
 		"vimls",
 		"yamlls",
+		"tsserver",
 	},
 	automatic_installation = true,
 }

@@ -132,6 +132,15 @@ local config = function()
 				},
 			})
 		end,
+		["tsserver"] = function()
+			require("typescript-tools").setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				settings = {
+					expose_as_code_action = "all",
+				}
+			})
+		end
 	})
 end
 
@@ -149,6 +158,11 @@ return {
 		"kosayoda/nvim-lightbulb",
 		"folke/neodev.nvim",
 		"nvim-lua/lsp-status.nvim",
+		{
+			"pmizio/typescript-tools.nvim",
+			dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+			config = false,
+		}
 
 		-- Should consider...
 		-- "windwp/nvim-autopairs",

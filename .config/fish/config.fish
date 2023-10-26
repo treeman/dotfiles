@@ -11,9 +11,12 @@ set -x PATH ~/.fly/bin $PATH
 set -x PATH ~/.fly/bin $PATH
 set -x PATH ~/src/bitcoin-cash-node/build/src $PATH
 set -x PATH /usr/lib/psql15/bin $PATH
+set -x PATH ~/.nvim $PATH
+
+set -gx PNPM_HOME ~/.local/share/pnpm
+set -gx PATH "$PNPM_HOME" $PATH
 
 set -x PERL5LIB ~/perl5/lib/perl5 $PERL5LIB
-
 # Beancount module finding for importers
 set -x PYTHONPATH $PYTHONPATH ~/vimwiki/money/accounting/
 set -x ELIXIR_LS_LANGUAGE_SERVER $HOME/src/elixir-ls/release/language_server.sh
@@ -64,9 +67,6 @@ set secret_file ~/.env.secrets.fish
 if test -e $secret_file
     source $secret_file
 end
-
-set -gx PNPM_HOME "/home/tree/.local/share/pnpm"
-set -gx PATH "$PNPM_HOME" $PATH
 
 alias n "nvim -c \":lua require('config.norg').open_norg('')\""
 alias ep "nvim -c \":lua require('config.norg').open_norg('projects')\""
