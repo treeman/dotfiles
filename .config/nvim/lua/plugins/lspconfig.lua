@@ -143,14 +143,19 @@ local config = function()
 				settings = {
 					expose_as_code_action = "all",
 					tsserver_file_preferences = {
-						includeInlayParameterNameHints = "all",
 						includeCompletionsForModuleExports = true,
+						includeCompletionsForImportStatements = true,
+						includeCompletionsWithObjectLiteralMethodSnippets = true,
+
+						includeInlayParameterNameHints = "all",
 						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
 						includeInlayFunctionParameterTypeHints = true,
 						includeInlayVariableTypeHints = true,
 						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayVariableTypeHintsWhenTypeMatchesName = true,
 						includeInlayFunctionLikeReturnTypeHints = true,
 						includeInlayEnumMemberValueHints = true,
+
 						importModuleSpecifierPreference = 'non-relative',
 						quotePreference = "auto",
 					},
