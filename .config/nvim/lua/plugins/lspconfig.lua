@@ -23,10 +23,9 @@ local config = function()
 		keymaps.buf_lsp(client, buffer)
 		lsp_status.on_attach(client)
 
-		-- FIXME make this work
-		-- if client.server_capabilities.inlayHintProvider then
-		-- 	vim.lsp.buf.inlay_hint(buffer, true)
-		-- end
+		if client.server_capabilities.inlayHintProvider then
+			vim.lsp.inlay_hint(buffer, true)
+		end
 	end
 
 	lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {
@@ -142,28 +141,18 @@ local config = function()
 				capabilities = capabilities,
 				on_attach = on_attach,
 				settings = {
-					-- FIXME these doesn't work (I don't think)
 					expose_as_code_action = "all",
 					tsserver_file_preferences = {
 						includeInlayParameterNameHints = "all",
 						includeCompletionsForModuleExports = true,
+						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+						importModuleSpecifierPreference = 'non-relative',
 						quotePreference = "auto",
-					},
-					tsserver_format_options = {
-						allowIncompleteCompletions = false,
-						allowRenameOfImportPath = false,
-					},
-					init_options = {
-						preferences = {
-							includeInlayParameterNameHints = "all",
-							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-							includeInlayFunctionParameterTypeHints = true,
-							includeInlayVariableTypeHints = true,
-							includeInlayPropertyDeclarationTypeHints = true,
-							includeInlayFunctionLikeReturnTypeHints = true,
-							includeInlayEnumMemberValueHints = true,
-							importModuleSpecifierPreference = 'non-relative'
-						},
 					},
 				}
 			})
