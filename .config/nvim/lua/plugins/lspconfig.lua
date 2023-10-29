@@ -22,6 +22,10 @@ local config = function()
 	local on_attach = function(client, buffer)
 		keymaps.buf_lsp(client, buffer)
 		lsp_status.on_attach(client)
+
+		if client.server_capabilities.inlayHintProvider then
+			vim.lsp.inlay_hint(buffer, true)
+		end
 	end
 
 	lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {
@@ -132,6 +136,32 @@ local config = function()
 				},
 			})
 		end,
+		["tsserver"] = function()
+			require("typescript-tools").setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				settings = {
+					expose_as_code_action = "all",
+					tsserver_file_preferences = {
+						includeCompletionsForModuleExports = true,
+						includeCompletionsForImportStatements = true,
+						includeCompletionsWithObjectLiteralMethodSnippets = true,
+
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+
+						importModuleSpecifierPreference = 'non-relative',
+						quotePreference = "auto",
+					},
+				}
+			})
+		end
 	})
 end
 
@@ -149,6 +179,11 @@ return {
 		"kosayoda/nvim-lightbulb",
 		"folke/neodev.nvim",
 		"nvim-lua/lsp-status.nvim",
+		{
+			"pmizio/typescript-tools.nvim",
+			dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+			config = false,
+		}
 
 		-- Should consider...
 		-- "windwp/nvim-autopairs",
