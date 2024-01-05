@@ -38,7 +38,12 @@ local config = function()
 	local elixir = require("elixir")
 	local elixirls = require("elixir.elixirls")
 	elixir.setup({
-		nextls = { enable = false },
+		nextls = {
+			enable = false,
+			cmd = vim.fn.expand("$HOME/.local/share/nvim/mason/bin/nextls"),
+			capabilities = capabilities,
+			on_attach = on_attach,
+		},
 		credo = { enable = true, capabilities = capabilities, on_attach = on_attach },
 		elixirls = {
 			enable = true,
@@ -156,12 +161,12 @@ local config = function()
 						includeInlayFunctionLikeReturnTypeHints = true,
 						includeInlayEnumMemberValueHints = true,
 
-						importModuleSpecifierPreference = 'non-relative',
+						importModuleSpecifierPreference = "non-relative",
 						quotePreference = "auto",
 					},
-				}
+				},
 			})
-		end
+		end,
 	})
 end
 
@@ -183,7 +188,7 @@ return {
 			"pmizio/typescript-tools.nvim",
 			dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 			config = false,
-		}
+		},
 
 		-- Should consider...
 		-- "windwp/nvim-autopairs",

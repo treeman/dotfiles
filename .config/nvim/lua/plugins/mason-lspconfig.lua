@@ -9,6 +9,7 @@ local opts = {
 		"dotls",
 		-- Install managed by elixir-tools instead.
 		-- "elixirls",
+		-- "nextls", -- Can't install automatically, even though we can install it using :Mason ?
 		"emmet_ls",
 		"eslint",
 		"html",
