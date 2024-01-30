@@ -73,13 +73,13 @@ local function config()
 				name = "neorg",
 				group_index = 3,
 			},
-			{
-				name = "beancount",
-				option = {
-					account = "/home/tree/vimwiki/money/accounting/personal.beancount",
-				},
-				group_index = 3,
-			},
+			-- {
+			-- 	name = "beancount",
+			-- 	option = {
+			-- 		account = "/home/tree/vimwiki/money/accounting/personal.beancount",
+			-- 	},
+			-- 	group_index = 3,
+			-- },
 			{
 				name = "spell",
 				option = {

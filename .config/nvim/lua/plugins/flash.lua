@@ -14,8 +14,8 @@ local opts = {
 }
 
 return {
-	"folke/flash.nvim",
-	event = { "BufReadPre", "BufNewFile" },
-	opts = opts,
-	keys = require("config.keymaps").flash,
+	-- "folke/flash.nvim",
+	-- event = { "BufReadPre", "BufNewFile" },
+	-- opts = opts,
+	-- keys = require("config.keymaps").flash,
 }
