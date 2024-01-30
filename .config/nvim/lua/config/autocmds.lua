@@ -74,6 +74,13 @@ autocmd({ "BufRead", "BufNewFile" }, {
 	end,
 })
 
+autocmd({ "BufRead", "BufNewFile" }, {
+	-- The markdown treesitter works well enough for djot
+	pattern = "*dj",
+	group = filegroup,
+	command = "set filetype=markdown",
+})
+
 -- Cursor line only in active window
 local cursorlinegroup = augroup("cursorlinegroup", { clear = true })
 autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
