@@ -60,6 +60,12 @@ autocmd("BufRead", {
 	group = filegroup,
 	command = "set filetype=html",
 })
+autocmd("BufRead", {
+	-- Use markdown filetype for djot for now
+	pattern = "*.dj",
+	group = filegroup,
+	command = "set filetype=markdown",
+})
 
 autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "*html.pm,*html.p,*xml.p,index.ptree",
