@@ -10,7 +10,7 @@ font:
   bold_italic:
     family: IosevkaTree Nerd Font Medium
     style: BoldItalic
-  size: 10.0
+  size: 11.0
 
 custom_cursor_colors: true
 

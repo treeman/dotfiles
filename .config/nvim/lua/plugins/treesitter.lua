@@ -1,4 +1,15 @@
 local config = function()
+	local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+	parser_config.djot = {
+		install_info = {
+			url = "~/code/tree-sitter-djot",
+			files = { "src/parser.c" },
+			generate_reqires_npm = false,
+			requires_generate_from_grammar = false,
+		},
+		filetype = "djot",
+	}
+
 	local keymaps = require("config.keymaps")
 
 	require("nvim-treesitter.configs").setup({
