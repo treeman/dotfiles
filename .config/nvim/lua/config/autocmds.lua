@@ -60,6 +60,11 @@ autocmd("BufRead", {
 	group = filegroup,
 	command = "set filetype=html",
 })
+autocmd("BufRead", {
+	pattern = "*.dj",
+	group = filegroup,
+	command = "set filetype=djot",
+})
 
 autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "*html.pm,*html.p,*xml.p,index.ptree",
@@ -72,13 +77,6 @@ autocmd({ "BufRead", "BufNewFile" }, {
 		vim.opt_local.sw = 2
 		require("config.keymaps").pollen()
 	end,
-})
-
-autocmd({ "BufRead", "BufNewFile" }, {
-	-- The markdown treesitter works well enough for djot
-	pattern = "*dj",
-	group = filegroup,
-	command = "set filetype=markdown",
 })
 
 -- Cursor line only in active window
