@@ -9,7 +9,6 @@ local opts = {
 		html = { "prettierd", "prettier" },
 		json = { "prettierd", "prettier" },
 		yaml = { "prettierd", "prettier" },
-		markdown = { "prettierd", "prettier" },
 		rust = { "rustfmt" },
 	},
 	format_on_save = function(bufnr)
