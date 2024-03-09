@@ -1,0 +1,42 @@
+# Melange colors
+[colors.bright]
+black = "#867462"
+blue = "#A3A9CE"
+cyan = "#89B3B6"
+green = "#85B695"
+magenta = "#CF9BC2"
+red = "#D47766"
+white = "#ECE1D7"
+yellow = "#EBC06D"
+
+[colors.normal]
+black = "#34302C"
+blue = "#7F91B2"
+cyan = "#7B9695"
+green = "#78997A"
+magenta = "#B380B0"
+red = "#BD8183"
+white = "#C1A78E"
+yellow = "#E49B5D"
+
+[colors.primary]
+background = "#292522"
+foreground = "#ECE1D7"
+
+[font]
+size = 11.0
+
+[font.bold]
+family = "IosevkaTree Nerd Font Medium"
+style = "Bold"
+
+[font.bold_italic]
+family = "IosevkaTree Nerd Font Medium"
+style = "BoldItalic"
+
+[font.italic]
+family = "IosevkaTree Nerd Font Medium"
+style = "Italic"
+
+[font.normal]
+family = "IosevkaTree Nerd Font Medium"

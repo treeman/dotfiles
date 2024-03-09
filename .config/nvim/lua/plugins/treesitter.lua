@@ -3,7 +3,7 @@ local config = function()
 	parser_config.djot = {
 		install_info = {
 			url = "~/code/tree-sitter-djot",
-			files = { "src/parser.c" },
+			files = { "src/parser.c", "src/scanner.c" },
 			generate_reqires_npm = false,
 			requires_generate_from_grammar = false,
 		},
@@ -114,15 +114,14 @@ local config = function()
 		},
 	})
 
-	-- NOTE that this interferes with flash f/t
 	-- Make movements repeatable with ; and ,
-	-- local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-	-- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
-	-- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
-	-- vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
-	-- vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
-	-- vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
-	-- vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
+	local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
+	vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+	vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+	vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
+	vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
+	vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
+	vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
 end
 
 return {
@@ -130,7 +129,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		config = config,
 		build = ":TSUpdate",
-		cmd = { "TSUpdate" },
+		cmd = { "TSInstall", "TSUpdate" },
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
