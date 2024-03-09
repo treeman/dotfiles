@@ -63,7 +63,7 @@ autocmd("BufRead", {
 autocmd("BufRead", {
 	pattern = "*.dj",
 	group = filegroup,
-	command = "set filetype=djot",
+	command = "set filetype=markdown",
 })
 
 autocmd({ "BufRead", "BufNewFile" }, {
