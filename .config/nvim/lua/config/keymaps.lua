@@ -243,8 +243,8 @@ M.ts_select = {
 	["if"] = { query = "@function.inner", desc = "Select inner function" },
 	["ac"] = { query = "@class.outer", desc = "Select outer class" },
 	["ic"] = { query = "@class.inner", desc = "Select inner class" },
-	["aB"] = { query = "@block.outer", desc = "Select outer block" },
-	["iB"] = { query = "@block.inner", desc = "Select inner block" },
+	["ab"] = { query = "@block.outer", desc = "Select outer block" },
+	["ib"] = { query = "@block.inner", desc = "Select inner block" },
 	["aa"] = { query = "@attribute.outer", desc = "Select outer attribute" },
 	["ia"] = { query = "@attribute.inner", desc = "Seect inner attribute" },
 	["ax"] = { query = "@comment.outer", desc = "Select outer comment" },
@@ -421,49 +421,6 @@ M.hop = {
 			require("hop").hint_words({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR })
 		end,
 		desc = "Hop words backwards",
-	},
-}
-
-M.flash = {
-	-- This is bugged and always selects the text instead of jumping to it
-	-- https://github.com/folke/flash.nvim/issues/233
-	-- {
-	-- 	"S",
-	-- 	mode = { "n", "o", "x" },
-	-- 	function()
-	-- 		require("flash").treesitter()
-	-- 	end,
-	-- 	desc = "Flash Treesitter",
-	-- },
-	{
-		"s",
-		mode = { "n", "o", "x" },
-		function()
-			require("flash").jump()
-		end,
-		desc = "Flash",
-	},
-	{
-		"r",
-		mode = "o",
-		function()
-			require("flash").remote()
-		end,
-		desc = "Remote Flash",
-	},
-	{
-		"<leader>w",
-		mode = { "n", "o", "x" },
-		function()
-			require("flash").jump({
-				search = {
-					mode = function(str)
-						return "\\<" .. str
-					end,
-				},
-			})
-		end,
-		desc = "Flash words",
 	},
 }
 

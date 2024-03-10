@@ -22,6 +22,8 @@ local overrides = {
 	-- Markdown
 	{ name = "@text.reference.markdown_inline", val = { link = "Type" } },
 	{ name = "@text.reference.markdown", val = { link = "Type" } },
+	-- Djot
+	{ name = "@markup.highlighted", val = { link = "@string.special" } },
 	-- Better elixir colors
 	{ name = "@symbol.elixir", val = { link = "@label" } },
 	{ name = "@constant.elixir", val = { link = "Constant" } },

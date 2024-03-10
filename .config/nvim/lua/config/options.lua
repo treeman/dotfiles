@@ -19,12 +19,8 @@ vim.opt.shada = "!,'1000,<100,s100,h,f1"
 vim.opt.shadafile = vim.fn.expand("~/.config/nvim/.shada")
 
 -- Prevent <leader> from timing out
--- vim.opt.timeout = false
-vim.opt.ttimeout = true
-vim.opt.updatetime = 150
--- Required by which-key
-vim.o.timeout = true
-vim.o.timeoutlen = 300
+vim.opt.timeout = false
+vim.opt.ttimeout = false
 
 -- Text display
 vim.opt.list = false -- show invisible chars?
