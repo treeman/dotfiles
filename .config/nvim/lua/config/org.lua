@@ -12,7 +12,7 @@ M.open_org_file_telescope = function(base_folder)
 	-- Archive can be gross, need to explicitly ask for it, otherwise we'll hide it.
 	local ignore_files = {}
 	if base_folder ~= "archive" then
-		ignore_files = { "~/archive" }
+		ignore_files = { "^archive/" }
 	end
 
 	require("telescope.builtin").find_files({
