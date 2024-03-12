@@ -23,6 +23,13 @@ local overrides = {
 	{ name = "@text.reference.markdown_inline", val = { link = "Type" } },
 	{ name = "@text.reference.markdown", val = { link = "Type" } },
 	-- Djot
+	{ name = "@markup.heading.1", val = { link = "Title" } },
+	{ name = "@markup.heading.2", val = { link = "Constant" } },
+	{ name = "@markup.heading.3", val = { link = "DiagnosticOk" } },
+	{ name = "@markup.heading.4", val = { link = "DiagnosticInfo" } },
+	{ name = "@markup.heading.5", val = { link = "DiagnosticHint" } },
+	{ name = "@markup.heading.6", val = { link = "DiagnosticError" } },
+
 	{ name = "@markup.highlighted", val = { link = "Special" } },
 	{ name = "@markup.insert", val = { link = "@markup.underline" } },
 	{ name = "@markup.delete", val = { link = "@markup.strike" } },
