@@ -9,9 +9,14 @@ M.open_org_file_telescope = function(base_folder)
 
 	local folder = vim.fn.expand("~/org/") .. base_folder .. "/"
 
+	-- Archive can be gross, need to explicitly ask for it, otherwise we'll hide it.
+	local ignore_files = {}
+	if base_folder ~= "archive" then
+		ignore_files = { "~/archive" }
+	end
+
 	require("telescope.builtin").find_files({
-		-- If archive gets gross, maybe we should ignore this when no explicitly searching for archive files?
-		-- file_ignore_patterns = { "archive" },
+		file_ignore_patterns = ignore_files,
 		attach_mappings = function(prompt_bufnr, map)
 			-- Creates a file using the telescope input prompt.
 			-- Useful to quickly create a file if nothing exists.
