@@ -86,8 +86,10 @@ M.init = function()
 	map("n", "<leader>d", ":Neotree toggle=true<CR>", { desc = "Neotree" })
 	map("n", "<leader>t", ":TroubleToggle<cr>", { desc = "Trouble" })
 
-	map("n", "<leader>es", ":e ~/norg/scratch.norg<CR>", { desc = "Scratch" })
-	map("n", "<leader>ej", require("config.norg").open_weekly_journal, { desc = "This weeks journal" })
+	map("n", "<leader>es", ":e ~/org/scratch.dj<CR>", { desc = "Scratch" })
+	map("n", "<leader>ej", ":e ~/org/journal.dj<CR>", { desc = "Journal" })
+	map("n", "<leader>eg", ":e ~/org/goals.dj<CR>", { desc = "Goals" })
+	map("n", "<leader>eh", ":e ~/org/habits.dj<CR>", { desc = "Habits" })
 
 	-- Git
 	map("n", "gs", ":Neogit<CR>", { desc = "Git status" })
@@ -117,49 +119,42 @@ M.telescope = {
 	{ "<leader>b", require("config.telescope_actions").open_buffer, silent = true, desc = "Buffers" },
 	{ "<leader>o", require("telescope.builtin").oldfiles, silent = true, desc = "Old files" },
 
-	--  -- I use neorg as a personal knowledge base. Telescoping in it makes it really pleasant,
+	--  Telescoping into a personal knowledge base is really pleasant,
 	{
-		"<leader>n",
+		"<leader><leader>",
 		function()
-			require("config.norg").open_norg("")
+			require("config.org").open_org_file_telescope("")
 		end,
-		desc = "Neorg",
+		desc = "Org",
 	},
 	{
 		"<leader>ep",
 		function()
-			require("config.norg").open_norg("projects")
+			require("config.org").open_org_file_telescope("projects")
 		end,
-		desc = "Neorg projects",
+		desc = "Org projects",
 	},
 	{
 		"<leader>ea",
 		function()
-			require("config.norg").open_norg("areas")
+			require("config.org").open_org_file_telescope("areas")
 		end,
-		desc = "Neorg areas",
+		desc = "Org areas",
 	},
 	{
 		"<leader>er",
 		function()
-			require("config.norg").open_norg("resources")
+			require("config.org").open_org_file_telescope("resources")
 		end,
-		desc = "Neorg resources",
+		desc = "Org resources",
 	},
 	{
 		"<leader>eA",
 		function()
-			require("config.norg").open_norg("archive")
+			require("config.org").open_org_file_telescope("archive")
 		end,
-		desc = "Neorg archive",
+		desc = "Org archive",
 	},
-	-- {
-	-- 	"<leader>ej",
-	-- 	function()
-	-- 		require("config.norg").open_norg("areas/weekly_journal")
-	-- 	end,
-	-- 	desc = "Neorg archive",
-	-- },
 	{ "gb", require("telescope.builtin").git_branches, silent = true, desc = "Git branches" },
 	-- Ideas
 	--require('telescope.builtin').git_commits()
