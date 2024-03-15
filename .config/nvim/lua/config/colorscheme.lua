@@ -30,6 +30,8 @@ local overrides = {
 	{ name = "@markup.heading.5", val = { link = "DiagnosticHint" } },
 	{ name = "@markup.heading.6", val = { link = "DiagnosticError" } },
 
+	{ name = "@markup", val = { link = "Normal" } },
+
 	{ name = "@markup.highlighted", val = { link = "Special" } },
 	{ name = "@markup.insert", val = { link = "@markup.underline" } },
 	{ name = "@markup.delete", val = { link = "@markup.strike" } },

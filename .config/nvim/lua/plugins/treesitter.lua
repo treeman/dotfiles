@@ -1,5 +1,14 @@
 local config = function()
 	local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+	parser_config.sdjot = {
+		install_info = {
+			url = "~/code/tree-sitter-sdjot",
+			files = { "src/parser.c", "src/scanner.c" },
+			generate_reqires_npm = false,
+			requires_generate_from_grammar = false,
+		},
+		filetype = "sdjot",
+	}
 	parser_config.djot = {
 		install_info = {
 			url = "~/code/tree-sitter-djot",
