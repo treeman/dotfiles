@@ -68,9 +68,9 @@ if test -e $secret_file
     source $secret_file
 end
 
-alias n "nvim -c \":lua require('config.norg').open_norg('')\""
-alias ep "nvim -c \":lua require('config.norg').open_norg('projects')\""
-alias ea "nvim -c \":lua require('config.norg').open_norg('areas')\""
-alias er "nvim -c \":lua require('config.norg').open_norg('resources')\""
-alias eA "nvim -c \":lua require('config.norg').open_norg('archive')\""
-alias ej "nvim -c \":lua require('config.norg').open_weekly_journal()\""
+alias n "nvim -c \":lua require('config.org').open_org_file_telescope('')\""
+alias ep "nvim -c \":lua require('config.org').open_org_file_telescope('projects')\""
+alias ea "nvim -c \":lua require('config.org').open_org_file_telescope('areas')\""
+alias er "nvim -c \":lua require('config.org').open_org_file_telescope('resources')\""
+alias eA "nvim -c \":lua require('config.org').open_org_file_telescope('archive')\""
+# alias ej "nvim -c \":lua require('config.org').open_weekly_journal()\""
