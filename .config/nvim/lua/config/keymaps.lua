@@ -206,6 +206,7 @@ local ts_move_keys = {
 	c = { query = "@class.outer", desc = "goto class" },
 	x = { query = "@comment.outer", desc = "goto comment" },
 	g = { query = { "@class.outer", "@function.outer" }, desc = "goto major" },
+	t = { query = "@heading1", desc = "goto heading1" },
 }
 
 M.ts_goto_next_start = {}
