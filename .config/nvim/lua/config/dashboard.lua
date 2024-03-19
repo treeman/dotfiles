@@ -55,9 +55,9 @@ end
 local buttons = {
 	type = "group",
 	val = {
-		button("s", "Scratch", ":e ~/norg/scratch.norg<CR>"),
-		button("f", "Find files", ":Telescope find_files<cr>"),
-		button("o", "Recent files", ":Telescope oldfiles<cr>"),
+		button("s", "Scratch", ":e ~/org/scratch.dj<CR>"),
+		button("g", "Goals", ":e ~/org/goals.dj<CR>"),
+		button("h", "Habits", ":e ~/org/habits.dj<CR>"),
 		{ type = "padding", val = 1 },
 		button(
 			"c",
@@ -69,24 +69,18 @@ local buttons = {
 		button("u", "Update all", ":UpdateAll<cr>"),
 		button("l", "Lazy", ":Lazy<cr>"),
 		button("m", "Mason", ":Mason<cr>"),
-		{ type = "padding", val = 1 },
-		button("n", "Norg", ":lua require('config.norg').open_norg('')<CR>"),
-		button("p", "Projects", ":lua require('config.norg').open_norg('projects')<CR>"),
-		button("a", "Areas", ":lua require('config.norg').open_norg('areas')<CR>"),
-		button("r", "Resources", ":lua require('config.norg').open_norg('resources')<CR>"),
-		button("A", "Archive", ":lua require('config.norg').open_norg('archive')<CR>"),
 	},
 }
 
 local working_on = {
 	-- Meh, just manually align middle space. Like a grug.
 	"<leader>w                  Word flash",
-	"s<c>                       Leap",
-	"yr<target>                 Remote yank",
+	-- "s<c>                       Leap",
+	-- "yr<target>                 Remote yank",
 	"cs<target><replacement>    Change delimiters",
 	"ds<char>                   Delete delimiters",
 	"ys<motion><char>           Add delimiters",
-	"v oil-ssh://server         Edit files on remote",
+	-- "v oil-ssh://server         Edit files on remote",
 }
 
 local working_on_transformed = {}
