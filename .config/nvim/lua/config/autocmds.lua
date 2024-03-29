@@ -86,7 +86,7 @@ autocmd({ "BufRead", "BufNewFile" }, {
 
 -- Didn't manage to add formatting specified with a lua function
 -- to conform, so do it manually.
-autocmd("BufWritePost", {
+autocmd("BufWritePre", {
 	pattern = "*.scm",
 	group = filegroup,
 	callback = require("util/format_queries").format,
