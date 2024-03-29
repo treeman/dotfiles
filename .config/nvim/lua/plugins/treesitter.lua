@@ -18,6 +18,15 @@ local config = function()
 		},
 		filetype = "djot",
 	}
+	parser_config.fishshell = {
+		install_info = {
+			url = "~/code/tree-sitter-fishshell",
+			files = { "src/parser.c" },
+			generate_reqires_npm = false,
+			requires_generate_from_grammar = false,
+		},
+		filetype = "fish-shell",
+	}
 
 	local keymaps = require("config.keymaps")
 
@@ -81,6 +90,9 @@ local config = function()
 			enable = true,
 		},
 		endwise = {
+			enable = true,
+		},
+		indent = {
 			enable = true,
 		},
 		textobjects = {

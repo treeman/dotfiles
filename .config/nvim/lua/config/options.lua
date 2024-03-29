@@ -25,6 +25,7 @@ vim.opt.ttimeout = false
 -- Text display
 vim.opt.list = false -- show invisible chars?
 vim.opt.listchars = "tab:>-,trail:-" -- show tabs and trailing spaces
+vim.opt.foldenable = false -- disable folding at startup
 
 -- Text formatting
 vim.opt.expandtab = true -- no real tabs please!
@@ -33,6 +34,8 @@ vim.opt.shiftwidth = 4 -- auto indent amount when using indents ex >> and <<
 vim.opt.softtabstop = 4 -- when hitting tab or backspace, how wide should a tab be
 vim.opt.tabstop = 4 -- tabs width
 vim.opt.autoindent = true -- keep indenting after newline
+-- vim.opt.autoindent = false -- use treesitter for indent instead
+-- vim.opt.smartindent = false
 vim.opt.smarttab = true -- insert tabs on the start according to shiftwidth, not tabstop
 
 -- UI
