@@ -14,7 +14,7 @@ local function update_position(args)
 	})
 	-- print(vim.inspect(msg))
 
-	local conn = vim.b[args.buf].myblog_conn
+	local conn = vim.b[args.buf].blog_conn
 	vim.fn.chansend(conn, msg)
 	-- Watcher tries to read lines so we need to terminate the message with a newline
 	vim.fn.chansend(conn, "\n")
@@ -22,21 +22,21 @@ end
 
 local function clear_connection(args)
 	print("Closing existing blog connection")
-	vim.fn.chanclose(vim.b[args.buf].myblog_conn)
-	vim.b[args.buf].myblog_conn = nil
+	vim.fn.chanclose(vim.b[args.buf].blog_conn)
+	vim.b[args.buf].blog_conn = nil
 	-- I guess we could just not create the autocmd, but this is cleaner if we fail to reconnect
 	vim.api.nvim_clear_autocmds({ event = "CursorMoved", buffer = args.buffer, group = args.group })
 end
 
 local function establish_connection(args)
 	print("Trying to establish connection...")
-	local existing = vim.b[args.buf].myblog_conn
+	local existing = vim.b[args.buf].blog_conn
 	if existing then
 		clear_connection(args)
 	end
 
 	local status, err = pcall(function()
-		vim.b[args.buf].myblog_conn = vim.fn.sockconnect("tcp", "127.0.0.1:8082", {
+		vim.b[args.buf].blog_conn = vim.fn.sockconnect("tcp", "127.0.0.1:8082", {
 			on_data = function(_, _, _)
 				-- Second argument should be a single-list item,
 				-- but since we don't send messages from the blog to Neovim this
@@ -70,7 +70,7 @@ local function attach(args)
 	establish_connection(args)
 end
 
-local group = augroup("myblog", { clear = true })
+local group = augroup("blog", { clear = true })
 autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "*.dj,*.markdown",
 	group = group,
