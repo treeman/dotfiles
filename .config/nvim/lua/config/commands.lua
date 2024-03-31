@@ -34,3 +34,5 @@ cmd("FormatEnable", function()
 end, {
 	desc = "Re-enable autoformat-on-save",
 })
+
+cmd("Preview", require("blog.preview").preview_curr_buf)
