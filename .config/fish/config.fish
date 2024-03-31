@@ -32,6 +32,9 @@ set -x EDITOR nvim
 
 set -x BROWSER firefox
 
+# Where is this coming from??
+set -e PORT
+
 alias vim nvim
 alias v nvim
 alias g git

@@ -1,5 +1,12 @@
--- vim.cmd.colorscheme("kanagawa")
 vim.cmd.colorscheme("melange")
+
+local bg = vim.opt.background:get()
+local palette = require("melange/palettes/" .. bg)
+
+local a = palette.a -- Grays
+local b = palette.b -- Bright foreground colors
+local c = palette.c -- Foreground colors
+local d = palette.d -- Background colors
 
 -- See :help neo-tree-highlights
 -- See: https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#highlights
@@ -30,26 +37,22 @@ local overrides = {
 	{ name = "@markup.heading.5", val = { link = "DiagnosticHint" } },
 	{ name = "@markup.heading.6", val = { link = "DiagnosticError" } },
 
-	{ name = "@markup", val = { link = "Normal" } },
+	-- { name = "@markup", val = { link = "Normal" } },
 	{ name = "@none", val = { link = "Normal" } },
 
+	-- { name = "@markup.symbol", val = { link = "@string.special" } },
+	{ name = "@markup.math", val = { link = "@markup.italic" } },
+	{ name = "@markup.strikethrough", val = { link = "@markup.strike" } },
+
+	-- Needed
+	{ name = "@markup.link.url", val = { link = "@string.special.path" } },
 	{ name = "@markup.highlighted", val = { link = "Special" } },
 	{ name = "@markup.insert", val = { link = "@markup.underline" } },
-	{ name = "@markup.delete", val = { link = "@markup.strike" } },
 	{ name = "@markup.superscript", val = { link = "@string" } },
 	{ name = "@markup.subscript", val = { link = "@string" } },
-	{ name = "@markup.symbol", val = { link = "@string.special" } },
-	{ name = "@markup.math", val = { link = "@markup.italic" } },
-	{ name = "@markup.caption", val = { link = "@markup.italic" } },
 	{ name = "@markup.link.label", val = { link = "@label" } },
-	{ name = "@markup.link.reference", val = { link = "Constant" } },
-	{ name = "@markup.link.definition", val = { link = "Constant" } },
-	{ name = "@markup.link.url", val = { link = "@string.special.path" } },
-	{ name = "@markup.footnote.definition", val = { link = "Function" } },
-	{ name = "@markup.footnote.reference", val = { link = "Function" } },
-	{ name = "@markup.todo", val = { link = "Todo" } },
-	{ name = "@markup.note", val = { link = "Todo" } },
-	{ name = "@markup.fixme", val = { link = "Todo" } },
+	{ name = "@markup.link", val = { fg = c.cyan, underline = true } },
+
 	-- Better elixir colors
 	{ name = "@symbol.elixir", val = { link = "@label" } },
 	{ name = "@constant.elixir", val = { link = "Constant" } },

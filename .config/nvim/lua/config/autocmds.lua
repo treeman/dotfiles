@@ -9,8 +9,13 @@ autocmd("TextYankPost", {
 	group = augroup("yank", { clear = true }),
 })
 
--- FIXME use modelines instead?
 local filegroup = augroup("filegroup", { clear = true })
+-- autocmd("FileType", {
+-- 	pattern = "python",
+-- 	group = filegroup,
+-- 	-- FIXME only disable for certain paths
+-- 	command = "FormatDisable",
+-- })
 autocmd("FileType", {
 	pattern = "html",
 	group = filegroup,
@@ -79,6 +84,14 @@ autocmd({ "BufRead", "BufNewFile" }, {
 	end,
 })
 
+-- Didn't manage to add formatting specified with a lua function
+-- to conform, so do it manually.
+autocmd("BufWritePre", {
+	pattern = "*.scm",
+	group = filegroup,
+	callback = require("util/format_queries").format,
+})
+
 -- Cursor line only in active window
 local cursorlinegroup = augroup("cursorlinegroup", { clear = true })
 autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
@@ -115,12 +128,10 @@ autocmd("WinLeave", {
 local foldgroup = augroup("openfoldsgroup", { clear = true })
 autocmd({ "BufReadPost", "FileReadPost" }, {
 	group = foldgroup,
-	pattern = "*.markdown,*.md",
+	pattern = "*.markdown,*.md,*.dj",
 	callback = function()
 		vim.opt_local.foldmethod = "expr"
 		vim.opt_local.foldexpr = "nvim_treesitter#foldexpr()"
-		-- Folds will start closed, this will force them all open
-		vim.cmd("normal zR")
 	end,
 })
 
