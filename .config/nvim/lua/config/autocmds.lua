@@ -65,11 +65,6 @@ autocmd("BufRead", {
 	group = filegroup,
 	command = "set filetype=html",
 })
-autocmd("BufRead", {
-	pattern = "*.dj",
-	group = filegroup,
-	command = "set filetype=djot",
-})
 
 autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "*html.pm,*html.p,*xml.p,index.ptree",
