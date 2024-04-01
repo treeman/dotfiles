@@ -35,4 +35,9 @@ end, {
 	desc = "Re-enable autoformat-on-save",
 })
 
-cmd("Preview", require("blog.preview").preview_curr_buf)
+local blog_server = require("blog.server")
+cmd("BlogStart", blog_server.start)
+cmd("BlogStop", blog_server.stop)
+cmd("BlogRestart", blog_server.restart)
+
+-- cmd("Preview", require("blog.preview").preview_curr_buf)

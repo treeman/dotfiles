@@ -45,12 +45,25 @@ M.init = function()
 		map("n", "<C-j>", "<c-w>j")
 		map("n", "<C-k>", "<c-w>k")
 		map("n", "<C-l>", "<c-w>l")
+
+		map("t", "<C-h>", "<c-w>h")
+		map("t", "<C-j>", "<c-w>j")
+		map("t", "<C-k>", "<c-w>k")
+		map("t", "<C-l>", "<c-w>l")
 	else
 		map("n", "<C-left>", "<c-w>h")
 		map("n", "<C-down>", "<c-w>j")
 		map("n", "<C-up>", "<c-w>k")
 		map("n", "<C-right>", "<c-w>l")
+
+		map("t", "<C-left>", "<c-w>h")
+		map("t", "<C-down>", "<c-w>j")
+		map("t", "<C-up>", "<c-w>k")
+		map("t", "<C-right>", "<c-w>l")
 	end
+
+	-- Don't get caught in terminal
+	map("t", "<Esc>", "<C-\\><C-n>")
 
 	-- Move visual lines
 	map("n", "<up>", "gk")

@@ -1,1 +1,2 @@
-require("blog.preview")
+-- require("blog.preview")
+require("blog.server")
