@@ -10,7 +10,12 @@ end
 
 -- Return the relative path of a file by stripping away the `blog_path`.
 local function rel_path(path)
-	return string.sub(path, string.len(blog_path) + 1)
+	-- Only strip prefix if found, return original otherwise.
+	if path:find(blog_path, 1, true) == 1 then
+		return string.sub(path, string.len(blog_path) + 1)
+	else
+		return path
+	end
 end
 
 -- local function curr_in_blog()
@@ -18,8 +23,17 @@ end
 -- end
 
 local function path_to_url(path)
-	-- drafts/test.dj -> drafts/test
-	-- posts/2024-01-01-some_title.dj -> blog/2024/01/01/some_title
+	local path = rel_path(path)
+
+	if path:find("drafts/", 1, true) == 1 then
+		-- drafts/test.dj -> drafts/test
+	elseif path:find("posts/", 1, true) == 1 then
+		-- posts/2024-01-01-some_title.dj -> blog/2024/01/01/some_title
+	end
+end
+
+local function path_to_localhost(path)
+	return "localhost:8080/" .. path_to_url(path)
 end
 
 local function url_to_path(url) end
@@ -107,9 +121,8 @@ M.preview_curr_buf = function()
 		return
 	end
 
-	print("In blog")
-
-	print(rel_path(curr_path))
+	local url = path_to_localhost(curr_path)
+	print(url)
 end
 
 return M
