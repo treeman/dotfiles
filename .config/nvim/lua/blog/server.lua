@@ -7,6 +7,8 @@
 -- Should show connection + server status in statusbar
 -- Should cwd to blog_path when loading a file
 
+local nio = require("nio")
+
 local blog_path = "/home/tree/code/jonashietala/"
 
 local autocmd = vim.api.nvim_create_autocmd
@@ -14,16 +16,25 @@ local augroup = vim.api.nvim_create_augroup
 
 -- Event handling
 
--- This fun little thing tries to connect to my blogging
--- watch server and sends it document positions on move.
-local function update_position(args)
+local function send_msg(msg)
 	local conn = vim.g.blog_conn
 
-	if not conn then
-		return
-	end
+	-- FIXME all messages needs a unique counter
+	-- return the counter from this function
+	-- then when a response is received, store the received message somewhere
+	-- and we can use the counter to retrieve the corresponding message.
 
-	local msg = vim.fn.json_encode({
+	if conn then
+		vim.fn.chansend(conn, vim.fn.json_encode(msg))
+		-- Watcher tries to read lines so we need to terminate the message with a newline
+		vim.fn.chansend(conn, "\n")
+	end
+end
+
+-- This fun little thing tries to connect to my blogging
+-- watch server and sends it document positions on move.
+local function update_position()
+	send_msg({
 		id = "CursorMoved",
 		-- context = vim.fn.getline("."),
 		linenum = vim.fn.line("."),
@@ -31,11 +42,6 @@ local function update_position(args)
 		column = vim.fn.col("."),
 		path = vim.fn.expand("%:p"),
 	})
-	-- print(vim.inspect(msg))
-
-	vim.fn.chansend(conn, msg)
-	-- Watcher tries to read lines so we need to terminate the message with a newline
-	vim.fn.chansend(conn, "\n")
 end
 
 -- Server management
@@ -73,11 +79,6 @@ local function stop_server()
 	print("blog server stopped")
 end
 
-local function restart_server()
-	stop_server()
-	start_server()
-end
-
 -- Server connection management
 
 local blog_group = augroup("blog", { clear = true })
@@ -92,7 +93,7 @@ local function close_connection()
 	vim.fn.chanclose(vim.g.blog_conn)
 	vim.g.blog_conn = nil
 	-- I guess we could just not create the autocmd, but this is cleaner if we fail to reconnect
-	vim.api.nvim_clear_autocmds({ event = "CursorMoved", group = blog_group })
+	-- vim.api.nvim_clear_autocmds({ event = "CursorMoved", group = blog_group })
 end
 
 local function try_connect()
@@ -112,6 +113,7 @@ local function try_connect()
 				print(vim.inspect(a))
 				print(vim.inspect(b))
 				print(vim.inspect(c))
+				-- TODO how to return data from here to where expected return value?
 				close_connection()
 			end,
 		})
@@ -119,12 +121,6 @@ local function try_connect()
 
 	if status then
 		print("Established blog connection")
-
-		-- autocmd("CursorMoved", {
-		-- 	pattern = blog_path .. "*.{dj,markdown,md}",
-		-- 	group = blog_group,
-		-- 	callback = update_position,
-		-- })
 
 		return true
 	end
@@ -150,7 +146,6 @@ local function establish_connection(ensure_server_started)
 	end
 
 	-- Then try to reconnect, via a task to not block the UI.
-	local nio = require("nio")
 	local _ = nio.run(function()
 		-- TODO maybe do something more intelligent here?
 		local attempt = 0
@@ -165,27 +160,43 @@ local function establish_connection(ensure_server_started)
 	end)
 end
 
-M = {}
-
-M.start = start_server
-M.stop = stop_server
-M.restart = restart_server
-
-M.preview = function() end
+local autocmd_pattern = blog_path .. "*.{dj,markdown,md}"
 
 autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = blog_path .. "*.{dj,markdown,md}",
+	pattern = autocmd_pattern,
 	group = blog_group,
 	callback = function()
 		print("Attached to:", vim.fn.expand("%:p"))
 		vim.api.nvim_set_current_dir(blog_path)
-		-- TODO
-		-- 1. try to establish connection
-		-- 2. if fails, try to start_server, and try to connect again
-		--	  unless we have done :BlogStop, which should block it via a global flag...??
-		-- start_server()
 		establish_connection(true)
 	end,
 })
+
+autocmd("CursorMoved", {
+	pattern = autocmd_pattern,
+	group = blog_group,
+	callback = update_position,
+})
+
+M = {}
+
+M.start = function()
+	start_server()
+	establish_connection(false)
+end
+
+M.stop = function()
+	close_connection()
+	stop_server()
+end
+
+M.restart = function()
+	M.stop()
+	M.start()
+end
+
+M.list_posts = function() end
+
+M.preview = function() end
 
 return M
