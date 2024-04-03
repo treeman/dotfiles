@@ -18,23 +18,29 @@ local augroup = vim.api.nvim_create_augroup
 
 local function send_msg(msg)
 	local conn = vim.g.blog_conn
+	vim.fn.chansend(conn, vim.fn.json_encode(msg))
+	-- Watcher tries to read lines so we need to terminate the message with a newline
+	vim.fn.chansend(conn, "\n")
+end
 
+local function call(msg)
 	-- FIXME all messages needs a unique counter
 	-- return the counter from this function
 	-- then when a response is received, store the received message somewhere
 	-- and we can use the counter to retrieve the corresponding message.
 
-	if conn then
-		vim.fn.chansend(conn, vim.fn.json_encode(msg))
-		-- Watcher tries to read lines so we need to terminate the message with a newline
-		vim.fn.chansend(conn, "\n")
-	end
+	msg["message_id"] = vim.g.blog_message_id + 1
+	send_msg(msg)
+end
+
+local function cast(msg)
+	send_msg(msg)
 end
 
 -- This fun little thing tries to connect to my blogging
 -- watch server and sends it document positions on move.
 local function update_position()
-	send_msg({
+	cast({
 		id = "CursorMoved",
 		-- context = vim.fn.getline("."),
 		linenum = vim.fn.line("."),
