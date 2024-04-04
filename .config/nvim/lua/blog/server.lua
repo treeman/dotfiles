@@ -29,7 +29,7 @@ local function send_msg(msg)
 	vim.fn.chansend(conn, "\n")
 end
 
-local function call(msg)
+local function call(msg, cb)
 	if not vim.g.blog_conn then
 		print("Not connected")
 		return nil
@@ -51,38 +51,95 @@ local function call(msg)
 
 	send_msg(msg)
 
-	local future = nio.control.future()
+	-- FIXME call cb with result instead of returning
 
-	local _ = nio.run(function()
-		-- Wait for response. 1 sec should be more than enough, otherwise we bail.
-		local attempt = 0
-		-- FIXME we might need to yield to the main thread...??
-		while attempt < 100 do
-			if vim.g.blog_reply_stack then
-				local reply = vim.g.blog_reply_stack[message_id]
-				print("Checking", message_id)
-				if reply then
-					P(reply)
-					vim.g.blog_reply_stack[message_id] = nil
-					future.set(reply)
-					return
-				end
+	-- local future = nio.control.future()
+
+	-- Wait for response. 1 sec should be more than enough, otherwise we bail.
+	local attempt = 0
+	-- FIXME we might need to yield to the main thread...??
+	while attempt < 100 do
+		if vim.g.blog_reply_stack then
+			local reply = vim.g.blog_reply_stack[message_id]
+			print("Checking", message_id)
+			if reply then
+				P(reply)
+				vim.g.blog_reply_stack[message_id] = nil
+				-- future.set(reply)
+				return reply
 			end
-
-			attempt = attempt + 1
-			-- os.execute("sleep 0.01")
-			nio.sleep(1000)
 		end
 
-		future.set(false)
-	end)
+		nio.scheduler()
+
+		attempt = attempt + 1
+		os.execute("sleep 0.01")
+		-- nio.sleep(1000)
+	end
+
+	return nil
+
+	-- local wait = nio.create(
+	-- 	nio.wrap(function()
+	-- 		-- Wait for response. 1 sec should be more than enough, otherwise we bail.
+	-- 		local attempt = 0
+	-- 		-- FIXME we might need to yield to the main thread...??
+	-- 		while attempt < 100 do
+	-- 			if vim.g.blog_reply_stack then
+	-- 				local reply = vim.g.blog_reply_stack[message_id]
+	-- 				print("Checking", message_id)
+	-- 				if reply then
+	-- 					P(reply)
+	-- 					vim.g.blog_reply_stack[message_id] = nil
+	-- 					-- future.set(reply)
+	-- 					return reply
+	-- 				end
+	-- 			end
+
+	-- 			attempt = attempt + 1
+	-- 			-- os.execute("sleep 0.01")
+	-- 			nio.sleep(1000)
+	-- 		end
+
+	-- 		return nil
+	-- 	end, 0),
+	-- 	0
+	-- )
+
+	-- local x = wait()
+
+	-- return x
+
+	-- local _ = nio.run(function()
+	-- 	-- Wait for response. 1 sec should be more than enough, otherwise we bail.
+	-- 	local attempt = 0
+	-- 	-- FIXME we might need to yield to the main thread...??
+	-- 	while attempt < 100 do
+	-- 		if vim.g.blog_reply_stack then
+	-- 			local reply = vim.g.blog_reply_stack[message_id]
+	-- 			print("Checking", message_id)
+	-- 			if reply then
+	-- 				P(reply)
+	-- 				vim.g.blog_reply_stack[message_id] = nil
+	-- 				future.set(reply)
+	-- 				return
+	-- 			end
+	-- 		end
+
+	-- 		attempt = attempt + 1
+	-- 		-- os.execute("sleep 0.01")
+	-- 		nio.sleep(1000)
+	-- 	end
+
+	-- 	future.set(false)
+	-- end)
 
 	-- local success, value = pcall(future.wait)
 	-- P(success)
 	-- P(value)
 	-- return value
 
-	return nil
+	-- return nil
 
 	-- local res = nio.first({ task })
 	-- if not res then
@@ -286,11 +343,10 @@ M.restart = function()
 	M.start()
 end
 
-M.list_posts = function()
-	local posts = call({
+M.list_posts = function(cb)
+	call({
 		id = "ListPosts",
-	})
-	P(posts)
+	}, cb)
 end
 
 M.list_posts()
