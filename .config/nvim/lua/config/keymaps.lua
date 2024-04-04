@@ -109,7 +109,7 @@ M.init = function()
 	map("n", "g<space>", ":Git ", { desc = "Git" })
 
 	-- Write and source lua file
-	map("n", "<leader>w", ":write<CR>:source %<CR>")
+	map("n", "<leader>x", ":write<CR>:source %<CR>")
 end
 
 M.telescope = {
@@ -173,7 +173,7 @@ M.telescope = {
 	},
 	{ "gb", require("telescope.builtin").git_branches, silent = true, desc = "Git branches" },
 
-	{ "<leader>h", require("telescope.builtin").help_tags, silent = true, desc = "Help tags" },
+	{ "<leader>hh", require("telescope.builtin").help_tags, silent = true, desc = "Help tags" },
 	-- Ideas
 	--require('telescope.builtin').git_commits()
 	--require('telescope.builtin').git_bcommits()

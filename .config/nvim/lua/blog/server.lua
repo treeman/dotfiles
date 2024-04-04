@@ -45,21 +45,53 @@ local function call(msg)
 		vim.g.blog_message_id = 0
 	end
 
-	msg["message_id"] = vim.g.blog_message_id
+	local message_id = vim.g.blog_message_id
 	vim.g.blog_message_id = vim.g.blog_message_id + 1
+	msg["message_id"] = message_id
 
 	send_msg(msg)
 
-	-- Wait for response. 1 sec should be more than enough, otherwise we bail.
-	local attempt = 0
-	while attempt < 20 do
-		attempt = attempt + 1
-		os.execute("sleep 0.05")
-		-- nio.sleep(50)
-	end
+	local future = nio.control.future()
 
-	print("call timed out:", vim.inspect(msg))
+	local _ = nio.run(function()
+		-- Wait for response. 1 sec should be more than enough, otherwise we bail.
+		local attempt = 0
+		-- FIXME we might need to yield to the main thread...??
+		while attempt < 100 do
+			if vim.g.blog_reply_stack then
+				local reply = vim.g.blog_reply_stack[message_id]
+				print("Checking", message_id)
+				if reply then
+					P(reply)
+					vim.g.blog_reply_stack[message_id] = nil
+					future.set(reply)
+					return
+				end
+			end
+
+			attempt = attempt + 1
+			-- os.execute("sleep 0.01")
+			nio.sleep(1000)
+		end
+
+		future.set(false)
+	end)
+
+	-- local success, value = pcall(future.wait)
+	-- P(success)
+	-- P(value)
+	-- return value
+
 	return nil
+
+	-- local res = nio.first({ task })
+	-- if not res then
+	-- 	print("call timed out:", vim.inspect(msg))
+	-- end
+	-- return res
+
+	-- print("call timed out:", vim.inspect(msg))
+	-- return nil
 end
 
 local function cast(msg)
@@ -145,20 +177,36 @@ local function try_connect()
 	print("Trying to establish connection...")
 	local status, err = pcall(function()
 		vim.g.blog_conn = vim.fn.sockconnect("tcp", "127.0.0.1:8082", {
-			on_data = function(a, b, c)
+			on_data = function(_, data, _)
 				-- Second argument should be a single-list item,
 				-- but since we don't send messages from the blog to Neovim this
 				-- should only happen when the connection is closed.
-				print("a", vim.inspect(a))
+				-- print("a", vim.inspect(a))
 				-- if b then
 				-- 	print("with b")
 				-- end
-				print("b", vim.inspect(b))
-				print("c", vim.inspect(c))
+				-- print("b", vim.inspect(b))
+				-- print("c", vim.inspect(c))
+				-- P(b)
 				-- TODO how to return data from here to where expected return value?
-				print("Blog connection closed")
 
-				close_connection()
+				if table.getn(data) == 1 and data[1] == "" then
+					print("Blog connection closed")
+					close_connection()
+					return
+				end
+
+				local reply = vim.fn.json_decode(data)
+				if reply and reply["message_id"] then
+					if not vim.g.blog_reply_stack then
+						vim.g.blog_reply_stack = {}
+					end
+
+					vim.g.blog_reply_stack[reply["message_id"]] = reply
+
+					print("Setting message_id:", reply["message_id"])
+					print("Reply: ", vim.inspect(vim.g.blog_reply_stack[reply["message_id"]]))
+				end
 			end,
 		})
 	end)
