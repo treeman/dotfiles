@@ -14,26 +14,60 @@ local blog_path = "/home/tree/code/jonashietala/"
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
+P = function(v)
+	print(vim.inspect(v))
+	return v
+end
+
 -- Event handling
 
 local function send_msg(msg)
 	local conn = vim.g.blog_conn
+	-- P(msg)
 	vim.fn.chansend(conn, vim.fn.json_encode(msg))
 	-- Watcher tries to read lines so we need to terminate the message with a newline
 	vim.fn.chansend(conn, "\n")
 end
 
 local function call(msg)
+	if not vim.g.blog_conn then
+		print("Not connected")
+		return nil
+	end
+
 	-- FIXME all messages needs a unique counter
 	-- return the counter from this function
 	-- then when a response is received, store the received message somewhere
 	-- and we can use the counter to retrieve the corresponding message.
 
-	msg["message_id"] = vim.g.blog_message_id + 1
+	-- Create a unique message id for the call
+	if not vim.g.blog_message_id then
+		vim.g.blog_message_id = 0
+	end
+
+	msg["message_id"] = vim.g.blog_message_id
+	vim.g.blog_message_id = vim.g.blog_message_id + 1
+
 	send_msg(msg)
+
+	-- Wait for response. 1 sec should be more than enough, otherwise we bail.
+	local attempt = 0
+	while attempt < 20 do
+		attempt = attempt + 1
+		os.execute("sleep 0.05")
+		-- nio.sleep(50)
+	end
+
+	print("call timed out:", vim.inspect(msg))
+	return nil
 end
 
 local function cast(msg)
+	if not vim.g.blog_conn then
+		print("Not connected")
+		return
+	end
+
 	send_msg(msg)
 end
 
@@ -115,11 +149,15 @@ local function try_connect()
 				-- Second argument should be a single-list item,
 				-- but since we don't send messages from the blog to Neovim this
 				-- should only happen when the connection is closed.
-				print("Blog connection closed")
-				print(vim.inspect(a))
-				print(vim.inspect(b))
-				print(vim.inspect(c))
+				print("a", vim.inspect(a))
+				-- if b then
+				-- 	print("with b")
+				-- end
+				print("b", vim.inspect(b))
+				print("c", vim.inspect(c))
 				-- TODO how to return data from here to where expected return value?
+				print("Blog connection closed")
+
 				close_connection()
 			end,
 		})
@@ -127,7 +165,6 @@ local function try_connect()
 
 	if status then
 		print("Established blog connection")
-
 		return true
 	end
 
@@ -201,7 +238,14 @@ M.restart = function()
 	M.start()
 end
 
-M.list_posts = function() end
+M.list_posts = function()
+	local posts = call({
+		id = "ListPosts",
+	})
+	P(posts)
+end
+
+M.list_posts()
 
 M.preview = function() end
 

@@ -6,15 +6,15 @@ local M = {}
 
 M.show_blog_posts = function(opts)
 	print("show blog posts")
-	pickers
-		.new(opts, {
-			finder = finders.new_table({
-				"Yes",
-				"No",
-			}),
-			sorter = config.generic_sorter(opts),
-		})
-		:find()
+	local res = require("blog/server").list_posts()
+
+	pickers.new(opts, {
+		finder = finders.new_table({
+			"Yes",
+			"No",
+		}),
+		sorter = config.generic_sorter(opts),
+	}):find()
 end
 
 M.show_blog_posts()
