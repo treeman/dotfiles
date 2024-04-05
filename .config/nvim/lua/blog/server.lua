@@ -23,10 +23,15 @@ end
 
 local function send_msg(msg)
 	local conn = vim.g.blog_conn
-	-- P(msg)
 	vim.fn.chansend(conn, vim.fn.json_encode(msg))
 	-- Watcher tries to read lines so we need to terminate the message with a newline
 	vim.fn.chansend(conn, "\n")
+end
+
+local function gen_message_id()
+	local message_id = vim.g.blog_message_id
+	vim.g.blog_message_id = vim.g.blog_message_id + 1
+	return message_id
 end
 
 local function call(msg, cb)
@@ -35,120 +40,39 @@ local function call(msg, cb)
 		return nil
 	end
 
-	-- FIXME all messages needs a unique counter
-	-- return the counter from this function
-	-- then when a response is received, store the received message somewhere
-	-- and we can use the counter to retrieve the corresponding message.
-
-	-- Create a unique message id for the call
-	if not vim.g.blog_message_id then
-		vim.g.blog_message_id = 0
-	end
-
-	local message_id = vim.g.blog_message_id
-	vim.g.blog_message_id = vim.g.blog_message_id + 1
-	msg["message_id"] = message_id
-
-	send_msg(msg)
-
-	-- FIXME call cb with result instead of returning
-
-	-- local future = nio.control.future()
-
-	-- Wait for response. 1 sec should be more than enough, otherwise we bail.
-	local attempt = 0
-	-- FIXME we might need to yield to the main thread...??
-	while attempt < 100 do
-		if vim.g.blog_reply_stack then
-			local reply = vim.g.blog_reply_stack[message_id]
-			print("Checking", message_id)
-			if reply then
-				P(reply)
-				vim.g.blog_reply_stack[message_id] = nil
-				-- future.set(reply)
-				return reply
-			end
+	nio.run(function()
+		-- Create a unique message id for the call
+		if not vim.g.blog_message_id then
+			vim.g.blog_message_id = 0
 		end
 
-		nio.scheduler()
+		local msg_id = gen_message_id()
+		msg["message_id"] = msg_id
 
-		attempt = attempt + 1
-		os.execute("sleep 0.01")
-		-- nio.sleep(1000)
-	end
+		send_msg(msg)
 
-	return nil
+		local msg_id_s = tostring(msg_id)
 
-	-- local wait = nio.create(
-	-- 	nio.wrap(function()
-	-- 		-- Wait for response. 1 sec should be more than enough, otherwise we bail.
-	-- 		local attempt = 0
-	-- 		-- FIXME we might need to yield to the main thread...??
-	-- 		while attempt < 100 do
-	-- 			if vim.g.blog_reply_stack then
-	-- 				local reply = vim.g.blog_reply_stack[message_id]
-	-- 				print("Checking", message_id)
-	-- 				if reply then
-	-- 					P(reply)
-	-- 					vim.g.blog_reply_stack[message_id] = nil
-	-- 					-- future.set(reply)
-	-- 					return reply
-	-- 				end
-	-- 			end
+		-- Wait for response. 1 sec should be more than enough, otherwise we bail.
+		local attempt = 0
+		while attempt < 100 do
+			if vim.g.blog_messages then
+				local reply = vim.g.blog_messages[msg_id_s]
+				if reply then
+					vim.g.blog_messages[msg_id_s] = nil
+					return reply
+				end
+			end
 
-	-- 			attempt = attempt + 1
-	-- 			-- os.execute("sleep 0.01")
-	-- 			nio.sleep(1000)
-	-- 		end
+			nio.scheduler()
 
-	-- 		return nil
-	-- 	end, 0),
-	-- 	0
-	-- )
+			attempt = attempt + 1
+			nio.sleep(10)
+		end
 
-	-- local x = wait()
-
-	-- return x
-
-	-- local _ = nio.run(function()
-	-- 	-- Wait for response. 1 sec should be more than enough, otherwise we bail.
-	-- 	local attempt = 0
-	-- 	-- FIXME we might need to yield to the main thread...??
-	-- 	while attempt < 100 do
-	-- 		if vim.g.blog_reply_stack then
-	-- 			local reply = vim.g.blog_reply_stack[message_id]
-	-- 			print("Checking", message_id)
-	-- 			if reply then
-	-- 				P(reply)
-	-- 				vim.g.blog_reply_stack[message_id] = nil
-	-- 				future.set(reply)
-	-- 				return
-	-- 			end
-	-- 		end
-
-	-- 		attempt = attempt + 1
-	-- 		-- os.execute("sleep 0.01")
-	-- 		nio.sleep(1000)
-	-- 	end
-
-	-- 	future.set(false)
-	-- end)
-
-	-- local success, value = pcall(future.wait)
-	-- P(success)
-	-- P(value)
-	-- return value
-
-	-- return nil
-
-	-- local res = nio.first({ task })
-	-- if not res then
-	-- 	print("call timed out:", vim.inspect(msg))
-	-- end
-	-- return res
-
-	-- print("call timed out:", vim.inspect(msg))
-	-- return nil
+		-- Response timed out
+		return false
+	end, cb)
 end
 
 local function cast(msg)
@@ -157,7 +81,9 @@ local function cast(msg)
 		return
 	end
 
-	send_msg(msg)
+	nio.run(function()
+		send_msg(msg)
+	end)
 end
 
 -- This fun little thing tries to connect to my blogging
@@ -221,8 +147,22 @@ local function close_connection()
 	print("Closing existing blog connection")
 	vim.fn.chanclose(vim.g.blog_conn)
 	vim.g.blog_conn = nil
-	-- I guess we could just not create the autocmd, but this is cleaner if we fail to reconnect
-	-- vim.api.nvim_clear_autocmds({ event = "CursorMoved", group = blog_group })
+end
+
+local function handle_reply(data)
+	if table.getn(data) == 1 and data[1] == "" then
+		print("Blog connection closed")
+		close_connection()
+		return
+	end
+
+	local reply = vim.fn.json_decode(data)
+	if reply and reply["message_id"] then
+		local message_id = tostring(reply["message_id"])
+		local messages = vim.g.blog_messages or {}
+		messages[message_id] = reply
+		vim.g.blog_messages = messages
+	end
 end
 
 local function try_connect()
@@ -235,35 +175,9 @@ local function try_connect()
 	local status, err = pcall(function()
 		vim.g.blog_conn = vim.fn.sockconnect("tcp", "127.0.0.1:8082", {
 			on_data = function(_, data, _)
-				-- Second argument should be a single-list item,
-				-- but since we don't send messages from the blog to Neovim this
-				-- should only happen when the connection is closed.
-				-- print("a", vim.inspect(a))
-				-- if b then
-				-- 	print("with b")
-				-- end
-				-- print("b", vim.inspect(b))
-				-- print("c", vim.inspect(c))
-				-- P(b)
-				-- TODO how to return data from here to where expected return value?
-
-				if table.getn(data) == 1 and data[1] == "" then
-					print("Blog connection closed")
-					close_connection()
-					return
-				end
-
-				local reply = vim.fn.json_decode(data)
-				if reply and reply["message_id"] then
-					if not vim.g.blog_reply_stack then
-						vim.g.blog_reply_stack = {}
-					end
-
-					vim.g.blog_reply_stack[reply["message_id"]] = reply
-
-					print("Setting message_id:", reply["message_id"])
-					print("Reply: ", vim.inspect(vim.g.blog_reply_stack[reply["message_id"]]))
-				end
+				nio.run(function()
+					handle_reply(data)
+				end)
 			end,
 		})
 	end)
@@ -343,13 +257,16 @@ M.restart = function()
 	M.start()
 end
 
-M.list_posts = function(cb)
-	call({
-		id = "ListPosts",
-	}, cb)
+M.reconnect = function()
+	close_connection()
+	try_connect()
 end
 
-M.list_posts()
+M.list_tags = function(cb)
+	call({
+		id = "ListTags",
+	}, cb)
+end
 
 M.preview = function() end
 
