@@ -62,6 +62,10 @@ local function config()
 				end,
 			},
 			{
+				name = "blog",
+				group_index = 1,
+			},
+			{
 				name = "nvim_lsp",
 				group_index = 2,
 			},
@@ -114,6 +118,7 @@ local function config()
 					luasnip = "[SNIP]",
 					nvim_lsp = "[LSP]",
 					nvim_lua = "[LUA]",
+					blog = "[BLOG]",
 					neorg = "[NORG]",
 					beancount = "[BEAN]",
 					spell = "[SPELL]",

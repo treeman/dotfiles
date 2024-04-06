@@ -7,9 +7,8 @@
 -- Should show connection + server status in statusbar
 -- Should cwd to blog_path when loading a file
 
+local path = require("blog/path")
 local nio = require("nio")
-
-local blog_path = "/home/tree/code/jonashietala/"
 
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
@@ -111,7 +110,7 @@ local function start_server()
 	vim.g.blog_job_buf = buf
 	vim.api.nvim_buf_call(buf, function()
 		vim.g.blog_job_id = vim.fn.termopen("./blog watch", {
-			cwd = blog_path,
+			cwd = path.blog_path,
 		})
 		print("blog server started")
 	end)
@@ -150,7 +149,7 @@ local function close_connection()
 end
 
 local function handle_reply(data)
-	if table.getn(data) == 1 and data[1] == "" then
+	if #data == 1 and data[1] == "" then
 		print("Blog connection closed")
 		close_connection()
 		return
@@ -222,14 +221,14 @@ local function establish_connection(ensure_server_started)
 	end)
 end
 
-local autocmd_pattern = blog_path .. "*.{dj,markdown,md}"
+local autocmd_pattern = path.blog_path .. "*.{dj,markdown,md}"
 
 autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = autocmd_pattern,
 	group = blog_group,
 	callback = function()
 		print("Attached to:", vim.fn.expand("%:p"))
-		vim.api.nvim_set_current_dir(blog_path)
+		vim.api.nvim_set_current_dir(path.blog_path)
 		establish_connection(true)
 	end,
 })
@@ -267,6 +266,8 @@ M.list_tags = function(cb)
 		id = "ListTags",
 	}, cb)
 end
+
+M.list_urls = function(cb) end
 
 M.preview = function() end
 

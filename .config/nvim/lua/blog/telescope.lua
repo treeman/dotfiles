@@ -1,20 +1,23 @@
 local action_state = require("telescope.actions.state")
 local actions = require("telescope.actions")
-local config = require("telescope.config").values
+local conf = require("telescope.config").values
 local finders = require("telescope.finders")
 local pickers = require("telescope.pickers")
 local previewers = require("telescope.previewers")
 local server = require("blog/server")
+local path = require("blog/path")
 local nio = require("nio")
 
 local M = {}
 
-local blog_path = "/home/tree/code/jonashietala/"
-
-M.show_tags = function(opts)
+M.find_tags = function(opts)
 	server.list_tags(function(_, res)
-		if res then
-			pickers.new(opts, {
+		if not res then
+			return
+		end
+
+		pickers
+			.new(opts, {
 				finder = finders.new_table({
 					results = res.tags,
 					entry_maker = function(entry)
@@ -26,7 +29,7 @@ M.show_tags = function(opts)
 					end,
 				}),
 				-- TODO sort tags by count?
-				sorter = config.generic_sorter(opts),
+				sorter = conf.generic_sorter(opts),
 				previewer = previewers.new_buffer_previewer({
 					title = "Tag detaiLs",
 					define_preview = function(self, entry)
@@ -48,53 +51,113 @@ M.show_tags = function(opts)
 					end)
 					return true
 				end,
-			}):find()
-		end
+			})
+			:find()
 	end)
 end
 
-M.show_posts = function()
+local function _find_posts(subpath)
 	nio.run(function()
 		local rg = nio.process.run({
 			cmd = "rg",
 			args = {
-				"-No",
-				-- "--json",
-				"title: (.+)",
-				blog_path .. "posts/",
+				"-NoH",
+				"--heading",
+				"(title|tags)(: | = )(.+)",
+				path.blog_path .. subpath,
 			},
 		})
 
+		if not rg then
+			return
+		end
+
 		local output = rg.stdout.read()
+		if not output then
+			return
+		end
+
 		nio.scheduler()
 		local lines = vim.fn.split(output, "\n")
 		local posts = {}
 
 		local line_count = #lines
-		local i = 1
-		while i <= line_count do
-			i = i + 1
+		local post = {}
+		for i = 1, line_count do
+			local line = lines[i]
+
+			if line == "" then
+				table.insert(posts, post)
+				post = {}
+			else
+				local title = string.match(line, 'title%s?[:=]%s+"(.+)"')
+				local tags = string.match(line, "tags%s?[:=]%s+(.+)")
+				if title then
+					post["title"] = title
+				elseif tags then
+					post["tags"] = tags
+				else
+					post["path"] = line
+					local date = string.match(line, "posts/(%d%d%d%d%-%d%d%-%d%d)%-")
+					P(date)
+					if date then
+						post["date"] = date
+					end
+				end
+			end
 		end
 
-		-- for _, line in ipairs(data) do
-		-- 	P(json)
-		-- 	if json.type == "match" then
-		-- 		table.insert(posts, {
-		-- 			path = json.data.path.text,
-		-- 		})
-		-- 	end
-		-- end
+		pickers
+			.new(opts, {
+				finder = finders.new_table({
+					results = posts,
+					entry_maker = function(entry)
+						local date = ""
+						if entry.date then
+							date = " (" .. entry.date .. ")"
+						end
 
-		-- P(posts)
-		-- local res = vim.fn.json_decode(output)
-		-- P(res)
+						return {
+							display = entry.title .. date,
+							ordinal = entry.title .. entry.tags,
+							value = entry,
+						}
+					end,
+				}),
+				sorter = conf.file_sorter(opts),
+				previewer = previewers.new_buffer_previewer({
+					title = "Post Preview",
+					define_preview = function(self, entry)
+						conf.buffer_previewer_maker(entry.value.path, self.state.bufnr, {
+							bufname = self.state.bufname,
+							winid = self.state.winid,
+							preview = opts.preview,
+							file_encoding = opts.file_encoding,
+						})
+					end,
+				}),
+				attach_mappings = function(prompt_bufnr)
+					actions.select_default:replace(function()
+						local selection = action_state.get_selected_entry()
+						actions.close(prompt_bufnr)
+						vim.cmd(":e " .. selection.value.path)
+					end)
+					return true
+				end,
+			})
+			:find()
 	end)
 end
 
-M.show_posts()
+M.find_posts = function()
+	return _find_posts("posts/")
+end
 
--- TODO these should just use fd and rg so we don't have to wait
--- Browse posts
--- Browse drafts
+M.find_drafts = function()
+	return _find_posts("drafts/")
+end
+
+-- M.find_drafts()
+-- M.find_posts()
 
 return M
