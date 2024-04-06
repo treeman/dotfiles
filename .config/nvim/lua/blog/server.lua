@@ -72,7 +72,11 @@ M.call = function(msg, cb)
 
 		-- Response timed out
 		return false
-	end, cb)
+	end, function(success, reply)
+		if success then
+			cb(reply)
+		end
+	end)
 end
 
 M.cast = function(msg)
