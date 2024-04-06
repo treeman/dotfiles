@@ -265,18 +265,6 @@ M.reconnect = function()
 	M.try_connect()
 end
 
-M.list_tags = function(cb)
-	M.call({
-		id = "ListTags",
-	}, cb)
-end
-
-M.list_urls = function(cb)
-	M.call({
-		id = "ListUrls",
-	}, cb)
-end
-
 M.preview = function() end
 
 return M

@@ -1,4 +1,5 @@
 local server = require("blog.server")
+local content = require("blog.content")
 local nio = require("nio")
 
 local source = {}
@@ -24,7 +25,7 @@ function source:complete(params, callback)
 	-- 2. Expanding links in ref defs, e.g. `[label]: `   <- expand
 	local expand_url = string.match(cursor_before_line, "^%[.+%]:%s+$") or string.match(cursor_before_line, "%]%(/$")
 	if expand_url then
-		server.list_urls(function(reply)
+		content.list_urls(function(reply)
 			local res = {}
 			for _, info in ipairs(reply.urls) do
 				table.insert(res, {
@@ -43,7 +44,7 @@ function source:complete(params, callback)
 	-- Expand tags:
 	-- If line starts with `tags = ` and last char is "
 	if string.match(cursor_line, "^tags = ") and string.match(cursor_before_line, '"$') then
-		server.list_tags(function(reply)
+		content.list_tags(function(reply)
 			local res = {}
 			for _, info in ipairs(reply.tags) do
 				table.insert(res, {
