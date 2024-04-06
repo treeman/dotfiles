@@ -13,52 +13,53 @@ local nio = require("nio")
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-P = function(v)
-	print(vim.inspect(v))
-	return v
+M = {}
+
+M.is_connected = function()
+	return M._blog_conn ~= nil
 end
 
 -- Event handling
 
-local function send_msg(msg)
-	local conn = vim.g.blog_conn
-	vim.fn.chansend(conn, vim.fn.json_encode(msg))
-	-- Watcher tries to read lines so we need to terminate the message with a newline
-	vim.fn.chansend(conn, "\n")
+M._send_msg = function(msg)
+	local conn = M._blog_conn
+	if conn then
+		vim.fn.chansend(conn, vim.fn.json_encode(msg))
+		-- Watcher tries to read lines so we need to terminate the message with a newline
+		vim.fn.chansend(conn, "\n")
+	else
+		print("Error: trying to send a message without being connected")
+	end
 end
 
-local function gen_message_id()
-	local message_id = vim.g.blog_message_id
-	vim.g.blog_message_id = vim.g.blog_message_id + 1
+M._gen_message_id = function()
+	local message_id = M._blog_message_id or 0
+	M._blog_message_id = message_id + 1
 	return message_id
 end
 
-local function call(msg, cb)
-	if not vim.g.blog_conn then
+M.call = function(msg, cb)
+	if not M.is_connected() then
 		print("Not connected")
 		return nil
 	end
 
 	nio.run(function()
 		-- Create a unique message id for the call
-		if not vim.g.blog_message_id then
-			vim.g.blog_message_id = 0
-		end
-
-		local msg_id = gen_message_id()
+		local msg_id = M._gen_message_id()
 		msg["message_id"] = msg_id
 
-		send_msg(msg)
+		M._send_msg(msg)
 
 		local msg_id_s = tostring(msg_id)
 
 		-- Wait for response. 1 sec should be more than enough, otherwise we bail.
 		local attempt = 0
 		while attempt < 100 do
-			if vim.g.blog_messages then
-				local reply = vim.g.blog_messages[msg_id_s]
+			if M._blog_messages then
+				local reply = M._blog_messages[msg_id_s]
 				if reply then
-					vim.g.blog_messages[msg_id_s] = nil
+					M._blog_messages[msg_id_s] = nil
 					return reply
 				end
 			end
@@ -74,21 +75,21 @@ local function call(msg, cb)
 	end, cb)
 end
 
-local function cast(msg)
-	if not vim.g.blog_conn then
+M.cast = function(msg)
+	if not M.is_connected() then
 		print("Not connected")
 		return
 	end
 
 	nio.run(function()
-		send_msg(msg)
+		M._send_msg(msg)
 	end)
 end
 
 -- This fun little thing tries to connect to my blogging
 -- watch server and sends it document positions on move.
-local function update_position()
-	cast({
+M._update_position = function()
+	M.cast({
 		id = "CursorMoved",
 		-- context = vim.fn.getline("."),
 		linenum = vim.fn.line("."),
@@ -100,35 +101,35 @@ end
 
 -- Server management
 
-local function start_server()
-	if vim.g.blog_job_id ~= nil then
+M.start_server = function()
+	if M._blog_job_id ~= nil then
 		print("blog server already started")
 		return
 	end
 
 	local buf = vim.api.nvim_create_buf(true, true)
-	vim.g.blog_job_buf = buf
+	M._blog_job_bufnr = buf
 	vim.api.nvim_buf_call(buf, function()
-		vim.g.blog_job_id = vim.fn.termopen("./blog watch", {
+		M._blog_job_id = vim.fn.termopen("./blog watch", {
 			cwd = path.blog_path,
 		})
 		print("blog server started")
 	end)
 end
 
-local function stop_server()
-	if vim.g.blog_job_id == nil then
+M.stop_server = function()
+	if M._blog_job_id == nil then
 		print("blog server not started")
 		return
 	end
 
-	print("Stopping:", vim.g.blog_job_id)
+	print("Stopping:", M._blog_job_id)
 
-	vim.fn.jobstop(vim.g.blog_job_id)
-	vim.api.nvim_buf_delete(vim.g.blog_job_buf, { force = true })
+	vim.fn.jobstop(M._blog_job_id)
+	vim.api.nvim_buf_delete(M._blog_job_bufnr, { force = true })
 
-	vim.g.blog_job_buf = nil
-	vim.g.blog_job_id = nil
+	M._blog_job_bufnr = nil
+	M._blog_job_id = nil
 
 	print("blog server stopped")
 end
@@ -137,48 +138,49 @@ end
 
 local blog_group = augroup("blog", { clear = true })
 
-local function close_connection()
-	if vim.g.blog_conn == nil then
+M.close_connection = function()
+	if M._blog_conn == nil then
 		print("No blog connection to close")
 		return
 	end
 
 	print("Closing existing blog connection")
-	vim.fn.chanclose(vim.g.blog_conn)
-	vim.g.blog_conn = nil
+	vim.fn.chanclose(M._blog_conn)
+	M._blog_conn = nil
 end
 
-local function handle_reply(data)
+M.handle_reply = function(data)
 	if #data == 1 and data[1] == "" then
 		print("Blog connection closed")
-		close_connection()
+		M.close_connection()
 		return
 	end
 
 	local reply = vim.fn.json_decode(data)
 	if reply and reply["message_id"] then
 		local message_id = tostring(reply["message_id"])
-		local messages = vim.g.blog_messages or {}
+		local messages = M._blog_messages or {}
 		messages[message_id] = reply
-		vim.g.blog_messages = messages
+		M._blog_messages = messages
 	end
 end
 
-local function try_connect()
-	if vim.g.blog_conn then
+M.try_connect = function()
+	if M._blog_conn then
 		print("Already connected")
 		return true
 	end
 
 	print("Trying to establish connection...")
 	local status, err = pcall(function()
-		vim.g.blog_conn = vim.fn.sockconnect("tcp", "127.0.0.1:8082", {
+		M._blog_conn = vim.fn.sockconnect("tcp", "127.0.0.1:8082", {
 			on_data = function(_, data, _)
 				nio.run(function()
-					handle_reply(data)
+					M.handle_reply(data)
 				end)
 			end,
 		})
+		P(M._blog_conn)
 	end)
 
 	if status then
@@ -190,20 +192,20 @@ local function try_connect()
 	return false
 end
 
-local function establish_connection(ensure_server_started)
+M.establish_connection = function(ensure_server_started)
 	ensure_server_started = ensure_server_started or true
 	print("start server?", ensure_server_started)
 
 	-- To figure out if we have a server started somewhere
 	-- (from another Neovim instance or from the command line)
 	-- we first try to connect to it.
-	if try_connect() then
+	if M.try_connect() then
 		return
 	end
 
 	-- If that fails, try to start the blog server.
 	if ensure_server_started then
-		start_server()
+		M.start_server()
 	end
 
 	-- Then try to reconnect, via a task to not block the UI.
@@ -214,7 +216,7 @@ local function establish_connection(ensure_server_started)
 			print("trying...", attempt)
 			attempt = attempt + 1
 			nio.sleep(1000)
-			if try_connect() then
+			if M.try_connect() then
 				return
 			end
 		end
@@ -229,26 +231,24 @@ autocmd({ "BufRead", "BufNewFile" }, {
 	callback = function()
 		print("Attached to:", vim.fn.expand("%:p"))
 		vim.api.nvim_set_current_dir(path.blog_path)
-		establish_connection(true)
+		M.establish_connection(true)
 	end,
 })
 
 autocmd("CursorMoved", {
 	pattern = autocmd_pattern,
 	group = blog_group,
-	callback = update_position,
+	callback = M._update_position,
 })
 
-M = {}
-
 M.start = function()
-	start_server()
-	establish_connection(false)
+	M.start_server()
+	M.establish_connection(false)
 end
 
 M.stop = function()
-	close_connection()
-	stop_server()
+	M.close_connection()
+	M.stop_server()
 end
 
 M.restart = function()
@@ -257,17 +257,21 @@ M.restart = function()
 end
 
 M.reconnect = function()
-	close_connection()
-	try_connect()
+	M.close_connection()
+	M.try_connect()
 end
 
 M.list_tags = function(cb)
-	call({
+	M.call({
 		id = "ListTags",
 	}, cb)
 end
 
-M.list_urls = function(cb) end
+M.list_urls = function(cb)
+	M.call({
+		id = "ListUrls",
+	}, cb)
+end
 
 M.preview = function() end
 
