@@ -73,7 +73,7 @@ M.call = function(msg, cb)
 		-- Response timed out
 		return false
 	end, function(success, reply)
-		if success then
+		if success and reply then
 			cb(reply)
 		end
 	end)

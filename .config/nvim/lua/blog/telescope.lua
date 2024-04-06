@@ -11,14 +11,10 @@ local nio = require("nio")
 local M = {}
 
 M.find_tags = function(opts)
-	server.list_tags(function(res)
-		if not res then
-			return
-		end
-
+	server.list_tags(function(reply)
 		pickers.new(opts, {
 			finder = finders.new_table({
-				results = res.tags,
+				results = reply.tags,
 				entry_maker = function(entry)
 					return {
 						display = entry.name .. " (" .. tostring(#entry.posts) .. ")",
