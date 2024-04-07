@@ -16,6 +16,12 @@ M.list_urls = function(cb)
 	}, cb)
 end
 
+M.list_series = function(cb)
+	server.call({
+		id = "ListSeries",
+	}, cb)
+end
+
 M.list_posts = function(subpath, cb)
 	nio.run(function()
 		local rg = nio.process.run({

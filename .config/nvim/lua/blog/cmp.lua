@@ -64,8 +64,15 @@ function source:complete(params, callback)
 		content.list_series(function(reply)
 			local res = {}
 			for _, entity in ipairs(reply.series) do
+				local filter_text = entity.title .. entity.id
+				for _, post in ipairs(entity.posts) do
+					filter_text = filter_text .. post.title
+				end
+
 				table.insert(res, {
-					label = entity.name,
+					label = entity.title,
+					insertText = entity.id,
+					filterText = filter_text,
 					commitCharacters = { '"' },
 					kind = 18,
 				})
