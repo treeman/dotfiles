@@ -1,5 +1,5 @@
 local server = require("blog.server")
-local path = require("blog/path")
+local path = require("blog.path")
 local nio = require("nio")
 
 local M = {}
@@ -22,9 +22,19 @@ M.list_series = function(cb)
 	}, cb)
 end
 
+local function _run_cmd(args)
+	local rg = nio.process.run(args)
+
+	if not rg then
+		return nil
+	end
+
+	return rg.stdout.read()
+end
+
 M.list_posts = function(subpath, cb)
 	nio.run(function()
-		local rg = nio.process.run({
+		local output = _run_cmd({
 			cmd = "rg",
 			args = {
 				"-NoH",
@@ -34,11 +44,6 @@ M.list_posts = function(subpath, cb)
 			},
 		})
 
-		if not rg then
-			return
-		end
-
-		local output = rg.stdout.read()
 		if not output then
 			return
 		end
@@ -75,6 +80,28 @@ M.list_posts = function(subpath, cb)
 		end
 
 		cb(posts)
+	end)
+end
+
+M.list_images = function(cb)
+	nio.run(function()
+		local output = _run_cmd({
+			cmd = "fd",
+			args = {
+				"-t",
+				"f",
+				"\\.",
+				path.blog_path .. "images/",
+			},
+		})
+
+		if not output then
+			return
+		end
+
+		nio.scheduler()
+		local images = vim.fn.split(output, "\n")
+		cb(images)
 	end)
 end
 

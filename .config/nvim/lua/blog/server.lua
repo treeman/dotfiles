@@ -7,7 +7,7 @@
 -- Should show connection + server status in statusbar
 -- Should cwd to blog_path when loading a file
 
-local path = require("blog/path")
+local path = require("blog.path")
 local nio = require("nio")
 
 local autocmd = vim.api.nvim_create_autocmd

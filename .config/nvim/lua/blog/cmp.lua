@@ -1,6 +1,6 @@
 local server = require("blog.server")
 local content = require("blog.content")
-local nio = require("nio")
+local path = require("blog.path")
 
 local source = {}
 
@@ -19,6 +19,23 @@ function source:complete(params, callback)
 	--	export const Text = 1;
 	--	export const File = 17;
 	--	export const Reference = 18;
+
+	-- Expand images separately because I only ever use it in a
+	-- `![](/url)`
+	-- context and not mixing with other urls gives a more pleasant experience.
+	if string.match(cursor_before_line, "!%[%]%($") then
+		content.list_images(function(imgs)
+			local res = {}
+			for _, img in ipairs(imgs) do
+				table.insert(res, {
+					label = "/" .. path.rel_path(img),
+					kind = 17,
+				})
+			end
+			callback(res)
+		end)
+		return
+	end
 
 	-- Two cases for expanding urls:
 	-- 1. Expanding inline links, e.g. `[txt](/`					<- expand
@@ -90,7 +107,7 @@ function source:complete(params, callback)
 end
 
 function source:get_trigger_characters()
-	return { "/", '"', "[", " " }
+	return { "/", '"', "[", " ", "(" }
 end
 
 require("cmp").register_source("blog", source)
@@ -102,3 +119,5 @@ require("cmp").register_source("blog", source)
 -- server.list_urls(function(urls)
 -- 	P(urls)
 -- end)
+
+-- P(string.match("x ![](", "!%[%]%($"))

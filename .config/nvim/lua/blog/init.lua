@@ -1,4 +1,4 @@
--- require("blog.preview")
+require("blog.path")
 require("blog.server")
 require("blog.cmp")
 
@@ -9,7 +9,6 @@ require("blog.cmp")
 -- + Promote/demote
 
 -- TODO autocomplete
--- + urls
 -- + header links
 -- + link label defs
 --
@@ -20,5 +19,4 @@ require("blog.cmp")
 -- TODO server commands
 -- + refresh
 -- + goto def
--- + get all urls
 -- + get headers in post
