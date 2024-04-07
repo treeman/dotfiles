@@ -46,9 +46,9 @@ function source:complete(params, callback)
 	if string.match(cursor_line, "^tags = ") and string.match(cursor_before_line, '"$') then
 		content.list_tags(function(reply)
 			local res = {}
-			for _, info in ipairs(reply.tags) do
+			for _, entity in ipairs(reply.tags) do
 				table.insert(res, {
-					label = info.name,
+					label = entity.name,
 					commitCharacters = { '"' },
 					kind = 18,
 				})
@@ -61,14 +61,25 @@ function source:complete(params, callback)
 	-- Expand series:
 	-- `series = "`		<- expand
 	if string.match(cursor_before_line, '^series = "') then
-		print("SERIES")
-		-- TODO
+		content.list_series(function(reply)
+			local res = {}
+			for _, entity in ipairs(reply.series) do
+				table.insert(res, {
+					label = entity.name,
+					commitCharacters = { '"' },
+					kind = 18,
+				})
+			end
+			callback(res)
+		end)
 		return
 	end
 
-	-- TODO autocomplete heading refs
-	-- TODO autocomplete link refs
-	-- TODO autocomplete footnote refs
+	-- TODO should complete images
+
+	-- TODO autocomplete heading refs `[Heading text][]` and `/some/path#my-id`
+	-- TODO autocomplete link refs `[ref][]` and `[descr][ref]`
+	-- TODO autocomplete footnote refs `[^ref]
 end
 
 function source:get_trigger_characters()
