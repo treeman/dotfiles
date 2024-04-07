@@ -120,12 +120,12 @@ end
 M.buf_blog = function(buffer)
 	local map = vim.keymap.set
 	map("n", "<localleader>t", require("blog.content").list_tags, { true, buffer = buffer, desc = "List tags" })
-	-- map(
-	-- 	"n",
-	-- 	"<localleader>p",
-	-- 	require("blog.content").open_post_in_browser,
-	-- 	{ true, buffer = buffer, desc = "Open current post in the webbrowser" }
-	-- )
+	map(
+		"n",
+		"<localleader>p",
+		require("blog.files").open_curr_post_in_browser,
+		{ true, buffer = buffer, desc = "Open current post in the web browser" }
+	)
 	-- map("n", "<localleader>d", require("blog.server").goto_def, { true, buffer = buffer, desc = "Goto definition" })
 	-- map("n", "<localleader>h", require("blog.server").hover, { true, buffer = buffer, desc = "Hover help" })
 end

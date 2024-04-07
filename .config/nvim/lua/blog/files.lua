@@ -73,7 +73,13 @@ M.demote_curr_post = function()
 	M.demote_post(vim.fn.expand("%:p"))
 end
 
--- M.promote_draft("/home/tree/code/jonashietala/drafts/djottest.dj")
--- P(os.date("%Y-%m-%d"))
+M.open_post_in_browser = function(path)
+	local rel_path = path.rel_path(path)
+	-- How to create url from path?
+end
+
+M.open_curr_post_in_browser = function()
+	M.open_post_in_browser(vim.fn.expand("%:p"))
+end
 
 return M
