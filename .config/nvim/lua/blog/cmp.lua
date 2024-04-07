@@ -99,8 +99,6 @@ function source:complete(params, callback)
 		return
 	end
 
-	-- TODO should complete images
-
 	-- TODO autocomplete heading refs `[Heading text][]` and `/some/path#my-id`
 	-- TODO autocomplete link refs `[ref][]` and `[descr][ref]`
 	-- TODO autocomplete footnote refs `[^ref]

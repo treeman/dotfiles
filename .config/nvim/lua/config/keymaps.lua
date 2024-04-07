@@ -110,6 +110,24 @@ M.init = function()
 
 	-- Write and source lua file
 	map("n", "<leader>x", ":write<CR>:source %<CR>")
+
+	-- Blogging
+	map("n", "gw", require("blog.files").new_draft, { desc = "Create new draft" })
+	map("n", "gd", require("blog.telescope").find_draft, { desc = "Find blog draft" })
+	map("n", "gp", require("blog.telescope").find_post, { desc = "Find blog post" })
+end
+
+M.buf_blog = function(buffer)
+	local map = vim.keymap.set
+	map("n", "<localleader>t", require("blog.content").list_tags, { true, buffer = buffer, desc = "List tags" })
+	-- map(
+	-- 	"n",
+	-- 	"<localleader>p",
+	-- 	require("blog.content").open_post_in_browser,
+	-- 	{ true, buffer = buffer, desc = "Open current post in the webbrowser" }
+	-- )
+	-- map("n", "<localleader>d", require("blog.server").goto_def, { true, buffer = buffer, desc = "Goto definition" })
+	-- map("n", "<localleader>h", require("blog.server").hover, { true, buffer = buffer, desc = "Hover help" })
 end
 
 M.telescope = {
