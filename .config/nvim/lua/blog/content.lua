@@ -22,7 +22,7 @@ M.list_series = function(cb)
 	}, cb)
 end
 
-local function _run_cmd(args)
+M.run_cmd = function(args)
 	local rg = nio.process.run(args)
 
 	if not rg then
@@ -32,9 +32,26 @@ local function _run_cmd(args)
 	return rg.stdout.read()
 end
 
+M.extract_title = function(path)
+	local title = M.run_cmd({
+		cmd = "rg",
+		args = {
+			"-NoH",
+			"^title = (.+)",
+			path,
+		},
+	})
+
+	if not title then
+		return nil
+	end
+
+	return title:match('title = "(.+)"')
+end
+
 M.list_posts = function(subpath, cb)
 	nio.run(function()
-		local output = _run_cmd({
+		local output = M.run_cmd({
 			cmd = "rg",
 			args = {
 				"-NoH",
@@ -85,7 +102,7 @@ end
 
 M.list_images = function(cb)
 	nio.run(function()
-		local output = _run_cmd({
+		local output = M.run_cmd({
 			cmd = "fd",
 			args = {
 				"-t",

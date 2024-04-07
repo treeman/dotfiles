@@ -55,10 +55,10 @@ end
 local buttons = {
 	type = "group",
 	val = {
-		button("s", "Scratch", ":e ~/org/scratch.dj<CR>"),
-		button("g", "Goals", ":e ~/org/goals.dj<CR>"),
-		button("h", "Habits", ":e ~/org/habits.dj<CR>"),
-		{ type = "padding", val = 1 },
+		-- button("s", "Scratch", ":e ~/org/scratch.dj<CR>"),
+		-- button("g", "Goals", ":e ~/org/goals.dj<CR>"),
+		-- button("h", "Habits", ":e ~/org/habits.dj<CR>"),
+		-- { type = "padding", val = 1 },
 		button(
 			"c",
 			"Config",
