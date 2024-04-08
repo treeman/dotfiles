@@ -2,14 +2,7 @@ require("blog.path")
 require("blog.server")
 require("blog.cmp")
 require("blog.commands")
-
--- M = {}
-
--- M.new_draft = content.new_draft()
--- M.find_post = telescope.find_post()
--- M.find_draft = telescope.find_draft()
-
--- return M
+require("blog.autocmd")
 
 -- Keymaps to define
 -- Always:
@@ -34,8 +27,6 @@ require("blog.commands")
 -- TODO user commands
 -- + Open current file in firefox
 -- + Control preview?
--- + Create new draft
--- + Promote/demote
 
 -- TODO autocomplete
 -- + header links

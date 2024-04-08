@@ -73,9 +73,28 @@ M.demote_curr_post = function()
 	M.demote_post(vim.fn.expand("%:p"))
 end
 
-M.open_post_in_browser = function(path)
-	local rel_path = path.rel_path(path)
-	-- How to create url from path?
+M.path_to_url = function(file_path)
+	local host = "localhost:8080/"
+	local rel_path = path.rel_path(file_path)
+	if path.is_draft(rel_path) then
+		local slug = rel_path:match("drafts/(.+)%.")
+		return host .. "drafts/" .. slug
+	elseif path.is_post(rel_path) then
+		local date, slug = rel_path:match("posts/(%d%d%d%d%-%d%d%-%d%d)-(.+)%.")
+		return host .. "blog/" .. date:gsub("-", "/") .. "/" .. slug
+	else
+		return nil
+	end
+end
+
+M.open_post_in_browser = function(file_path)
+	local url = M.path_to_url(file_path)
+	if not url then
+		print("Could not convert to url:", file_path)
+		return
+	end
+
+	vim.cmd("!firefox " .. url)
 end
 
 M.open_curr_post_in_browser = function()

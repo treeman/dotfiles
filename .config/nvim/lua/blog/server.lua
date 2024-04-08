@@ -10,9 +10,6 @@
 local path = require("blog.path")
 local nio = require("nio")
 
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
-
 M = {}
 
 M.is_connected = function()
@@ -92,7 +89,7 @@ end
 
 -- This fun little thing tries to connect to my blogging
 -- watch server and sends it document positions on move.
-M._update_position = function()
+M.update_position = function()
 	M.cast({
 		id = "CursorMoved",
 		-- context = vim.fn.getline("."),
@@ -140,8 +137,6 @@ end
 
 -- Server connection management
 
-local blog_group = augroup("blog", { clear = true })
-
 M.close_connection = function()
 	if M._blog_conn == nil then
 		print("No blog connection to close")
@@ -184,7 +179,6 @@ M.try_connect = function()
 				end)
 			end,
 		})
-		P(M._blog_conn)
 	end)
 
 	if status then
@@ -226,24 +220,6 @@ M.establish_connection = function(ensure_server_started)
 		end
 	end)
 end
-
-local autocmd_pattern = path.blog_path .. "*.{dj,markdown,md}"
-
-autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = autocmd_pattern,
-	group = blog_group,
-	callback = function()
-		print("Attached to:", vim.fn.expand("%:p"))
-		vim.api.nvim_set_current_dir(path.blog_path)
-		M.establish_connection(true)
-	end,
-})
-
-autocmd("CursorMoved", {
-	pattern = autocmd_pattern,
-	group = blog_group,
-	callback = M._update_position,
-})
 
 M.start = function()
 	M.start_server()
