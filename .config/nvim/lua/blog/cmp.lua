@@ -4,7 +4,6 @@ local path = require("blog.path")
 
 local source = {}
 
--- FIXME
 function source:is_available()
 	return server.is_connected()
 end

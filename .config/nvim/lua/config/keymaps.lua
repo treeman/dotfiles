@@ -126,8 +126,9 @@ M.buf_blog = function(buffer)
 		require("blog.files").open_curr_post_in_browser,
 		{ buffer = buffer, desc = "Open current post in the web browser" }
 	)
-	-- map("n", "<localleader>d", require("blog.server").goto_def, { true, buffer = buffer, desc = "Goto definition" })
-	-- map("n", "<localleader>h", require("blog.server").hover, { true, buffer = buffer, desc = "Hover help" })
+	map("n", "<localleader>d", require("blog.interaction").goto_def, { buffer = buffer, desc = "Goto definition" })
+	-- map("n", "<localleader>h", require("blog.server").hover, { buffer = buffer, desc = "Hover help" })
+	print("Set buf mappings")
 end
 
 M.telescope = {

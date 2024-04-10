@@ -25,14 +25,14 @@ require("blog.autocmd")
 -- (make a commands.lua file)
 
 -- TODO user commands
--- + Open current file in firefox
 -- + Control preview?
 --
 -- TODO jump to
 -- + link labels
 -- + other posts
 
+-- TODO info under cursor
+
 -- TODO server commands
 -- + refresh
 -- + goto def
--- + get headers in post
