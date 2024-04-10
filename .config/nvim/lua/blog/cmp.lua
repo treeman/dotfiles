@@ -16,9 +16,31 @@ function source:complete(params, callback)
 	-- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/
 	-- https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/types/lsp.lua
 	-- kinds:
-	--	export const Text = 1;
-	--	export const File = 17;
-	--	export const Reference = 18;
+	-- export const Text = 1;
+	-- export const Method = 2;
+	-- export const Function = 3;
+	-- export const Constructor = 4;
+	-- export const Field = 5;
+	-- export const Variable = 6;
+	-- export const Class = 7;
+	-- export const Interface = 8;
+	-- export const Module = 9;
+	-- export const Property = 10;
+	-- export const Unit = 11;
+	-- export const Value = 12;
+	-- export const Enum = 13;
+	-- export const Keyword = 14;
+	-- export const Snippet = 15;
+	-- export const Color = 16;
+	-- export const File = 17;
+	-- export const Reference = 18;
+	-- export const Folder = 19;
+	-- export const EnumMember = 20;
+	-- export const Constant = 21;
+	-- export const Struct = 22;
+	-- export const Event = 23;
+	-- export const Operator = 24;
+	-- export const TypeParameter = 25;
 
 	-- Expand images separately because I only ever use it in a
 	-- `![](/url)`
@@ -54,6 +76,76 @@ function source:complete(params, callback)
 				})
 			end
 			callback(res)
+		end)
+		return
+	end
+
+	-- Expand headings for current file:
+	-- 1. Expanding inline links, e.g. `[txt](#`					 <- expand
+	-- 2. Expanding links in ref defs, e.g. `[label]: #`   <- expand
+	local expand_curr_heading = string.match(cursor_before_line, "^%[.+%]:%s+#$")
+		or string.match(cursor_before_line, "%]%(#$")
+	if expand_curr_heading then
+		content.list_headings_in_curr(function(reply)
+			P(reply)
+			local res = {}
+			for _, info in ipairs(reply.headings) do
+				table.insert(res, {
+					label = info.id,
+					kind = 7,
+				})
+			end
+			callback(res)
+		end)
+		return
+	end
+
+	-- Expand url definition tags in `[text][tag]`
+	if string.match(cursor_before_line, "%[.+%]%[$") then
+		content.list_link_defs(function(reply)
+			local res = {}
+			for _, info in ipairs(reply.defs) do
+				table.insert(res, {
+					label = info.label,
+					insertText = info.label,
+					filterText = info.url .. info.label,
+					detail = info.url,
+					kind = 18,
+				})
+			end
+
+			callback(res)
+		end)
+		return
+	end
+
+	-- Expand url definition tags in `[tag][]`, simplified to after a `[`.
+	if string.match(cursor_before_line, "%[$") then
+		content.list_link_defs(function(reply)
+			P(reply)
+			local res = {}
+			for _, info in ipairs(reply.defs) do
+				table.insert(res, {
+					label = info.label,
+					insertText = info.label,
+					filterText = info.url .. info.label,
+					detail = info.url,
+					kind = 18,
+				})
+			end
+
+			-- Also includes short headings that are specified with the heading content.
+			content.list_headings_in_curr(function(heading_reply)
+				P(heading_reply)
+				for _, info in ipairs(heading_reply.headings) do
+					table.insert(res, {
+						label = info.content,
+						kind = 7,
+					})
+				end
+
+				callback(res)
+			end)
 		end)
 		return
 	end
@@ -100,12 +192,11 @@ function source:complete(params, callback)
 	end
 
 	-- TODO autocomplete heading refs `[Heading text][]` and `/some/path#my-id`
-	-- TODO autocomplete link refs `[ref][]` and `[descr][ref]`
 	-- TODO autocomplete footnote refs `[^ref]
 end
 
 function source:get_trigger_characters()
-	return { "/", '"', "[", " ", "(" }
+	return { "/", '"', "[", " ", "(", "#" }
 end
 
 require("cmp").register_source("blog", source)
