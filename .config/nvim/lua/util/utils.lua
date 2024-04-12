@@ -14,4 +14,10 @@ M.has_normal_keyboard = function()
 	return os.getenv("NORMAL_KEYBOARD")
 end
 
+M.list_buffers = function()
+	return vim.tbl_filter(function(buf)
+		return vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_get_option(buf, "buflisted")
+	end, vim.api.nvim_list_bufs())
+end
+
 return M

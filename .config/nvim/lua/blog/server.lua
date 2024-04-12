@@ -8,6 +8,7 @@
 -- Should cwd to blog_path when loading a file
 
 local path = require("blog.path")
+local utils = require("util.utils")
 local nio = require("nio")
 
 M = {}
@@ -100,6 +101,30 @@ M.update_position = function()
 	})
 end
 
+-- FIXME should request diagnostics when file is read too
+M._add_diagnostics = function(msg)
+	for _, buf in ipairs(utils.list_buffers()) do
+		local buf_name = vim.api.nvim_buf_get_name(0)
+		local buf_diagnostics = msg[buf_name]
+
+		if buf_diagnostics then
+			local diagnostics = {}
+			for _, d in ipairs(buf_diagnostics) do
+				table.insert(diagnostics, {
+					lnum = d.linenum,
+					end_lnum = d.end_linenum,
+					col = d.column,
+					end_col = d.end_column,
+					message = d.message,
+					severity = vim.diagnostic.severity.WARN,
+				})
+			end
+
+			vim.diagnostic.set(vim.api.nvim_create_namespace("blog"), buf, diagnostics)
+		end
+	end
+end
+
 -- Server management
 
 M.start_server = function()
@@ -156,12 +181,31 @@ M.handle_reply = function(data)
 	end
 
 	local reply = vim.fn.json_decode(data)
-	if reply and reply["message_id"] then
+	if not reply then
+		return
+	end
+
+	if reply["message_id"] then
 		local message_id = tostring(reply["message_id"])
 		local messages = M._blog_messages or {}
 		messages[message_id] = reply
 		M._blog_messages = messages
+	elseif reply.id == "Diagnostics" then
+		M._add_diagnostics(reply.diagnostics)
+	else
+		print("Unknown message:")
+		P(reply)
 	end
+
+	-- local diagnostic = {
+	-- 	bufnr = ,
+	-- 	lnum = ,
+	-- 	end_lnum = ,
+	-- 	col = ,
+	-- 	end_col = ,
+	-- 	severity = vim.diagnostic.severity.ERROR,
+	-- 	message = ,
+	-- }
 end
 
 M.try_connect = function()
