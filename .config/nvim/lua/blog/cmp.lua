@@ -41,6 +41,8 @@ function source:complete(params, callback)
 	-- export const Operator = 24;
 	-- export const TypeParameter = 25;
 
+	-- TODO expand broken link tags after `[`
+
 	-- Expand images separately because I only ever use it in a
 	-- `![](/url)`
 	-- context and not mixing with other urls gives a more pleasant experience.

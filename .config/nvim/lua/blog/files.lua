@@ -21,7 +21,7 @@ M.new_draft = function()
 		vim.cmd(":e " .. file_path)
 		local template = {
 			"---toml",
-			'title = "Djot test"',
+			'title = "' .. title .. '"',
 			'tags = ["Some tag"]',
 			"---",
 		}
