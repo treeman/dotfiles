@@ -1,3 +1,5 @@
+local map = vim.keymap.set
+
 -- Keymaps that are sent to plugins during configuration
 -- Return a module here so we can keep all keymap definitions
 -- in the same place.
@@ -9,7 +11,6 @@ local M = {}
 -- Wrap it in a function to prevent requiring this file evaluates
 -- global keymaps multiple times.
 M.init = function()
-	local map = vim.keymap.set
 	local normal_keyboard = require("util").has_normal_keyboard()
 
 	-- Copy/paste to mouse clipboard quickly
@@ -282,13 +283,11 @@ M.ts_select = {
 }
 
 M.global_lsp = function()
-	local map = vim.keymap.set
 	map("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
 	map("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Prev diagnostic" })
 end
 
 M.buf_lsp = function(_, buffer)
-	local map = vim.keymap.set
 	-- FIXME there are other cool possibilities listed in nvim-lspconfig
 	map("n", "<localleader>D", vim.lsp.buf.declaration, { silent = true, buffer = buffer, desc = "Declaration" })
 	map("n", "<localleader>d", vim.lsp.buf.definition, { silent = true, buffer = buffer, desc = "Definition" })
@@ -348,7 +347,6 @@ end
 
 M.gitsigns = function(buffer)
 	local gitsigns = package.loaded.gitsigns
-	local map = vim.keymap.set
 	map("n", "]h", gitsigns.next_hunk, { silent = true, buffer = buffer, desc = "Next hunk" })
 	map("n", "[h", gitsigns.prev_hunk, { silent = true, buffer = buffer, desc = "Prev hunk" })
 	map("n", "<leader>hs", gitsigns.stage_hunk, { silent = true, buffer = buffer, desc = "Stage hunk" })
@@ -490,7 +488,6 @@ M.replacer = {
 }
 
 M.pollen = function()
-	local map = vim.keymap.set
 	map("i", "<C-l>", "λ")
 	map("i", "<C-e>", "◊")
 end
