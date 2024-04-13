@@ -9,15 +9,15 @@ M.goto_def = function()
 		column = vim.fn.col("."),
 		path = vim.fn.expand("%:p"),
 	}, function(reply)
-		if reply.path ~= vim.NIL or reply.linenum then
-			vim.cmd("m'")
+		if reply.path ~= vim.NIL or reply.linenum ~= vim.NIL then
+			vim.cmd(":normal m'")
 		end
 
 		if reply.path ~= vim.NIL then
 			vim.cmd(":e" .. reply.path)
 		end
 
-		if reply.linenum then
+		if reply.linenum ~= vim.NIL then
 			vim.api.nvim_win_set_cursor(0, { reply.linenum, reply.column })
 		end
 	end)

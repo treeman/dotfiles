@@ -101,7 +101,6 @@ M.update_position = function()
 	})
 end
 
--- FIXME should request diagnostics when file is read too
 M._add_diagnostics = function(msg)
 	for _, buf in ipairs(utils.list_buffers()) do
 		local buf_name = vim.api.nvim_buf_get_name(0)
@@ -110,11 +109,13 @@ M._add_diagnostics = function(msg)
 		if buf_diagnostics then
 			local diagnostics = {}
 			for _, d in ipairs(buf_diagnostics) do
+				-- The positions we send are 1-indexed, but diagnostics are 0-indexed...
+				-- I hope this is fine...?
 				table.insert(diagnostics, {
-					lnum = d.linenum,
-					end_lnum = d.end_linenum,
-					col = d.column,
-					end_col = d.end_column,
+					lnum = d.linenum - 1,
+					end_lnum = d.end_linenum - 1,
+					col = d.column - 1,
+					end_col = d.end_column - 1,
 					message = d.message,
 					severity = vim.diagnostic.severity.WARN,
 				})
@@ -123,6 +124,13 @@ M._add_diagnostics = function(msg)
 			vim.diagnostic.set(vim.api.nvim_create_namespace("blog"), buf, diagnostics)
 		end
 	end
+end
+
+M.request_diagnostics_curr_buf = function()
+	M.cast({
+		id = "RefreshDiagnostics",
+		path = vim.fn.expand("%:p"),
+	})
 end
 
 -- Server management
