@@ -24,6 +24,10 @@ local function lsp_info()
 	end
 end
 
+local function server_info()
+	return require("blog.server").status() .. lsp_info()
+end
+
 local function spell()
 	if vim.opt.spell:get() then
 		return table.concat(vim.opt.spelllang:get(), ",")
@@ -145,7 +149,7 @@ local function config()
 				{ "diagnostics", fmt = trunc(80, 80, 80, true) },
 			},
 			lualine_c = { filename },
-			lualine_x = { { lsp_info, fmt = trunc(120, 10, 60, true) } },
+			lualine_x = { { server_info, fmt = trunc(120, 10, 60, true) } },
 			lualine_y = {
 				{ spell, fmt = trunc(120, 120, 120, true) },
 				{ "encoding", fmt = trunc(120, 120, 120, true) },

@@ -17,6 +17,25 @@ M.is_connected = function()
 	return M._blog_conn ~= nil
 end
 
+M.has_server = function()
+	return M._blog_job_id ~= nil
+end
+
+M.status = function()
+	local is_connected = M.is_connected()
+	local has_server = M.has_server()
+
+	if has_server and is_connected then
+		return "s"
+	elseif has_server then
+		return "Server but not connected"
+	elseif is_connected then
+		return "v"
+	else
+		return ""
+	end
+end
+
 -- Event handling
 
 M._send_msg = function(msg)
@@ -38,7 +57,6 @@ end
 
 M.call = function(msg, cb)
 	if not M.is_connected() then
-		print("Not connected")
 		return nil
 	end
 
@@ -79,7 +97,6 @@ end
 
 M.cast = function(msg)
 	if not M.is_connected() then
-		print("Not connected")
 		return
 	end
 
@@ -137,7 +154,6 @@ end
 
 M.start_server = function()
 	if M._blog_job_id ~= nil then
-		print("blog server already started")
 		return
 	end
 
@@ -147,43 +163,34 @@ M.start_server = function()
 		M._blog_job_id = vim.fn.termopen("./blog watch", {
 			cwd = path.blog_path,
 		})
-		print("blog server started")
 	end)
 end
 
 M.stop_server = function()
 	if M._blog_job_id == nil then
-		print("blog server not started")
 		return
 	end
-
-	print("Stopping:", M._blog_job_id)
 
 	vim.fn.jobstop(M._blog_job_id)
 	vim.api.nvim_buf_delete(M._blog_job_bufnr, { force = true })
 
 	M._blog_job_bufnr = nil
 	M._blog_job_id = nil
-
-	print("blog server stopped")
 end
 
 -- Server connection management
 
 M.close_connection = function()
 	if M._blog_conn == nil then
-		print("No blog connection to close")
 		return
 	end
 
-	print("Closing existing blog connection")
 	vim.fn.chanclose(M._blog_conn)
 	M._blog_conn = nil
 end
 
 M.handle_reply = function(data)
 	if #data == 1 and data[1] == "" then
-		print("Blog connection closed")
 		M.close_connection()
 		return
 	end
@@ -204,25 +211,13 @@ M.handle_reply = function(data)
 		print("Unknown message:")
 		P(reply)
 	end
-
-	-- local diagnostic = {
-	-- 	bufnr = ,
-	-- 	lnum = ,
-	-- 	end_lnum = ,
-	-- 	col = ,
-	-- 	end_col = ,
-	-- 	severity = vim.diagnostic.severity.ERROR,
-	-- 	message = ,
-	-- }
 end
 
 M.try_connect = function()
 	if M._blog_conn then
-		print("Already connected")
 		return true
 	end
 
-	print("Trying to establish connection...")
 	local status, err = pcall(function()
 		M._blog_conn = vim.fn.sockconnect("tcp", "127.0.0.1:8082", {
 			on_data = function(_, data, _)
@@ -234,7 +229,6 @@ M.try_connect = function()
 	end)
 
 	if status then
-		print("Established blog connection")
 		return true
 	end
 
@@ -244,7 +238,6 @@ end
 
 M.establish_connection = function(ensure_server_started)
 	ensure_server_started = ensure_server_started or true
-	print("start server?", ensure_server_started)
 
 	-- To figure out if we have a server started somewhere
 	-- (from another Neovim instance or from the command line)
@@ -263,7 +256,6 @@ M.establish_connection = function(ensure_server_started)
 		-- TODO maybe do something more intelligent here?
 		local attempt = 0
 		while attempt < 10 do
-			print("trying...", attempt)
 			attempt = attempt + 1
 			nio.sleep(1000)
 			if M.try_connect() then
