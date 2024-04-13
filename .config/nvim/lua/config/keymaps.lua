@@ -112,7 +112,6 @@ M.init = function()
 	map("n", "<leader>x", ":write<CR>:source %<CR>")
 
 	-- Blogging
-	map("n", "gw", require("blog.files").new_draft, { desc = "Create new draft" })
 	map("n", "gd", require("blog.telescope").find_draft, { desc = "Find blog draft" })
 	map("n", "gp", require("blog.telescope").find_post, { desc = "Find blog post" })
 end
@@ -120,15 +119,8 @@ end
 M.buf_blog = function(buffer)
 	local map = vim.keymap.set
 	map("n", "<localleader>t", require("blog.telescope").find_tags, { buffer = buffer, desc = "List tags" })
-	map(
-		"n",
-		"<localleader>p",
-		require("blog.files").open_curr_post_in_browser,
-		{ buffer = buffer, desc = "Open current post in the web browser" }
-	)
 	map("n", "<localleader>d", require("blog.interaction").goto_def, { buffer = buffer, desc = "Goto definition" })
 	-- map("n", "<localleader>h", require("blog.server").hover, { buffer = buffer, desc = "Hover help" })
-	print("Set buf mappings")
 end
 
 M.telescope = {
