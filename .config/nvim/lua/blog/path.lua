@@ -1,7 +1,7 @@
 M = {}
 
 -- Not defined as `M` because lib loading sometimes causes it to be nil...
-local blog_path = "/home/tree/code/jonashietala/"
+local blog_path = vim.fn.expand("$HOME/code/jonashietala/")
 
 M.in_blog = function(path)
 	return path:find(blog_path, 1, true) == 1

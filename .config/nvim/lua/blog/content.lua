@@ -41,13 +41,13 @@ M.list_series = function(cb)
 end
 
 M.run_cmd = function(args)
-	local rg = nio.process.run(args)
+	local proc = nio.process.run(args)
 
-	if not rg then
+	if not proc then
 		return nil
 	end
 
-	return rg.stdout.read()
+	return proc.stdout.read()
 end
 
 M.extract_title = function(path)
@@ -74,7 +74,7 @@ M.list_posts = function(subpath, cb)
 			args = {
 				"-NoH",
 				"--heading",
-				"(title|tags)(: | = )(.+)",
+				"^(title|tags)(: | = )(.+)",
 				path.blog_path .. subpath,
 			},
 		})
