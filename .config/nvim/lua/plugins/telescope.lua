@@ -14,6 +14,11 @@ local config = function()
 					hidden = true,
 				},
 			},
+			layout_config = {
+				horizontal = {
+					preview_width = 0.6,
+				},
+			},
 		},
 	})
 

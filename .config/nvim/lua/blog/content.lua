@@ -72,9 +72,9 @@ M.list_posts = function(subpath, cb)
 		local output = M.run_cmd({
 			cmd = "rg",
 			args = {
-				"-NoH",
+				"-NoHU",
 				"--heading",
-				"^(title|tags)(: | = )(.+)",
+				"^\\---\\w*\\n(.+\\n)+^---",
 				path.blog_path .. subpath,
 			},
 		})
@@ -87,31 +87,33 @@ M.list_posts = function(subpath, cb)
 		local lines = vim.fn.split(output, "\n")
 		local posts = {}
 
-		local line_count = #lines
 		local post = {}
-		for i = 1, line_count do
-			local line = lines[i]
-
+		for _, line in ipairs(lines) do
+			-- When a newline is encountered save the post and prepare for the next entry.
 			if line == "" then
 				if post.title then
 					table.insert(posts, post)
 				end
 				post = {}
-			else
-				local title = string.match(line, 'title%s?[:=]%s+"(.+)"')
-				local tags = string.match(line, "tags%s?[:=]%s+(.+)")
-				if title then
-					post["title"] = title
-				elseif tags then
-					post["tags"] = tags
+			-- Skip `---` markers.
+			elseif not string.match(line, "%-%-%-%w*") then
+				-- Try to extract all key value definitions and store them.
+				local key, value = string.match(line, '(%w+)%s*[:=]%s*"?(.+)"?')
+				if key then
+					post[key] = value
 				else
+					-- If no key value pair is found, then we should be at the beginning with the file path.
 					post["path"] = line
+					-- Only posts have a date in the path, not drafts.
 					local date = string.match(line, "posts/(%d%d%d%d%-%d%d%-%d%d)%-")
 					if date then
 						post["date"] = date
 					end
 				end
 			end
+		end
+		if post.title then
+			table.insert(posts, post)
 		end
 
 		cb(posts)

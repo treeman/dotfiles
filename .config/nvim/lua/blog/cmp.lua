@@ -46,7 +46,7 @@ function source:complete(params, callback)
 	-- Expand images separately because I only ever use it in a
 	-- `![](/url)`
 	-- context and not mixing with other urls gives a more pleasant experience.
-	if string.match(cursor_before_line, "!%[%]%($") then
+	if string.match(cursor_before_line, "!%[%]%(") then
 		content.list_images(function(imgs)
 			local res = {}
 			for _, img in ipairs(imgs) do
