@@ -97,7 +97,6 @@ autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
 		-- Maybe we can query for the filetype of buffer, and then exclude some things?
 		-- This ignores the dashboard at least, which maybe is good enough?
 		if string.len(x.file) > 0 then
-			-- print(vim.inspect(x))
 			vim.opt_local.cursorline = true
 		end
 	end,

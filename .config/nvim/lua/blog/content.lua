@@ -74,7 +74,7 @@ M.list_posts = function(subpath, cb)
 			args = {
 				"-NoHU",
 				"--heading",
-				"^\\---\\w*\\n(.+\\n)+^---",
+				"\\A\\---\\w*\\n(.+\\n)+^---",
 				path.blog_path .. subpath,
 			},
 		})
@@ -98,8 +98,15 @@ M.list_posts = function(subpath, cb)
 			-- Skip `---` markers.
 			elseif not string.match(line, "%-%-%-%w*") then
 				-- Try to extract all key value definitions and store them.
-				local key, value = string.match(line, '(%w+)%s*[:=]%s*"?(.+)"?')
+				local key, value = string.match(line, "(%w+)%s*[:=]%s*(.+)")
 				if key then
+					-- Strip surrounding quotes.
+					-- Do this here because there's no non-greedy specifier that could be used
+					-- in the key/value regex above.
+					local stripped = string.match(value, '^"(.+)"$')
+					if stripped then
+						value = stripped
+					end
 					post[key] = value
 				else
 					-- If no key value pair is found, then we should be at the beginning with the file path.

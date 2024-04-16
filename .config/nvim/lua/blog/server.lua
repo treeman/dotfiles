@@ -10,6 +10,10 @@
 local path = require("blog.path")
 local utils = require("util.utils")
 local nio = require("nio")
+local log = require("plenary.log").new({
+	plugin = "blog",
+	level = "error",
+})
 
 M = {}
 
@@ -45,7 +49,7 @@ M._send_msg = function(msg)
 		-- Watcher tries to read lines so we need to terminate the message with a newline
 		vim.fn.chansend(conn, "\n")
 	else
-		print("Error: trying to send a message without being connected")
+		log.error("Trying to send a message without being connected")
 	end
 end
 
@@ -79,8 +83,6 @@ M.call = function(msg, cb)
 					return reply
 				end
 			end
-
-			nio.scheduler()
 
 			attempt = attempt + 1
 			nio.sleep(10)
@@ -208,8 +210,7 @@ M.handle_reply = function(data)
 	elseif reply.id == "Diagnostics" then
 		M._add_diagnostics(reply.diagnostics)
 	else
-		print("Unknown message:")
-		P(reply)
+		log.debug("Unknown message:", vim.inspect(reply))
 	end
 end
 
@@ -232,7 +233,7 @@ M.try_connect = function()
 		return true
 	end
 
-	print("Connection error:", vim.inspect(err))
+	log.debug("Connection error:", vim.inspect(err))
 	return false
 end
 
@@ -252,8 +253,8 @@ M.establish_connection = function(ensure_server_started)
 	end
 
 	-- Then try to reconnect, via a task to not block the UI.
+	-- This isn't super smart, but it seems to work.
 	local _ = nio.run(function()
-		-- TODO maybe do something more intelligent here?
 		local attempt = 0
 		while attempt < 10 do
 			attempt = attempt + 1

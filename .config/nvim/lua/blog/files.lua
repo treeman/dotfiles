@@ -1,6 +1,10 @@
 local path = require("blog.path")
 local content = require("blog.content")
 local nio = require("nio")
+local log = require("plenary.log").new({
+	plugin = "blog",
+	level = "error",
+})
 
 local M = {}
 
@@ -38,7 +42,7 @@ end
 M.promote_draft = function(draft_path)
 	nio.run(function()
 		if not path.in_blog(draft_path) then
-			print("Not a blog file")
+			log.error("Not a blog file:", draft_path)
 			return
 		end
 
@@ -57,7 +61,7 @@ end
 M.demote_post = function(post_path)
 	nio.run(function()
 		if not path.in_blog(post_path) then
-			print("Not a blog file")
+			log.error("Not a blog file:", post_path)
 			return
 		end
 
@@ -90,7 +94,7 @@ end
 M.open_post_in_browser = function(file_path)
 	local url = M.path_to_url(file_path)
 	if not url then
-		print("Could not convert to url:", file_path)
+		log.error("Could not convert to url:", file_path)
 		return
 	end
 
