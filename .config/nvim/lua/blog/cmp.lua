@@ -2,6 +2,9 @@ local server = require("blog.server")
 local content = require("blog.content")
 local path = require("blog.path")
 
+-- FIXME temporary
+require("blog.tmp_cmp")
+
 local source = {}
 
 function source:is_available()
@@ -217,7 +220,8 @@ function source:get_trigger_characters()
 	return { "/", '"', "[", " ", "(", "#" }
 end
 
-require("cmp").register_source("blog", source)
+-- FIXME tmp
+-- require("cmp").register_source("blog", source)
 
 -- P(string.match("(/", "%(/$|^%[.+%]:%s+$"))
 -- P(string.match("/", "%(/$"))
