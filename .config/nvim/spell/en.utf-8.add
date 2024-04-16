@@ -281,3 +281,5 @@ urls
 json
 tokio
 Neovim's
+urls
+defs

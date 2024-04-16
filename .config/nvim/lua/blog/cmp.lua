@@ -41,12 +41,10 @@ function source:complete(params, callback)
 	-- export const Operator = 24;
 	-- export const TypeParameter = 25;
 
-	-- TODO expand broken link tags after `[`
-
 	-- Expand images separately because I only ever use it in a
 	-- `![](/url)`
 	-- context and not mixing with other urls gives a more pleasant experience.
-	if string.match(cursor_before_line, "!%[%]%(") then
+	if string.match(cursor_before_line, "!%[%]%([^%)]*$") then
 		content.list_images(function(imgs)
 			local res = {}
 			for _, img in ipairs(imgs) do
@@ -63,7 +61,8 @@ function source:complete(params, callback)
 	-- Two cases for expanding urls:
 	-- 1. Expanding inline links, e.g. `[txt](/`					<- expand
 	-- 2. Expanding links in ref defs, e.g. `[label]: `   <- expand
-	local expand_url = string.match(cursor_before_line, "^%[.+%]:%s+$") or string.match(cursor_before_line, "%]%(/$")
+	local expand_url = string.match(cursor_before_line, "^%[.+%]:%s+$")
+		or string.match(cursor_before_line, "%]%(/[^%)]*$")
 	if expand_url then
 		content.list_urls(function(reply)
 			local res = {}
@@ -84,15 +83,17 @@ function source:complete(params, callback)
 	-- Expand headings for current file:
 	-- 1. Expanding inline links, e.g. `[txt](#`					 <- expand
 	-- 2. Expanding links in ref defs, e.g. `[label]: #`   <- expand
-	local expand_curr_heading = string.match(cursor_before_line, "^%[.+%]:%s+#$")
-		or string.match(cursor_before_line, "%]%(#$")
+	local expand_curr_heading = string.match(cursor_before_line, "^%[.+%]:%s+#")
+		or string.match(cursor_before_line, "%]%(#[^%)]*$")
 	if expand_curr_heading then
 		content.list_headings_in_curr(function(reply)
 			P(reply)
 			local res = {}
 			for _, info in ipairs(reply.headings) do
 				table.insert(res, {
-					label = info.id,
+					label = info.content,
+					insertText = info.id,
+					filterText = info.content,
 					kind = 7,
 				})
 			end
@@ -102,7 +103,7 @@ function source:complete(params, callback)
 	end
 
 	-- Expand url definition tags in `[text][tag]`
-	if string.match(cursor_before_line, "%[.+%]%[$") then
+	if string.match(cursor_before_line, "%[[^%]]+%]%[[^%]]*$") then
 		content.list_link_defs(function(reply)
 			local res = {}
 			for _, info in ipairs(reply.defs) do
@@ -121,9 +122,8 @@ function source:complete(params, callback)
 	end
 
 	-- Expand url definition tags in `[tag][]`, simplified to after a `[`.
-	if string.match(cursor_before_line, "%[$") then
+	if string.match(cursor_before_line, "%[[^%]]*$") then
 		content.list_link_defs(function(reply)
-			P(reply)
 			local res = {}
 			for _, info in ipairs(reply.defs) do
 				table.insert(res, {
@@ -137,7 +137,6 @@ function source:complete(params, callback)
 
 			-- Also includes short headings that are specified with the heading content.
 			content.list_headings_in_curr(function(heading_reply)
-				P(heading_reply)
 				for _, info in ipairs(heading_reply.headings) do
 					table.insert(res, {
 						label = info.content,
@@ -145,7 +144,22 @@ function source:complete(params, callback)
 					})
 				end
 
-				callback(res)
+				-- If we start at the beginning of a line, we should complete
+				-- broken link tags as well.
+				if string.match(cursor_before_line, "^%[") then
+					content.list_broken_links(function(broken_links)
+						for _, info in ipairs(broken_links.links) do
+							table.insert(res, {
+								label = info.tag,
+								detail = "Broken link",
+								kind = 18,
+							})
+						end
+						callback(res)
+					end)
+				else
+					callback(res)
+				end
 			end)
 		end)
 		return
@@ -192,8 +206,11 @@ function source:complete(params, callback)
 		return
 	end
 
-	-- TODO autocomplete heading refs `[Heading text][]` and `/some/path#my-id`
+	-- TODO autocomplete external heading refs like `/some/path#my-id`
 	-- TODO autocomplete footnote refs `[^ref]
+
+	-- Should always call the callback.
+	callback({})
 end
 
 function source:get_trigger_characters()

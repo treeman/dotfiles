@@ -11,10 +11,17 @@ M.list_link_defs = function(cb)
 	}, cb)
 end
 
-M.list_headings = function(path, cb)
+M.list_broken_links = function(cb)
+	server.call({
+		id = "ListBrokenLinks",
+		path = vim.fn.expand("%:p"),
+	}, cb)
+end
+
+M.list_headings = function(file_path, cb)
 	server.call({
 		id = "ListHeadings",
-		path = path,
+		path = file_path,
 	}, cb)
 end
 
@@ -50,13 +57,13 @@ M.run_cmd = function(args)
 	return proc.stdout.read()
 end
 
-M.extract_title = function(path)
+M.extract_title = function(file_path)
 	local title = M.run_cmd({
 		cmd = "rg",
 		args = {
 			"-NoH",
 			"^title = (.+)",
-			path,
+			file_path,
 		},
 	})
 
@@ -95,7 +102,7 @@ M.list_posts = function(subpath, cb)
 					table.insert(posts, post)
 				end
 				post = {}
-			-- Skip `---` markers.
+				-- Skip `---` markers.
 			elseif not string.match(line, "%-%-%-%w*") then
 				-- Try to extract all key value definitions and store them.
 				local key, value = string.match(line, "(%w+)%s*[:=]%s*(.+)")
