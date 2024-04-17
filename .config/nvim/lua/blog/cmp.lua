@@ -12,7 +12,7 @@ function source:is_available()
 end
 
 function source:resolve(item, callback)
-	-- TODO should fill in `documentation` I gusee
+	-- TODO should fill in `documentation` I guess
 	P(item)
 	callback(item)
 end

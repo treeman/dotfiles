@@ -284,3 +284,6 @@ Neovim's
 urls
 defs
 regexes
+gunicorn
+Dockerfile
+statsd
