@@ -4,42 +4,42 @@ local nio = require("nio")
 
 local M = {}
 
-M.list_link_defs = function(cb)
-	server.call({
-		id = "ListLinkDefs",
-		path = vim.fn.expand("%:p"),
-	}, cb)
-end
+-- M.list_link_defs = function(cb)
+-- 	server.call({
+-- 		id = "ListLinkDefs",
+-- 		path = vim.fn.expand("%:p"),
+-- 	}, cb)
+-- end
 
-M.list_broken_links = function(cb)
-	server.call({
-		id = "ListBrokenLinks",
-		path = vim.fn.expand("%:p"),
-	}, cb)
-end
+-- M.list_broken_links = function(cb)
+-- 	server.call({
+-- 		id = "ListBrokenLinks",
+-- 		path = vim.fn.expand("%:p"),
+-- 	}, cb)
+-- end
 
-M.list_headings = function(file_path, cb)
-	server.call({
-		id = "ListHeadings",
-		path = file_path,
-	}, cb)
-end
+-- M.list_headings = function(file_path, cb)
+-- 	server.call({
+-- 		id = "ListHeadings",
+-- 		path = file_path,
+-- 	}, cb)
+-- end
 
-M.list_headings_in_curr = function(cb)
-	M.list_headings(vim.fn.expand("%:p"), cb)
-end
+-- -- M.list_headings_in_curr = function(cb)
+-- 	M.list_headings(vim.fn.expand("%:p"), cb)
+-- end
 
-M.list_urls = function(cb)
-	server.call({
-		id = "ListUrls",
-	}, cb)
-end
+-- M.list_urls = function(cb)
+-- 	server.call({
+-- 		id = "ListUrls",
+-- 	}, cb)
+-- end
 
-M.list_tags = function(cb)
-	server.call({
-		id = "ListTags",
-	}, cb)
-end
+-- M.list_tags = function(cb)
+-- 	server.call({
+-- 		id = "ListTags",
+-- 	}, cb)
+-- end
 
 M.list_series = function(cb)
 	server.call({
