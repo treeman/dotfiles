@@ -118,7 +118,6 @@ M.init = function()
 end
 
 M.buf_blog = function(buffer)
-	local map = vim.keymap.set
 	map("n", "<localleader>t", require("blog.telescope").find_tags, { buffer = buffer, desc = "List tags" })
 	map("i", "<C-t>", require("blog.telescope").find_tags, { buffer = buffer, desc = "List tags" })
 	map("n", "<localleader>d", require("blog.interaction").goto_def, { buffer = buffer, desc = "Goto definition" })

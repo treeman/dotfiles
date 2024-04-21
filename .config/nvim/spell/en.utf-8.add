@@ -287,3 +287,5 @@ regexes
 gunicorn
 Dockerfile
 statsd
+SpanLinkType
+fzy

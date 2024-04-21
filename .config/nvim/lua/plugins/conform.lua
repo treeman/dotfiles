@@ -11,6 +11,7 @@ local opts = {
 		yaml = { { "prettierd", "prettier" } },
 		toml = { { "prettierd", "prettier" } },
 		rust = { "rustfmt" },
+		sql = { "pg_format" },
 	},
 	format_on_save = function(bufnr)
 		-- Disable autoformat on certain filetypes
