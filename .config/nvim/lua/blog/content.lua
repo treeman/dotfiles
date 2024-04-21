@@ -86,7 +86,7 @@ M.list_posts = function(subpath, cb)
 					if date then
 						post["date"] = date
 					else
-						local f = io.popen("stat -c %y " .. line)
+						local f = io.popen("stat -c %Y " .. line)
 						if f then
 							post["date"] = os.date("%Y-%m-%d", tonumber(f:read()))
 						end
