@@ -25,6 +25,10 @@ M.rel_path = function(path)
 	end
 end
 
+-- M.abs_path = function(rel_path)
+-- 	return blog_path .. string.gsub(rel_path, "^/", "", 1)
+-- end
+
 M.blog_path = blog_path
 
 return M

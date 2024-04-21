@@ -27,6 +27,42 @@ local function disallowed_buftype()
 	return false
 end
 
+local fst = true
+
+local function blog_compare(entry1, entry2)
+	-- Only sort blog entries.
+	if entry1.source.name ~= "blog" or entry2.source.name ~= "blog" then
+		return nil
+	end
+
+	if fst then
+		P(entry1.completion_item.info)
+		fst = false
+	end
+
+	local info1 = entry1.completion_item.info
+	local info2 = entry2.completion_item.info
+
+	-- Compare images by modification time.
+	if info1.type == "Img" then
+		if info1.modified < info2.modified then
+			return true
+		else
+			return false
+		end
+	end
+
+	-- If images, sort by last modified
+	-- If posts, sort by... Latest? I dunno...
+	-- Should order by type
+	--  1. Posts
+	--  2. Constants
+	--  3. Tags
+	--  4. Series
+
+	return nil
+end
+
 local function config()
 	local cmp = require("cmp")
 	local lspkind = require("lspkind")
@@ -132,6 +168,7 @@ local function config()
 		sorting = {
 			priority_weight = 2,
 			comparators = {
+				blog_compare,
 				cmp.config.compare.offset,
 				cmp.config.compare.exact,
 				cmp.config.compare.score,

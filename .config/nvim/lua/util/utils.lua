@@ -20,4 +20,13 @@ M.list_buffers = function()
 	end, vim.api.nvim_list_bufs())
 end
 
+M.file_modified = function(path)
+	local f = io.popen("stat -c %Y " .. path)
+	if f then
+		return tonumber(f:read())
+	else
+		return nil
+	end
+end
+
 return M

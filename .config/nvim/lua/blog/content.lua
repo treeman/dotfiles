@@ -1,6 +1,7 @@
 local server = require("blog.server")
 local path = require("blog.path")
 local nio = require("nio")
+local util = require("util")
 
 local M = {}
 
@@ -86,10 +87,7 @@ M.list_posts = function(subpath, cb)
 					if date then
 						post["date"] = date
 					else
-						local f = io.popen("stat -c %Y " .. line)
-						if f then
-							post["date"] = os.date("%Y-%m-%d", tonumber(f:read()))
-						end
+						post["date"] = os.date("%Y-%m-%d", util.file_modified(line))
 					end
 				end
 			end
