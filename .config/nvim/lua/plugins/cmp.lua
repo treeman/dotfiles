@@ -27,7 +27,17 @@ local function disallowed_buftype()
 	return false
 end
 
-local fst = true
+local blog_type_rank = {
+	BrokenLink = 0,
+	LinkDef = 1,
+	Heading = 2,
+	Post = 3,
+	Tag = 4,
+	Series = 5,
+	Standalone = 6,
+	Constant = 7,
+	Img = 8,
+}
 
 local function blog_compare(entry1, entry2)
 	-- Only sort blog entries.
@@ -35,30 +45,42 @@ local function blog_compare(entry1, entry2)
 		return nil
 	end
 
-	if fst then
-		P(entry1.completion_item.info)
-		fst = false
-	end
-
 	local info1 = entry1.completion_item.info
 	local info2 = entry2.completion_item.info
 
-	-- Compare images by modification time.
+	local rank1 = blog_type_rank[info1.type]
+	local rank2 = blog_type_rank[info2.type]
+	if rank1 < rank2 then
+		return true
+	elseif rank1 > rank2 then
+		return false
+	end
+
 	if info1.type == "Img" then
-		if info1.modified < info2.modified then
+		if info1.modified > info2.modified then
+			return true
+		else
+			return false
+		end
+	elseif info1.type == "Post" then
+		if info1.created > info2.created then
+			return true
+		else
+			return false
+		end
+	elseif info1.type == "Series" then
+		if info1.posts[1].created > info2.posts[1].created then
+			return true
+		else
+			return false
+		end
+	elseif info1.type == "Tag" then
+		if #info1.posts > #info2.posts then
 			return true
 		else
 			return false
 		end
 	end
-
-	-- If images, sort by last modified
-	-- If posts, sort by... Latest? I dunno...
-	-- Should order by type
-	--  1. Posts
-	--  2. Constants
-	--  3. Tags
-	--  4. Series
 
 	return nil
 end
@@ -168,12 +190,12 @@ local function config()
 		sorting = {
 			priority_weight = 2,
 			comparators = {
-				blog_compare,
 				cmp.config.compare.offset,
 				cmp.config.compare.exact,
 				cmp.config.compare.score,
 				cmp.config.compare.recently_used,
 				cmp.config.compare.locality,
+				blog_compare,
 				cmp.config.compare.kind,
 				cmp.config.compare.sort_text,
 				cmp.config.compare.length,
