@@ -37,6 +37,7 @@ local blog_type_rank = {
 	Standalone = 6,
 	Constant = 7,
 	Img = 8,
+	DivClass = 9,
 }
 
 local function blog_compare(entry1, entry2)

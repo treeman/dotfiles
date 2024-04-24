@@ -8,7 +8,7 @@
 -- Should cwd to blog_path when loading a file
 
 local path = require("blog.path")
-local utils = require("util.utils")
+local diagnostics = require("blog.diagnostics")
 local nio = require("nio")
 local log = require("plenary.log").new({
 	plugin = "blog",
@@ -110,39 +110,16 @@ end
 -- This fun little thing tries to connect to my blogging
 -- watch server and sends it document positions on move.
 M.update_position = function()
+	local pos = vim.api.nvim_win_get_cursor(0)
+
 	M.cast({
 		id = "CursorMoved",
 		-- context = vim.fn.getline("."),
-		linenum = vim.fn.line("."),
+		linenum = pos[1],
 		linecount = vim.fn.line("$"),
-		column = vim.fn.col("."),
+		column = pos[2],
 		path = vim.fn.expand("%:p"),
 	})
-end
-
-M._add_diagnostics = function(msg)
-	for _, buf in ipairs(utils.list_buffers()) do
-		local buf_name = vim.api.nvim_buf_get_name(0)
-		local buf_diagnostics = msg[buf_name]
-
-		if buf_diagnostics then
-			local diagnostics = {}
-			for _, d in ipairs(buf_diagnostics) do
-				-- The positions we send are 1-indexed, but diagnostics are 0-indexed...
-				-- I hope this is fine...?
-				table.insert(diagnostics, {
-					lnum = d.linenum - 1,
-					end_lnum = d.end_linenum - 1,
-					col = d.column - 1,
-					end_col = d.end_column - 1,
-					message = d.message,
-					severity = vim.diagnostic.severity.WARN,
-				})
-			end
-
-			vim.diagnostic.set(vim.api.nvim_create_namespace("blog"), buf, diagnostics)
-		end
-	end
 end
 
 M.request_diagnostics_curr_buf = function()
@@ -208,7 +185,7 @@ M.handle_reply = function(data)
 		messages[message_id] = reply
 		M._blog_messages = messages
 	elseif reply.id == "Diagnostics" then
-		M._add_diagnostics(reply.diagnostics)
+		diagnostics.add_diagnostics(reply.diagnostics)
 	else
 		log.debug("Unknown message:", vim.inspect(reply))
 	end

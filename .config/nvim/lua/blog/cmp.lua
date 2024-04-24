@@ -132,6 +132,56 @@ local function _broken_link_docs(link)
 	return vim.api.nvim_buf_get_lines(0, link.row - 1, link.row + 1, false)
 end
 
+local function _div_class_docs(class)
+	if class.name == "flex" then
+		return {
+			"Display images horizontally using flex",
+			"---",
+			"::: flex",
+			"![](/images/one.jpg)",
+			"![](/images/two.jpg)",
+			":::",
+		}
+	elseif class.name == "gallery" then
+		return {
+			"Create an image gallery",
+			"---",
+			"::: gallery",
+			"![](/images/one.jpg)",
+			"![](/images/two.jpg)",
+			":::",
+		}
+	elseif class.name == "epigraph" then
+		return {
+			"Convert a blockquote to an epigraph",
+			"---",
+			"::: epigraph",
+			"> The difference between stupidity and genius is that genius has its limits. ",
+			"> ^ Albert Einstein",
+			":::",
+		}
+	elseif class.name == "notice" then
+		return {
+			"Add a text notice",
+			"---",
+			"::: notice",
+			"Highlighted text",
+			":::",
+		}
+	elseif class.name == "greek" then
+		return {
+			"Use greek characters for ordered list",
+			"---",
+			"::: greek",
+			"a. alpha",
+			"b. beta",
+			":::",
+		}
+	else
+		return nil
+	end
+end
+
 function source:resolve(item, callback)
 	if item.info then
 		local lines
@@ -154,6 +204,8 @@ function source:resolve(item, callback)
 			lines = _link_def_docs(item.info)
 		elseif item.info.type == "BrokenLink" then
 			lines = _broken_link_docs(item.info)
+		elseif item.info.type == "DivClass" then
+			lines = _div_class_docs(item.info)
 		end
 
 		if lines and #lines > 0 then
