@@ -289,3 +289,5 @@ Dockerfile
 statsd
 SpanLinkType
 fzy
+jumplist
+postgres

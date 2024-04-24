@@ -2,30 +2,51 @@ local util = require("util")
 
 M = {}
 
+M.add_diagnostics_tmp = function(msg)
+	-- for _, buf in ipairs(util.list_buffers()) do
+	-- 	local buf_name = vim.api.nvim_buf_get_name(0)
+	-- 	if buf_name == "/home/tree/dotfiles/.config/nvim/lua/blog/diagnostics.lua" then
+	local diagnostics = {
+		{
+			col = 2,
+			end_col = 17,
+			lnum = 30,
+			end_lnum = 30,
+			message = "Link to non-existent link definition: `tag`",
+			severity = vim.diagnostic.severity.ERROR,
+		},
+	}
+
+	vim.diagnostic.set(vim.api.nvim_create_namespace("blog"), 0, diagnostics)
+	-- 	end
+	-- end
+end
+
 M.add_diagnostics = function(msg)
 	for _, buf in ipairs(util.list_buffers()) do
 		local buf_name = vim.api.nvim_buf_get_name(0)
 		local buf_diagnostics = msg[buf_name]
 
 		if buf_diagnostics then
-			local diagnostics = {}
-			for _, d in ipairs(buf_diagnostics) do
-				-- The positions we send are 1-indexed, but diagnostics are 0-indexed...
-				-- I hope this is fine...?
-				-- table.insert(diagnostics, {
-				-- 	lnum = d.lnum,
-				-- 	end_lnum = d.end_lnum,
-				-- 	col = d.col,
-				-- 	end_col = d.end_col,
-				-- 	message = d.message,
-				-- 	severity = vim.diagnostic.severity.WARN,
-				-- })
-				table.insert(diagnostics, d)
-			end
-
-			vim.diagnostic.set(vim.api.nvim_create_namespace("blog"), buf, diagnostics)
+			vim.diagnostic.set(vim.api.nvim_create_namespace("blog"), buf, buf_diagnostics)
 		end
 	end
 end
+
+local msg = {
+	["/home/tree/dotfiles/.config/nvim/lua/blog/diagnostics.lua"] = {
+		-- ["/path/to/file.dj"] = {
+		{
+			col = 2,
+			end_col = 17,
+			lnum = 30,
+			end_lnum = 30,
+			message = "Link to non-existent link definition: `tag`",
+			severity = vim.diagnostic.severity.WARN,
+		},
+	},
+}
+
+M.add_diagnostics(msg)
 
 return M
