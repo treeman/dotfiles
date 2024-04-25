@@ -34,6 +34,25 @@ M.new_draft = function()
 	end)
 end
 
+M.new_series = function()
+	nio.run(function()
+		local title = nio.ui.input({ prompt = "Series title: " })
+		local file_path = path.blog_path .. "series/" .. M.slugify(title) .. ".dj"
+		vim.cmd(":e " .. file_path)
+		local template = {
+			"---toml",
+			'title = "' .. title .. '"',
+			"completed = false",
+			'img = "/images/trident/nice_wires2.jpg"',
+			"homepage = true",
+			"---",
+			"",
+		}
+		local buf = vim.api.nvim_get_current_buf()
+		vim.api.nvim_buf_set_lines(buf, 0, 0, true, template)
+	end)
+end
+
 local function _rename(from, to)
 	vim.cmd(":!mv " .. from .. " " .. to)
 	vim.cmd(":e " .. to)

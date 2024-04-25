@@ -24,7 +24,7 @@ end
 
 M.add_diagnostics = function(msg)
 	for _, buf in ipairs(util.list_buffers()) do
-		local buf_name = vim.api.nvim_buf_get_name(0)
+		local buf_name = vim.api.nvim_buf_get_name(buf)
 		local buf_diagnostics = msg[buf_name]
 
 		if buf_diagnostics then
