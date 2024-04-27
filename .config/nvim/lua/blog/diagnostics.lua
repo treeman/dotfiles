@@ -22,6 +22,13 @@ M.add_diagnostics_tmp = function(msg)
 	-- end
 end
 
+M.request_diagnostics_curr_buf = function()
+	M.cast({
+		id = "RefreshDiagnostics",
+		path = vim.fn.expand("%:p"),
+	})
+end
+
 M.add_diagnostics = function(msg)
 	for _, buf in ipairs(util.list_buffers()) do
 		local buf_name = vim.api.nvim_buf_get_name(buf)

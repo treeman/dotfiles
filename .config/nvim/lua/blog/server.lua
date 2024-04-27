@@ -107,28 +107,6 @@ M.cast = function(msg)
 	end)
 end
 
--- This fun little thing tries to connect to my blogging
--- watch server and sends it document positions on move.
-M.update_position = function()
-	local pos = vim.api.nvim_win_get_cursor(0)
-
-	M.cast({
-		id = "CursorMoved",
-		-- context = vim.fn.getline("."),
-		linenum = pos[1],
-		linecount = vim.fn.line("$"),
-		column = pos[2],
-		path = vim.fn.expand("%:p"),
-	})
-end
-
-M.request_diagnostics_curr_buf = function()
-	M.cast({
-		id = "RefreshDiagnostics",
-		path = vim.fn.expand("%:p"),
-	})
-end
-
 -- Server management
 
 M.start_server = function()
@@ -207,6 +185,7 @@ M.try_connect = function()
 	end)
 
 	if status then
+		diagnostics.request_diagnostics_curr_buf()
 		return true
 	end
 

@@ -25,9 +25,29 @@ M.rel_path = function(path)
 	end
 end
 
--- M.abs_path = function(rel_path)
--- 	return blog_path .. string.gsub(rel_path, "^/", "", 1)
--- end
+M.path_to_url = function(file_path)
+	local host = "localhost:8080/"
+	local rel_path = M.rel_path(file_path)
+	if M.is_draft(rel_path) then
+		local slug = rel_path:match("drafts/(.+)%.")
+		return host .. "drafts/" .. slug
+	elseif M.is_post(rel_path) then
+		local date, slug = rel_path:match("posts/(%d%d%d%d%-%d%d%-%d%d)-(.+)%.")
+		return host .. "blog/" .. date:gsub("-", "/") .. "/" .. slug
+	else
+		return nil
+	end
+end
+
+-- Create a slug from a title.
+M.slugify = function(title)
+	title = title:lower()
+	title = title:gsub("[^ a-zA-Z0-9_-]+", "")
+	title = title:gsub("[ _]+", "_")
+	title = title:gsub("^[ _-]+", "")
+	title = title:gsub("[ _-]+$", "")
+	return title
+end
 
 M.blog_path = blog_path
 

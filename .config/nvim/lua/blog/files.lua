@@ -1,5 +1,6 @@
-local path = require("blog.path")
+local blog_path = require("blog.path")
 local content = require("blog.content")
+local utils = require("util.utils")
 local nio = require("nio")
 local log = require("plenary.log").new({
 	plugin = "blog",
@@ -8,46 +9,77 @@ local log = require("plenary.log").new({
 
 local M = {}
 
--- Create a slug from a title.
-M.slugify = function(title)
-	title = title:lower()
-	title = title:gsub("[^ a-zA-Z0-9_-]+", "")
-	title = title:gsub("[ _]+", "_")
-	title = title:gsub("^[ _-]+", "")
-	title = title:gsub("[ _-]+$", "")
-	return title
-end
-
-M.new_draft = function()
+local function create_file(title_prompt, folder, template_fun)
 	nio.run(function()
-		local title = nio.ui.input({ prompt = "Draft title: " })
-		local file_path = path.blog_path .. "drafts/" .. M.slugify(title) .. ".dj"
+		local title = nio.ui.input({ prompt = title_prompt })
+		local template = template_fun(title)
+		local file_path = blog_path.blog_path .. folder .. blog_path.slugify(title) .. ".dj"
 		vim.cmd(":e " .. file_path)
-		local template = {
-			"---toml",
-			'title = "' .. title .. '"',
-			'tags = ["Some tag"]',
-			"---",
-		}
 		local buf = vim.api.nvim_get_current_buf()
 		vim.api.nvim_buf_set_lines(buf, 0, 0, true, template)
 	end)
 end
 
+M.new_draft = function()
+	create_file("Draft title: ", "drafts/", function(title)
+		return {
+			"---toml",
+			'title = "' .. title .. '"',
+			'tags = ["Some tag"]',
+			"---",
+		}
+	end)
+end
+
 M.new_series = function()
-	nio.run(function()
-		local title = nio.ui.input({ prompt = "Series title: " })
-		local file_path = path.blog_path .. "series/" .. M.slugify(title) .. ".dj"
-		vim.cmd(":e " .. file_path)
-		local template = {
+	create_file("Series title: ", "series/", function(title)
+		return {
 			"---toml",
 			'title = "' .. title .. '"',
 			"completed = false",
 			'img = "/images/trident/nice_wires2.jpg"',
 			"homepage = true",
 			"---",
-			"",
 		}
+	end)
+end
+
+M.new_static = function()
+	create_file("Static title: ", "static/", function(title)
+		return {
+			"---toml",
+			'title = "' .. title .. '"',
+			"---",
+		}
+	end)
+end
+
+M.new_project = function()
+	utils.list_files(blog_path.blog_path .. "projects/", function(files)
+		local lowest_ordinal = 99999
+		for _, file in ipairs(files) do
+			local ord = tonumber(string.match(file, "projects/(%d+)"))
+			if ord and ord < lowest_ordinal then
+				lowest_ordinal = ord
+			end
+		end
+
+		local title = nio.ui.input({ prompt = "Project title: " })
+		local template = {
+			"---toml",
+			'title = "' .. title .. '"',
+			"year = " .. os.date("%Y"),
+			'link = ""',
+			"homepage = true",
+			"---",
+		}
+		local file_path = blog_path.blog_path
+			.. "projects/"
+			.. lowest_ordinal - 1
+			.. "_"
+			.. blog_path.slugify(title)
+			.. ".dj"
+		vim.cmd(":e " .. file_path)
 		local buf = vim.api.nvim_get_current_buf()
 		vim.api.nvim_buf_set_lines(buf, 0, 0, true, template)
 	end)
@@ -60,13 +92,13 @@ end
 
 M.promote_draft = function(draft_path)
 	nio.run(function()
-		if not path.in_blog(draft_path) then
+		if not blog_path.in_blog(draft_path) then
 			log.error("Not a blog file:", draft_path)
 			return
 		end
 
 		local title = content.extract_title(draft_path)
-		local post_path = path.blog_path .. "posts/" .. os.date("%Y-%m-%d") .. "-" .. M.slugify(title) .. ".dj"
+		local post_path = blog_path.blog_path .. "posts/" .. os.date("%Y-%m-%d") .. "-" .. M.slugify(title) .. ".dj"
 
 		nio.scheduler()
 		_rename(draft_path, post_path)
@@ -79,13 +111,13 @@ end
 
 M.demote_post = function(post_path)
 	nio.run(function()
-		if not path.in_blog(post_path) then
+		if not blog_path.in_blog(post_path) then
 			log.error("Not a blog file:", post_path)
 			return
 		end
 
 		local title = content.extract_title(post_path)
-		local draft_path = path.blog_path .. "drafts/" .. M.slugify(title) .. ".dj"
+		local draft_path = blog_path.blog_path .. "drafts/" .. M.slugify(title) .. ".dj"
 
 		nio.scheduler()
 		_rename(post_path, draft_path)
@@ -96,22 +128,8 @@ M.demote_curr_post = function()
 	M.demote_post(vim.fn.expand("%:p"))
 end
 
-M.path_to_url = function(file_path)
-	local host = "localhost:8080/"
-	local rel_path = path.rel_path(file_path)
-	if path.is_draft(rel_path) then
-		local slug = rel_path:match("drafts/(.+)%.")
-		return host .. "drafts/" .. slug
-	elseif path.is_post(rel_path) then
-		local date, slug = rel_path:match("posts/(%d%d%d%d%-%d%d%-%d%d)-(.+)%.")
-		return host .. "blog/" .. date:gsub("-", "/") .. "/" .. slug
-	else
-		return nil
-	end
-end
-
 M.open_post_in_browser = function(file_path)
-	local url = M.path_to_url(file_path)
+	local url = blog_path.path_to_url(file_path)
 	if not url then
 		log.error("Could not convert to url:", file_path)
 		return

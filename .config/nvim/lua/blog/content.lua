@@ -11,18 +11,8 @@ M.list_tags = function(cb)
 	}, cb)
 end
 
-M.run_cmd = function(args)
-	local proc = nio.process.run(args)
-
-	if not proc then
-		return nil
-	end
-
-	return proc.stdout.read()
-end
-
 M.extract_title = function(file_path)
-	local title = M.run_cmd({
+	local title = util.run_cmd({
 		cmd = "rg",
 		args = {
 			"-NoH",
@@ -40,7 +30,7 @@ end
 
 M.list_posts = function(subpath, cb)
 	nio.run(function()
-		local output = M.run_cmd({
+		local output = util.run_cmd({
 			cmd = "rg",
 			args = {
 				"-NoHU",
@@ -97,28 +87,6 @@ M.list_posts = function(subpath, cb)
 		end
 
 		cb(posts)
-	end)
-end
-
-M.list_images = function(cb)
-	nio.run(function()
-		local output = M.run_cmd({
-			cmd = "fd",
-			args = {
-				"-t",
-				"f",
-				"\\.",
-				path.blog_path .. "images/",
-			},
-		})
-
-		if not output then
-			return
-		end
-
-		nio.scheduler()
-		local images = vim.fn.split(output, "\n")
-		cb(images)
 	end)
 end
 

@@ -29,4 +29,38 @@ M.file_modified = function(path)
 	end
 end
 
+M.run_cmd = function(args)
+	local nio = require("nio")
+	local proc = nio.process.run(args)
+
+	if not proc then
+		return nil
+	end
+
+	return proc.stdout.read()
+end
+
+M.list_files = function(path, cb)
+	local nio = require("nio")
+	nio.run(function()
+		local output = M.run_cmd({
+			cmd = "fd",
+			args = {
+				"-t",
+				"f",
+				"\\.",
+				path,
+			},
+		})
+
+		if not output then
+			return
+		end
+
+		nio.scheduler()
+		local files = vim.fn.split(output, "\n")
+		cb(files)
+	end)
+end
+
 return M

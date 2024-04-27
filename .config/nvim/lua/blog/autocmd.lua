@@ -1,5 +1,6 @@
 local path = require("blog.path")
 local server = require("blog.server")
+local diagnostics = require("blog.diagnostics")
 local keymaps = require("config.keymaps")
 
 local autocmd = vim.api.nvim_create_autocmd
@@ -15,12 +16,27 @@ autocmd({ "BufRead", "BufNewFile" }, {
 		vim.api.nvim_set_current_dir(path.blog_path)
 		server.establish_connection(true)
 		keymaps.buf_blog(opts.buf)
-		server.request_diagnostics_curr_buf()
+		diagnostics.request_diagnostics_curr_buf()
 	end,
 })
+
+-- This fun little thing tries to connect to my blogging
+-- watch server and sends it document positions on move.
+local function update_position()
+	local pos = vim.api.nvim_win_get_cursor(0)
+
+	server.cast({
+		id = "CursorMoved",
+		-- context = vim.fn.getline("."),
+		linenum = pos[1],
+		linecount = vim.fn.line("$"),
+		column = pos[2],
+		path = vim.fn.expand("%:p"),
+	})
+end
 
 autocmd("CursorMoved", {
 	pattern = autocmd_pattern,
 	group = blog_group,
-	callback = server.update_position,
+	callback = update_position,
 })
