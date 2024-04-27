@@ -7,7 +7,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
 local blog_group = augroup("blog", { clear = true })
-local autocmd_pattern = path.blog_path .. "*.{dj,markdown,md}"
+local autocmd_pattern = path.blog_path .. "*.dj"
 
 autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = autocmd_pattern,

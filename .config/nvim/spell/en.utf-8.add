@@ -292,3 +292,6 @@ fzy
 jumplist
 postgres
 Deref
+grokk
+CLI
+discoverable
