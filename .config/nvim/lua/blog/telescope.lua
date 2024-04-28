@@ -38,42 +38,40 @@ end
 
 M.find_tags = function(opts)
 	content.list_tags(function(reply)
-		pickers
-			.new(opts, {
-				finder = finders.new_table({
-					results = reply.tags,
-					entry_maker = function(entry)
-						return {
-							display = entry.name .. " (" .. tostring(#entry.posts) .. ")",
-							ordinal = { name = entry.name, post_count = #entry.posts },
-							value = entry,
-						}
-					end,
-				}),
-				sorter = tags_sorter(opts),
-				previewer = previewers.new_buffer_previewer({
-					title = "Tag detaiLs",
-					define_preview = function(self, entry)
-						local lines = {}
-						for _, post in ipairs(entry.value.posts) do
-							table.insert(lines, post.title)
-							table.insert(lines, post.url)
-							table.insert(lines, "")
-						end
-						vim.api.nvim_buf_set_lines(self.state.bufnr, 0, 0, true, lines)
-					end,
-				}),
-				attach_mappings = function(prompt_bufnr)
-					actions.select_default:replace(function()
-						local selection = action_state.get_selected_entry()
-						actions.close(prompt_bufnr)
-						-- TODO multiselect to insert all...?
-						vim.cmd(':normal i "' .. selection.value.name .. '"')
-					end)
-					return true
+		pickers.new(opts, {
+			finder = finders.new_table({
+				results = reply.tags,
+				entry_maker = function(entry)
+					return {
+						display = entry.name .. " (" .. tostring(#entry.posts) .. ")",
+						ordinal = { name = entry.name, post_count = #entry.posts },
+						value = entry,
+					}
 				end,
-			})
-			:find()
+			}),
+			sorter = tags_sorter(opts),
+			previewer = previewers.new_buffer_previewer({
+				title = "Tag detaiLs",
+				define_preview = function(self, entry)
+					local lines = {}
+					for _, post in ipairs(entry.value.posts) do
+						table.insert(lines, post.title)
+						table.insert(lines, post.url)
+						table.insert(lines, "")
+					end
+					vim.api.nvim_buf_set_lines(self.state.bufnr, 0, 0, true, lines)
+				end,
+			}),
+			attach_mappings = function(prompt_bufnr)
+				actions.select_default:replace(function()
+					local selection = action_state.get_selected_entry()
+					actions.close(prompt_bufnr)
+					-- TODO multiselect to insert all...?
+					vim.cmd(':normal i "' .. selection.value.name .. '"')
+				end)
+				return true
+			end,
+		}):find()
 	end)
 end
 
@@ -84,9 +82,9 @@ local function split_prompt(prompt)
 	for word in prompt:gmatch("([^%s]+)") do
 		local fst = word:sub(1, 1)
 		if fst == "@" then
-			table.insert(tags, word:sub(2, word:len()))
+			table.insert(tags, word:sub(2))
 		elseif fst == "#" then
-			table.insert(series, word:sub(2, word:len()))
+			table.insert(series, word:sub(2))
 		else
 			table.insert(title, word)
 		end
@@ -198,52 +196,50 @@ end
 
 local function _find_post(subpath)
 	content.list_posts(subpath, function(posts)
-		pickers
-			.new(opts, {
-				finder = finders.new_table({
-					results = posts,
-					entry_maker = function(entry)
-						local title = entry.title
-						if entry.date then
-							title = title .. " (" .. entry.date .. ")"
-						end
+		pickers.new(opts, {
+			finder = finders.new_table({
+				results = posts,
+				entry_maker = function(entry)
+					local title = entry.title
+					if entry.date then
+						title = title .. " (" .. entry.date .. ")"
+					end
 
-						local ordinal = {
-							title = entry.title,
-							tags = entry.tags,
-							series = entry.series,
-							date = entry.date,
-						}
+					local ordinal = {
+						title = entry.title,
+						tags = entry.tags,
+						series = entry.series,
+						date = entry.date,
+					}
 
-						return {
-							display = title,
-							ordinal = ordinal,
-							value = entry,
-						}
-					end,
-				}),
-				sorter = posts_sorter(opts),
-				previewer = previewers.new_buffer_previewer({
-					title = "Post Preview",
-					define_preview = function(self, entry)
-						conf.buffer_previewer_maker(entry.value.path, self.state.bufnr, {
-							bufname = self.state.bufname,
-							winid = self.state.winid,
-							preview = opts.preview,
-							file_encoding = opts.file_encoding,
-						})
-					end,
-				}),
-				attach_mappings = function(prompt_bufnr)
-					actions.select_default:replace(function()
-						local selection = action_state.get_selected_entry()
-						actions.close(prompt_bufnr)
-						vim.cmd(":e " .. selection.value.path)
-					end)
-					return true
+					return {
+						display = title,
+						ordinal = ordinal,
+						value = entry,
+					}
 				end,
-			})
-			:find()
+			}),
+			sorter = posts_sorter(opts),
+			previewer = previewers.new_buffer_previewer({
+				title = "Post Preview",
+				define_preview = function(self, entry)
+					conf.buffer_previewer_maker(entry.value.path, self.state.bufnr, {
+						bufname = self.state.bufname,
+						winid = self.state.winid,
+						preview = opts.preview,
+						file_encoding = opts.file_encoding,
+					})
+				end,
+			}),
+			attach_mappings = function(prompt_bufnr)
+				actions.select_default:replace(function()
+					local selection = action_state.get_selected_entry()
+					actions.close(prompt_bufnr)
+					vim.cmd(":e " .. selection.value.path)
+				end)
+				return true
+			end,
+		}):find()
 	end)
 end
 
@@ -256,44 +252,42 @@ M.find_draft = function()
 end
 
 local function tmp()
-	pickers
-		.new(opts, {
-			finder = finders.new_table({
-				results = {
-					-- `tags`
-					{ title = "One", tags = { "Tag1", "Tag2" }, path = "posts/2024-01-01-one.dj" },
-					{ title = "Two", tags = { "Tag2" }, path = "posts/2024-02-02-two.dj" },
-				},
-				entry_maker = function(entry)
-					return {
-						display = entry.title,
-						-- `ordinal` is now a list.
-						ordinal = {
-							title = entry.title,
-							tags = entry.tags,
-						},
-						value = entry,
-					}
-				end,
-				sorter = function(opts)
-					-- opts = opts or {}
-					-- local fzy_sorter = sorters.get_fzy_sorter(opts)
+	pickers.new(opts, {
+		finder = finders.new_table({
+			results = {
+				-- `tags`
+				{ title = "One", tags = { "Tag1", "Tag2" }, path = "posts/2024-01-01-one.dj" },
+				{ title = "Two", tags = { "Tag2" }, path = "posts/2024-02-02-two.dj" },
+			},
+			entry_maker = function(entry)
+				return {
+					display = entry.title,
+					-- `ordinal` is now a list.
+					ordinal = {
+						title = entry.title,
+						tags = entry.tags,
+					},
+					value = entry,
+				}
+			end,
+			sorter = function(opts)
+				-- opts = opts or {}
+				-- local fzy_sorter = sorters.get_fzy_sorter(opts)
 
-					return sorters.Sorter:new({
-						discard = true,
+				return sorters.Sorter:new({
+					discard = true,
 
-						scoring_function = function(_, prompt, ordinal)
-							return 0
-						end,
+					scoring_function = function(_, prompt, ordinal)
+						return 0
+					end,
 
-						-- highlighter = fzy_sorter.highlighter,
-					})
-				end,
-			}),
-		})
-		:find()
+					-- highlighter = fzy_sorter.highlighter,
+				})
+			end,
+		}),
+	}):find()
 end
 
-tmp()
+-- tmp()
 
 return M

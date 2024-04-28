@@ -1,4 +1,4 @@
-local blog_path = require("blog.path")
+local path = require("blog.path")
 local content = require("blog.content")
 local utils = require("util.utils")
 local nio = require("nio")
@@ -13,10 +13,9 @@ local function create_file(title_prompt, folder, template_fun)
 	nio.run(function()
 		local title = nio.ui.input({ prompt = title_prompt })
 		local template = template_fun(title)
-		local file_path = blog_path.blog_path .. folder .. blog_path.slugify(title) .. ".dj"
+		local file_path = path.blog_path .. folder .. path.slugify(title) .. ".dj"
 		vim.cmd(":e " .. file_path)
-		local buf = vim.api.nvim_get_current_buf()
-		vim.api.nvim_buf_set_lines(buf, 0, 0, true, template)
+		vim.api.nvim_buf_set_lines(0, 0, 0, true, template)
 	end)
 end
 
@@ -55,7 +54,7 @@ M.new_static = function()
 end
 
 M.new_project = function()
-	utils.list_files(blog_path.blog_path .. "projects/", function(files)
+	utils.list_files(path.blog_path .. "projects/", function(files)
 		local lowest_ordinal = 99999
 		for _, file in ipairs(files) do
 			local ord = tonumber(string.match(file, "projects/(%d+)"))
@@ -73,15 +72,9 @@ M.new_project = function()
 			"homepage = true",
 			"---",
 		}
-		local file_path = blog_path.blog_path
-			.. "projects/"
-			.. lowest_ordinal - 1
-			.. "_"
-			.. blog_path.slugify(title)
-			.. ".dj"
+		local file_path = path.blog_path .. "projects/" .. lowest_ordinal - 1 .. "_" .. path.slugify(title) .. ".dj"
 		vim.cmd(":e " .. file_path)
-		local buf = vim.api.nvim_get_current_buf()
-		vim.api.nvim_buf_set_lines(buf, 0, 0, true, template)
+		vim.api.nvim_buf_set_lines(0, 0, 0, true, template)
 	end)
 end
 
@@ -92,13 +85,13 @@ end
 
 M.promote_draft = function(draft_path)
 	nio.run(function()
-		if not blog_path.in_blog(draft_path) then
+		if not path.in_blog(draft_path) then
 			log.error("Not a blog file:", draft_path)
 			return
 		end
 
 		local title = content.extract_title(draft_path)
-		local post_path = blog_path.blog_path .. "posts/" .. os.date("%Y-%m-%d") .. "-" .. M.slugify(title) .. ".dj"
+		local post_path = path.blog_path .. "posts/" .. os.date("%Y-%m-%d") .. "-" .. path.slugify(title) .. ".dj"
 
 		nio.scheduler()
 		_rename(draft_path, post_path)
@@ -111,13 +104,13 @@ end
 
 M.demote_post = function(post_path)
 	nio.run(function()
-		if not blog_path.in_blog(post_path) then
+		if not path.in_blog(post_path) then
 			log.error("Not a blog file:", post_path)
 			return
 		end
 
 		local title = content.extract_title(post_path)
-		local draft_path = blog_path.blog_path .. "drafts/" .. M.slugify(title) .. ".dj"
+		local draft_path = path.blog_path .. "drafts/" .. path.slugify(title) .. ".dj"
 
 		nio.scheduler()
 		_rename(post_path, draft_path)
@@ -129,7 +122,7 @@ M.demote_curr_post = function()
 end
 
 M.open_post_in_browser = function(file_path)
-	local url = blog_path.path_to_url(file_path)
+	local url = path.path_to_url(file_path)
 	if not url then
 		log.error("Could not convert to url:", file_path)
 		return
