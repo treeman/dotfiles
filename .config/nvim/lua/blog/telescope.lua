@@ -7,7 +7,9 @@ local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
 local content = require("blog.content")
 
-local tags_sorter = function(opts)
+local M = {}
+
+local function tags_sorter(opts)
 	opts = opts or {}
 	local fzy = opts.fzy_mod or require("telescope.algos.fzy")
 
@@ -33,49 +35,6 @@ local tags_sorter = function(opts)
 		end,
 	})
 end
-
-local posts_sorter = function(opts)
-	opts = opts or {}
-	local fzy_sorter = sorters.get_fzy_sorter(opts)
-
-	return sorters.Sorter:new({
-		discard = true,
-
-		scoring_function = function(_, prompt, entry)
-			-- We could separate tags and series and calculate them separately...
-
-			-- fzy generates a score 0..1, and < 0 for filtered entries.
-			local entry_string = ""
-			if entry.series then
-				entry_string = entry.series .. ":"
-			end
-			entry_string = entry_string .. entry.tags .. ":" .. entry.title
-
-			local base_score = fzy_sorter:scoring_function(prompt, entry_string)
-			if base_score < 0 then
-				return base_score
-			end
-
-			-- Date of my first blog post as a number.
-			local beginning_of_time = 20090621
-			-- Today's date as a number.
-			local today = os.date("%Y%m%d")
-			-- Remove `-` from entry date, so it's comparable.
-			local entry_time = string.gsub(entry.date, "-", "")
-			-- Place the number on a 0..1 scale, where 1 is today (`1 -` reverses, otherwise 1
-			-- would be the beginning of time).
-			local date_score = 1 - (entry_time - beginning_of_time) / (today - beginning_of_time)
-
-			-- Date sorting is only worth 1/10 of the fuzzy score.
-			-- Why? I dunno, it's arbitrary from how it feels.
-			return base_score + date_score / 10
-		end,
-
-		highlighter = fzy_sorter.highlighter,
-	})
-end
-
-local M = {}
 
 M.find_tags = function(opts)
 	content.list_tags(function(reply)
@@ -116,6 +75,125 @@ M.find_tags = function(opts)
 			})
 			:find()
 	end)
+end
+
+local function split_prompt(prompt)
+	local tags = {}
+	local series = {}
+	local title = {}
+	for word in prompt:gmatch("([^%s]+)") do
+		local fst = word:sub(1, 1)
+		if fst == "@" then
+			table.insert(tags, word:sub(2, word:len()))
+		elseif fst == "#" then
+			table.insert(series, word:sub(2, word:len()))
+		else
+			table.insert(title, word)
+		end
+	end
+
+	return {
+		tags = tags,
+		series = series,
+		title = vim.fn.join(title, " "),
+	}
+end
+
+-- Score a prompt element against an entry element using `sorter`.
+--
+-- Prompt elements should be a list of words from the prompt.
+-- For example a prompt with tags like `@tag1 @tag2`
+-- can produce the `{ "tag1", "tag2" }` `prompt_elements`.
+-- Every prompted element needs a match, otherwise the entry will
+-- get filtered.
+--
+-- The `entry_element` could either be a string (such a series id)
+-- or a list of strings (multiple tags).
+--
+-- This function will clamp the score to 0..1, and return -1
+-- if it should remove the entry (we prompted for it, but got no match).
+-- In the case of multiple prompt elements, each individual element
+-- is worth 1 / count prompt_elements.
+local function score_element(prompt_elements, entry_element, sorter)
+	-- We didn't prompt for this type, ignore it.
+	if next(prompt_elements) == nil then
+		return 0
+	end
+
+	-- We prompted for this type, but entry didn't have it, remove entry.
+	-- For example if we prompt for a series, this removes all posts
+	-- without a series.
+	if not entry_element then
+		return -1
+	end
+
+	-- Convert multiple entry values to a string like `tag1:tag2`.
+	local entry
+	if type(entry_element) == "string" then
+		entry = entry_element
+	elseif type(entry_element) == "table" then
+		entry = vim.fn.join(entry_element, ":")
+	end
+
+	local total = 0
+	for _, prompt_element in ipairs(prompt_elements) do
+		local score = sorter:scoring_function(prompt_element, entry)
+		-- Require a match for every element.
+		if score < 0 then
+			return -1
+		end
+		total = total + score
+	end
+
+	-- Clamp score to max 1.
+	return total / #prompt_elements
+end
+
+local function posts_sorter(opts)
+	opts = opts or {}
+	local fzy_sorter = sorters.get_fzy_sorter(opts)
+
+	return sorters.Sorter:new({
+		discard = true,
+
+		scoring_function = function(_, prompt, entry)
+			prompt = split_prompt(prompt)
+
+			-- Score and filter against series, tags, and title separately.
+			-- If any element returns a 0, it means nothing matched but we shouldn't filter.
+			-- If it returns < 0, it means it did not match and should remove the entry.
+			local series_score = score_element(prompt.series, entry.series, fzy_sorter)
+			if series_score < 0 then
+				return -1
+			end
+
+			local tags_score = score_element(prompt.tags, entry.tags, fzy_sorter)
+			if tags_score < 0 then
+				return -1
+			end
+
+			local title_score = fzy_sorter:scoring_function(prompt.title, entry.title)
+			if title_score < 0 then
+				return -1
+			end
+
+			-- Date of my first blog post as a number.
+			local beginning_of_time = 20090621
+			-- Today's date as a number.
+			local today = os.date("%Y%m%d")
+			-- Remove `-` from entry date, so it's like a number.
+			local entry_time = string.gsub(entry.date, "-", "")
+			-- Place the number on a 0..1 scale, where 1 is today (`1 -` reverses, otherwise 1
+			-- would be the beginning of time).
+			local date_score = 1 - (entry_time - beginning_of_time) / (today - beginning_of_time)
+
+			-- Date sorting is only worth 1/10 of the fuzzy score.
+			-- Why? I dunno, it's arbitrary from how it feels.
+			return series_score + tags_score + title_score + date_score / 10
+		end,
+
+		highlighter = fzy_sorter.highlighter,
+	})
 end
 
 local function _find_post(subpath)
@@ -176,5 +254,46 @@ end
 M.find_draft = function()
 	return _find_post("drafts/")
 end
+
+local function tmp()
+	pickers
+		.new(opts, {
+			finder = finders.new_table({
+				results = {
+					-- `tags`
+					{ title = "One", tags = { "Tag1", "Tag2" }, path = "posts/2024-01-01-one.dj" },
+					{ title = "Two", tags = { "Tag2" }, path = "posts/2024-02-02-two.dj" },
+				},
+				entry_maker = function(entry)
+					return {
+						display = entry.title,
+						-- `ordinal` is now a list.
+						ordinal = {
+							title = entry.title,
+							tags = entry.tags,
+						},
+						value = entry,
+					}
+				end,
+				sorter = function(opts)
+					-- opts = opts or {}
+					-- local fzy_sorter = sorters.get_fzy_sorter(opts)
+
+					return sorters.Sorter:new({
+						discard = true,
+
+						scoring_function = function(_, prompt, ordinal)
+							return 0
+						end,
+
+						-- highlighter = fzy_sorter.highlighter,
+					})
+				end,
+			}),
+		})
+		:find()
+end
+
+tmp()
 
 return M

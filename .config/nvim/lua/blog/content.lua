@@ -28,6 +28,15 @@ M.extract_title = function(file_path)
 	return title:match('title = "(.+)"')
 end
 
+local function trim_quotes(s)
+	local stripped = string.match(s, '^"(.+)"$')
+	if stripped then
+		return stripped
+	else
+		return s
+	end
+end
+
 M.list_posts = function(subpath, cb)
 	nio.run(function()
 		local output = util.run_cmd({
@@ -64,9 +73,16 @@ M.list_posts = function(subpath, cb)
 					-- Strip surrounding quotes.
 					-- Do this here because there's no non-greedy specifier that could be used
 					-- in the key/value regex above.
-					local stripped = string.match(value, '^"(.+)"$')
-					if stripped then
-						value = stripped
+					value = trim_quotes(value)
+					-- Split a sequence.
+					-- Yeah, I should really use a parser instead...
+					local seq = string.match(value, "^%[(.+)%]$")
+					if seq then
+						local parts = {}
+						for part in string.gmatch(seq, "%s*([^,]+)") do
+							table.insert(parts, trim_quotes(part))
+						end
+						value = parts
 					end
 					post[key] = value
 				else
