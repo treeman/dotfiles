@@ -75,7 +75,6 @@ M.list_posts = function(subpath, cb)
 					-- in the key/value regex above.
 					value = trim_quotes(value)
 					-- Split a sequence.
-					-- Yeah, I should really use a parser instead...
 					local seq = string.match(value, "^%[(.+)%]$")
 					if seq then
 						local parts = {}
@@ -93,11 +92,13 @@ M.list_posts = function(subpath, cb)
 					if date then
 						post["date"] = date
 					else
+						-- Use the modified timestamp for drafts.
 						post["date"] = os.date("%Y-%m-%d", util.file_modified(line))
 					end
 				end
 			end
 		end
+		-- If output ends we might have an unsaved post.
 		if post.title then
 			table.insert(posts, post)
 		end

@@ -38,40 +38,42 @@ end
 
 M.find_tags = function(opts)
 	content.list_tags(function(reply)
-		pickers.new(opts, {
-			finder = finders.new_table({
-				results = reply.tags,
-				entry_maker = function(entry)
-					return {
-						display = entry.name .. " (" .. tostring(#entry.posts) .. ")",
-						ordinal = { name = entry.name, post_count = #entry.posts },
-						value = entry,
-					}
+		pickers
+			.new(opts, {
+				finder = finders.new_table({
+					results = reply.tags,
+					entry_maker = function(entry)
+						return {
+							display = entry.name .. " (" .. tostring(#entry.posts) .. ")",
+							ordinal = { name = entry.name, post_count = #entry.posts },
+							value = entry,
+						}
+					end,
+				}),
+				sorter = tags_sorter(opts),
+				previewer = previewers.new_buffer_previewer({
+					title = "Tag detaiLs",
+					define_preview = function(self, entry)
+						local lines = {}
+						for _, post in ipairs(entry.value.posts) do
+							table.insert(lines, post.title)
+							table.insert(lines, post.url)
+							table.insert(lines, "")
+						end
+						vim.api.nvim_buf_set_lines(self.state.bufnr, 0, 0, true, lines)
+					end,
+				}),
+				attach_mappings = function(prompt_bufnr)
+					actions.select_default:replace(function()
+						local selection = action_state.get_selected_entry()
+						actions.close(prompt_bufnr)
+						-- TODO multiselect to insert all...?
+						vim.cmd(':normal i "' .. selection.value.name .. '"')
+					end)
+					return true
 				end,
-			}),
-			sorter = tags_sorter(opts),
-			previewer = previewers.new_buffer_previewer({
-				title = "Tag detaiLs",
-				define_preview = function(self, entry)
-					local lines = {}
-					for _, post in ipairs(entry.value.posts) do
-						table.insert(lines, post.title)
-						table.insert(lines, post.url)
-						table.insert(lines, "")
-					end
-					vim.api.nvim_buf_set_lines(self.state.bufnr, 0, 0, true, lines)
-				end,
-			}),
-			attach_mappings = function(prompt_bufnr)
-				actions.select_default:replace(function()
-					local selection = action_state.get_selected_entry()
-					actions.close(prompt_bufnr)
-					-- TODO multiselect to insert all...?
-					vim.cmd(':normal i "' .. selection.value.name .. '"')
-				end)
-				return true
-			end,
-		}):find()
+			})
+			:find()
 	end)
 end
 
@@ -79,12 +81,15 @@ local function split_prompt(prompt)
 	local tags = {}
 	local series = {}
 	local title = {}
+	local path = {}
 	for word in prompt:gmatch("([^%s]+)") do
 		local fst = word:sub(1, 1)
 		if fst == "@" then
 			table.insert(tags, word:sub(2))
 		elseif fst == "#" then
 			table.insert(series, word:sub(2))
+		elseif fst == "/" then
+			table.insert(path, word)
 		else
 			table.insert(title, word)
 		end
@@ -93,6 +98,7 @@ local function split_prompt(prompt)
 	return {
 		tags = tags,
 		series = series,
+		path = path,
 		title = vim.fn.join(title, " "),
 	}
 end
@@ -118,7 +124,7 @@ local function score_element(prompt_elements, entry_element, sorter)
 		return 0
 	end
 
-	-- We prompted for this type, but entry didn't have it, remove entry.
+	-- We prompted for this type, but entry didn't have it, so remove the entry.
 	-- For example if we prompt for a series, this removes all posts
 	-- without a series.
 	if not entry_element then
@@ -170,6 +176,11 @@ local function posts_sorter(opts)
 				return -1
 			end
 
+			local path_score = score_element(prompt.path, entry.path, fzy_sorter)
+			if path_score < 0 then
+				return -1
+			end
+
 			local title_score = fzy_sorter:scoring_function(prompt.title, entry.title)
 			if title_score < 0 then
 				return -1
@@ -180,66 +191,59 @@ local function posts_sorter(opts)
 			-- Today's date as a number.
 			local today = os.date("%Y%m%d")
 			-- Remove `-` from entry date, so it's like a number.
-			local entry_time = string.gsub(entry.date, "-", "")
+			local entry_date = string.gsub(entry.date, "-", "")
 			-- Place the number on a 0..1 scale, where 1 is today (`1 -` reverses, otherwise 1
 			-- would be the beginning of time).
-			local date_score = 1 - (entry_time - beginning_of_time) / (today - beginning_of_time)
+			local date_score = 1 - (entry_date - beginning_of_time) / (today - beginning_of_time)
 
-			-- Date sorting is only worth 1/10 of the fuzzy score.
-			-- Why? I dunno, it's arbitrary from how it feels.
+			-- Date sorting is only worth 1/10 of the fuzzy scores.
+			-- Why? I dunno, it felt like 1 was too much and 1/10 felt good.
 			return series_score + tags_score + title_score + date_score / 10
 		end,
-
-		highlighter = fzy_sorter.highlighter,
 	})
 end
 
 local function _find_post(subpath)
 	content.list_posts(subpath, function(posts)
-		pickers.new(opts, {
-			finder = finders.new_table({
-				results = posts,
-				entry_maker = function(entry)
-					local title = entry.title
-					if entry.date then
-						title = title .. " (" .. entry.date .. ")"
-					end
+		pickers
+			.new(opts, {
+				finder = finders.new_table({
+					results = posts,
+					entry_maker = function(entry)
+						local title = entry.title
+						if entry.date then
+							title = title .. " (" .. entry.date .. ")"
+						end
 
-					local ordinal = {
-						title = entry.title,
-						tags = entry.tags,
-						series = entry.series,
-						date = entry.date,
-					}
-
-					return {
-						display = title,
-						ordinal = ordinal,
-						value = entry,
-					}
+						return {
+							display = title,
+							ordinal = entry,
+							value = entry,
+						}
+					end,
+				}),
+				sorter = posts_sorter(opts),
+				previewer = previewers.new_buffer_previewer({
+					title = "Post Preview",
+					define_preview = function(self, entry)
+						conf.buffer_previewer_maker(entry.value.path, self.state.bufnr, {
+							bufname = self.state.bufname,
+							winid = self.state.winid,
+							preview = opts.preview,
+							file_encoding = opts.file_encoding,
+						})
+					end,
+				}),
+				attach_mappings = function(prompt_bufnr)
+					actions.select_default:replace(function()
+						local selection = action_state.get_selected_entry()
+						actions.close(prompt_bufnr)
+						vim.cmd(":e " .. selection.value.path)
+					end)
+					return true
 				end,
-			}),
-			sorter = posts_sorter(opts),
-			previewer = previewers.new_buffer_previewer({
-				title = "Post Preview",
-				define_preview = function(self, entry)
-					conf.buffer_previewer_maker(entry.value.path, self.state.bufnr, {
-						bufname = self.state.bufname,
-						winid = self.state.winid,
-						preview = opts.preview,
-						file_encoding = opts.file_encoding,
-					})
-				end,
-			}),
-			attach_mappings = function(prompt_bufnr)
-				actions.select_default:replace(function()
-					local selection = action_state.get_selected_entry()
-					actions.close(prompt_bufnr)
-					vim.cmd(":e " .. selection.value.path)
-				end)
-				return true
-			end,
-		}):find()
+			})
+			:find()
 	end)
 end
 
@@ -251,43 +255,64 @@ M.find_draft = function()
 	return _find_post("drafts/")
 end
 
-local function tmp()
-	pickers.new(opts, {
-		finder = finders.new_table({
-			results = {
-				-- `tags`
-				{ title = "One", tags = { "Tag1", "Tag2" }, path = "posts/2024-01-01-one.dj" },
-				{ title = "Two", tags = { "Tag2" }, path = "posts/2024-02-02-two.dj" },
-			},
-			entry_maker = function(entry)
-				return {
-					display = entry.title,
-					-- `ordinal` is now a list.
-					ordinal = {
-						title = entry.title,
-						tags = entry.tags,
-					},
-					value = entry,
-				}
-			end,
-			sorter = function(opts)
-				-- opts = opts or {}
-				-- local fzy_sorter = sorters.get_fzy_sorter(opts)
+local function post_sorter(opts)
+	opts = opts or {}
+	local fzy_sorter = sorters.get_fzy_sorter(opts)
 
-				return sorters.Sorter:new({
-					discard = true,
+	return sorters.Sorter:new({
+		discard = true,
 
-					scoring_function = function(_, prompt, ordinal)
-						return 0
-					end,
+		scoring_function = function(_, prompt, entry)
+			prompt = split_prompt(prompt)
 
-					-- highlighter = fzy_sorter.highlighter,
-				})
-			end,
-		}),
-	}):find()
+			print("scoring:")
+			P(prompt)
+			P(entry)
+
+			local series_score = score_element(prompt.series, entry.series, fzy_sorter)
+			if series_score < 0 then
+				return -1
+			end
+
+			local tags_score = score_element(prompt.tags, entry.tags, fzy_sorter)
+			if tags_score < 0 then
+				return -1
+			end
+
+			local title_score = fzy_sorter:scoring_function(prompt.title, entry.title)
+			if title_score < 0 then
+				return -1
+			end
+
+			return series_score + tags_score + title_score
+		end,
+
+		-- highlighter = fzy_sorter.highlighter,
+	})
 end
 
--- tmp()
+local function tmp()
+	pickers
+		.new(opts, {
+			finder = finders.new_table({
+				results = {
+					-- `tags`
+					{ title = "One", tags = { "Tag1", "Tag2" }, path = "posts/2024-01-01-one.dj" },
+					{ title = "Two", tags = { "Tag2" }, path = "posts/2024-02-02-two.dj" },
+				},
+				entry_maker = function(entry)
+					return {
+						display = entry.title,
+						-- `ordinal` is now a list.
+						ordinal = entry,
+					}
+				end,
+			}),
+			sorter = post_sorter(opts),
+		})
+		:find()
+end
+
+tmp()
 
 return M
