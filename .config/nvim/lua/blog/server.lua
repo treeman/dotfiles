@@ -152,7 +152,12 @@ M.handle_reply = function(data)
 		return
 	end
 
-	local reply = vim.fn.json_decode(data)
+	if #data == 0 then
+		log.warn("Empty data received")
+		return
+	end
+
+	local reply = vim.fn.json_decode(data[1])
 	if not reply then
 		return
 	end

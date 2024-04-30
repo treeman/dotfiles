@@ -46,6 +46,10 @@ local function blog_compare(entry1, entry2)
 		return nil
 	end
 
+	if not entry1.completion_item.info then
+		return nil
+	end
+
 	local info1 = entry1.completion_item.info
 	local info2 = entry2.completion_item.info
 
@@ -58,29 +62,13 @@ local function blog_compare(entry1, entry2)
 	end
 
 	if info1.type == "Img" then
-		if info1.modified > info2.modified then
-			return true
-		else
-			return false
-		end
+		return info1.modified > info2.modified
 	elseif info1.type == "Post" then
-		if info1.created > info2.created then
-			return true
-		else
-			return false
-		end
+		return info1.created > info2.created
 	elseif info1.type == "Series" then
-		if info1.posts[1].created > info2.posts[1].created then
-			return true
-		else
-			return false
-		end
+		return info1.posts[1].created > info2.posts[1].created
 	elseif info1.type == "Tag" then
-		if #info1.posts > #info2.posts then
-			return true
-		else
-			return false
-		end
+		return #info1.posts > #info2.posts
 	end
 
 	return nil
@@ -122,7 +110,7 @@ local function config()
 			},
 			{
 				name = "blog",
-				group_index = 1,
+				group_index = 2,
 			},
 			{
 				name = "nvim_lsp",
@@ -130,7 +118,7 @@ local function config()
 			},
 			{
 				name = "nvim_lua",
-				group_index = 3,
+				group_index = 2,
 			},
 			{
 				name = "neorg",

@@ -297,3 +297,5 @@ CLI
 discoverable
 standalones
 boolean
+Autocompletion
+autocompletion
