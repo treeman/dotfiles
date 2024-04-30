@@ -265,10 +265,6 @@ local function post_sorter(opts)
 		scoring_function = function(_, prompt, entry)
 			prompt = split_prompt(prompt)
 
-			print("scoring:")
-			P(prompt)
-			P(entry)
-
 			local series_score = score_element(prompt.series, entry.series, fzy_sorter)
 			if series_score < 0 then
 				return -1
