@@ -299,3 +299,5 @@ standalones
 boolean
 Autocompletion
 autocompletion
+toml
+cli
