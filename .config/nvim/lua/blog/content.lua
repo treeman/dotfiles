@@ -15,8 +15,8 @@ M.extract_title = function(file_path)
 	local title = util.run_cmd({
 		cmd = "rg",
 		args = {
-			"-NoH",
-			"^title = (.+)",
+			"-INo",
+			"^title = (.+)$",
 			file_path,
 		},
 	})
@@ -25,7 +25,7 @@ M.extract_title = function(file_path)
 		return nil
 	end
 
-	return title:match('title = "(.+)"')
+	return title:match('title = "([^%"]+)"')
 end
 
 local function trim_quotes(s)
