@@ -17,6 +17,10 @@ local log = require("plenary.log").new({
 
 M = {}
 
+M.is_buf_connected = function()
+	return vim.b[0].blog_file and M._blog_conn ~= nil
+end
+
 M.is_connected = function()
 	return M._blog_conn ~= nil
 end
@@ -26,6 +30,10 @@ M.has_server = function()
 end
 
 M.status = function()
+	if not vim.b[0].blog_file then
+		return ""
+	end
+
 	local is_connected = M.is_connected()
 	local has_server = M.has_server()
 

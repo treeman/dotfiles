@@ -3,7 +3,7 @@ local server = require("blog.server")
 local source = {}
 
 function source:is_available()
-	return server.is_connected()
+	return server.is_buf_connected()
 end
 
 local function read_lines(file, start_row, end_row, res)
