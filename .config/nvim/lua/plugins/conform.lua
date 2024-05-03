@@ -25,7 +25,7 @@ local opts = {
 		end
 		-- Disable autoformat for files in a certain path
 		local bufname = vim.api.nvim_buf_get_name(bufnr)
-		if bufname:match("/euronetics/") then
+		if bufname:match("/euronetics/schedule/") or bufname:match("/euronetics/vbanken/") then
 			return
 		end
 		return { timeout_ms = 500, lsp_fallback = true }
