@@ -19,6 +19,9 @@ local config = function()
 					preview_width = 0.6,
 				},
 			},
+			path_display = {
+				"filename_first",
+			},
 		},
 	})
 

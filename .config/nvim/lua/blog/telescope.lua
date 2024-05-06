@@ -1,4 +1,6 @@
 local action_state = require("telescope.actions.state")
+local devicons = require("nvim-web-devicons")
+local entry_display = require("telescope.pickers.entry_display")
 local actions = require("telescope.actions")
 local conf = require("telescope.config").values
 local finders = require("telescope.finders")
@@ -204,21 +206,62 @@ local function posts_sorter(opts)
 end
 
 local function _find_post(subpath)
+	local make_display = function(entry)
+		local icon_hl
+		if subpath == "posts/" then
+			icon_hl = "TelescopeResultsTitle"
+		else
+			icon_hl = "TelescopeResultsComment"
+		end
+
+		-- No djot icon, just pick something that looks neat
+		local ext = require("telescope.utils").file_extension(entry.value.path)
+		if ext == "dj" then
+			ext = "tcl"
+		end
+		local icon, _ = devicons.get_icon_by_filetype(ext)
+
+		local tags
+		if type(entry.value.tags) == "string" then
+			tags = entry.value.tags
+		elseif type(entry.value.tags) == "table" then
+			tags = vim.fn.join(entry.value.tags, " ")
+		end
+
+		local series = entry.value.series or ""
+
+		local displayer = entry_display.create({
+			separator = " ",
+			items = {
+				{ width = 1 },
+				{ width = string.len(entry.value.title) },
+				{ width = string.len(entry.value.date) },
+				{ width = string.len(tags) },
+				{ remaining = true },
+			},
+		})
+
+		return displayer({
+			{ icon, icon_hl },
+			entry.value.title,
+			{ entry.value.date, "TelescopeResultsComment" },
+			{ tags, "TelescopeResultsConstant" },
+			{ series, "TelescopeResultsClass" },
+		})
+	end
+
 	content.list_posts(subpath, function(posts)
 		pickers
 			.new(opts, {
 				finder = finders.new_table({
 					results = posts,
 					entry_maker = function(entry)
-						local title = entry.title
-						if entry.date then
-							title = title .. " (" .. entry.date .. ")"
-						end
-
 						return {
-							display = title,
+							display = make_display,
 							ordinal = entry,
 							value = entry,
+							-- Make standard action open `path` on <CR>
+							filename = entry.path,
 						}
 					end,
 				}),
@@ -234,14 +277,6 @@ local function _find_post(subpath)
 						})
 					end,
 				}),
-				attach_mappings = function(prompt_bufnr)
-					actions.select_default:replace(function()
-						local selection = action_state.get_selected_entry()
-						actions.close(prompt_bufnr)
-						vim.cmd(":e " .. selection.value.path)
-					end)
-					return true
-				end,
 			})
 			:find()
 	end)
@@ -288,18 +323,52 @@ local function post_sorter(opts)
 end
 
 local function tmp()
+	local make_display = function(entry)
+		P(entry)
+
+		-- local icon, icon_hl = devicons.get_icon_by_filetype("markdown")
+		-- local icon, icon_hl = devicons.get_icon_by_filetype("tcl")
+		local icon, icon_hl = devicons.get_icon_by_filetype("hbs")
+
+		local displayer = entry_display.create({
+			separator = " ",
+			items = {
+				{ width = 3 },
+				-- { width = 20 },
+				{ remaining = true },
+			},
+		})
+
+		return displayer({
+			{ icon, icon_hl },
+			{ entry.ordinal.title, "TelescopeResultsNumber" },
+		})
+	end
+
+	-- P(displayer({ { "x", "TelescopeResultsNumber" }, { "y", "TelescopeResultsComment" } }))
+	-- P(displayer({ "x", "y" }))
 	pickers
 		.new(opts, {
 			finder = finders.new_table({
 				results = {
 					-- `tags`
-					{ title = "One", tags = { "Tag1", "Tag2" }, path = "posts/2024-01-01-one.dj" },
-					{ title = "Two", tags = { "Tag2" }, path = "posts/2024-02-02-two.dj" },
+					{
+						title = "One",
+						tags = { "Tag1", "Tag2" },
+						path = "posts/2024-01-01-one.dj",
+					},
+					{
+						title = "Two",
+						tags = { "Tag2" },
+						path = "posts/2024-02-02-two.dj",
+					},
 				},
 				entry_maker = function(entry)
+					P(entry.title)
 					return {
-						display = entry.title,
-						-- `ordinal` is now a list.
+						-- display = entry.title,
+						display = make_display,
+						-- `ordinal` is now a table.
 						ordinal = entry,
 					}
 				end,
