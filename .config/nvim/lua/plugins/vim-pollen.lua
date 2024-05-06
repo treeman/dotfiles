@@ -1,4 +1,4 @@
 return {
-	"otherjoel/vim-pollen",
-	ft = "pollen",
+  "otherjoel/vim-pollen",
+  ft = "pollen",
 }

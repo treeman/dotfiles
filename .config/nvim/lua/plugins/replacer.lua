@@ -1,5 +1,5 @@
 return {
-	"gabrielpoca/replacer.nvim",
-	opts = { rename_files = false },
-	keys = require("config.keymaps").replacer,
+  "gabrielpoca/replacer.nvim",
+  opts = { rename_files = false },
+  keys = require("config.keymaps").replacer,
 }

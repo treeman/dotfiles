@@ -1,7 +1,7 @@
 require("config.leader")
 
 if vim.g.neovide then
-	require("config.neovide")
+  require("config.neovide")
 end
 
 require("config.lazy")

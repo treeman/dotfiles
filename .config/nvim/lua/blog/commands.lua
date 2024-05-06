@@ -1,6 +1,6 @@
 local cmd = require("util").create_cmd
-local server = require("blog.server")
 local files = require("blog.files")
+local server = require("blog.server")
 
 cmd("BlogStart", server.start)
 cmd("BlogStop", server.stop)

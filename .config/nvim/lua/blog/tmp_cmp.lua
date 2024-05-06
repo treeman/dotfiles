@@ -3,29 +3,29 @@ print("LOADED")
 local source = {}
 
 function source:complete(params, callback)
-	local cursor_before_line = params.context.cursor_before_line
+  local cursor_before_line = params.context.cursor_before_line
 
-	local items = {}
+  local items = {}
 
-	if cursor_before_line:sub(1, 1) == "/" then
-		items = {
-			-- {
-			-- 	-- Text to be displayed in the completion menu.
-			-- 	label = "Rewriting my Neovim config in Lua",
-			-- 	-- Text to insert.
-			-- 	insertText = "/blog/2023/10/01/rewriting_my_neovim_config_in_lua/",
-			-- 	-- Text to filter against, works like `ordinal` for telescope.
-			-- 	filterText = "/blog/2023/10/01/rewriting_my_neovim_config_in_lua/|Rewriting my Neovim config in Lua",
-			-- 	kind = require("cmp.types.lsp").CompletionItemKind.File,
-			-- },
-			{ label = "/one", kind = require("cmp.types.lsp").CompletionItemKind.File },
-			{ label = "/two", kind = require("cmp.types.lsp").CompletionItemKind.Property },
-			{ label = "/three", kind = require("cmp.types.lsp").CompletionItemKind.Struct },
-		}
-	end
+  if cursor_before_line:sub(1, 1) == "/" then
+    items = {
+      -- {
+      -- 	-- Text to be displayed in the completion menu.
+      -- 	label = "Rewriting my Neovim config in Lua",
+      -- 	-- Text to insert.
+      -- 	insertText = "/blog/2023/10/01/rewriting_my_neovim_config_in_lua/",
+      -- 	-- Text to filter against, works like `ordinal` for telescope.
+      -- 	filterText = "/blog/2023/10/01/rewriting_my_neovim_config_in_lua/|Rewriting my Neovim config in Lua",
+      -- 	kind = require("cmp.types.lsp").CompletionItemKind.File,
+      -- },
+      { label = "/one", kind = require("cmp.types.lsp").CompletionItemKind.File },
+      { label = "/two", kind = require("cmp.types.lsp").CompletionItemKind.Property },
+      { label = "/three", kind = require("cmp.types.lsp").CompletionItemKind.Struct },
+    }
+  end
 
-	-- `callback` should always be called.
-	callback(items)
+  -- `callback` should always be called.
+  callback(items)
 end
 
 -- function source:complete(params, callback)
@@ -56,7 +56,7 @@ end
 -- Trigger completion on these characters.
 -- We could also trigger it manually.
 function source:get_trigger_characters()
-	return { "/" }
+  return { "/" }
 end
 
 require("cmp").register_source("blog", source)

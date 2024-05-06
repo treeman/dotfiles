@@ -1,7 +1,7 @@
 local opts = {
   highlight = {
     duration = 500,
-  }
+  },
 }
 
 return {

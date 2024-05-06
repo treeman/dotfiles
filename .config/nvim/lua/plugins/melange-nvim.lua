@@ -1,6 +1,6 @@
 return {
-	{
-		"savq/melange-nvim",
-		priority = 1000,
-	},
+  {
+    "savq/melange-nvim",
+    priority = 1000,
+  },
 }
