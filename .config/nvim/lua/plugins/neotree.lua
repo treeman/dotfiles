@@ -14,6 +14,7 @@ local opts = {
 			["d"] = "add_directory",
 			["X"] = "delete",
 			["/"] = "noop", -- Disable fuzzy finder thx
+			["?"] = "noop", -- Disable fuzzy finder thx
 			["space"] = "none",
 			["<Esc>"] = "close_window",
 		},
