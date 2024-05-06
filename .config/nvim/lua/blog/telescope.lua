@@ -7,6 +7,7 @@ local finders = require("telescope.finders")
 local pickers = require("telescope.pickers")
 local previewers = require("telescope.previewers")
 local sorters = require("telescope.sorters")
+local telescope_utils = require("telescope.utils")
 local content = require("blog.content")
 
 local M = {}
@@ -207,15 +208,8 @@ end
 
 local function _find_post(subpath)
 	local make_display = function(entry)
-		local icon_hl
-		if subpath == "posts/" then
-			icon_hl = "TelescopeResultsTitle"
-		else
-			icon_hl = "TelescopeResultsComment"
-		end
-
 		-- No djot icon, just pick something that looks neat
-		local ext = require("telescope.utils").file_extension(entry.value.path)
+		local ext = telescope_utils.file_extension(entry.value.path)
 		if ext == "dj" then
 			ext = "tcl"
 		end
@@ -225,7 +219,7 @@ local function _find_post(subpath)
 		if type(entry.value.tags) == "string" then
 			tags = entry.value.tags
 		elseif type(entry.value.tags) == "table" then
-			tags = vim.fn.join(entry.value.tags, " ")
+			tags = vim.fn.join(entry.value.tags, ", ")
 		end
 
 		local series = entry.value.series or ""
@@ -242,7 +236,7 @@ local function _find_post(subpath)
 		})
 
 		return displayer({
-			{ icon, icon_hl },
+			{ icon, "TelescopeResultsComment" },
 			entry.value.title,
 			{ entry.value.date, "TelescopeResultsComment" },
 			{ tags, "TelescopeResultsConstant" },

@@ -27,17 +27,17 @@ local function disallowed_buftype()
 	return false
 end
 
-local blog_type_rank = {
-	BrokenLink = 0,
-	LinkDef = 1,
-	Heading = 2,
-	Post = 3,
-	Tag = 4,
-	Series = 5,
-	Standalone = 6,
-	Constant = 7,
-	Img = 8,
-	DivClass = 9,
+local blog_types = {
+	BrokenLink = { rank = 0, symbol = "󰌺" },
+	LinkDef = { rank = 1, symbol = "󰌹" },
+	Heading = { rank = 2, symbol = "" },
+	Post = { rank = 3, symbol = "󱚌" },
+	Tag = { rank = 4, symbol = "󰓹" },
+	Series = { rank = 5, symbol = "" },
+	Standalone = { rank = 6, symbol = "󰂺" },
+	Constant = { rank = 7, symbol = "" },
+	Img = { rank = 8, symbol = "" },
+	DivClass = { rank = 9, symbol = "" },
 }
 
 local function blog_compare(entry1, entry2)
@@ -53,8 +53,8 @@ local function blog_compare(entry1, entry2)
 	local info1 = entry1.completion_item.info
 	local info2 = entry2.completion_item.info
 
-	local rank1 = blog_type_rank[info1.type]
-	local rank2 = blog_type_rank[info2.type]
+	local rank1 = blog_types[info1.type].rank
+	local rank2 = blog_types[info2.type].rank
 	if rank1 < rank2 then
 		return true
 	elseif rank1 > rank2 then
@@ -74,9 +74,43 @@ local function blog_compare(entry1, entry2)
 	return nil
 end
 
+local blog_format = function(entry, vim_item)
+	local info = entry.completion_item.info
+	vim_item.kind = blog_types[info.type].symbol .. " " .. info.type
+	vim_item.menu = "[BLOG]"
+	return vim_item
+end
+
+local function make_format()
+	local lspkind_format = require("lspkind").cmp_format({
+		mode = "symbol_text",
+		ellipsis_char = "…",
+		menu = {
+			luasnip = "[SNIP]",
+			nvim_lsp = "[LSP]",
+			nvim_lua = "[LUA]",
+			-- blog = "[BLOG]",
+			neorg = "[NORG]",
+			beancount = "[BEAN]",
+			spell = "[SPELL]",
+			treesitter = "[TREE]",
+			async_path = "[PATH]",
+			buffer = "[BUF]",
+			calc = "[CALC]",
+		},
+	})
+
+	return function(entry, vim_item)
+		if entry.source.name == "blog" then
+			return blog_format(entry, vim_item)
+		else
+			return lspkind_format(entry, vim_item)
+		end
+	end
+end
+
 local function config()
 	local cmp = require("cmp")
-	local lspkind = require("lspkind")
 	local luasnip = require("luasnip")
 
 	cmp.setup({
@@ -158,23 +192,7 @@ local function config()
 			},
 		},
 		formatting = {
-			format = lspkind.cmp_format({
-				mode = "symbol_text",
-				ellipsis_char = "…",
-				menu = {
-					luasnip = "[SNIP]",
-					nvim_lsp = "[LSP]",
-					nvim_lua = "[LUA]",
-					blog = "[BLOG]",
-					neorg = "[NORG]",
-					beancount = "[BEAN]",
-					spell = "[SPELL]",
-					treesitter = "[TREE]",
-					async_path = "[PATH]",
-					buffer = "[BUF]",
-					calc = "[CALC]",
-				},
-			}),
+			format = make_format(),
 		},
 		sorting = {
 			priority_weight = 2,

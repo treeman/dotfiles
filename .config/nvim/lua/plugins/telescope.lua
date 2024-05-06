@@ -17,6 +17,7 @@ local config = function()
 			layout_config = {
 				horizontal = {
 					preview_width = 0.6,
+					width = { padding = 5 },
 				},
 			},
 			path_display = {
