@@ -240,7 +240,7 @@ local function _find_post(subpath)
       entry.value.title,
       { entry.value.date, "TelescopeResultsComment" },
       { tags, "TelescopeResultsConstant" },
-      { series, "TelescopeResultsClass" },
+      { series, "TelescopeResultsOperator" },
     })
   end
 
@@ -318,24 +318,17 @@ end
 
 local function tmp()
   local make_display = function(entry)
-    P(entry)
-
-    -- local icon, icon_hl = devicons.get_icon_by_filetype("markdown")
-    -- local icon, icon_hl = devicons.get_icon_by_filetype("tcl")
-    local icon, icon_hl = devicons.get_icon_by_filetype("hbs")
-
     local displayer = entry_display.create({
       separator = " ",
       items = {
-        { width = 3 },
-        -- { width = 20 },
+        { width = 1 },
         { remaining = true },
       },
     })
 
     return displayer({
-      { icon, icon_hl },
-      { entry.ordinal.title, "TelescopeResultsNumber" },
+      { "󰇷", "TelescopeResultsComment" },
+      { entry.value.title, "TelescopeResultsNumber" },
     })
   end
 
@@ -358,12 +351,10 @@ local function tmp()
           },
         },
         entry_maker = function(entry)
-          P(entry.title)
           return {
-            -- display = entry.title,
             display = make_display,
-            -- `ordinal` is now a table.
             ordinal = entry,
+            value = entry,
           }
         end,
       }),
