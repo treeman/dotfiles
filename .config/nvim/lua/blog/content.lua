@@ -28,81 +28,29 @@ M.extract_title = function(file_path)
   return title:match('title = "([^%"]+)"')
 end
 
-local function trim_quotes(s)
-  local stripped = string.match(s, '^"(.+)"$')
-  if stripped then
-    return stripped
-  else
-    return s
-  end
-end
-
-M.list_posts = function(subpath, cb)
+M.list_posts = function(draft, cb)
   nio.run(function()
+    local subcmd
+    if draft then
+      subcmd = "list-drafts"
+    else
+      subcmd = "list-posts"
+    end
+
     local output = util.run_cmd({
-      cmd = "rg",
+      cmd = "cargo",
       args = {
-        "-NoHU",
-        "--heading",
-        "\\A\\---\\w*\\n(.+\\n)+^---",
-        path.blog_path .. subpath,
+        "run",
+        "-q",
+        "--",
+        "-q",
+        subcmd,
       },
+      cwd = "/home/tree/code/jonashietala",
     })
 
-    if not output then
-      return
-    end
-
     nio.scheduler()
-    local lines = vim.fn.split(output, "\n")
-    local posts = {}
-
-    local post = {}
-    for _, line in ipairs(lines) do
-      -- When a newline is encountered save the post and prepare for the next entry.
-      if line == "" then
-        if post.title then
-          table.insert(posts, post)
-        end
-        post = {}
-        -- Skip `---` markers.
-      elseif not string.match(line, "%-%-%-%w*") then
-        -- Try to extract all key value definitions and store them.
-        local key, value = string.match(line, "(%w+)%s*[:=]%s*(.+)")
-        if key then
-          -- Strip surrounding quotes.
-          -- Do this here because there's no non-greedy specifier that could be used
-          -- in the key/value regex above.
-          value = trim_quotes(value)
-          -- Split a sequence.
-          local seq = string.match(value, "^%[(.+)%]$")
-          if seq then
-            local parts = {}
-            for part in string.gmatch(seq, "%s*([^,]+)") do
-              table.insert(parts, trim_quotes(part))
-            end
-            value = parts
-          end
-          post[key] = value
-        else
-          -- If no key value pair is found, then we should be at the beginning with the file path.
-          post["path"] = line
-          -- Only posts have a date in the path, not drafts.
-          local date = string.match(line, "posts/(%d%d%d%d%-%d%d%-%d%d)%-")
-          if date then
-            post["date"] = date
-          else
-            -- Use the modified timestamp for drafts.
-            post["date"] = os.date("%Y-%m-%d", util.file_modified(line))
-          end
-        end
-      end
-    end
-    -- If output ends we might have an unsaved post.
-    if post.title then
-      table.insert(posts, post)
-    end
-
+    local posts = vim.fn.json_decode(output)
     cb(posts)
   end)
 end

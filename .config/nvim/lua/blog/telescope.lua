@@ -124,7 +124,7 @@ local function posts_sorter(opts)
       -- Today's date as a number.
       local today = os.date("%Y%m%d")
       -- Remove `-` from entry date, so it's like a number.
-      local entry_date = string.gsub(entry.date, "-", "")
+      local entry_date = string.gsub(entry.created, "-", "")
       -- Place the number on a 0..1 scale, where 1 is today (`1 -` reverses, otherwise 1
       -- would be the beginning of time).
       local date_score = 1 - (entry_date - beginning_of_time) / (today - beginning_of_time)
@@ -136,7 +136,7 @@ local function posts_sorter(opts)
   })
 end
 
-local function _find_post(subpath)
+local function _find_post(draft)
   local make_display = function(entry)
     -- No djot icon, just pick something that looks neat
     local ext = telescope_utils.file_extension(entry.value.path)
@@ -159,7 +159,7 @@ local function _find_post(subpath)
       items = {
         { width = 1 },
         { width = string.len(entry.value.title) },
-        { width = string.len(entry.value.date) },
+        { width = string.len(entry.value.created) },
         { width = string.len(tags) },
         { remaining = true },
       },
@@ -168,13 +168,13 @@ local function _find_post(subpath)
     return displayer({
       { icon, "TelescopeResultsComment" },
       entry.value.title,
-      { entry.value.date, "TelescopeResultsComment" },
+      { entry.value.created, "TelescopeResultsComment" },
       { tags, "TelescopeResultsConstant" },
       { series, "TelescopeResultsClass" },
     })
   end
 
-  content.list_posts(subpath, function(posts)
+  content.list_posts(draft, function(posts)
     pickers
       .new(opts, {
         finder = finders.new_table({
@@ -207,11 +207,11 @@ local function _find_post(subpath)
 end
 
 M.find_post = function()
-  return _find_post("posts/")
+  return _find_post(false)
 end
 
 M.find_draft = function()
-  return _find_post("drafts/")
+  return _find_post(true)
 end
 
 return M
