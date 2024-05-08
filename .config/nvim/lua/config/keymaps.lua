@@ -120,13 +120,6 @@ end
 M.buf_blog = function(buffer)
   map(
     "n",
-    "<localleader>t",
-    require("blog.telescope").find_tags,
-    { buffer = buffer, desc = "List tags" }
-  )
-  map("i", "<C-t>", require("blog.telescope").find_tags, { buffer = buffer, desc = "List tags" })
-  map(
-    "n",
     "<localleader>d",
     require("blog.goto").goto_def,
     { buffer = buffer, desc = "Goto definition" }
