@@ -170,7 +170,7 @@ local function _find_post(draft)
       entry.value.title,
       { entry.value.created, "TelescopeResultsComment" },
       { tags, "TelescopeResultsConstant" },
-      { series, "TelescopeResultsClass" },
+      { series, "TelescopeResultsOperator" },
     })
   end
 
