@@ -18,9 +18,23 @@ function source:complete(params, callback)
       -- 	filterText = "/blog/2023/10/01/rewriting_my_neovim_config_in_lua/|Rewriting my Neovim config in Lua",
       -- 	kind = require("cmp.types.lsp").CompletionItemKind.File,
       -- },
-      { label = "/one", kind = require("cmp.types.lsp").CompletionItemKind.File },
-      { label = "/two", kind = require("cmp.types.lsp").CompletionItemKind.Property },
-      { label = "/three", kind = require("cmp.types.lsp").CompletionItemKind.Struct },
+      {
+        label = "/one",
+        kind = require("cmp.types.lsp").CompletionItemKind.File,
+        info = { type = "Post" },
+      },
+      {
+        label = "/two",
+        kind = require("cmp.types.lsp").CompletionItemKind.Property,
+        info = { type = "Tag" },
+      },
+      {
+        label = "/three",
+        kind = require("cmp.types.lsp").CompletionItemKind.Struct,
+        info = {
+          type = "Series",
+        },
+      },
     }
   end
 
