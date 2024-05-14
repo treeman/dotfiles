@@ -1,0 +1,38 @@
+# List of non-Neovim rocks.
+# This includes things like `toml` or other lua packages.
+[rocks]
+
+# List of Neovim plugins to install alongside their versions.
+# If the plugin name contains a dot then you must add quotes to the key name!
+[plugins]
+"rocks.nvim" = "2.27.1"
+"rocks-config.nvim" = "1.5.0"
+"rocks-git.nvim" = "1.5.0"
+"mini.cursorword" = "0.9.0"
+"mini.trailspace" = "0.9.0"
+"mini.ai" = "0.9.0"
+"conform.nvim" = "5.6.0"
+"neo-tree.nvim" = "3.14"
+"telescope.nvim" = "scm"
+"comment.nvim" = "0.8.0"
+"indent-blankline.nvim" = "3.5.4"
+"oil.nvim" = "2.8.0"
+"melange-nvim" = { git = "savq/melange-nvim" }
+"todo-comments.nvim" = "1.2.0"
+"vim-cool" = { git = "romainl/vim-cool" }
+"vim-sleuth" = { git = "tpope/vim-sleuth" }
+"suda.vim" = { git = "lambdalisue/vim-suda.git" }
+"dial.nvim" = "scm"
+"replacer.nvim" = { git = "gabrielpoca/replacer.nvim" }
+"zoxide.vim" = { git = "nanotee/zoxide.vim" }
+nvim-web-devicons = "0.100"
+"lualine.nvim" = "scm"
+"lsp-status.nvim" = "scm"
+# Deps for lualine
+
+# FIXME errors
+# "gitsigns.nvim" = "scm"
+
+# How to make telescope see this?
+# [plugins."telescope-fzf-native.nvim"]
+# git = "nvim-telescope/telescope-fzf-native.nvim"

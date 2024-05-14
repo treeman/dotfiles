@@ -1,6 +1,5 @@
 do
     -- Specifies where to install/use rocks.nvim
-    print(vim.fn.stdpath("data"))
     local install_location = vim.fs.joinpath(vim.fn.stdpath("data"), "rocks")
 
     -- Set up configuration options related to rocks.nvim (recommended to leave as default)
@@ -24,6 +23,7 @@ do
         vim.fs.joinpath(rocks_config.rocks_path, "lib64", "lua", "5.1", "?.so"),
     }
     package.cpath = package.cpath .. ";" .. table.concat(luarocks_cpath, ";")
+
 
     -- Load all installed plugins, including rocks.nvim itself
     vim.opt.runtimepath:append(vim.fs.joinpath(rocks_config.rocks_path, "lib", "luarocks", "rocks-5.1", "rocks.nvim", "*"))
