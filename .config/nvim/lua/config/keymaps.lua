@@ -195,6 +195,29 @@ M.init = function()
   --require('telescope.builtin').git_commits()
   --require('telescope.builtin').git_bcommits()
   --require('telescope.builtin').git_bcommits_range()
+  map("n", "<leader>rq", function()
+    require("replacer").run()
+  end, {
+    silent = true,
+    desc = "Make quickfix editable for replacing in",
+  })
+
+  -- Replace word under cursor
+  map("n", "<leader>rw", "<cmd>SearchReplaceSingleBufferCWord<cr>", {
+    desc = "Replace CWord",
+  })
+  -- Replace WORD under cursor
+  map("n", "<leader>rW", "<cmd>SearchReplaceSingleBufferCWORD<cr>", {
+    desc = "Replace CWORD",
+  })
+  -- Replace "expression" (includes dots, not sure how useful this is)
+  map("n", "<leader>re", "<cmd>SearchReplaceSingleBufferCExpr<cr>", {
+    desc = "Replace CExpr",
+  })
+  -- Replace visual selection
+  map("v", "<C-r>", "<CMD>SearchReplaceSingleBufferVisualSelection<CR>", {
+    desc = "Replace selection",
+  })
 
   -- FIXME these don't work
   -- map("n", "<C-a>", function()
@@ -217,6 +240,37 @@ M.init = function()
   -- end, {
   --   desc = "Decrement number",
   -- })
+  --
+  map("n", "]t", function()
+    require("trouble").next({ skip_groups = true, jump = true })
+  end, {
+    desc = "Next trouble",
+    silent = true,
+  })
+  map("n", "[t", function()
+    require("trouble").previous({ skip_groups = true, jump = true })
+  end, {
+    desc = "Prev trouble",
+    silent = true,
+  })
+  map("n", "]T", function()
+    require("trouble").last({ skip_groups = true, jump = true })
+  end, {
+    desc = "Last trouble",
+    silent = true,
+  })
+  map("n", "[T", function()
+    require("trouble").first({ skip_groups = true, jump = true })
+  end, {
+    desc = "First trouble",
+    silent = true,
+  })
+
+  map("n", "<leader>u", function()
+    require("undotree").toggle()
+  end, {
+    desc = "Undotree",
+  })
 end
 
 -- M.buf_blog = function(buffer)
@@ -398,13 +452,6 @@ M.buf_lsp = function(_, buffer)
     ":TroubleToggle workspace_diagnostics<CR>",
     { silent = true, buffer = buffer, desc = "Workspace diagnostics" }
   )
-
-  map("n", "<leader>rq", function()
-    require("replacer").run()
-  end, {
-    silent = true,
-    desc = "Make quickfix editable for replacing in",
-  })
 end
 --
 -- M.gitsigns = function(buffer)
@@ -434,121 +481,20 @@ end
 --   end, { silent = true, buffer = buffer, desc = "Blame hunk" })
 -- end
 --
--- M.marks = {
---   set = "m",
---   delete = "dm",
---   delete_line = "dm-",
---   delete_buf = "dm<space>",
---   next = "]m",
---   prev = "[m",
---   preview = "m:",
--- }
+M.marks = {
+  set = "m",
+  delete = "dm",
+  delete_line = "dm-",
+  delete_buf = "dm<space>",
+  next = "]m",
+  prev = "[m",
+  preview = "m:",
+}
 --
 -- M.trouble = {
---   {
---     "]t",
---     function()
---       require("trouble").next({ skip_groups = true, jump = true })
---     end,
---     desc = "Next trouble",
---     silent = true,
---   },
---   {
---     "[t",
---     function()
---       require("trouble").previous({ skip_groups = true, jump = true })
---     end,
---     desc = "Prev trouble",
---     silent = true,
---   },
---   {
---     "]T",
---     function()
---       require("trouble").last({ skip_groups = true, jump = true })
---     end,
---     desc = "Last trouble",
---     silent = true,
---   },
---   {
---     "[T",
---     function()
---       require("trouble").first({ skip_groups = true, jump = true })
---     end,
---     desc = "First trouble",
---     silent = true,
---   },
 -- }
 --
 -- M.undotree = {
---   {
---     "<leader>u",
---     function()
---       require("undotree").toggle()
---     end,
---     desc = "Undotree",
---   },
--- }
---
--- M.hop = {
---   {
---     "s",
---     function()
---       require("hop").hint_char2({})
---     end,
---     desc = "Sneak",
---   },
---   {
---     "S",
---     function()
---       require("hop").hint_char2({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR })
---     end,
---     desc = "Sneak backwards",
---   },
---   {
---     "<leader>w",
---     function()
---       require("hop").hint_words({})
---     end,
---     desc = "Hop words",
---   },
---   {
---     "<leader>W",
---     function()
---       require("hop").hint_words({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR })
---     end,
---     desc = "Hop words backwards",
---   },
--- }
---
--- M.search_replace = {
---   -- Replace word under cursor
---   {
---     "<leader>rw",
---     "<cmd>SearchReplaceSingleBufferCWord<cr>",
---     desc = "Replace CWord",
---   },
---   -- Replace WORD under cursor
---   {
---     "<leader>rW",
---     "<cmd>SearchReplaceSingleBufferCWORD<cr>",
---     desc = "Replace CWORD",
---   },
---   -- Replace "expression" (includes dots, not sure how useful this is)
---   {
---     "<leader>re",
---     "<cmd>SearchReplaceSingleBufferCExpr<cr>",
---     desc = "Replace CExpr",
---   },
---   -- Replace visual selection
---   {
---     "<C-r>",
---     mode = "v",
---     "<CMD>SearchReplaceSingleBufferVisualSelection<CR>",
---     desc = "Replace selection",
---   },
--- }
---
--- M.replacer = {
 -- }
 
 M.pollen = function()

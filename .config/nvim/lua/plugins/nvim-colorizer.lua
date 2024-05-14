@@ -1,4 +1,4 @@
-local opts = {
+require("colorizer").setup({
   user_default_options = {
     names = false,
     mode = "virtualtext",
@@ -8,10 +8,4 @@ local opts = {
     css = { css = true, tailwind = true },
     scss = { css = true, tailwind = true },
   },
-}
-
-return {
-  "NvChad/nvim-colorizer.lua",
-  event = { "BufReadPre", "BufNewFile" },
-  opts = opts,
-}
+})

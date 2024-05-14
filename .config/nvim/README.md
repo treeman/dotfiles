@@ -11,3 +11,4 @@
 - git
 - stylua
 - fzf
+- lua51-devel (void linux)

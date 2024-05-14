@@ -21,13 +21,28 @@
 "todo-comments.nvim" = "1.2.0"
 "vim-cool" = { git = "romainl/vim-cool" }
 "vim-sleuth" = { git = "tpope/vim-sleuth" }
-"suda.vim" = { git = "lambdalisue/vim-suda.git" }
+"suda.vim" = { git = "lambdalisue/vim-suda" }
 "dial.nvim" = "scm"
 "replacer.nvim" = { git = "gabrielpoca/replacer.nvim" }
 "zoxide.vim" = { git = "nanotee/zoxide.vim" }
 nvim-web-devicons = "0.100"
 "lualine.nvim" = "scm"
 "lsp-status.nvim" = "scm"
+"elixir-tools.nvim" = "0.14.0"
+"nerdy.nvim" = { git = "2kabhishek/nerdy.nvim" }
+"search-replace.nvim" = { git = "roobert/search-replace.nvim" }
+"marks.nvim" = "scm"
+"vim-fugitive" = { git = "tpope/vim-fugitive" }
+neogit = { git = "TimUntersberger/neogit", branch = "nightly" }
+"nvim-colorizer" = { git = "NvChad/nvim-colorizer.lua" }
+nvim-nio = "1.9.3"
+"trouble.nvim" = "2.10.0"
+nvim-lastplace = "scm"
+vim-matchup = { git = "andymass/vim-matchup" }
+vim-maximizer = { git = "szw/vim-maximizer" }
+
+[plugins.undotree]
+git = "jiaoshijie/undotree"
 # Deps for lualine
 
 # FIXME errors
