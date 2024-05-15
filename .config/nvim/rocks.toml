@@ -40,10 +40,34 @@ nvim-nio = "1.9.3"
 nvim-lastplace = "scm"
 vim-matchup = { git = "andymass/vim-matchup" }
 vim-maximizer = { git = "szw/vim-maximizer" }
+alpha-nvim = "scm"
+nvim-cmp = "scm"
+cmp-nvim-lsp = "scm"
+cmp-buffer = "scm"
+cmp-cmdline = "scm"
+undotree = { git = "jiaoshijie/undotree" }
+luasnip = "2.3.0"
+"lspkind.nvim" = "scm"
+nvim-treesitter = "scm"
+nvim-treesitter-endwise = { git = "RRethy/nvim-treesitter-endwise" }
+cmp-async-path = { git = "https://codeberg.org/FelipeLema/cmp-async-path.git" }
+cmp-spell = { git = "f3fora/cmp-spell" }
+cmp-calc = { git = "hrsh7th/cmp-calc" }
+cmp-nvim-lua = { git = "hrsh7th/cmp-nvim-lua" }
+cmp-treesitter = { git = "ray-x/cmp-treesitter" }
+nvim-surround = "2.1.5"
+nvim-ts-context-commentstring = "scm"
+nvim-treesitter-context = "scm"
+nvim-ts-autotag = "scm"
+nvim-treesitter-textobjects = "scm"
+tree-sitter-rust = "scm"
+# "rocks-treesitter.nvim" = "scm"
+# tree-sitter-rust = "scm"
+# tree-sitter-gitignore = "scm"
+# tree-sitter-djot = "scm"
 
-[plugins.undotree]
-git = "jiaoshijie/undotree"
-# Deps for lualine
+# [treesitter]
+# auto_highlight = "all"
 
 # FIXME errors
 # "gitsigns.nvim" = "scm"

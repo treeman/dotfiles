@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 require("config.leader")
 require("config.rocks-nvim")
 require("config.options")
