@@ -71,8 +71,8 @@ local function blog_compare(entry1, entry2)
 end
 
 local blog_format = function(entry, vim_item)
-  local item = entry.completion_item
-  vim_item.kind = blog_types[item.type].symbol .. " " .. item.type
+  local type = entry.completion_item.type
+  vim_item.kind = blog_types[type].symbol .. " " .. type
   vim_item.menu = "[BLOG]"
   return vim_item
 end
