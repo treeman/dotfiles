@@ -188,29 +188,29 @@ local function _div_class_docs(class)
 end
 
 function source:resolve(item, callback)
-  if item.info then
+  if item.type then
     local lines
 
-    if item.info.type == "Post" then
-      lines = _post_docs(item.info)
-    elseif item.info.type == "Standalone" then
-      lines = _standalone_docs(item.info)
-    elseif item.info.type == "Constant" then
-      lines = _constant_docs(item.info)
-    elseif item.info.type == "Series" then
-      lines = _series_docs(item.info)
-    elseif item.info.type == "Tag" then
-      lines = _tag_docs(item.info)
-    elseif item.info.type == "Img" then
-      lines = _img_docs(item.info)
-    elseif item.info.type == "Heading" then
-      lines = _heading_docs(item.info)
-    elseif item.info.type == "LinkDef" then
-      lines = _link_def_docs(item.info)
-    elseif item.info.type == "BrokenLink" then
-      lines = _broken_link_docs(item.info)
-    elseif item.info.type == "DivClass" then
-      lines = _div_class_docs(item.info)
+    if item.type == "Post" then
+      lines = _post_docs(item)
+    elseif item.type == "Standalone" then
+      lines = _standalone_docs(item)
+    elseif item.type == "Constant" then
+      lines = _constant_docs(item)
+    elseif item.type == "Series" then
+      lines = _series_docs(item)
+    elseif item.type == "Tag" then
+      lines = _tag_docs(item)
+    elseif item.type == "Img" then
+      lines = _img_docs(item)
+    elseif item.type == "Heading" then
+      lines = _heading_docs(item)
+    elseif item.type == "LinkDef" then
+      lines = _link_def_docs(item)
+    elseif item.type == "BrokenLink" then
+      lines = _broken_link_docs(item)
+    elseif item.type == "DivClass" then
+      lines = _div_class_docs(item)
     end
 
     if lines and #lines > 0 then

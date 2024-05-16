@@ -46,37 +46,33 @@ local function blog_compare(entry1, entry2)
     return nil
   end
 
-  if not entry1.completion_item.info then
-    return nil
-  end
+  local item1 = entry1.completion_item
+  local item2 = entry2.completion_item
 
-  local info1 = entry1.completion_item.info
-  local info2 = entry2.completion_item.info
-
-  local rank1 = blog_types[info1.type].rank
-  local rank2 = blog_types[info2.type].rank
+  local rank1 = blog_types[item1.type].rank
+  local rank2 = blog_types[item2.type].rank
   if rank1 < rank2 then
     return true
   elseif rank1 > rank2 then
     return false
   end
 
-  if info1.type == "Img" then
-    return info1.modified > info2.modified
-  elseif info1.type == "Post" then
-    return info1.created > info2.created
-  elseif info1.type == "Series" then
-    return info1.posts[1].created > info2.posts[1].created
-  elseif info1.type == "Tag" then
-    return #info1.posts > #info2.posts
+  if item1.type == "Img" then
+    return item1.modified > item2.modified
+  elseif item1.type == "Post" then
+    return item1.created > item2.created
+  elseif item1.type == "Series" then
+    return item1.posts[1].created > item2.posts[1].created
+  elseif item1.type == "Tag" then
+    return #item1.posts > #item2.posts
   end
 
   return nil
 end
 
 local blog_format = function(entry, vim_item)
-  local info = entry.completion_item.info
-  vim_item.kind = blog_types[info.type].symbol .. " " .. info.type
+  local item = entry.completion_item
+  vim_item.kind = blog_types[item.type].symbol .. " " .. item.type
   vim_item.menu = "[BLOG]"
   return vim_item
 end
