@@ -19,13 +19,15 @@ local config = function()
   -- global keybindings
   keymaps.global_lsp()
 
+  vim.lsp.inlay_hint.enable(true)
+
   local on_attach = function(client, buffer)
     keymaps.buf_lsp(client, buffer)
     lsp_status.on_attach(client)
 
-    if client.server_capabilities.inlayHintProvider then
-      vim.lsp.inlay_hint(buffer, true)
-    end
+    -- if client.server_capabilities.inlayHintProvider then
+    --   vim.lsp.buf.inlay_hint(buffer, true)
+    -- end
   end
 
   lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {
@@ -74,7 +76,11 @@ local config = function()
   -- See :help mason-lspconfig-dynamic-server-setup
   mason_lspconfig.setup_handlers({
     function(server)
-      lspconfig[server].setup({})
+      -- Depend on rustaceanvim to setup `rust_analyzer`.
+      -- We're not allowed to call `setup` ourselves.
+      if server ~= "rust_analyzer" then
+        lspconfig[server].setup({})
+      end
     end,
     ["lua_ls"] = function()
       lspconfig.lua_ls.setup({
@@ -112,35 +118,35 @@ local config = function()
     -- FIXME extra commands available?
     -- :RustRunnables
     -- :RustExpandMacro
-    ["rust_analyzer"] = function()
-      require("rust-tools").setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-        -- rust-tools options
-        tools = {
-          autoSetHints = true,
-          inlay_hints = {
-            show_parameter_hints = true,
-            parameter_hints_prefix = "ρ ",
-            other_hints_prefix = "τ ",
-          },
-        },
-        -- rust-analyzer options
-        settings = {
-          ["rust-analyzer"] = {
-            diagnostics = {
-              -- Disables 'proc macro `Serialize` not expanded and similar
-              -- https://github.com/rust-analyzer/rust-analyzer/pull/6645
-              disabled = { "unresolved-proc-macro" },
-            },
-            checkOnSave = {
-              extraArgs = { "--target-dir", "/tmp/rust-analyzer-check" },
-              command = "clippy",
-            },
-          },
-        },
-      })
-    end,
+    -- ["rust_analyzer"] = function()
+    --   require("rust-tools").setup({
+    --     capabilities = capabilities,
+    --     on_attach = on_attach,
+    --     -- rust-tools options
+    --     tools = {
+    --       autoSetHints = true,
+    --       inlay_hints = {
+    --         show_parameter_hints = true,
+    --         parameter_hints_prefix = "ρ ",
+    --         other_hints_prefix = "τ ",
+    --       },
+    --     },
+    --     -- rust-analyzer options
+    --     settings = {
+    --       ["rust-analyzer"] = {
+    --         diagnostics = {
+    --           -- Disables 'proc macro `Serialize` not expanded and similar
+    --           -- https://github.com/rust-analyzer/rust-analyzer/pull/6645
+    --           disabled = { "unresolved-proc-macro" },
+    --         },
+    --         checkOnSave = {
+    --           extraArgs = { "--target-dir", "/tmp/rust-analyzer-check" },
+    --           command = "clippy",
+    --         },
+    --       },
+    --     },
+    --   })
+    -- end,
     ["tsserver"] = function()
       require("typescript-tools").setup({
         capabilities = capabilities,
@@ -179,7 +185,7 @@ return {
     "ahmedkhalf/lsp-rooter.nvim",
     "litao91/lsp_lines",
     "hrsh7th/cmp-nvim-lsp",
-    "simrat39/rust-tools.nvim",
+    "mrcjkb/rustaceanvim",
     "elixir-tools/elixir-tools.nvim",
     "kosayoda/nvim-lightbulb",
     "folke/neodev.nvim",
