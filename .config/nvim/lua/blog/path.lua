@@ -46,15 +46,13 @@ local function slugify(title)
   return title
 end
 
--- Define `M` here because lib loading sometimes makes these nil...?
-M = {}
-
-M.blog_path = blog_path
-M.rel_path = rel_path
-M.in_blog = in_blog
-M.is_post = is_post
-M.is_draft = is_draft
-M.path_to_url = path_to_url
-M.slugify = slugify
-
-return M
+-- Define export here because lib loading sometimes makes these nil...?
+return {
+  blog_path = blog_path,
+  rel_path = rel_path,
+  in_blog = in_blog,
+  is_post = is_post,
+  is_draft = is_draft,
+  path_to_url = path_to_url,
+  slugify = slugify,
+}
