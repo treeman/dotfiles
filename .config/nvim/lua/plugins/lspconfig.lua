@@ -71,6 +71,21 @@ local config = function()
   -- Will override lua_ls settings, but only for Neovim config files.
   neodev.setup({})
 
+  vim.g.rustaceanvim = {
+    -- Plugin configuration
+    tools = {},
+    -- LSP configuration
+    server = {
+      on_attach = on_attach,
+      default_settings = {
+        -- rust-analyzer language server configuration
+        ["rust-analyzer"] = {},
+      },
+    },
+    -- DAP configuration
+    dap = {},
+  }
+
   -- Dynamic server setup, so we don't have to explicitly list every single server
   -- and can just list the ones we want to override configuration for.
   -- See :help mason-lspconfig-dynamic-server-setup
