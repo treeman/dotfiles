@@ -103,8 +103,8 @@ M.init = function()
   map("n", "<leader>x", ":write<CR>:source %<CR>")
 
   -- Blogging
-  -- map("n", "gd", require("blog.telescope").find_draft, { desc = "Find blog draft" })
-  -- map("n", "gp", require("blog.telescope").find_post, { desc = "Find blog post" })
+  map("n", "gd", require("blog.telescope").find_draft, { desc = "Find blog draft" })
+  map("n", "gp", require("blog.telescope").find_post, { desc = "Find blog post" })
 
   map(
     "n",
@@ -262,15 +262,15 @@ M.init = function()
   })
 end
 
--- M.buf_blog = function(buffer)
---   map(
---     "n",
---     "<localleader>d",
---     require("blog.goto").goto_def,
---     { buffer = buffer, desc = "Goto definition" }
---   )
---   -- map("n", "<localleader>h", require("blog.server").hover, { buffer = buffer, desc = "Hover help" })
--- end
+M.buf_blog = function(buffer)
+  map(
+    "n",
+    "<localleader>d",
+    require("blog.goto").goto_def,
+    { buffer = buffer, desc = "Goto definition" }
+  )
+  -- map("n", "<localleader>h", require("blog.server").hover, { buffer = buffer, desc = "Hover help" })
+end
 
 -- Maps four pairs:
 -- [f, [F, ]f, ]F
