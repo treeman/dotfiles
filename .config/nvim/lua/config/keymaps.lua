@@ -210,27 +210,27 @@ M.init = function()
   })
 
   -- FIXME these don't work
-  -- map("n", "<C-a>", function()
-  --   require("dial.map").manipulate("increment", "normal")
-  -- end, {
-  --   desc = "Increment number",
-  -- })
-  -- map("n", "<C-x>", function()
-  --   require("dial.map").manipulate("decrement", "normal")
-  -- end, {
-  --   desc = "Decrement number",
-  -- })
-  -- map("v", "<C-a>", function()
-  --   require("dial.map").manipulate("increment", "visual")
-  -- end, {
-  --   desc = "Increment number",
-  -- })
-  -- map("v", "<C-x>", function()
-  --   require("dial.map").manipulate("decrement", "visual")
-  -- end, {
-  --   desc = "Decrement number",
-  -- })
-  --
+  map("n", "<C-a>", function()
+    require("dial.map").manipulate("increment", "normal")
+  end, {
+    desc = "Increment number",
+  })
+  map("n", "<C-x>", function()
+    require("dial.map").manipulate("decrement", "normal")
+  end, {
+    desc = "Decrement number",
+  })
+  map("v", "<C-a>", function()
+    require("dial.map").manipulate("increment", "visual")
+  end, {
+    desc = "Increment number",
+  })
+  map("v", "<C-x>", function()
+    require("dial.map").manipulate("decrement", "visual")
+  end, {
+    desc = "Decrement number",
+  })
+
   map("n", "]t", function()
     require("trouble").next({ skip_groups = true, jump = true })
   end, {
@@ -436,34 +436,34 @@ M.buf_lsp = function(_, buffer)
     { silent = true, buffer = buffer, desc = "Workspace diagnostics" }
   )
 end
---
--- M.gitsigns = function(buffer)
---   local gitsigns = package.loaded.gitsigns
---   map("n", "]h", gitsigns.next_hunk, { silent = true, buffer = buffer, desc = "Next hunk" })
---   map("n", "[h", gitsigns.prev_hunk, { silent = true, buffer = buffer, desc = "Prev hunk" })
---   map(
---     "n",
---     "<leader>hs",
---     gitsigns.stage_hunk,
---     { silent = true, buffer = buffer, desc = "Stage hunk" }
---   )
---   map(
---     "n",
---     "<leader>hr",
---     gitsigns.reset_hunk,
---     { silent = true, buffer = buffer, desc = "Reset hunk" }
---   )
---   map("v", "<leader>hs", function()
---     gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
---   end, { silent = true, buffer = buffer, desc = "Stage hunk" })
---   map("v", "<leader>hr", function()
---     gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
---   end, { silent = true, buffer = buffer, desc = "Reset hunk" })
---   map("n", "<leader>hb", function()
---     gitsigns.blame_line({ full = true })
---   end, { silent = true, buffer = buffer, desc = "Blame hunk" })
--- end
---
+
+M.gitsigns = function(buffer)
+  local gitsigns = package.loaded.gitsigns
+  map("n", "]h", gitsigns.next_hunk, { silent = true, buffer = buffer, desc = "Next hunk" })
+  map("n", "[h", gitsigns.prev_hunk, { silent = true, buffer = buffer, desc = "Prev hunk" })
+  map(
+    "n",
+    "<leader>hs",
+    gitsigns.stage_hunk,
+    { silent = true, buffer = buffer, desc = "Stage hunk" }
+  )
+  map(
+    "n",
+    "<leader>hr",
+    gitsigns.reset_hunk,
+    { silent = true, buffer = buffer, desc = "Reset hunk" }
+  )
+  map("v", "<leader>hs", function()
+    gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+  end, { silent = true, buffer = buffer, desc = "Stage hunk" })
+  map("v", "<leader>hr", function()
+    gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+  end, { silent = true, buffer = buffer, desc = "Reset hunk" })
+  map("n", "<leader>hb", function()
+    gitsigns.blame_line({ full = true })
+  end, { silent = true, buffer = buffer, desc = "Blame hunk" })
+end
+
 M.marks = {
   set = "m",
   delete = "dm",
@@ -480,4 +480,3 @@ M.pollen = function()
 end
 
 return M
-

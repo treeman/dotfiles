@@ -28,7 +28,6 @@
 "vim-cool" = { git = "romainl/vim-cool" }
 "vim-sleuth" = { git = "tpope/vim-sleuth" }
 "suda.vim" = { git = "lambdalisue/vim-suda" }
-"dial.nvim" = "scm"
 "replacer.nvim" = { git = "gabrielpoca/replacer.nvim" }
 "zoxide.vim" = { git = "nanotee/zoxide.vim" }
 nvim-web-devicons = "0.100"
@@ -70,4 +69,5 @@ nvim-ts-autotag = { git = "windwp/nvim-ts-autotag.git", rev = "aeb7090" }
 nvim-treesitter-textobjects = { git = "nvim-treesitter/nvim-treesitter-textobjects.git", rev = "5f9bf4b" }
 "rest.nvim" = "2.0.1"
 vim-pollen = { git = "otherjoel/vim-pollen" }
-gitsigns = { git = "lewis6991/gitsigns.nvim" }
+"gitsigns.nvim" = { git = "lewis6991/gitsigns.nvim" }
+"dial.nvim" = { git = "monaqa/dial.nvim" }
