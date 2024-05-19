@@ -28,5 +28,5 @@ telescope.setup({
 
 -- Makes sorting a lot faster than the built-in one
 -- and enables fzf syntax
--- FIXME how to make telescope see this?
--- telescope.load_extension("fzf")
+-- FIXME sometimes crashes...?
+telescope.load_extension("fzf")

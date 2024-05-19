@@ -192,19 +192,19 @@ local config = function()
 end
 
 return {
-  "neovim/nvim-lspconfig",
+  -- "neovim/nvim-lspconfig",
   config = config,
   dependencies = {
-    "williamboman/mason.nvim",
-    "onsails/lspkind-nvim",
-    "ahmedkhalf/lsp-rooter.nvim",
+    -- "williamboman/mason.nvim",
+    -- "onsails/lspkind-nvim",
+    -- "ahmedkhalf/lsp-rooter.nvim",
     "litao91/lsp_lines",
-    "hrsh7th/cmp-nvim-lsp",
-    "mrcjkb/rustaceanvim",
-    "elixir-tools/elixir-tools.nvim",
-    "kosayoda/nvim-lightbulb",
-    "folke/neodev.nvim",
-    "nvim-lua/lsp-status.nvim",
+    -- "hrsh7th/cmp-nvim-lsp",
+    -- "mrcjkb/rustaceanvim",
+    -- "elixir-tools/elixir-tools.nvim",
+    -- "kosayoda/nvim-lightbulb",
+    -- "folke/neodev.nvim",
+    -- "nvim-lua/lsp-status.nvim",
     {
       "pmizio/typescript-tools.nvim",
       dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },

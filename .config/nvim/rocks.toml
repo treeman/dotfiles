@@ -1,12 +1,6 @@
-# This is your rocks.nvim plugins declaration file.
-# Here is a small yet pretty detailed example on how to use it:
-#
-# [plugins]
-# nvim-treesitter = "semver_version"  # e.g. "1.0.0"
-
 # List of non-Neovim rocks.
 # This includes things like `toml` or other lua packages.
-[rocks]
+# [rocks]
 
 # List of Neovim plugins to install alongside their versions.
 # If the plugin name contains a dot then you must add quotes to the key name!
@@ -71,3 +65,11 @@ nvim-treesitter-textobjects = { git = "nvim-treesitter/nvim-treesitter-textobjec
 vim-pollen = { git = "otherjoel/vim-pollen" }
 "gitsigns.nvim" = { git = "lewis6991/gitsigns.nvim" }
 "dial.nvim" = { git = "monaqa/dial.nvim" }
+"telescope-fzf-native.nvim" = { git = "nvim-telescope/telescope-fzf-native.nvim.git" }
+"mason.nvim" = { version = "1.10.0", opt = true }
+"mason-lspconfig.nvim" = { version = "1.29.0", opt = true }
+nvim-lspconfig = "0.1.7"
+rustaceanvim = "4.23.2"
+nvim-lightbulb = "1.0.0"
+"neodev.nvim" = "2.5.2"
+"typescript-tools.nvim" = "scm"

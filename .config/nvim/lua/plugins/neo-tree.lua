@@ -17,4 +17,8 @@ require("neo-tree").setup({
       ["<Esc>"] = "close_window",
     },
   },
+  filesystem = {
+    -- Use oil instead
+    hijack_netrw_behavior = "disabled",
+  },
 })
