@@ -1,4 +1,4 @@
-local cmd = require("util").create_cmd
+local cmd = require("util.helpers").create_cmd
 local files = require("blog.files")
 local server = require("blog.server")
 
