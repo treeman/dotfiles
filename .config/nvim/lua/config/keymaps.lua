@@ -209,7 +209,6 @@ M.init = function()
     desc = "Replace selection",
   })
 
-  -- FIXME these don't work
   map("n", "<C-a>", function()
     require("dial.map").manipulate("increment", "normal")
   end, {
@@ -329,13 +328,13 @@ M.ts_select = {
   ["i,"] = { query = "@parameter.inner", desc = "Select inner parameter" },
 }
 
--- M.global_lsp = function()
---   map("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
---   map("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Prev diagnostic" })
--- end
+M.global_lsp = function()
+  map("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
+  map("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Prev diagnostic" })
+end
 
 M.buf_lsp = function(_, buffer)
-  -- FIXME there are other cool possibilities listed in nvim-lspconfig
+  -- NOTE there are other cool possibilities listed in nvim-lspconfig
   map(
     "n",
     "<localleader>D",

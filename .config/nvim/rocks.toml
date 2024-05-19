@@ -66,8 +66,8 @@ vim-pollen = { git = "otherjoel/vim-pollen" }
 "gitsigns.nvim" = { git = "lewis6991/gitsigns.nvim" }
 "dial.nvim" = { git = "monaqa/dial.nvim" }
 "telescope-fzf-native.nvim" = { git = "nvim-telescope/telescope-fzf-native.nvim.git" }
-"mason.nvim" = { version = "1.10.0", opt = true }
-"mason-lspconfig.nvim" = { version = "1.29.0", opt = true }
+"mason.nvim" = { version = "1.10.0" }
+"mason-lspconfig.nvim" = { version = "1.29.0" }
 nvim-lspconfig = "0.1.7"
 rustaceanvim = "4.23.2"
 nvim-lightbulb = "1.0.0"
