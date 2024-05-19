@@ -1,12 +1,12 @@
 vim.cmd.colorscheme("melange")
 
-local bg = vim.opt.background:get()
-local palette = require("melange/palettes/" .. bg)
+-- local bg = vim.opt.background:get()
+-- local palette = require("melange/palettes/" .. bg)
 
-local a = palette.a -- Grays
-local b = palette.b -- Bright foreground colors
-local c = palette.c -- Foreground colors
-local d = palette.d -- Background colors
+-- local a = palette.a -- Grays
+-- local b = palette.b -- Bright foreground colors
+-- local c = palette.c -- Foreground colors
+-- local d = palette.d -- Background colors
 
 -- See :help neo-tree-highlights
 -- See: https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#highlights
@@ -51,10 +51,11 @@ local overrides = {
   { name = "@markup.superscript", val = { link = "@string" } },
   { name = "@markup.subscript", val = { link = "@string" } },
   { name = "@markup.link.label", val = { link = "@label" } },
-  { name = "@markup.link", val = { fg = c.cyan, underline = true } },
+  -- { name = "@markup.link", val = { fg = c.cyan, underline = true } },
 
   -- Better elixir colors
   { name = "@symbol.elixir", val = { link = "@label" } },
+  { name = "string.special.symbol.elixir", val = { link = "@label" } },
   { name = "@constant.elixir", val = { link = "Constant" } },
   -- mini
   { name = "MiniTrailSpace", val = { link = "PmenuSel" } },
