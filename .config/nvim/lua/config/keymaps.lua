@@ -70,18 +70,8 @@ M.init = function()
   map("n", "<up>", "gk")
   map("n", "<down>", "gj")
 
-  -- Remaps to try from theprimaegen
   -- Don't move cursor when joining lines
   map("n", "J", "mzJ`z")
-  -- Keep cursor in the middle whenj paging
-  -- map("n", "<C-d>", "<C-d>zz")
-  -- map("n", "<C-u>", "<C-u>zz")
-  -- map("n", "<PageUp>", "<PageUp>zz")
-  -- map("n", "<PageDown>", "<PageDown>zz")
-  -- Keep search terms in the middle
-  -- map("n", "n", "nzzzv")
-  -- map("n", "N", "Nzzzv")
-  -- TODO should probably try to align C-f, C-b / and all [] prefixes... So why bother?
 
   -- Maximize current buffer
   map("n", "<C-w>m", ":MaximizerToggle<CR>", { silent = true, desc = "Maximize window" })
@@ -116,80 +106,80 @@ M.init = function()
   -- map("n", "gd", require("blog.telescope").find_draft, { desc = "Find blog draft" })
   -- map("n", "gp", require("blog.telescope").find_post, { desc = "Find blog post" })
 
-  -- map(
-  --   "n",
-  --   "z=",
-  --   require("telescope.builtin").spell_suggest,
-  --   { silent = true, desc = "Spell suggest" }
-  -- )
-  -- map(
-  --   "n",
-  --   "<leader>f",
-  --   require("telescope.builtin").find_files,
-  --   { silent = true, desc = "Find files" }
-  -- )
-  -- map("n", "<leader>F", function()
-  --   require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })
-  -- end, { silent = true, desc = "Find relative file" })
-  --
-  -- map(
-  --   "n",
-  --   "<leader>/",
-  --   require("telescope.builtin").live_grep,
-  --   { silent = true, desc = "Find in files" }
-  -- )
-  -- map(
-  --   "n",
-  --   "<leader>b",
-  --   require("custom.telescope").open_buffer,
-  --   { silent = true, desc = "Buffers" }
-  -- )
-  -- map(
-  --   "n",
-  --   "<leader>o",
-  --   require("telescope.builtin").oldfiles,
-  --   { silent = true, desc = "Old files" }
-  -- )
-  --
-  -- --  Telescoping into a personal knowledge base is really pleasant,
-  -- map("n", "<leader><leader>", function()
-  --   require("config.org").open_org_file_telescope("")
-  -- end, {
-  --   desc = "Org",
-  -- })
-  -- map("n", "<leader>ep", function()
-  --   require("config.org").open_org_file_telescope("projects")
-  -- end, {
-  --   desc = "Org projects",
-  -- })
-  -- map("n", "<leader>ea", function()
-  --   require("config.org").open_org_file_telescope("areas")
-  -- end, {
-  --   desc = "Org areas",
-  -- })
-  -- map("n", "<leader>er", function()
-  --   require("config.org").open_org_file_telescope("resources")
-  -- end, {
-  --   desc = "Org resources",
-  -- })
-  -- map("n", "<leader>eA", function()
-  --   require("config.org").open_org_file_telescope("archive")
-  -- end, {
-  --   desc = "Org archive",
-  -- })
-  -- map(
-  --   "n",
-  --   "gb",
-  --   require("telescope.builtin").git_branches,
-  --   { silent = true, desc = "Git branches" }
-  -- )
-  --
-  -- map(
-  --   "n",
-  --   "<leader>hh",
-  --   require("telescope.builtin").help_tags,
-  --   { silent = true, desc = "Help tags" }
-  -- )
+  map(
+    "n",
+    "z=",
+    require("telescope.builtin").spell_suggest,
+    { silent = true, desc = "Spell suggest" }
+  )
+  map(
+    "n",
+    "<leader>f",
+    require("telescope.builtin").find_files,
+    { silent = true, desc = "Find files" }
+  )
+  map("n", "<leader>F", function()
+    require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })
+  end, { silent = true, desc = "Find relative file" })
+
+  map(
+    "n",
+    "<leader>/",
+    require("telescope.builtin").live_grep,
+    { silent = true, desc = "Find in files" }
+  )
+  map(
+    "n",
+    "<leader>b",
+    require("custom.telescope").open_buffer,
+    { silent = true, desc = "Buffers" }
+  )
+  map(
+    "n",
+    "<leader>o",
+    require("telescope.builtin").oldfiles,
+    { silent = true, desc = "Old files" }
+  )
+
+  --  Telescoping into a personal knowledge base is really pleasant,
+  map("n", "<leader><leader>", function()
+    require("config.org").open_org_file_telescope("")
+  end, {
+    desc = "Org",
+  })
+  map("n", "<leader>ep", function()
+    require("config.org").open_org_file_telescope("projects")
+  end, {
+    desc = "Org projects",
+  })
+  map("n", "<leader>ea", function()
+    require("config.org").open_org_file_telescope("areas")
+  end, {
+    desc = "Org areas",
+  })
+  map("n", "<leader>er", function()
+    require("config.org").open_org_file_telescope("resources")
+  end, {
+    desc = "Org resources",
+  })
+  map("n", "<leader>eA", function()
+    require("config.org").open_org_file_telescope("archive")
+  end, {
+    desc = "Org archive",
+  })
+  map(
+    "n",
+    "gb",
+    require("telescope.builtin").git_branches,
+    { silent = true, desc = "Git branches" }
+  )
+
+  map(
+    "n",
+    "<leader>hh",
+    require("telescope.builtin").help_tags,
+    { silent = true, desc = "Help tags" }
+  )
 
   -- Ideas
   --require('telescope.builtin').git_commits()
