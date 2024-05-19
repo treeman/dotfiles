@@ -1,0 +1,26 @@
+# This is your rocks.nvim plugins declaration file.
+# Here is a small yet pretty detailed example on how to use it:
+#
+# [plugins]
+# nvim-treesitter = "semver_version"  # e.g. "1.0.0"
+
+# List of non-Neovim rocks.
+# This includes things like `toml` or other lua packages.
+[rocks]
+
+# List of Neovim plugins to install alongside their versions.
+# If the plugin name contains a dot then you must add quotes to the key name!
+[plugins]
+"rocks.nvim" = "2.27.1" # rocks.nvim can also manage itself :D
+"rocks-config.nvim" = "1.5.0"
+"rocks-git.nvim" = "1.5.0"
+"melange-nvim" = { git = "savq/melange-nvim" }
+
+# Lots of parsers failed to install when using the rocks package,
+# so fallback to git bleeding edge.
+nvim-treesitter = { git = "nvim-treesitter/nvim-treesitter.git", rev = "1eabe69" }
+nvim-treesitter-endwise = { git = "RRethy/nvim-treesitter-endwise", rev = "8b34305" }
+nvim-ts-context-commentstring = { git = "JoosepAlviste/nvim-ts-context-commentstring.git", rev = "0bdccb9" }
+nvim-treesitter-context = { git = "nvim-treesitter/nvim-treesitter-context.git", rev = "55e2908" }
+nvim-ts-autotag = { git = "windwp/nvim-ts-autotag.git", rev = "aeb7090" }
+nvim-treesitter-textobjects = { git = "nvim-treesitter/nvim-treesitter-textobjects.git", rev = "5f9bf4b" }

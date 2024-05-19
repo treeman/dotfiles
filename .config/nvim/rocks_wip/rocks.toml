@@ -1,0 +1,74 @@
+# List of non-Neovim rocks.
+# This includes things like `toml` or other lua packages.
+[rocks]
+
+# List of Neovim plugins to install alongside their versions.
+# If the plugin name contains a dot then you must add quotes to the key name!
+[plugins]
+"rocks.nvim" = "2.27.1"
+"rocks-config.nvim" = "1.5.0"
+"rocks-git.nvim" = "1.5.0"
+"mini.cursorword" = "0.9.0"
+"mini.trailspace" = "0.9.0"
+"mini.ai" = "0.9.0"
+"conform.nvim" = "5.6.0"
+"neo-tree.nvim" = "3.14"
+"telescope.nvim" = "scm"
+"comment.nvim" = "0.8.0"
+"indent-blankline.nvim" = "3.5.4"
+"oil.nvim" = "2.8.0"
+"melange-nvim" = { git = "savq/melange-nvim" }
+"todo-comments.nvim" = "1.2.0"
+"vim-cool" = { git = "romainl/vim-cool" }
+"vim-sleuth" = { git = "tpope/vim-sleuth" }
+"suda.vim" = { git = "lambdalisue/vim-suda" }
+"dial.nvim" = "scm"
+"replacer.nvim" = { git = "gabrielpoca/replacer.nvim" }
+"zoxide.vim" = { git = "nanotee/zoxide.vim" }
+nvim-web-devicons = "0.100"
+"lualine.nvim" = "scm"
+"lsp-status.nvim" = "scm"
+"elixir-tools.nvim" = "0.14.0"
+"nerdy.nvim" = { git = "2kabhishek/nerdy.nvim" }
+"search-replace.nvim" = { git = "roobert/search-replace.nvim" }
+"marks.nvim" = "scm"
+"vim-fugitive" = { git = "tpope/vim-fugitive" }
+neogit = { git = "TimUntersberger/neogit", branch = "nightly" }
+"nvim-colorizer" = { git = "NvChad/nvim-colorizer.lua" }
+nvim-nio = "1.9.3"
+"trouble.nvim" = "2.10.0"
+nvim-lastplace = "scm"
+vim-matchup = { git = "andymass/vim-matchup" }
+vim-maximizer = { git = "szw/vim-maximizer" }
+alpha-nvim = "scm"
+nvim-cmp = "scm"
+cmp-nvim-lsp = "scm"
+cmp-buffer = "scm"
+cmp-cmdline = "scm"
+undotree = { git = "jiaoshijie/undotree" }
+luasnip = "2.3.0"
+"lspkind.nvim" = "scm"
+nvim-treesitter-endwise = { git = "RRethy/nvim-treesitter-endwise" }
+cmp-async-path = { git = "https://codeberg.org/FelipeLema/cmp-async-path.git" }
+cmp-spell = { git = "f3fora/cmp-spell" }
+cmp-calc = { git = "hrsh7th/cmp-calc" }
+cmp-nvim-lua = { git = "hrsh7th/cmp-nvim-lua" }
+cmp-treesitter = { git = "ray-x/cmp-treesitter" }
+nvim-surround = "2.1.5"
+nvim-treesitter = "0.9.2"
+nvim-ts-context-commentstring = "scm"
+nvim-treesitter-context = "scm"
+nvim-ts-autotag = "scm"
+nvim-treesitter-textobjects = "scm"
+
+# I got a lot of mismatching query errors when I tried the "rocks-treesitter.nvim" repo
+# in conjunction with nvim-treesitter. I couldn't figure out how to make them
+# play well together so I went back to only relying on nvim-treesitter.
+# "rocks-treesitter.nvim" = "scm"
+
+# FIXME errors
+# "gitsigns.nvim" = "scm"
+
+# How to make telescope see this?
+# [plugins."telescope-fzf-native.nvim"]
+# git = "nvim-telescope/telescope-fzf-native.nvim"
