@@ -1,4 +1,4 @@
-local util = require("util")
+local helpers = require("util.helpers")
 
 M = {}
 
@@ -30,7 +30,7 @@ M.request_diagnostics_curr_buf = function()
 end
 
 M.add_diagnostics = function(msg)
-  for _, buf in ipairs(util.list_buffers()) do
+  for _, buf in ipairs(helpers.list_buffers()) do
     local buf_name = vim.api.nvim_buf_get_name(buf)
     local buf_diagnostics = msg[buf_name]
 
