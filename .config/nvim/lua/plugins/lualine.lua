@@ -17,7 +17,7 @@ end
 
 local function lsp_info()
   -- TODO this can sometimes be very wordy
-  if vim.lsp.get_active_clients() == nil then
+  if vim.lsp.get_clients() == nil then
     return ""
   else
     return require("lsp-status").status()
@@ -25,7 +25,7 @@ local function lsp_info()
 end
 
 local function server_info()
-  return require("blog.server").status() .. lsp_info()
+  return require("blog.server").blog_status() .. lsp_info()
 end
 
 local function spell()
