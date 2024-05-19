@@ -59,7 +59,7 @@ cmp-spell = { git = "f3fora/cmp-spell" }
 cmp-calc = { git = "hrsh7th/cmp-calc" }
 cmp-nvim-lua = { git = "hrsh7th/cmp-nvim-lua" }
 cmp-treesitter = { git = "ray-x/cmp-treesitter" }
-
+lsp-rooter = { git = "ahmedkhalf/lsp-rooter.nvim" }
 # Lots of parsers failed to install when using the rocks package,
 # so fallback to git bleeding edge.
 nvim-treesitter = { git = "nvim-treesitter/nvim-treesitter.git", rev = "1eabe69" }
@@ -68,3 +68,6 @@ nvim-ts-context-commentstring = { git = "JoosepAlviste/nvim-ts-context-commentst
 nvim-treesitter-context = { git = "nvim-treesitter/nvim-treesitter-context.git", rev = "55e2908" }
 nvim-ts-autotag = { git = "windwp/nvim-ts-autotag.git", rev = "aeb7090" }
 nvim-treesitter-textobjects = { git = "nvim-treesitter/nvim-treesitter-textobjects.git", rev = "5f9bf4b" }
+"rest.nvim" = "2.0.1"
+vim-pollen = { git = "otherjoel/vim-pollen" }
+gitsigns = { git = "lewis6991/gitsigns.nvim" }
