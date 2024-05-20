@@ -1,12 +1,5 @@
-local opts = {
+require("nvim-surround").setup({
   highlight = {
     duration = 500,
   },
-}
-
-return {
-  "kylechui/nvim-surround",
-  opts = opts,
-  event = "BufReadPre",
-  version = "*",
-}
+})

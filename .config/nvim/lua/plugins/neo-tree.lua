@@ -1,6 +1,4 @@
--- If this doesn't work well, look at nvim-tree
-
-local opts = {
+require("neo-tree").setup({
   -- use_default_mappings = false,
   window = {
     mapping_options = {
@@ -19,17 +17,8 @@ local opts = {
       ["<Esc>"] = "close_window",
     },
   },
-}
-
-return {
-  "nvim-neo-tree/neo-tree.nvim",
-  branch = "v3.x",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons",
-    "MunifTanjim/nui.nvim",
-    "s1n7ax/nvim-window-picker",
+  filesystem = {
+    -- Use oil instead
+    hijack_netrw_behavior = "disabled",
   },
-  cmd = "Neotree",
-  opts = opts,
-}
+})

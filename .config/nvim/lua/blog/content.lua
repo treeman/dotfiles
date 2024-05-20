@@ -1,7 +1,6 @@
+local helpers = require("util.helpers")
 local nio = require("nio")
-local path = require("blog.path")
 local server = require("blog.server")
-local util = require("util")
 
 local M = {}
 
@@ -12,7 +11,7 @@ M.list_tags = function(cb)
 end
 
 M.extract_title = function(file_path)
-  local title = util.run_cmd({
+  local title = helpers.run_cmd({
     cmd = "rg",
     args = {
       "-INo",
@@ -37,7 +36,7 @@ M.list_posts = function(draft, cb)
       subcmd = "list-posts"
     end
 
-    local output = util.run_cmd({
+    local output = helpers.run_cmd({
       cmd = "cargo",
       args = {
         "run",

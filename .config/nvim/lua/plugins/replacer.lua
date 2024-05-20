@@ -1,5 +1,3 @@
-return {
-  "gabrielpoca/replacer.nvim",
-  opts = { rename_files = false },
-  keys = require("config.keymaps").replacer,
-}
+require("replacer").setup({
+  rename_files = false,
+})

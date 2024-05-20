@@ -1,4 +1,8 @@
-local opts = {
+local cmd = require("util.helpers").create_cmd
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+
+require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
     javascript = { { "prettierd", "prettier" } },
@@ -30,11 +34,41 @@ local opts = {
     end
     return { timeout_ms = 500, lsp_fallback = true }
   end,
-}
+})
 
-return {
-  "stevearc/conform.nvim",
-  event = "BufWritePre",
-  cmd = "ConformInfo",
-  opts = opts,
-}
+cmd("Format", function(args)
+  local range = nil
+  if args.count ~= -1 then
+    local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+    range = {
+      start = { args.line1, 0 },
+      ["end"] = { args.line2, end_line:len() },
+    }
+  end
+  require("conform").format({ async = true, lsp_fallback = true, range = range })
+end, { range = true })
+
+cmd("FormatDisable", function(args)
+  if args.bang then
+    -- FormatDisable! will disable formatting just for this buffer
+    vim.b.disable_autoformat = true
+  else
+    vim.g.disable_autoformat = true
+  end
+end, {
+  desc = "Disable autoformat-on-save",
+  bang = true,
+})
+cmd("FormatEnable", function()
+  vim.g.disable_autoformat = false
+end, {
+  desc = "Re-enable autoformat-on-save",
+})
+
+-- Didn't manage to add formatting specified with a lua function
+-- to conform, so do it manually.
+autocmd("BufWritePre", {
+  pattern = "*.scm",
+  group = augroup("scm", { clear = true }),
+  callback = require("custom/format_queries").format,
+})

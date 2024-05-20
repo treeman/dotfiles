@@ -1,11 +1,11 @@
 local content = require("blog.content")
+local helpers = require("util.helpers")
 local log = require("plenary.log").new({
   plugin = "blog",
   level = "error",
 })
 local nio = require("nio")
 local path = require("blog.path")
-local utils = require("util.utils")
 
 local M = {}
 
@@ -54,7 +54,7 @@ M.new_static = function()
 end
 
 M.new_project = function()
-  utils.list_files(path.blog_path .. "projects/", function(files)
+  helpers.list_files(path.blog_path .. "projects/", function(files)
     local lowest_ordinal = 99999
     for _, file in ipairs(files) do
       local ord = tonumber(string.match(file, "projects/(%d+)"))

@@ -1,5 +1,6 @@
 vim.filetype.add({
-	extension = {
-		dj = "djot",
-	},
+  extension = {
+    dj = "djot",
+    http = "http",
+  },
 })

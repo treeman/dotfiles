@@ -1,54 +1,34 @@
-local config = function()
-  local actions = require("telescope.actions")
+local actions = require("telescope.actions")
+local telescope = require("telescope")
 
-  require("telescope").setup({
-    defaults = {
-      file_ignore_patterns = { "node_modules" },
-      mappings = {
-        i = {
-          ["<esc>"] = actions.close,
-        },
-      },
-      pickers = {
-        find_files = {
-          hidden = true,
-        },
-      },
-      layout_config = {
-        horizontal = {
-          preview_width = 0.6,
-          width = { padding = 5 },
-        },
-      },
-      path_display = {
-        "filename_first",
+telescope.setup({
+  defaults = {
+    file_ignore_patterns = { "node_modules" },
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close,
       },
     },
-  })
-
-  -- Makes sorting a lot faster than the built-in one
-  -- and enables fzf syntax
-  require("telescope").load_extension("fzf")
-end
-
-return {
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/popup.nvim",
-      "nvim-lua/plenary.nvim",
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
+    pickers = {
+      find_files = {
+        hidden = true,
       },
-      "gbrlsnchs/telescope-lsp-handlers.nvim",
-      -- Never really used this
-      -- "nvim-telescope/telescope-file-browser.nvim",
-      "nvim-treesitter/nvim-treesitter",
     },
-    config = config,
-    keys = require("config.keymaps").telescope,
-    cmd = "Telescope",
-    event = { "BufReadPre", "BufNewFile" },
+    layout_config = {
+      horizontal = {
+        preview_width = 0.6,
+        width = { padding = 5 },
+      },
+    },
+    path_display = {
+      "filename_first",
+    },
   },
-}
+})
+
+-- vim.cmd("packadd telescope-fzf-native.nvim")
+
+-- Makes sorting a lot faster than the built-in one
+-- and enables fzf syntax
+-- FIXME how to make telescope see this?
+-- telescope.load_extension("fzf")

@@ -1,5 +1,5 @@
 -- Difficult to use fish as a default shell as plugins may depend on POSIX
--- Instead launch terminal with fish
+-- Instead launch terminal with bash
 vim.opt.shell = "/bin/bash"
 
 -- Use CLIPBOARD register + as default
@@ -49,7 +49,7 @@ vim.opt.ruler = true -- always show current positions along the bottom
 vim.opt.showcmd = true -- show the command being typed
 vim.opt.signcolumn = "yes" -- Use a gutter for git-gutter and LSP messages
 vim.opt.completeopt = "menuone,noselect" -- Required settings for nvim-cmp
-vim.opt.conceallevel = 2 -- Hide "concealed" syntax, for example in norg files
+vim.opt.conceallevel = 2 -- Hide "concealed" syntax, for example in Djot and markdown
 
 vim.opt.spell = true
 vim.opt.spelllang = { "en_us" }

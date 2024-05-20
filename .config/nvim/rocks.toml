@@ -1,0 +1,75 @@
+# List of non-Neovim rocks.
+# This includes things like `toml` or other lua packages.
+# [rocks]
+
+# List of Neovim plugins to install alongside their versions.
+# If the plugin name contains a dot then you must add quotes to the key name!
+[plugins]
+"rocks.nvim" = "2.27.1" # rocks.nvim can also manage itself :D
+"rocks-config.nvim" = "1.5.0"
+"rocks-git.nvim" = "1.5.0"
+"melange-nvim" = { git = "savq/melange-nvim" }
+"mini.cursorword" = "0.9.0"
+"mini.trailspace" = "0.9.0"
+"mini.ai" = "0.9.0"
+"conform.nvim" = "5.6.0"
+"neo-tree.nvim" = "3.14"
+"telescope.nvim" = "scm"
+"comment.nvim" = "0.8.0"
+"indent-blankline.nvim" = "3.5.4"
+"oil.nvim" = "2.8.0"
+"todo-comments.nvim" = "1.2.0"
+"vim-cool" = { git = "romainl/vim-cool" }
+"vim-sleuth" = { git = "tpope/vim-sleuth" }
+"suda.vim" = { git = "lambdalisue/vim-suda" }
+"replacer.nvim" = { git = "gabrielpoca/replacer.nvim" }
+"zoxide.vim" = { git = "nanotee/zoxide.vim" }
+nvim-web-devicons = "0.100"
+"lualine.nvim" = "scm"
+"lsp-status.nvim" = "scm"
+"elixir-tools.nvim" = "0.14.0"
+"nerdy.nvim" = { git = "2kabhishek/nerdy.nvim" }
+"search-replace.nvim" = { git = "roobert/search-replace.nvim" }
+"marks.nvim" = "scm"
+"vim-fugitive" = { git = "tpope/vim-fugitive" }
+neogit = { git = "TimUntersberger/neogit", branch = "nightly" }
+"nvim-colorizer" = { git = "NvChad/nvim-colorizer.lua" }
+nvim-nio = "1.9.3"
+"trouble.nvim" = "2.10.0"
+nvim-lastplace = "scm"
+vim-matchup = { git = "andymass/vim-matchup" }
+vim-maximizer = { git = "szw/vim-maximizer" }
+alpha-nvim = "scm"
+nvim-cmp = "scm"
+undotree = { git = "jiaoshijie/undotree" }
+luasnip = "2.3.0"
+"lspkind.nvim" = "scm"
+cmp-nvim-lsp = "scm"
+cmp-buffer = "scm"
+cmp-cmdline = "scm"
+cmp-async-path = { git = "https://codeberg.org/FelipeLema/cmp-async-path.git" }
+cmp-spell = { git = "f3fora/cmp-spell" }
+cmp-calc = { git = "hrsh7th/cmp-calc" }
+cmp-nvim-lua = { git = "hrsh7th/cmp-nvim-lua" }
+cmp-treesitter = { git = "ray-x/cmp-treesitter" }
+lsp-rooter = { git = "ahmedkhalf/lsp-rooter.nvim" }
+# Lots of parsers failed to install when using the rocks package,
+# so fallback to git bleeding edge.
+nvim-treesitter = { git = "nvim-treesitter/nvim-treesitter.git", rev = "1eabe69" }
+nvim-treesitter-endwise = { git = "RRethy/nvim-treesitter-endwise", rev = "8b34305" }
+nvim-ts-context-commentstring = { git = "JoosepAlviste/nvim-ts-context-commentstring.git", rev = "0bdccb9" }
+nvim-treesitter-context = { git = "nvim-treesitter/nvim-treesitter-context.git", rev = "55e2908" }
+nvim-ts-autotag = { git = "windwp/nvim-ts-autotag.git", rev = "aeb7090" }
+nvim-treesitter-textobjects = { git = "nvim-treesitter/nvim-treesitter-textobjects.git", rev = "5f9bf4b" }
+"rest.nvim" = "2.0.1"
+vim-pollen = { git = "otherjoel/vim-pollen" }
+"gitsigns.nvim" = { git = "lewis6991/gitsigns.nvim" }
+"dial.nvim" = { git = "monaqa/dial.nvim" }
+"telescope-fzf-native.nvim" = { git = "nvim-telescope/telescope-fzf-native.nvim.git" }
+"mason.nvim" = { version = "1.10.0" }
+"mason-lspconfig.nvim" = { version = "1.29.0" }
+nvim-lspconfig = "0.1.7"
+rustaceanvim = "4.23.2"
+nvim-lightbulb = "1.0.0"
+"neodev.nvim" = "2.5.2"
+"typescript-tools.nvim" = "scm"

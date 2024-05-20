@@ -17,7 +17,7 @@ end
 
 local function lsp_info()
   -- TODO this can sometimes be very wordy
-  if vim.lsp.get_active_clients() == nil then
+  if vim.lsp.get_clients() == nil then
     return ""
   else
     return require("lsp-status").status()
@@ -25,7 +25,7 @@ local function lsp_info()
 end
 
 local function server_info()
-  return require("blog.server").status() .. lsp_info()
+  return require("blog.server").blog_status() .. lsp_info()
 end
 
 local function spell()
@@ -120,60 +120,48 @@ local filename = {
   path = 1,
 }
 
-local function config()
-  local lualine = require("lualine")
-  local lsp_status = require("lsp-status")
+local lsp_status = require("lsp-status")
+local lualine = require("lualine")
 
-  lsp_status.config({
-    current_function = false,
-    show_filename = false,
-    diagnostics = false,
-  })
-  lsp_status.register_progress()
+lsp_status.config({
+  current_function = false,
+  show_filename = false,
+  diagnostics = false,
+})
+lsp_status.register_progress()
 
-  lualine.setup({
-    options = {
-      theme = custom_theme,
-      -- component_separators = { left = "", right = "" },
-    },
-    sections = {
-      -- See current window width using :echo winwidth(0)
-      -- Laptop
-      -- full: 213
-      -- half: 106
-      -- third: 71
-      lualine_a = { "mode" },
-      lualine_b = {
-        { "branch", fmt = trunc(80, 80, 80, true) },
-        { "diff", fmt = trunc(80, 80, 80, true) },
-        { "diagnostics", fmt = trunc(80, 80, 80, true) },
-      },
-      lualine_c = { filename },
-      lualine_x = { { server_info, fmt = trunc(120, 10, 60, true) } },
-      lualine_y = {
-        { spell, fmt = trunc(120, 120, 120, true) },
-        { "encoding", fmt = trunc(120, 120, 120, true) },
-        { "filetype", fmt = trunc(80, 80, 80, true) },
-      },
-      lualine_z = { location },
-    },
-    inactive_sections = {
-      lualine_a = {},
-      lualine_b = {},
-      lualine_c = { filename },
-      lualine_x = {},
-      lualine_y = {},
-      lualine_z = {},
-    },
-  })
-end
-
-return {
-  "nvim-lualine/lualine.nvim",
-  dependencies = {
-    "nvim-tree/nvim-web-devicons",
-    "nvim-lua/lsp-status.nvim",
+lualine.setup({
+  options = {
+    theme = custom_theme,
+    -- component_separators = { left = "", right = "" },
   },
-  config = config,
-  event = { "BufReadPre", "BufNewFile" },
-}
+  sections = {
+    -- See current window width using :echo winwidth(0)
+    -- Laptop
+    -- full: 213
+    -- half: 106
+    -- third: 71
+    lualine_a = { "mode" },
+    lualine_b = {
+      { "branch", fmt = trunc(80, 80, 80, true) },
+      { "diff", fmt = trunc(80, 80, 80, true) },
+      { "diagnostics", fmt = trunc(80, 80, 80, true) },
+    },
+    lualine_c = { filename },
+    lualine_x = { { server_info, fmt = trunc(120, 10, 60, true) } },
+    lualine_y = {
+      { spell, fmt = trunc(120, 120, 120, true) },
+      { "encoding", fmt = trunc(120, 120, 120, true) },
+      { "filetype", fmt = trunc(80, 80, 80, true) },
+    },
+    lualine_z = { location },
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { filename },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
+  },
+})

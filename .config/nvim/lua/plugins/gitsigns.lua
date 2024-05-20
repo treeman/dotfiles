@@ -1,4 +1,4 @@
-local opts = {
+require("gitsigns").setup({
   signs = {
     add = { text = "+" },
     change = { text = "~" },
@@ -7,10 +7,4 @@ local opts = {
     changedelete = { text = "~" },
   },
   on_attach = require("config.keymaps").gitsigns,
-}
-
-return {
-  "lewis6991/gitsigns.nvim",
-  opts = opts,
-  event = { "BufReadPre", "BufNewFile" },
-}
+})

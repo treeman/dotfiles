@@ -11,7 +11,7 @@ local M = {}
 -- Wrap it in a function to prevent requiring this file evaluates
 -- global keymaps multiple times.
 M.init = function()
-  local normal_keyboard = require("util").has_normal_keyboard()
+  local normal_keyboard = require("util.keyboard").has_normal_keyboard()
 
   -- Copy/paste to mouse clipboard quickly
   map("n", "<leader>p", '"*p', { silent = true, desc = "Paste from mouse" })
@@ -70,18 +70,8 @@ M.init = function()
   map("n", "<up>", "gk")
   map("n", "<down>", "gj")
 
-  -- Remaps to try from theprimaegen
   -- Don't move cursor when joining lines
   map("n", "J", "mzJ`z")
-  -- Keep cursor in the middle when paging
-  -- map("n", "<C-d>", "<C-d>zz")
-  -- map("n", "<C-u>", "<C-u>zz")
-  -- map("n", "<PageUp>", "<PageUp>zz")
-  -- map("n", "<PageDown>", "<PageDown>zz")
-  -- Keep search terms in the middle
-  -- map("n", "n", "nzzzv")
-  -- map("n", "N", "Nzzzv")
-  -- TODO should probably try to align C-f, C-b / and all [] prefixes... So why bother?
 
   -- Maximize current buffer
   map("n", "<C-w>m", ":MaximizerToggle<CR>", { silent = true, desc = "Maximize window" })
@@ -113,120 +103,175 @@ M.init = function()
   map("n", "<leader>x", ":write<CR>:source %<CR>")
 
   -- Blogging
-  map("n", "gd", require("blog.telescope").find_draft, { desc = "Find blog draft" })
-  map("n", "gp", require("blog.telescope").find_post, { desc = "Find blog post" })
-end
+  map("n", "gd", function()
+    require("blog.telescope").find_draft()
+  end, { desc = "Find blog draft" })
+  map("n", "gp", function()
+    require("blog.telescope").find_post()
+  end, { desc = "Find blog post" })
 
-M.buf_blog = function(buffer)
   map(
     "n",
-    "<localleader>d",
-    require("blog.goto").goto_def,
-    { buffer = buffer, desc = "Goto definition" }
-  )
-  -- map("n", "<localleader>h", require("blog.server").hover, { buffer = buffer, desc = "Hover help" })
-end
-
-M.telescope = {
-  {
     "z=",
-    function()
-      require("telescope.builtin").spell_suggest()
-    end,
-    silent = true,
-    desc = "Spell suggest",
-  },
-  { "<leader>f", require("telescope.builtin").find_files, silent = true, desc = "Find files" },
-  {
-    "<leader>F",
-    function()
-      require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })
-    end,
-    silent = true,
-    desc = "Find relative file",
-  },
+    require("telescope.builtin").spell_suggest,
+    { silent = true, desc = "Spell suggest" }
+  )
+  map(
+    "n",
+    "<leader>f",
+    require("telescope.builtin").find_files,
+    { silent = true, desc = "Find files" }
+  )
+  map("n", "<leader>F", function()
+    require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })
+  end, { silent = true, desc = "Find relative file" })
 
-  { "<leader>/", require("telescope.builtin").live_grep, silent = true, desc = "Find in files" },
-  { "<leader>b", require("config.telescope_actions").open_buffer, silent = true, desc = "Buffers" },
-  { "<leader>o", require("telescope.builtin").oldfiles, silent = true, desc = "Old files" },
+  map(
+    "n",
+    "<leader>/",
+    require("telescope.builtin").live_grep,
+    { silent = true, desc = "Find in files" }
+  )
+  map(
+    "n",
+    "<leader>b",
+    require("custom.telescope").open_buffer,
+    { silent = true, desc = "Buffers" }
+  )
+  map(
+    "n",
+    "<leader>o",
+    require("telescope.builtin").oldfiles,
+    { silent = true, desc = "Old files" }
+  )
 
   --  Telescoping into a personal knowledge base is really pleasant,
-  {
-    "<leader><leader>",
-    function()
-      require("config.org").open_org_file_telescope("")
-    end,
+  map("n", "<leader><leader>", function()
+    require("config.org").open_org_file_telescope("")
+  end, {
     desc = "Org",
-  },
-  {
-    "<leader>ep",
-    function()
-      require("config.org").open_org_file_telescope("projects")
-    end,
+  })
+  map("n", "<leader>ep", function()
+    require("config.org").open_org_file_telescope("projects")
+  end, {
     desc = "Org projects",
-  },
-  {
-    "<leader>ea",
-    function()
-      require("config.org").open_org_file_telescope("areas")
-    end,
+  })
+  map("n", "<leader>ea", function()
+    require("config.org").open_org_file_telescope("areas")
+  end, {
     desc = "Org areas",
-  },
-  {
-    "<leader>er",
-    function()
-      require("config.org").open_org_file_telescope("resources")
-    end,
+  })
+  map("n", "<leader>er", function()
+    require("config.org").open_org_file_telescope("resources")
+  end, {
     desc = "Org resources",
-  },
-  {
-    "<leader>eA",
-    function()
-      require("config.org").open_org_file_telescope("archive")
-    end,
+  })
+  map("n", "<leader>eA", function()
+    require("config.org").open_org_file_telescope("archive")
+  end, {
     desc = "Org archive",
-  },
-  { "gb", require("telescope.builtin").git_branches, silent = true, desc = "Git branches" },
+  })
+  map(
+    "n",
+    "gb",
+    require("telescope.builtin").git_branches,
+    { silent = true, desc = "Git branches" }
+  )
 
-  { "<leader>hh", require("telescope.builtin").help_tags, silent = true, desc = "Help tags" },
+  map(
+    "n",
+    "<leader>hh",
+    require("telescope.builtin").help_tags,
+    { silent = true, desc = "Help tags" }
+  )
+
   -- Ideas
   --require('telescope.builtin').git_commits()
   --require('telescope.builtin').git_bcommits()
   --require('telescope.builtin').git_bcommits_range()
-}
+  map("n", "<leader>rq", function()
+    require("replacer").run()
+  end, {
+    silent = true,
+    desc = "Make quickfix editable for replacing in",
+  })
 
-M.dial = {
-  {
-    "<C-a>",
-    function()
-      require("dial.map").manipulate("increment", "normal")
-    end,
+  -- Replace word under cursor
+  map("n", "<leader>rw", "<cmd>SearchReplaceSingleBufferCWord<cr>", {
+    desc = "Replace CWord",
+  })
+  -- Replace WORD under cursor
+  map("n", "<leader>rW", "<cmd>SearchReplaceSingleBufferCWORD<cr>", {
+    desc = "Replace CWORD",
+  })
+  -- Replace "expression" (includes dots, not sure how useful this is)
+  map("n", "<leader>re", "<cmd>SearchReplaceSingleBufferCExpr<cr>", {
+    desc = "Replace CExpr",
+  })
+  -- Replace visual selection
+  map("v", "<C-r>", "<CMD>SearchReplaceSingleBufferVisualSelection<CR>", {
+    desc = "Replace selection",
+  })
+
+  map("n", "<C-a>", function()
+    require("dial.map").manipulate("increment", "normal")
+  end, {
     desc = "Increment number",
-  },
-  {
-    "<C-x>",
-    function()
-      require("dial.map").manipulate("decrement", "normal")
-    end,
+  })
+  map("n", "<C-x>", function()
+    require("dial.map").manipulate("decrement", "normal")
+  end, {
     desc = "Decrement number",
-  },
-  {
-    "<C-a>",
-    mode = { "v" },
-    function()
-      require("dial.map").manipulate("increment", "visual")
-    end,
+  })
+  map("v", "<C-a>", function()
+    require("dial.map").manipulate("increment", "visual")
+  end, {
     desc = "Increment number",
-  },
-  {
-    "<C-x>",
-    mode = { "v" },
-    function()
-      require("dial.map").manipulate("decrement", "visual")
-    end,
+  })
+  map("v", "<C-x>", function()
+    require("dial.map").manipulate("decrement", "visual")
+  end, {
     desc = "Decrement number",
-  },
-}
+  })
+
+  map("n", "]t", function()
+    require("trouble").next({ skip_groups = true, jump = true })
+  end, {
+    desc = "Next trouble",
+    silent = true,
+  })
+  map("n", "[t", function()
+    require("trouble").previous({ skip_groups = true, jump = true })
+  end, {
+    desc = "Prev trouble",
+    silent = true,
+  })
+  map("n", "]T", function()
+    require("trouble").last({ skip_groups = true, jump = true })
+  end, {
+    desc = "Last trouble",
+    silent = true,
+  })
+  map("n", "[T", function()
+    require("trouble").first({ skip_groups = true, jump = true })
+  end, {
+    desc = "First trouble",
+    silent = true,
+  })
+
+  map("n", "<leader>u", function()
+    require("undotree").toggle()
+  end, {
+    desc = "Undotree",
+  })
+end
+
+M.buf_blog = function(buffer)
+  map("n", "<localleader>d", function()
+    require("blog.goto").goto_def()
+  end, { buffer = buffer, desc = "Goto definition" })
+  -- map("n", "<localleader>h", require("blog.server").hover, { buffer = buffer, desc = "Hover help" })
+end
 
 -- Maps four pairs:
 -- [f, [F, ]f, ]F
@@ -290,7 +335,7 @@ M.global_lsp = function()
 end
 
 M.buf_lsp = function(_, buffer)
-  -- FIXME there are other cool possibilities listed in nvim-lspconfig
+  -- NOTE there are other cool possibilities listed in nvim-lspconfig
   map(
     "n",
     "<localleader>D",
@@ -427,121 +472,6 @@ M.marks = {
   next = "]m",
   prev = "[m",
   preview = "m:",
-}
-
-M.trouble = {
-  {
-    "]t",
-    function()
-      require("trouble").next({ skip_groups = true, jump = true })
-    end,
-    desc = "Next trouble",
-    silent = true,
-  },
-  {
-    "[t",
-    function()
-      require("trouble").previous({ skip_groups = true, jump = true })
-    end,
-    desc = "Prev trouble",
-    silent = true,
-  },
-  {
-    "]T",
-    function()
-      require("trouble").last({ skip_groups = true, jump = true })
-    end,
-    desc = "Last trouble",
-    silent = true,
-  },
-  {
-    "[T",
-    function()
-      require("trouble").first({ skip_groups = true, jump = true })
-    end,
-    desc = "First trouble",
-    silent = true,
-  },
-}
-
-M.undotree = {
-  {
-    "<leader>u",
-    function()
-      require("undotree").toggle()
-    end,
-    desc = "Undotree",
-  },
-}
-
-M.hop = {
-  {
-    "s",
-    function()
-      require("hop").hint_char2({})
-    end,
-    desc = "Sneak",
-  },
-  {
-    "S",
-    function()
-      require("hop").hint_char2({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR })
-    end,
-    desc = "Sneak backwards",
-  },
-  {
-    "<leader>w",
-    function()
-      require("hop").hint_words({})
-    end,
-    desc = "Hop words",
-  },
-  {
-    "<leader>W",
-    function()
-      require("hop").hint_words({ direction = require("hop.hint").HintDirection.BEFORE_CURSOR })
-    end,
-    desc = "Hop words backwards",
-  },
-}
-
-M.search_replace = {
-  -- Replace word under cursor
-  {
-    "<leader>rw",
-    "<cmd>SearchReplaceSingleBufferCWord<cr>",
-    desc = "Replace CWord",
-  },
-  -- Replace WORD under cursor
-  {
-    "<leader>rW",
-    "<cmd>SearchReplaceSingleBufferCWORD<cr>",
-    desc = "Replace CWORD",
-  },
-  -- Replace "expression" (includes dots, not sure how useful this is)
-  {
-    "<leader>re",
-    "<cmd>SearchReplaceSingleBufferCExpr<cr>",
-    desc = "Replace CExpr",
-  },
-  -- Replace visual selection
-  {
-    "<C-r>",
-    mode = "v",
-    "<CMD>SearchReplaceSingleBufferVisualSelection<CR>",
-    desc = "Replace selection",
-  },
-}
-
-M.replacer = {
-  {
-    "<leader>rq",
-    function()
-      require("replacer").run()
-    end,
-    silent = true,
-    desc = "Make quickfix editable for replacing in",
-  },
 }
 
 M.pollen = function()

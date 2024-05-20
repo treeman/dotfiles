@@ -136,7 +136,9 @@ local function posts_sorter(opts)
   })
 end
 
-local function _find_post(draft)
+local function _find_post(opts)
+  local draft = opts.draft
+
   local make_display = function(entry)
     -- No djot icon, just pick something that looks neat
     local ext = telescope_utils.file_extension(entry.value.path)
@@ -207,11 +209,11 @@ local function _find_post(draft)
 end
 
 M.find_post = function()
-  return _find_post(false)
+  return _find_post({ draft = false })
 end
 
 M.find_draft = function()
-  return _find_post(true)
+  return _find_post({ draft = true })
 end
 
 return M

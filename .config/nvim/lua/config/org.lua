@@ -6,6 +6,7 @@ M.open_org_file_telescope = function(base_folder)
   local action_state = require("telescope.actions.state")
   local actions = require("telescope.actions")
   local Path = require("plenary.path")
+  local builtin = require("telescope.builtin")
 
   local folder = vim.fn.expand("~/org/") .. base_folder .. "/"
 
@@ -15,7 +16,7 @@ M.open_org_file_telescope = function(base_folder)
     ignore_files = { "^archive/" }
   end
 
-  require("telescope.builtin").find_files({
+  builtin.find_files({
     file_ignore_patterns = ignore_files,
     attach_mappings = function(prompt_bufnr, map)
       -- Creates a file using the telescope input prompt.

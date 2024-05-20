@@ -1,23 +1,12 @@
--- Basic lazy.nvim setup as copied from the readme
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
--- Load plugin specs from lua/plugins/*.lua
-require("lazy").setup("plugins", {
-  defaults = {
-    lazy = true,
-  },
-  change_detection = {
-    notify = false,
-  },
+autocmd({ "BufReadPre", "BufNewFile" }, {
+  pattern = "*",
+  group = augroup("lazy_plugins.lspconfig", { clear = true }),
+  callback = function(opts)
+    require("lazy_plugins.lspconfig")
+    -- Only do setup once... But setup is fast enough so it really doesn't matter.
+    -- vim.api.nvim_del_augroup_by_name("lazy_plugins.lspconfig")
+  end,
 })

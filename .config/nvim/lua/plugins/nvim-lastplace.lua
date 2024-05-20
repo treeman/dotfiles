@@ -1,11 +1,11 @@
-local opts = {
-  lastplace_ignore_buftype = {
+vim.g.nvim_lastplace = {
+  ignore_buftype = {
     "quickfix",
     "nofile",
     "help",
     "terminal",
   },
-  lastplace_ignore_filetype = {
+  ignore_filetype = {
     "gitcommit",
     "gitrebase",
     "svn",
@@ -13,11 +13,5 @@ local opts = {
     "toggleterm",
     "dashboard",
   },
-  lastplace_open_folds = false,
-}
-
-return {
-  "ethanholz/nvim-lastplace",
-  opts = opts,
-  event = { "BufReadPre", "BufNewFile" },
+  open_folds = true,
 }
