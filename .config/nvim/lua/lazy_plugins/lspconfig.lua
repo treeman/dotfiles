@@ -2,15 +2,12 @@ local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local keymaps = require("config.keymaps")
 local lsp_status = require("lsp-status")
 local lspconfig = require("lspconfig")
-local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local neodev = require("neodev")
 
-mason.setup({})
-
 mason_lspconfig.setup({
   ensure_installed = {
-    "beancount",
+    -- "beancount",
     "clangd",
     "clangd",
     "cssls",
@@ -19,7 +16,7 @@ mason_lspconfig.setup({
     "dotls",
     -- Install managed by elixir-tools instead.
     -- "elixirls",
-    -- "nextls", -- Can't install automatically, even though we can install it using :Mason ?
+    -- "nextls",
     "emmet_ls",
     "eslint",
     "html",
@@ -42,8 +39,12 @@ capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 capabilities = vim.tbl_extend("keep", capabilities, lsp_status.capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+local function on_attach(client, buffer)
+  keymaps.buf_lsp(client, buffer)
+  lsp_status.on_attach(client)
+end
+
 vim.diagnostic.config({
-  -- Disable as we use lsp_lines instead
   virtual_text = false,
 })
 
@@ -52,30 +53,31 @@ keymaps.global_lsp()
 
 vim.lsp.inlay_hint.enable(true)
 
-local on_attach = function(client, buffer)
-  keymaps.buf_lsp(client, buffer)
-  lsp_status.on_attach(client)
-end
-
 lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {
   capabilities = capabilities,
   on_attach = on_attach,
 })
 
--- elixirls is managed by elixir-tools outside of mason.
 -- This compiles the LSP using the exact Elixir + Erlang version, while giving us some extra functionality.
 local elixir = require("elixir")
 local elixirls = require("elixir.elixirls")
 elixir.setup({
   nextls = {
-    enable = false,
-    cmd = vim.fn.expand("$HOME/.local/share/nvim/mason/bin/nextls"),
+    enable = true,
+    init_options = {
+      mix_env = "dev",
+      experimental = {
+        completions = {
+          enable = true,
+        },
+      },
+    },
     capabilities = capabilities,
     on_attach = on_attach,
   },
   credo = { enable = true, capabilities = capabilities, on_attach = on_attach },
   elixirls = {
-    enable = true,
+    enable = false,
     settings = elixirls.settings({
       dialyzerEnabled = true,
       enableTestLenses = true,
@@ -83,13 +85,6 @@ elixir.setup({
       fetchDeps = true,
     }),
     capabilities = capabilities,
-    -- FIXME extra commands available?
-    -- vim.lsp.codelens.run()
-    -- :ElixirFromPipe
-    -- :ElixirToPipe
-    -- :ElixirExpandMacro
-    -- :ElixirOutputPanel
-    -- :Mix
     on_attach = on_attach,
   },
 })

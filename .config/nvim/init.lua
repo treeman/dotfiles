@@ -8,6 +8,7 @@ require("config.autocmds")
 require("config.keymaps").init()
 require("config.colorscheme")
 require("config.neovide")
+require("config.lazy")
 require("blog")
 
 require("util.helpers")

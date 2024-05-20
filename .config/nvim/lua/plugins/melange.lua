@@ -1,10 +1,10 @@
 local bg = vim.opt.background:get()
 local palette = require("melange/palettes/" .. bg)
 
-local a = palette.a -- Grays
-local b = palette.b -- Bright foreground colors
+-- local a = palette.a -- Grays
+-- local b = palette.b -- Bright foreground colors
 local c = palette.c -- Foreground colors
-local d = palette.d -- Background colors
+-- local d = palette.d -- Background colors
 
 -- See :help neo-tree-highlights
 -- See: https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#highlights
@@ -22,6 +22,9 @@ local overrides = {
   { name = "NeoTreeFadeText2", val = { link = "LineNer" } },
   { name = "NeoTreeDimText", val = { link = "WinSeparator" } },
   -- Fix cmp
+  { name = "CmpItemAbbrMatch", val = { link = "Function" } },
+  { name = "CmpItemKind", val = { link = "Function" } },
+  -- FIXME all other kinds aren't highlighted anymore...
   { name = "CmpItemKindText", val = { link = "CursorLineNr" } },
   { name = "CmpItemMenu", val = { link = "Conceal" } },
   -- Marks
