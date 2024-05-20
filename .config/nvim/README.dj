@@ -1,13 +1,14 @@
 # External dependencies
 
-- prettierd
+- prettierd (could move to mason...?
 
   ```bash
   npm install --save-dev --save-exact prettier
   npm install -g @fsouza/prettierd
   ```
+
 - ripgrep
 - fd
 - git
-- stylua
 - fzf
+- libcurl-devel
