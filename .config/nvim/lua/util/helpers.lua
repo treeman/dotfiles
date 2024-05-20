@@ -1,8 +1,3 @@
-P = function(v)
-  print(vim.inspect(v))
-  return v
-end
-
 local M = {}
 
 M.create_cmd = function(command, f, opts)
