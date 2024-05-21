@@ -23,34 +23,46 @@ local overrides = {
   { name = "NeoTreeDimText", val = { link = "WinSeparator" } },
   -- Fix cmp
   { name = "CmpItemAbbrMatch", val = { link = "Function" } },
-  { name = "CmpItemKind", val = { link = "Function" } },
-  -- FIXME maybe try to separate these from each other?
-  { name = "CmpItemKindText", val = { link = "LineNr" } },
-  { name = "CmpItemKindMethod", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindFunction", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindConstructor", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindField", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindVariable", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindClass", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindInterface", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindModule", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindProperty", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindUnit", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindValue", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindEnum", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindKeyword", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindSnippet", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindColor", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindFile", val = { link = "CursorLineNr" } },
+  -- { name = "CmpItemKind", val = { link = "Function" } },
+  { name = "CmpItemKindText", val = { link = "Conceal" } },
+  { name = "CmpItemKindMethod", val = { link = "@lsp.type.meThod" } },
+  { name = "CmpItemKindFunction", val = { link = "@lsp.type.function" } },
+  { name = "CmpItemKindConstructor", val = { link = "@lsp.type.function" } },
+  { name = "CmpItemKindField", val = { link = "Identifier" } },
+  { name = "CmpItemKindVariable", val = { link = "@lsp.type.variable" } },
+  { name = "CmpItemKindClass", val = { link = "@lsp.type.class" } },
+  { name = "CmpItemKindInterface", val = { link = "@lsp.type.class" } },
+  { name = "CmpItemKindModule", val = { link = "@lsp.type.namespace" } },
+  { name = "CmpItemKindProperty", val = { link = "@lsp.type.property" } },
+  { name = "CmpItemKindUnit", val = { link = "Number" } },
+  { name = "CmpItemKindValue", val = { link = "Number" } },
+  { name = "CmpItemKindEnum", val = { link = "@lsp.type.enum" } },
+  { name = "CmpItemKindKeyword", val = { link = "@lsp.type.keyword" } },
+  { name = "CmpItemKindSnippet", val = { link = "Number" } },
+  { name = "CmpItemKindColor", val = { link = "Operator" } },
+  { name = "CmpItemKindFile", val = { link = "Statement" } },
   { name = "CmpItemKindReference", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindFolder", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindEnumMember", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindConstant", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindStruct", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindEvent", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindOperator", val = { link = "CursorLineNr" } },
-  { name = "CmpItemKindTypeParameter", val = { link = "CursorLineNr" } },
+  { name = "CmpItemKindFolder", val = { link = "Special" } },
+  { name = "CmpItemKindEnumMember", val = { link = "@lsp.type.enumMember" } },
+  { name = "CmpItemKindConstant", val = { link = "Constant" } },
+  { name = "CmpItemKindStruct", val = { link = "@lsp.type.struct" } },
+  { name = "CmpItemKindEvent", val = { link = "Special" } },
+  { name = "CmpItemKindOperator", val = { link = "@lsp.type.operator" } },
+  { name = "CmpItemKindTypeParameter", val = { link = "@lsp.type.typeParameter" } },
   { name = "CmpItemMenu", val = { link = "Conceal" } },
+
+  -- New lsp semantic tokens `:help lsp-semantic-highlight`
+  -- { name = "@lsp.mod.abstract", val = { link = "" } }, --        Types and member functions that are abstract
+  -- { name = "@lsp.mod.async", val = { link = "Statement" } }, --           Functions that are marked async
+  -- { name = "@lsp.mod.declaration", val = { link = "" } }, --     Declarations of symbols
+  -- { name = "@lsp.mod.defaultLibrary", val = { link = "" } }, --  Symbols that are part of the standard library
+  -- { name = "@lsp.mod.definition", val = { link = "" } }, --      Definitions of symbols, for example, in header files
+  -- { name = "@lsp.mod.deprecated", val = { link = "" } }, --      Symbols that should no longer be used
+  { name = "@lsp.mod.documentation", val = { link = "@label" } }, --   Occurrences of symbols in documentation
+  -- { name = "@lsp.mod.modification", val = { link = "" } }, --    Variable references where the variable is assigned to
+  { name = "@lsp.mod.readonly", val = { link = "Constant" } }, --        Readonly variables and member fields (constants)
+  -- { name = "@lsp.mod.static", val = { link = "Statement" } },
+
   -- Marks
   { name = "MarkSignHL", val = { link = "GitSignsChange" } },
   -- Not quite great as MarkSignNumHL overrides current line number coloring
