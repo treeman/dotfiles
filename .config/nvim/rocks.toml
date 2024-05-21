@@ -73,3 +73,5 @@ rustaceanvim = "4.23.2"
 nvim-lightbulb = "1.0.0"
 "neodev.nvim" = "2.5.2"
 "typescript-tools.nvim" = "scm"
+"tardis.nvim" = { git = "fredeeb/tardis.nvim" }
+"blame.nvim" = { git = "FabijanZulj/blame.nvim" }

@@ -97,7 +97,15 @@ M.init = function()
 
   -- Git
   map("n", "gs", ":Neogit<CR>", { desc = "Git status" })
+  map("n", "gt", ":Tardis git<CR>", { desc = "Git timemachine (Tardis)" })
   map("n", "g<space>", ":Git ", { desc = "Git" })
+  map(
+    "n",
+    "gb",
+    require("telescope.builtin").git_branches,
+    { silent = true, desc = "Git branches" }
+  )
+  map("n", "gB", ":BlameToggle<CR>", { silent = true, desc = "Git blame" })
 
   -- Write and source lua file
   map("n", "<leader>x", ":write<CR>:source %<CR>")
@@ -171,12 +179,6 @@ M.init = function()
   end, {
     desc = "Org archive",
   })
-  map(
-    "n",
-    "gb",
-    require("telescope.builtin").git_branches,
-    { silent = true, desc = "Git branches" }
-  )
 
   map(
     "n",

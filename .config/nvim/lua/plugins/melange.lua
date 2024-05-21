@@ -51,14 +51,16 @@ local overrides = {
   { name = "CmpItemKindTypeParameter", val = { link = "@lsp.type.typeParameter" } },
   { name = "CmpItemMenu", val = { link = "Conceal" } },
 
-  -- New lsp semantic tokens `:help lsp-semantic-highlight`
+  -- lsp semantic tokens `:help lsp-semantic-highlight`
+  { name = "@lsp.typemod.decorator", val = { link = "Function" } }, --        Types and member functions that are abstract
+  { name = "@lsp.type.enumMember", val = { link = "Constant" } }, --        Types and member functions that are abstract
   -- { name = "@lsp.mod.abstract", val = { link = "" } }, --        Types and member functions that are abstract
   -- { name = "@lsp.mod.async", val = { link = "Statement" } }, --           Functions that are marked async
   -- { name = "@lsp.mod.declaration", val = { link = "" } }, --     Declarations of symbols
   -- { name = "@lsp.mod.defaultLibrary", val = { link = "" } }, --  Symbols that are part of the standard library
   -- { name = "@lsp.mod.definition", val = { link = "" } }, --      Definitions of symbols, for example, in header files
   -- { name = "@lsp.mod.deprecated", val = { link = "" } }, --      Symbols that should no longer be used
-  { name = "@lsp.mod.documentation", val = { link = "@label" } }, --   Occurrences of symbols in documentation
+  { name = "@lsp.mod.documentation", val = { link = "Statement" } }, --   Occurrences of symbols in documentation
   -- { name = "@lsp.mod.modification", val = { link = "" } }, --    Variable references where the variable is assigned to
   { name = "@lsp.mod.readonly", val = { link = "Constant" } }, --        Readonly variables and member fields (constants)
   -- { name = "@lsp.mod.static", val = { link = "Statement" } },
