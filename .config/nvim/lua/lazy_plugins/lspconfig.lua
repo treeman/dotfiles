@@ -101,7 +101,17 @@ vim.g.rustaceanvim = {
     on_attach = on_attach,
     default_settings = {
       -- rust-analyzer language server configuration
-      ["rust-analyzer"] = {},
+      ["rust-analyzer"] = {
+        diagnostics = {
+          -- Disables 'proc macro `Serialize` not expanded and similar
+          -- https://github.com/rust-analyzer/rust-analyzer/pull/6645
+          disabled = { "unresolved-proc-macro" },
+        },
+        checkOnSave = {
+          extraArgs = { "--target-dir", "/tmp/rust-analyzer-check" },
+          command = "clippy",
+        },
+      },
     },
   },
   -- DAP configuration
