@@ -88,7 +88,7 @@ M.init = function()
   map("n", "<leader>eD", ":Oil <C-R>=expand('%:p:h')<CR><CR>", { desc = "Edit relative workspace" })
 
   map("n", "<leader>d", ":Neotree toggle=true<CR>", { desc = "Neotree" })
-  map("n", "<leader>t", ":TroubleToggle<cr>", { desc = "Trouble" })
+  map("n", "<leader>t", ":Trouble diagnostics toggle<cr>", { desc = "Diagnostics" })
 
   map("n", "<leader>es", ":e ~/org/scratch.dj<CR>", { desc = "Scratch" })
   map("n", "<leader>ej", ":e ~/org/journal.dj<CR>", { desc = "Journal" })
@@ -243,7 +243,7 @@ M.init = function()
     silent = true,
   })
   map("n", "[t", function()
-    require("trouble").previous({ skip_groups = true, jump = true })
+    require("trouble").prev({ skip_groups = true, jump = true })
   end, {
     desc = "Prev trouble",
     silent = true,
@@ -286,7 +286,7 @@ local ts_move_keys = {
   c = { query = "@class.outer", desc = "goto class" },
   x = { query = "@comment.outer", desc = "goto comment" },
   g = { query = { "@class.outer", "@function.outer" }, desc = "goto major" },
-  t = { query = "@heading1", desc = "goto heading1" },
+  -- t = { query = "@heading1", desc = "goto heading1" },
 }
 
 M.ts_goto_next_start = {}
@@ -350,18 +350,13 @@ M.buf_lsp = function(_, buffer)
     vim.lsp.buf.definition,
     { silent = true, buffer = buffer, desc = "Definition" }
   )
-  -- map(
-  -- 	"n",
-  -- 	"<localleader>d",
-  -- 	":TroubleToggle lsp_definitions<CR>",
-  -- 	{ silent = true, buffer = buffer, desc = "Definitions" }
-  -- )
   map(
     "n",
     "<localleader>r",
     vim.lsp.buf.references,
     { silent = true, buffer = buffer, desc = "References" }
   )
+  -- Jumping doesn't quite work, don't switch yet.
   -- map(
   -- 	"n",
   -- 	"<localleader>r",
@@ -415,27 +410,8 @@ M.buf_lsp = function(_, buffer)
   map(
     "n",
     "<localleader>w",
-    vim.lsp.buf.document_symbol,
+    ":Trouble symbols toggle<CR>",
     { silent = true, buffer = buffer, desc = "Document symbols" }
-  )
-  map(
-    "n",
-    "<localleader>W",
-    vim.lsp.buf.workspace_symbol,
-    { silent = true, buffer = buffer, desc = "Workspace symbols" }
-  )
-
-  map(
-    "n",
-    "<localleader>e",
-    ":TroubleToggle document_diagnostics<CR>",
-    { silent = true, buffer = buffer, desc = "Document diagnostics" }
-  )
-  map(
-    "n",
-    "<localleader>E",
-    ":TroubleToggle workspace_diagnostics<CR>",
-    { silent = true, buffer = buffer, desc = "Workspace diagnostics" }
   )
 end
 

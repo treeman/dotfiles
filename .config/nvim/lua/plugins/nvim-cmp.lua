@@ -86,14 +86,13 @@ local function make_format()
       luasnip = "[SNIP]",
       nvim_lsp = "[LSP]",
       nvim_lua = "[LUA]",
-      -- blog = "[BLOG]",
-      neorg = "[NORG]",
       beancount = "[BEAN]",
       spell = "[SPELL]",
       treesitter = "[TREE]",
       async_path = "[PATH]",
       buffer = "[BUF]",
       calc = "[CALC]",
+      ["vim-dadbod-completion"] = "[DB]",
     },
   })
 
@@ -137,7 +136,7 @@ cmp.setup({
     },
     {
       name = "blog",
-      group_index = 2,
+      group_index = 1,
     },
     {
       name = "nvim_lsp",
@@ -147,10 +146,10 @@ cmp.setup({
       name = "nvim_lua",
       group_index = 2,
     },
-    {
-      name = "neorg",
-      group_index = 3,
-    },
+    -- {
+    --   name = "vim-dadbod-completion",
+    --   group_index = 2,
+    -- },
     {
       name = "spell",
       option = {
@@ -201,4 +200,13 @@ cmp.setup.cmdline("/", {
   sources = {
     { name = "buffer" },
   },
+})
+
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd("FileType", {
+  pattern = "mysql,plsql",
+  callback = function()
+    require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
+  end,
 })

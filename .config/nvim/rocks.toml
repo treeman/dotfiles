@@ -34,7 +34,8 @@ nvim-web-devicons = "0.100"
 "vim-fugitive" = { git = "tpope/vim-fugitive" }
 neogit = { git = "TimUntersberger/neogit", branch = "nightly" }
 nvim-nio = "1.9.3"
-"trouble.nvim" = "2.10.0"
+# Use new trouble beta
+"trouble.nvim" = { git = "folke/trouble.nvim", branch = "dev" }
 nvim-lastplace = "scm"
 vim-matchup = { git = "andymass/vim-matchup" }
 vim-maximizer = { git = "szw/vim-maximizer" }
@@ -75,3 +76,6 @@ nvim-lightbulb = "1.0.0"
 "tardis.nvim" = { git = "fredeeb/tardis.nvim" }
 "blame.nvim" = { git = "FabijanZulj/blame.nvim" }
 "nvim-highlight-colors" = { git = "brenoprata10/nvim-highlight-colors"}
+"vim-dadbod" = { git = "tpope/vim-dadbod" }
+"vim-dadbod-completion" = { git = "kristijanhusak/vim-dadbod-completion" }
+"vim-dadbod-ui" = { git = "kristijanhusak/vim-dadbod-ui" }

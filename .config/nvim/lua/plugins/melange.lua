@@ -11,6 +11,7 @@ local c = palette.c -- Foreground colors
 local overrides = {
   -- Adjust for 0.10
   { name = "FloatBorder", val = { link = "WinSeparator" } },
+
   -- Fix neo-tree
   { name = "NeoTreeNormal", val = { link = "Normal" } },
   { name = "NeoTreeWinSeparator", val = { link = "WinSeparator" } },
@@ -21,9 +22,8 @@ local overrides = {
   { name = "NeoTreeFadeText1", val = { link = "LineNr" } },
   { name = "NeoTreeFadeText2", val = { link = "LineNr" } },
   { name = "NeoTreeDimText", val = { link = "WinSeparator" } },
-  -- Fix cmp
+
   { name = "CmpItemAbbrMatch", val = { link = "Function" } },
-  -- { name = "CmpItemKind", val = { link = "Function" } },
   { name = "CmpItemKindText", val = { link = "Conceal" } },
   { name = "CmpItemKindMethod", val = { link = "@lsp.type.meThod" } },
   { name = "CmpItemKindFunction", val = { link = "@lsp.type.function" } },
@@ -65,10 +65,10 @@ local overrides = {
   { name = "@lsp.mod.readonly", val = { link = "Constant" } }, --        Readonly variables and member fields (constants)
   -- { name = "@lsp.mod.static", val = { link = "Statement" } },
 
-  -- Marks
   { name = "MarkSignHL", val = { link = "GitSignsChange" } },
   -- Not quite great as MarkSignNumHL overrides current line number coloring
   { name = "MarkSignNumHL", val = { link = "LineNr" } },
+
   -- Markdown
   { name = "@text.reference.markdown_inline", val = { link = "Type" } },
   { name = "@text.reference.markdown", val = { link = "Type" } },
@@ -89,19 +89,22 @@ local overrides = {
   { name = "@none", val = { link = "Normal" } },
   { name = "@markup.math", val = { link = "@markup.italic" } },
   { name = "@markup.strikethrough", val = { link = "@markup.strike" } },
+
   -- Better elixir colors
   { name = "@symbol.elixir", val = { link = "@label" } },
   { name = "@string.special.symbol.elixir", val = { link = "@label" } },
   { name = "@constant.elixir", val = { link = "Constant" } },
-  -- mini
+
   { name = "MiniTrailSpace", val = { link = "PmenuSel" } },
-  -- beancount
+
   { name = "@property.beancount", val = { link = "Number" } }, -- SEK
   { name = "@field.beancount", val = { link = "Function" } }, -- Dates
   { name = "@constant.beancount", val = { link = "Constant" } }, -- Tags
-  -- Random
+
   { name = "@attribute", val = { link = "Constant" } },
   { name = "LeapLabelPrimary", val = { link = "IncSearch" } },
+  { name = "TroubleNormal", val = { link = "Normal" } },
+  { name = "TroubleNormalNC", val = { link = "Normal" } },
 }
 
 for _, v in pairs(overrides) do

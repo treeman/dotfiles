@@ -16,6 +16,9 @@ require("conform").setup({
     toml = { { "prettierd", "prettier" } },
     rust = { "rustfmt" },
     sql = { "pg_format" },
+    mysql = { "pg_format" },
+    plsql = { "pg_format" },
+    elixir = { "mix" },
   },
   format_on_save = function(bufnr)
     -- Disable autoformat on certain filetypes
