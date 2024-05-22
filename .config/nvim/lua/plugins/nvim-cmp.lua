@@ -47,10 +47,6 @@ local function blog_compare(entry1, entry2)
     return nil
   end
 
-  if not entry1.completion_item.info then
-    return nil
-  end
-
   local item1 = entry1.completion_item
   local item2 = entry2.completion_item
 
