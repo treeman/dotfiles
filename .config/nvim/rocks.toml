@@ -33,7 +33,6 @@ nvim-web-devicons = "0.100"
 "marks.nvim" = "scm"
 "vim-fugitive" = { git = "tpope/vim-fugitive" }
 neogit = { git = "TimUntersberger/neogit", branch = "nightly" }
-"nvim-colorizer" = { git = "NvChad/nvim-colorizer.lua" }
 nvim-nio = "1.9.3"
 "trouble.nvim" = "2.10.0"
 nvim-lastplace = "scm"
@@ -75,3 +74,4 @@ nvim-lightbulb = "1.0.0"
 "typescript-tools.nvim" = "scm"
 "tardis.nvim" = { git = "fredeeb/tardis.nvim" }
 "blame.nvim" = { git = "FabijanZulj/blame.nvim" }
+"nvim-highlight-colors" = { git = "brenoprata10/nvim-highlight-colors"}
