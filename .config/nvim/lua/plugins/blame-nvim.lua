@@ -9,4 +9,17 @@ require("blame").setup({
     show_commit = "<CR>",
     close = { "<esc>", "q" },
   },
+  colors = {
+    "#867462",
+    "#D47766",
+    "#EBC06D",
+    "#85B695",
+    "#A3A9CE",
+    "#CF9BC2",
+    "#BD8183",
+    "#E49B5D",
+    "#78997A",
+    "#7F91B2",
+    "#B380B0",
+  },
 })
