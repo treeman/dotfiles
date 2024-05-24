@@ -331,11 +331,6 @@ M.ts_select = {
   ["i,"] = { query = "@parameter.inner", desc = "Select inner parameter" },
 }
 
-M.global_lsp = function()
-  map("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
-  map("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Prev diagnostic" })
-end
-
 M.buf_lsp = function(_, buffer)
   -- NOTE there are other cool possibilities listed in nvim-lspconfig
   map(
