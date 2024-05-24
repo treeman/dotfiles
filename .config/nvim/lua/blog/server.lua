@@ -1,12 +1,3 @@
--- :BlogStart
--- :BlogStop
--- :BlogRestart
--- :BlogPreview
---
--- Should start `blog watch` in terminal when opening a dj or md file in our blog
--- Should show connection + server status in statusbar
--- Should cwd to blog_path when loading a file
-
 local diagnostics = require("blog.diagnostics")
 local log = require("plenary.log").new({
   plugin = "blog",
@@ -15,12 +6,16 @@ local log = require("plenary.log").new({
 local nio = require("nio")
 local path = require("blog.path")
 
-local function is_buf_connected()
-  return vim.b[0].blog_file and vim.g.blog_conn ~= nil
-end
-
 local function is_connected()
   return vim.g.blog_conn ~= nil
+end
+
+local function is_blog_buf()
+  return vim.b[0].blog_file
+end
+
+local function is_buf_connected()
+  return is_connected() and is_blog_buf()
 end
 
 local function has_server()
