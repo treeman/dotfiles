@@ -52,7 +52,6 @@ cmp-spell = { git = "f3fora/cmp-spell" }
 cmp-calc = { git = "hrsh7th/cmp-calc" }
 cmp-nvim-lua = { git = "hrsh7th/cmp-nvim-lua" }
 cmp-treesitter = { git = "ray-x/cmp-treesitter" }
-lsp-rooter = { git = "ahmedkhalf/lsp-rooter.nvim" }
 # Lots of parsers failed to install when using the rocks package,
 # so fallback to git bleeding edge.
 nvim-treesitter = { git = "nvim-treesitter/nvim-treesitter", rev = "1eabe69" }
