@@ -32,12 +32,3 @@ autocmd("WinLeave", {
     vim.opt_local.cursorline = false
   end,
 })
-
-autocmd("BufEnter", {
-  callback = function(ctx)
-    local root = vim.fs.root(ctx.buf, { ".git" })
-    if root then
-      vim.uv.chdir(root)
-    end
-  end,
-})

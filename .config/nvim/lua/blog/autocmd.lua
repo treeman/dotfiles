@@ -14,7 +14,6 @@ autocmd({ "BufRead", "BufNewFile" }, {
   group = blog_group,
   callback = function(opts)
     vim.b[0].blog_file = true
-    vim.api.nvim_set_current_dir(path.blog_path)
     server.establish_connection(true)
     keymaps.buf_blog(opts.buf)
     diagnostics.request_diagnostics_curr_buf()
