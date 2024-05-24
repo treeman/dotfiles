@@ -48,9 +48,6 @@ vim.diagnostic.config({
   virtual_text = false,
 })
 
--- Setup global keybindings.
-keymaps.global_lsp()
-
 vim.lsp.inlay_hint.enable(true)
 
 lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {
@@ -63,7 +60,7 @@ local elixir = require("elixir")
 local elixirls = require("elixir.elixirls")
 elixir.setup({
   nextls = {
-    enable = true,
+    enable = false,
     init_options = {
       mix_env = "dev",
       experimental = {
@@ -77,7 +74,7 @@ elixir.setup({
   },
   credo = { enable = true, capabilities = capabilities, on_attach = on_attach },
   elixirls = {
-    enable = false,
+    enable = true,
     settings = elixirls.settings({
       dialyzerEnabled = true,
       enableTestLenses = true,
