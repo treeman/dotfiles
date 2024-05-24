@@ -266,6 +266,11 @@ M.init = function()
   end, {
     desc = "Undotree",
   })
+
+  local old_gx = vim.fn.maparg("gx", "n", nil, true)
+  map("n", "gx", require("custom.open").gx_extended(old_gx.callback), { desc = old_gx.desc })
+
+  -- TODO in help files map <CR> to <C-]>
 end
 
 M.buf_blog = function(buffer)
@@ -383,7 +388,7 @@ M.buf_lsp = function(_, buffer)
     vim.lsp.buf.code_action,
     { silent = true, buffer = buffer, desc = "Code action" }
   )
-  -- map("n", prefix .. "l", "<cmd>lua vim.diagnostic.open_float({ focusable = false })<CR>")
+  map("n", "<localleader>l", "<cmd>lua vim.diagnostic.open_float({ focusable = false })<CR>")
   map(
     "n",
     "<localleader>R",
@@ -408,6 +413,13 @@ M.buf_lsp = function(_, buffer)
     ":Trouble symbols toggle<CR>",
     { silent = true, buffer = buffer, desc = "Document symbols" }
   )
+end
+
+-- These are default bindings in Neovim but they don't open the diagnostic floats immediately.
+-- Calling them manually does though...
+M.global_lsp = function()
+  map("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
+  map("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Prev diagnostic" })
 end
 
 M.gitsigns = function(buffer)

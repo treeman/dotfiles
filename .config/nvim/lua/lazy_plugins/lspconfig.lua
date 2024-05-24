@@ -46,7 +46,12 @@ end
 
 vim.diagnostic.config({
   virtual_text = false,
+  float = {
+    scope = "cursor",
+  },
 })
+
+keymaps.global_lsp()
 
 vim.lsp.inlay_hint.enable(true)
 
