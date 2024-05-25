@@ -88,7 +88,7 @@ M.init = function()
   map("n", "<leader>eD", ":Oil <C-R>=expand('%:p:h')<CR><CR>", { desc = "Edit relative workspace" })
 
   map("n", "<leader>d", ":Neotree toggle=true<CR>", { desc = "Neotree" })
-  map("n", "<leader>t", ":Trouble diagnostics toggle<cr>", { desc = "Diagnostics" })
+  map("n", "<leader>t", ":Trouble cascade toggle<cr>", { desc = "Diagnostics" })
 
   map("n", "<leader>es", ":e ~/org/scratch.dj<CR>", { desc = "Scratch" })
   map("n", "<leader>ej", ":e ~/org/journal.dj<CR>", { desc = "Journal" })
@@ -275,9 +275,14 @@ end
 
 M.buf_blog = function(buffer)
   map("n", "<localleader>d", function()
-    require("blog.goto").goto_def()
+    require("blog.interaction").goto_def()
   end, { buffer = buffer, desc = "Goto definition" })
-  -- map("n", "<localleader>h", require("blog.server").hover, { buffer = buffer, desc = "Hover help" })
+  map(
+    "n",
+    "<localleader>h",
+    require("blog.interaction").hover,
+    { buffer = buffer, desc = "Hover help" }
+  )
 end
 
 -- Maps four pairs:

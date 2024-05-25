@@ -38,5 +38,11 @@ end
 autocmd("CursorMoved", {
   pattern = autocmd_pattern,
   group = blog_group,
-  callback = update_position,
+  callback = function()
+    update_position()
+    if vim.b[0].blog_float_win then
+      vim.api.nvim_win_close(vim.b[0].blog_float_win, true)
+      vim.b[0].blog_float_win = nil
+    end
+  end,
 })

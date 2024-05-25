@@ -1,6 +1,6 @@
 local cmp = require("cmp")
 local context = require("cmp.config.context")
-local luasnip = require("luasnip")
+-- local luasnip = require("luasnip")
 
 local function in_comment()
   return context.in_treesitter_capture("comment") or context.in_syntax_group("Comment")
@@ -123,17 +123,17 @@ cmp.setup({
   },
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body)
+      vim.snippet.expand(args.body)
     end,
   },
   sources = {
-    {
-      name = "luasnip",
-      group_index = 1,
-      entry_filter = function()
-        return not in_string()
-      end,
-    },
+    -- {
+    --   name = "luasnip",
+    --   group_index = 1,
+    --   entry_filter = function()
+    --     return not in_string()
+    --   end,
+    -- },
     {
       name = "blog",
       group_index = 1,

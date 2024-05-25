@@ -54,4 +54,15 @@ M.list_posts = function(draft, cb)
   end)
 end
 
+-- M.cursor_info = function(cb)
+--   local pos = vim.api.nvim_win_get_cursor(0)
+--
+--   server.call({
+--     id = "CursorInfo",
+--     linenum = pos[1] - 1,
+--     column = pos[2],
+--     path = vim.fn.expand("%:p"),
+--   }, cb)
+-- end
+
 return M

@@ -6,8 +6,8 @@
 # If the plugin name contains a dot then you must add quotes to the key name!
 [plugins]
 "rocks.nvim" = "2.29.0"
-"rocks-config.nvim" = "1.6.0"
-"rocks-git.nvim" = "1.5.1"
+"rocks-config.nvim" = "scm"
+"rocks-git.nvim" = "scm"
 "melange-nvim" = { git = "savq/melange-nvim" }
 "mini.cursorword" = "0.9.0"
 "mini.trailspace" = "0.9.0"
@@ -40,7 +40,6 @@ vim-maximizer = { git = "szw/vim-maximizer" }
 alpha-nvim = "scm"
 nvim-cmp = "scm"
 undotree = { git = "jiaoshijie/undotree" }
-luasnip = "2.3.0"
 "lspkind.nvim" = "scm"
 cmp-nvim-lsp = "scm"
 cmp-buffer = "scm"
