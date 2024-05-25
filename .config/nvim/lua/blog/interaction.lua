@@ -1,3 +1,4 @@
+local content = require("blog.content")
 local server = require("blog.server")
 
 local M = {}
@@ -41,14 +42,7 @@ local function element_docs(element)
 end
 
 M.hover = function()
-  local pos = vim.api.nvim_win_get_cursor(0)
-
-  server.call({
-    id = "CursorInfo",
-    linenum = pos[1] - 1,
-    column = pos[2],
-    path = vim.fn.expand("%:p"),
-  }, function(reply)
+  content.cursor_info(function(reply)
     local docs = element_docs(reply.element)
     if docs and #docs > 0 then
       local buf = vim.api.nvim_create_buf(false, true)
