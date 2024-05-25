@@ -44,6 +44,8 @@ local function on_attach(client, buffer)
   lsp_status.on_attach(client)
 end
 
+-- TODO `LspAttach` event in an autocommand is considered best practice now
+
 vim.diagnostic.config({
   virtual_text = false,
   severity_sort = true,
