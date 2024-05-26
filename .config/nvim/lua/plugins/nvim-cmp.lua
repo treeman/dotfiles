@@ -137,6 +137,7 @@ cmp.setup({
     {
       name = "blog",
       group_index = 1,
+      max_item_count = 10000,
     },
     {
       name = "nvim_lsp",
