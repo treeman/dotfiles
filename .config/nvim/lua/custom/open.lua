@@ -1,38 +1,52 @@
 M = {}
 
-M.gx_extended = function(fallback)
+local function extract_element_url(element)
+  if element.url then
+    return element.url
+  end
+
+  if element.link_ref then
+    return element.link_ref.url
+  end
+end
+
+local function get_element_url(element)
+  local url = extract_element_url(element)
+  if url and url:match("^/") then
+    return "localhost:8080" .. url
+  else
+    return url
+  end
+end
+
+local function static_open(old_gx)
+  -- Open git short links.
+  local plugin_name = vim.fn.expand("<cWORD>"):match("[\"']([%a_%.%-]+/[%a_%.%-]+)[\"']")
+  if plugin_name then
+    vim.ui.open("https://github.com/" .. plugin_name)
+    return
+  end
+
+  if old_gx then
+    old_gx()
+  end
+end
+
+M.gx_extended = function(old_gx)
   return function()
     if require("blog.server").is_buf_connected() then
-      -- require("blog.content").cursor_info(function(reply)
-      --   P(reply)
-      --   if reply and reply.element and reply.element.link_ref and reply.element.link_ref.url then
-      --     vim.ui.open("localhost:8080" .. reply.element.link_ref.url)
-      --   else
-      --     if fallback then
-      --       fallback()
-      --     end
-      --   end
-      -- end)
-      -- return
-      -- TODO rely on backend instead to give us the url.
-      -- Will allow us to use `gx` on a short link for example.
-      local rel_path = vim.fn.expand("<cWORD>"):match("%]%(([^%)]+)%)$")
-        or vim.fn.expand("<cWORD>"):match("^(/[^%s]+)$")
-
-      if rel_path then
-        vim.ui.open("localhost:8080" .. rel_path)
-        return
-      end
-    end
-
-    local plugin_name = vim.fn.expand("<cWORD>"):match("[\"']([%a_%.%-]+/[%a_%.%-]+)[\"']")
-    if plugin_name then
-      vim.ui.open("https://github.com/" .. plugin_name)
-      return
-    end
-
-    if fallback then
-      fallback()
+      require("blog.content").cursor_info(function(reply)
+        if reply and reply.element then
+          local url = get_element_url(reply.element)
+          if url then
+            vim.ui.open(url)
+            return
+          end
+        end
+        static_open(old_gx)
+      end)
+    else
+      static_open(old_gx)
     end
   end
 end
