@@ -4,7 +4,7 @@ require("nio").run(function()
     vim.fs.joinpath(vim.fn.stdpath("data"), "site/pack/rocks/start", "telescope-fzf-native.nvim/")
 
   -- Before loading the extension we need to build it with `make`.
-  require("util.helpers").run_cmd({
+  require("nio").process.run({
     cmd = "make",
     args = {},
     cwd = package_path,
