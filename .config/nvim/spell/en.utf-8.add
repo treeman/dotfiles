@@ -317,3 +317,6 @@ TJ
 luarocks
 lspconfig
 runtimepath
+yaml
+SemVer
+versioning

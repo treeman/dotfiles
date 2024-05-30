@@ -64,9 +64,7 @@ lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.defa
 })
 
 -- This compiles the LSP using the exact Elixir + Erlang version, while giving us some extra functionality.
-local elixir = require("elixir")
-local elixirls = require("elixir.elixirls")
-elixir.setup({
+require("elixir").setup({
   nextls = {
     enable = false,
     init_options = {
@@ -83,7 +81,7 @@ elixir.setup({
   credo = { enable = true, capabilities = capabilities, on_attach = on_attach },
   elixirls = {
     enable = true,
-    settings = elixirls.settings({
+    settings = require("elixir.elixirls").settings({
       dialyzerEnabled = true,
       enableTestLenses = true,
       suggestSpecs = true,
