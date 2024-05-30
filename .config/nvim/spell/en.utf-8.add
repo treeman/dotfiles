@@ -314,3 +314,6 @@ timestamp
 parsers
 DeVries
 TJ
+luarocks
+lspconfig
+runtimepath
