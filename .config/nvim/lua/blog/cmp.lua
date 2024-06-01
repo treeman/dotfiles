@@ -173,6 +173,23 @@ local function _div_class_docs(class)
       "Highlighted text",
       ":::",
     }
+  elseif class.name == "important" then
+    return {
+      "Add an important notice",
+      "---",
+      "::: important",
+      "Highlighted text",
+      ":::",
+    }
+  elseif class.name == "update" then
+    return {
+      "Add a text update",
+      "---",
+      '{date="2024-06-01"}',
+      "::: update",
+      "Highlighted text",
+      ":::",
+    }
   elseif class.name == "greek" then
     return {
       "Use greek characters for ordered list",
