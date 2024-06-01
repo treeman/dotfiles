@@ -7,7 +7,7 @@ require("rest-nvim").setup({
       stay_in_current_window_after_split = true,
     },
   },
-  highliht = {
+  highlight = {
     timeout = 200,
   },
 })

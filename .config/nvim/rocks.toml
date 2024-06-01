@@ -1,11 +1,5 @@
-# List of non-Neovim rocks.
-# This includes things like `toml` or other lua packages.
-# [rocks]
-
-# List of Neovim plugins to install alongside their versions.
-# If the plugin name contains a dot then you must add quotes to the key name!
 [plugins]
-"rocks.nvim" = "2.29.1"
+"rocks.nvim" = "2.29.2"
 "rocks-config.nvim" = "1.6.0"
 "rocks-git.nvim" = "1.5.1"
 "melange-nvim" = { git = "savq/melange-nvim" }
@@ -65,7 +59,7 @@ vim-pollen = { git = "otherjoel/vim-pollen" }
 "mason.nvim" = { version = "1.10.0" }
 "mason-lspconfig.nvim" = { version = "1.29.0" }
 nvim-lspconfig = "0.1.8"
-rustaceanvim = "4.23.5"
+rustaceanvim = "4.24.0"
 nvim-lightbulb = "1.0.0"
 "neodev.nvim" = "2.5.2"
 "typescript-tools.nvim" = "scm"
@@ -75,5 +69,5 @@ nvim-lightbulb = "1.0.0"
 "vim-dadbod" = { git = "tpope/vim-dadbod" }
 "vim-dadbod-completion" = { git = "kristijanhusak/vim-dadbod-completion" }
 "vim-dadbod-ui" = { git = "kristijanhusak/vim-dadbod-ui" }
-"trouble.nvim" = { git = "folke/trouble.nvim", branch = "dev" }
 "project.nvim" = "scm"
+"trouble.nvim" = { git = "https://github.com/folke/trouble.nvim" }
