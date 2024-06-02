@@ -61,7 +61,6 @@ vim-pollen = { git = "otherjoel/vim-pollen" }
 nvim-lspconfig = "0.1.8"
 rustaceanvim = "4.24.0"
 nvim-lightbulb = "1.0.0"
-"neodev.nvim" = "2.5.2"
 "typescript-tools.nvim" = "scm"
 "tardis.nvim" = { git = "fredeeb/tardis.nvim" }
 "blame.nvim" = { git = "FabijanZulj/blame.nvim" }
@@ -70,4 +69,5 @@ nvim-lightbulb = "1.0.0"
 "vim-dadbod-completion" = { git = "kristijanhusak/vim-dadbod-completion" }
 "vim-dadbod-ui" = { git = "kristijanhusak/vim-dadbod-ui" }
 "project.nvim" = "scm"
-"trouble.nvim" = { git = "https://github.com/folke/trouble.nvim" }
+"trouble.nvim" = "3.1.0"
+"lazydev.nvim" = { git = "folke/lazydev.nvim" }

@@ -127,30 +127,27 @@ cmp.setup({
     end,
   },
   sources = {
-    -- {
-    --   name = "luasnip",
-    --   group_index = 1,
-    --   entry_filter = function()
-    --     return not in_string()
-    --   end,
-    -- },
     {
       name = "blog",
-      group_index = 1,
+      group_index = 0,
       max_item_count = 10000,
     },
     {
       name = "nvim_lsp",
-      group_index = 2,
+      group_index = 0,
     },
     {
       name = "nvim_lua",
-      group_index = 2,
+      group_index = 0,
     },
-    -- {
-    --   name = "vim-dadbod-completion",
-    --   group_index = 2,
-    -- },
+    {
+      name = "vim-dadbod-completion",
+      group_index = 0,
+    },
+    {
+      name = "lazydev",
+      group_index = 0,
+    },
     {
       name = "spell",
       option = {
