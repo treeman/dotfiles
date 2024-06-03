@@ -71,3 +71,4 @@ nvim-lightbulb = "1.0.0"
 "vim-dadbod-ui" = { git = "kristijanhusak/vim-dadbod-ui" }
 "project.nvim" = "scm"
 "trouble.nvim" = { git = "https://github.com/folke/trouble.nvim" }
+"edgy.nvim" = "1.8.4"

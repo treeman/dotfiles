@@ -41,7 +41,6 @@ vim.opt.smarttab = true -- insert tabs on the start according to shiftwidth, not
 -- UI
 vim.opt.relativenumber = true -- display relative line numbers
 vim.opt.number = true -- show line numbers
-vim.opt.laststatus = 2 -- always show the status line
 vim.opt.linespace = 0 -- don't insert any extra pixel lines between rows
 vim.opt.report = 0 -- tell us when anything is changed via :...
 vim.opt.shortmess = "aOstTc" -- shortens messages to aviod 'press a key' prompt
@@ -50,6 +49,8 @@ vim.opt.showcmd = true -- show the command being typed
 vim.opt.signcolumn = "yes" -- Use a gutter for git-gutter and LSP messages
 vim.opt.completeopt = "menuone,noselect" -- Required settings for nvim-cmp
 vim.opt.conceallevel = 2 -- Hide "concealed" syntax, for example in Djot and markdown
+vim.opt.laststatus = 3 -- always show the status line, 3 is for edgy.nvim
+vim.opts.splitkeep = "screen" -- For edgy.nvim
 
 vim.opt.spell = true
 vim.opt.spelllang = { "en_us" }
