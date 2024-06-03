@@ -71,4 +71,3 @@ nvim-lightbulb = "1.0.0"
 "project.nvim" = "scm"
 "trouble.nvim" = "3.1.0"
 "lazydev.nvim" = { git = "folke/lazydev.nvim" }
-"edgy.nvim" = "1.8.4"
