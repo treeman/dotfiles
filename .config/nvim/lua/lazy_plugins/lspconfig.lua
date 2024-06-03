@@ -3,7 +3,6 @@ local keymaps = require("config.keymaps")
 local lsp_status = require("lsp-status")
 local lspconfig = require("lspconfig")
 local mason_lspconfig = require("mason-lspconfig")
-local neodev = require("neodev")
 
 mason_lspconfig.setup({
   ensure_installed = {
@@ -39,12 +38,14 @@ capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 capabilities = vim.tbl_extend("keep", capabilities, lsp_status.capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local function on_attach(client, buffer)
-  keymaps.buf_lsp(client, buffer)
-  lsp_status.on_attach(client)
-end
-
--- TODO `LspAttach` event in an autocommand is considered best practice now
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    keymaps.buf_lsp(client, bufnr)
+    lsp_status.on_attach(client)
+  end,
+})
 
 vim.diagnostic.config({
   virtual_text = false,
@@ -60,7 +61,6 @@ vim.lsp.inlay_hint.enable(true)
 
 lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {
   capabilities = capabilities,
-  on_attach = on_attach,
 })
 
 -- This compiles the LSP using the exact Elixir + Erlang version, while giving us some extra functionality.
@@ -76,9 +76,8 @@ require("elixir").setup({
       },
     },
     capabilities = capabilities,
-    on_attach = on_attach,
   },
-  credo = { enable = true, capabilities = capabilities, on_attach = on_attach },
+  credo = { enable = true, capabilities = capabilities },
   elixirls = {
     enable = true,
     settings = require("elixir.elixirls").settings({
@@ -88,20 +87,14 @@ require("elixir").setup({
       fetchDeps = true,
     }),
     capabilities = capabilities,
-    on_attach = on_attach,
   },
 })
-
--- Neodev must come before lsp.
--- Will override lua_ls settings, but only for Neovim config files.
-neodev.setup({})
 
 vim.g.rustaceanvim = {
   -- Plugin configuration
   tools = {},
   -- LSP configuration
   server = {
-    on_attach = on_attach,
     default_settings = {
       -- rust-analyzer language server configuration
       ["rust-analyzer"] = {
@@ -132,34 +125,6 @@ mason_lspconfig.setup_handlers({
       lspconfig[server].setup({})
     end
   end,
-  ["lua_ls"] = function()
-    lspconfig.lua_ls.setup({
-      settings = {
-        Lua = {
-          runtime = {
-            -- LuaJIT in the case of Neovim
-            version = "LuaJIT",
-            path = vim.split(package.path, ";"),
-          },
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = { "vim" },
-          },
-          workspace = {
-            -- Make the server aware of Neovim runtime files
-            library = {
-              [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-              [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-            },
-          },
-          -- Do not send telemetry data containing a randomized but unique identifier
-          telemetry = {
-            enable = false,
-          },
-        },
-      },
-    })
-  end,
   ["clangd"] = function()
     lspconfig.clangd.setup({
       filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
@@ -168,7 +133,6 @@ mason_lspconfig.setup_handlers({
   ["tsserver"] = function()
     require("typescript-tools").setup({
       capabilities = capabilities,
-      on_attach = on_attach,
       settings = {
         expose_as_code_action = "all",
         tsserver_file_preferences = {
