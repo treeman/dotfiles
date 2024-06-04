@@ -27,4 +27,4 @@ require("trouble").setup({
   },
 })
 
-require("blog.trouble")
+require("custom.trouble")

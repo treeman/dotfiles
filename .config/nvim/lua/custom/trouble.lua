@@ -97,9 +97,11 @@ function source.get(cb)
       end_pos = heading.end_pos,
       buf = 0,
       type = heading.type,
-      filename = vim.api.nvim_buf_get_name(0),
       item = heading,
       source = "headings",
+      -- Id is required if we use a parent/child relationship
+      -- otherwise things will crash.
+      id = table.concat({ heading.pos[1], heading.text }, "|"),
     })
 
     if heading.level ~= 1 then
