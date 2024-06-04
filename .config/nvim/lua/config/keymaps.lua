@@ -285,6 +285,15 @@ M.buf_blog = function(buffer)
   )
 end
 
+M.djot = function()
+  map(
+    "n",
+    "<localleader>w",
+    ":Trouble headings toggle<CR>",
+    { buffer = 0, desc = "Display headings" }
+  )
+end
+
 -- Maps four pairs:
 -- [f, [F, ]f, ]F
 -- for the given treesitter textobject

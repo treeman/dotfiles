@@ -26,3 +26,5 @@ require("trouble").setup({
     },
   },
 })
+
+require("blog.trouble")

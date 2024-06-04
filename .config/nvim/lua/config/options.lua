@@ -49,8 +49,7 @@ vim.opt.showcmd = true -- show the command being typed
 vim.opt.signcolumn = "yes" -- Use a gutter for git-gutter and LSP messages
 vim.opt.completeopt = "menuone,noselect" -- Required settings for nvim-cmp
 vim.opt.conceallevel = 2 -- Hide "concealed" syntax, for example in Djot and markdown
-vim.opt.laststatus = 3 -- always show the status line, 3 is for edgy.nvim
-vim.opts.splitkeep = "screen" -- For edgy.nvim
+vim.opt.laststatus = 2 -- always show the status line
 
 vim.opt.spell = true
 vim.opt.spelllang = { "en_us" }
