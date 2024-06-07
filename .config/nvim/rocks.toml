@@ -51,7 +51,6 @@ nvim-ts-context-commentstring = { git = "JoosepAlviste/nvim-ts-context-commentst
 nvim-treesitter-context = { git = "nvim-treesitter/nvim-treesitter-context", rev = "55e2908" }
 nvim-ts-autotag = { git = "windwp/nvim-ts-autotag", rev = "aeb7090" }
 nvim-treesitter-textobjects = { git = "nvim-treesitter/nvim-treesitter-textobjects", rev = "5f9bf4b" }
-"rest.nvim" = "2.0.1"
 vim-pollen = { git = "otherjoel/vim-pollen" }
 "gitsigns.nvim" = { git = "lewis6991/gitsigns.nvim" }
 "dial.nvim" = { git = "monaqa/dial.nvim" }
@@ -71,3 +70,4 @@ nvim-lightbulb = "1.0.0"
 "project.nvim" = "scm"
 "trouble.nvim" = "3.1.0"
 "lazydev.nvim" = { git = "folke/lazydev.nvim" }
+"hurl.nvim" = { git = "jellydn/hurl.nvim" }
