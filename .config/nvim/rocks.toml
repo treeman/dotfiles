@@ -71,3 +71,7 @@ nvim-lightbulb = "1.0.0"
 "trouble.nvim" = "3.1.0"
 "lazydev.nvim" = { git = "folke/lazydev.nvim" }
 "hurl.nvim" = { git = "jellydn/hurl.nvim" }
+neotest = "5.2.5"
+"neotest-elixir" = { git = "jfpedroza/neotest-elixir" }
+"neotest-vim-test" = { git = "nvim-neotest/neotest-vim-test" }
+"vim-test" = { git = "vim-test/vim-test" }

@@ -350,6 +350,22 @@ M.ts_select = {
   ["i,"] = { query = "@parameter.inner", desc = "Select inner parameter" },
 }
 
+M.neotest = function(buffer)
+  map("n", "<localleader><space>", function()
+    require("neotest").run.run()
+  end, { silent = true, buffer = buffer, desc = "Neotest run test at cursor" })
+  map("n", "<localleader>f", function()
+    require("neotest").run.run(vim.fn.expand("%"))
+  end, { silent = true, buffer = buffer, desc = "Neotest run tests in file" })
+
+  map("n", "<leader>n", function()
+    require("neotest").output_panel.toggle()
+  end, { silent = true, buffer = buffer, desc = "Neotest toggle panel tab" })
+  map("n", "<leader>N", function()
+    require("neotest").summary.toggle()
+  end, { silent = true, buffer = buffer, desc = "Neotest toggle summary tab" })
+end
+
 M.buf_lsp = function(_, buffer)
   -- NOTE there are other cool possibilities listed in nvim-lspconfig
   map(
