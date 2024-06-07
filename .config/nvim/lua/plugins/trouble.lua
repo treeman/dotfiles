@@ -28,3 +28,4 @@ require("trouble").setup({
 })
 
 require("custom.trouble")
+require("custom.ts_trouble")

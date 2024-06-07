@@ -12,3 +12,5 @@
 - git
 - fzf
 - libcurl-devel
+- hurl
+- jq
