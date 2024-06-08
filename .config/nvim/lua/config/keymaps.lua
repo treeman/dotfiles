@@ -289,7 +289,7 @@ M.djot = function()
   map(
     "n",
     "<localleader>w",
-    ":Trouble headings toggle<CR>",
+    ":Trouble ts_headings toggle<CR>",
     { buffer = 0, desc = "Display headings" }
   )
 end
