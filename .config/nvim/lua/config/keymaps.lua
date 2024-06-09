@@ -107,9 +107,6 @@ M.init = function()
   )
   map("n", "gB", ":BlameToggle<CR>", { silent = true, desc = "Git blame" })
 
-  -- Write and source lua file
-  map("n", "<leader>x", ":write<CR>:source %<CR>")
-
   -- Blogging
   map("n", "gd", function()
     require("blog.telescope").find_draft()
@@ -351,19 +348,22 @@ M.ts_select = {
 }
 
 M.neotest = function(buffer)
-  map("n", "<localleader><space>", function()
+  map("n", "<leader>x", function()
     require("neotest").run.run()
-  end, { silent = true, buffer = buffer, desc = "Neotest run test at cursor" })
-  map("n", "<localleader>f", function()
+  end, { buffer = buffer, desc = "Neotest run test at cursor" })
+  map("n", "<leader>X", function()
     require("neotest").run.run(vim.fn.expand("%"))
-  end, { silent = true, buffer = buffer, desc = "Neotest run tests in file" })
+  end, { buffer = buffer, desc = "Neotest run tests in file" })
+  map("n", "<leader>m", function()
+    require("neotest").run.run(vim.loop.cwd())
+  end, { buffer = buffer, desc = "Neotest run tests in workspace" })
 
   map("n", "<leader>n", function()
     require("neotest").output_panel.toggle()
-  end, { silent = true, buffer = buffer, desc = "Neotest toggle panel tab" })
+  end, { buffer = buffer, desc = "Neotest toggle panel tab" })
   map("n", "<leader>N", function()
     require("neotest").summary.toggle()
-  end, { silent = true, buffer = buffer, desc = "Neotest toggle summary tab" })
+  end, { buffer = buffer, desc = "Neotest toggle summary tab" })
 end
 
 M.buf_lsp = function(_, buffer)

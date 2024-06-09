@@ -70,7 +70,7 @@ require("elixir").setup({
   nextls = {
     enable = false,
     init_options = {
-      mix_env = "dev",
+      mix_env = "test",
       experimental = {
         completions = {
           enable = true,
