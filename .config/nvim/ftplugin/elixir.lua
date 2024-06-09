@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<localleader><space>", function()
+vim.keymap.set("n", "<leader>x", function()
   vim.lsp.codelens.run()
 end)
 
