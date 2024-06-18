@@ -1,6 +1,5 @@
 local cmp = require("cmp")
 local context = require("cmp.config.context")
--- local luasnip = require("luasnip")
 
 local function in_comment()
   return context.in_treesitter_capture("comment") or context.in_syntax_group("Comment")
@@ -83,7 +82,7 @@ local function make_format()
     mode = "symbol_text",
     ellipsis_char = "…",
     menu = {
-      luasnip = "[SNIP]",
+      -- luasnip = "[SNIP]",
       nvim_lsp = "[LSP]",
       nvim_lua = "[LUA]",
       beancount = "[BEAN]",
@@ -114,7 +113,7 @@ cmp.setup({
     ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
     ["<PgUp>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
     ["<PgDn>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete({}), { "i", "c" }),
     ["<C-e>"] = cmp.mapping({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),

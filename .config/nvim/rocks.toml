@@ -1,12 +1,13 @@
 [plugins]
-"rocks.nvim" = "2.29.2"
+"rocks.nvim" = "2.31.0"
 "rocks-config.nvim" = "1.6.0"
 "rocks-git.nvim" = "1.5.1"
+"rocks-dev.nvim" = "1.2.3"
 "melange-nvim" = { git = "savq/melange-nvim" }
 "mini.cursorword" = "0.9.0"
 "mini.trailspace" = "0.9.0"
 "mini.ai" = "0.9.0"
-"conform.nvim" = "5.8.0"
+"conform.nvim" = "5.9.0"
 "neo-tree.nvim" = "3.26"
 "telescope.nvim" = "scm"
 "comment.nvim" = "0.8.0"
@@ -21,13 +22,13 @@
 nvim-web-devicons = "0.100"
 "lualine.nvim" = "scm"
 "lsp-status.nvim" = "scm"
-"elixir-tools.nvim" = "0.14.2"
+"elixir-tools.nvim" = "0.14.3"
 "nerdy.nvim" = { git = "2kabhishek/nerdy.nvim" }
 "search-replace.nvim" = { git = "roobert/search-replace.nvim" }
 "marks.nvim" = "scm"
 "vim-fugitive" = { git = "tpope/vim-fugitive" }
 neogit = { git = "TimUntersberger/neogit" }
-nvim-nio = "1.9.3"
+nvim-nio = "1.9.4"
 nvim-lastplace = "1.0.0"
 vim-matchup = { git = "andymass/vim-matchup" }
 vim-maximizer = { git = "szw/vim-maximizer" }
@@ -43,14 +44,12 @@ cmp-spell = { git = "f3fora/cmp-spell" }
 cmp-calc = { git = "hrsh7th/cmp-calc" }
 cmp-nvim-lua = { git = "hrsh7th/cmp-nvim-lua" }
 cmp-treesitter = { git = "ray-x/cmp-treesitter" }
-# Lots of parsers failed to install when using the rocks package,
-# so fallback to git bleeding edge.
-nvim-treesitter = { git = "nvim-treesitter/nvim-treesitter", rev = "1eabe69" }
-nvim-treesitter-endwise = { git = "RRethy/nvim-treesitter-endwise", rev = "8b34305" }
-nvim-ts-context-commentstring = { git = "JoosepAlviste/nvim-ts-context-commentstring", rev = "0bdccb9" }
-nvim-treesitter-context = { git = "nvim-treesitter/nvim-treesitter-context", rev = "55e2908" }
-nvim-ts-autotag = { git = "windwp/nvim-ts-autotag", rev = "aeb7090" }
-nvim-treesitter-textobjects = { git = "nvim-treesitter/nvim-treesitter-textobjects", rev = "5f9bf4b" }
+nvim-treesitter = { git = "nvim-treesitter/nvim-treesitter" }
+nvim-treesitter-endwise = { git = "RRethy/nvim-treesitter-endwise" }
+nvim-ts-context-commentstring = { git = "JoosepAlviste/nvim-ts-context-commentstring" }
+nvim-treesitter-context = { git = "nvim-treesitter/nvim-treesitter-context" }
+nvim-ts-autotag = { git = "windwp/nvim-ts-autotag" }
+nvim-treesitter-textobjects = { git = "nvim-treesitter/nvim-treesitter-textobjects" }
 vim-pollen = { git = "otherjoel/vim-pollen" }
 "gitsigns.nvim" = { git = "lewis6991/gitsigns.nvim" }
 "dial.nvim" = { git = "monaqa/dial.nvim" }
@@ -58,8 +57,7 @@ vim-pollen = { git = "otherjoel/vim-pollen" }
 "mason.nvim" = { version = "1.10.0" }
 "mason-lspconfig.nvim" = { version = "1.29.0" }
 nvim-lspconfig = "0.1.8"
-rustaceanvim = "4.24.0"
-nvim-lightbulb = "1.0.0"
+rustaceanvim = "4.25.0"
 "typescript-tools.nvim" = "scm"
 "tardis.nvim" = { git = "fredeeb/tardis.nvim" }
 "blame.nvim" = { git = "FabijanZulj/blame.nvim" }
@@ -68,10 +66,14 @@ nvim-lightbulb = "1.0.0"
 "vim-dadbod-completion" = { git = "kristijanhusak/vim-dadbod-completion" }
 "vim-dadbod-ui" = { git = "kristijanhusak/vim-dadbod-ui" }
 "project.nvim" = "scm"
-"trouble.nvim" = "3.1.0"
+"trouble.nvim" = "3.4.2"
 "lazydev.nvim" = { git = "folke/lazydev.nvim" }
 "hurl.nvim" = { git = "jellydn/hurl.nvim" }
-neotest = "5.2.5"
+# neotest = "scm"
+neotest = { git = "nvim-neotest/neotest"}
 "neotest-elixir" = { git = "jfpedroza/neotest-elixir" }
 "neotest-vim-test" = { git = "nvim-neotest/neotest-vim-test" }
 "vim-test" = { git = "vim-test/vim-test" }
+nvim-lint = "scm"
+
+# "neotest-gleam" = { dir = "~/code/neotest-gleam" }

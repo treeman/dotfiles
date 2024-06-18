@@ -66,31 +66,37 @@ lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.defa
 })
 
 -- This compiles the LSP using the exact Elixir + Erlang version, while giving us some extra functionality.
-require("elixir").setup({
-  nextls = {
-    enable = false,
-    init_options = {
-      mix_env = "test",
-      experimental = {
-        completions = {
-          enable = true,
-        },
-      },
-    },
-    capabilities = capabilities,
-  },
-  credo = { enable = true, capabilities = capabilities },
-  elixirls = {
-    enable = true,
-    settings = require("elixir.elixirls").settings({
-      dialyzerEnabled = true,
-      enableTestLenses = true,
-      suggestSpecs = true,
-      fetchDeps = true,
-    }),
-    capabilities = capabilities,
-  },
-})
+-- NOTE maybe replace this with lexical?
+-- FIXME credo isn't found
+-- require("elixir").setup({
+--   nextls = {
+--     enable = false,
+--     init_options = {
+--       mix_env = "test",
+--       experimental = {
+--         completions = {
+--           enable = true,
+--         },
+--       },
+--     },
+--     capabilities = capabilities,
+--   },
+--   credo = {
+--     enable = true,
+--     capabilities = capabilities,
+--     cmd = vim.fn.expand("~/.local/share/nvim/rocks/bin/credo-language-server"),
+--   },
+--   elixirls = {
+--     enable = true,
+--     settings = require("elixir.elixirls").settings({
+--       dialyzerEnabled = true,
+--       enableTestLenses = true,
+--       suggestSpecs = true,
+--       fetchDeps = true,
+--     }),
+--     capabilities = capabilities,
+--   },
+-- })
 
 vim.g.rustaceanvim = {
   -- Plugin configuration
@@ -116,6 +122,9 @@ vim.g.rustaceanvim = {
   dap = {},
 }
 
+-- The Gleam LSP is integrated into the gleam cli and isn't installed via mason.
+lspconfig.gleam.setup({})
+
 -- Dynamic server setup, so we don't have to explicitly list every single server
 -- and can just list the ones we want to override configuration for.
 -- See :help mason-lspconfig-dynamic-server-setup
@@ -130,6 +139,17 @@ mason_lspconfig.setup_handlers({
   ["clangd"] = function()
     lspconfig.clangd.setup({
       filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
+    })
+  end,
+  ["lexical"] = function()
+    lspconfig.lexical.setup({
+      filetypes = { "elixir", "eelixir", "heex" },
+      cmd = {
+        vim.fn.expand(
+          "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
+        ),
+      },
+      settings = {},
     })
   end,
   ["tsserver"] = function()
