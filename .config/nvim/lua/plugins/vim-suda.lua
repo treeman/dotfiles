@@ -1,5 +1,4 @@
 return {
-  "roobert/search-replace.nvim",
-  ops = {},
+  "lambdalisue/vim-suda",
   event = { "BufReadPost", "BufNewFile" },
 }

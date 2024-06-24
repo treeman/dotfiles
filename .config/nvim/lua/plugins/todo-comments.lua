@@ -1,8 +1,12 @@
-require("todo-comments").setup({
-  highlight = {
-    pattern = [[.*<(KEYWORDS)]], -- Don't require a colon.
+return {
+  "folke/todo-comments.nvim",
+  opts = {
+    highlight = {
+      pattern = [[.*<(KEYWORDS)]], -- Don't require a colon.
+    },
+    search = {
+      pattern = [[\b(KEYWORDS)\b]], -- Match without the extra colon.
+    },
   },
-  search = {
-    pattern = [[\b(KEYWORDS)\b]], -- Match without the extra colon.
-  },
-})
+  event = { "BufReadPost", "BufNewFile" },
+}

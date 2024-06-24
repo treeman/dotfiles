@@ -1,6 +1,9 @@
-require("undotree").setup({
-  float_diff = false,
-  window = {
-    winblend = 0,
+return {
+  "jiaoshijie/undotree",
+  opts = {
+    float_diff = false,
+    window = {
+      winblend = 0,
+    },
   },
-})
+}

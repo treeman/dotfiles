@@ -1,5 +1,4 @@
 return {
-  "roobert/search-replace.nvim",
-  ops = {},
+  "romainl/vim-cool",
   event = { "BufReadPost", "BufNewFile" },
 }

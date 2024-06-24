@@ -1,3 +1,6 @@
-require("lsp-rooter").setup({
-  ignore_lsp = { "elixirls" },
-})
+return {
+  "ahmedkhalf/lsp-rooter.nvim",
+  opts = {
+    ignore_lsp = { "elixirls" },
+  },
+}

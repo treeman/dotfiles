@@ -1,12 +1,16 @@
-require("neogit").setup({
-  kind = "split_above",
-  auto_show_console = false,
-  mappings = {
-    status = {
-      ["="] = "Toggle",
+return {
+  "TimUntersberger/neogit",
+  opts = {
+    kind = "split_above",
+    auto_show_console = false,
+    mappings = {
+      status = {
+        ["="] = "Toggle",
+      },
+    },
+    commit_editor = {
+      kind = "auto",
     },
   },
-  commit_editor = {
-    kind = "auto",
-  },
-})
+  cmd = "Neogit",
+}

@@ -1,5 +1,9 @@
-require("Comment").setup({
+return {
+  "numToStr/Comment.nvim",
   opts = {
-    ignore = "^$",
+    opts = {
+      ignore = "^$",
+    },
   },
-})
+  event = { "BufReadPost", "BufNewFile" },
+}

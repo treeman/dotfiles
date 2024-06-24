@@ -1,17 +1,21 @@
-vim.g.nvim_lastplace = {
-  ignore_buftype = {
-    "quickfix",
-    "nofile",
-    "help",
-    "terminal",
+return {
+  "ethanholz/nvim-lastplace",
+  opts = {
+    lastplace_ignore_buftype = {
+      "quickfix",
+      "nofile",
+      "help",
+      "terminal",
+    },
+    lastplace_ignore_filetype = {
+      "dashboard",
+      "gitcommit",
+      "gitrebase",
+      "hgcommit",
+      "svn",
+      "toggleterm",
+    },
+    lastplace_open_folds = true,
   },
-  ignore_filetype = {
-    "gitcommit",
-    "gitrebase",
-    "svn",
-    "hgcommit",
-    "toggleterm",
-    "dashboard",
-  },
-  open_folds = true,
+  lazy = false,
 }

@@ -1,10 +1,14 @@
-require("gitsigns").setup({
-  signs = {
-    add = { text = "+" },
-    change = { text = "~" },
-    delete = { text = "-" },
-    topdelete = { text = "-" },
-    changedelete = { text = "~" },
+return {
+  "lewis6991/gitsigns.nvim",
+  opts = {
+    signs = {
+      add = { text = "+" },
+      change = { text = "~" },
+      delete = { text = "-" },
+      topdelete = { text = "-" },
+      changedelete = { text = "~" },
+    },
+    on_attach = require("config.keymaps").gitsigns,
   },
-  on_attach = require("config.keymaps").gitsigns,
-})
+  event = { "BufReadPost", "BufNewFile" },
+}

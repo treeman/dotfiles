@@ -1,5 +1,4 @@
 return {
-  "roobert/search-replace.nvim",
-  ops = {},
+  "monaqa/dial.nvim",
   event = { "BufReadPost", "BufNewFile" },
 }

@@ -266,8 +266,6 @@ M.init = function()
 
   local old_gx = vim.fn.maparg("gx", "n", nil, true)
   map("n", "gx", require("custom.open").gx_extended(old_gx.callback), { desc = old_gx.desc })
-
-  -- TODO in help files map <CR> to <C-]>
 end
 
 M.buf_blog = function(buffer)

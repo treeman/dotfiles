@@ -1,3 +1,7 @@
-require("hurl").setup({
-  mode = "popup",
-})
+return {
+  "jellydn/hurl.nvim",
+  opts = {
+    mode = "popup",
+  },
+  ft = "hurl",
+}
