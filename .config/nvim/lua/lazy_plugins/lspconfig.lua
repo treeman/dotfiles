@@ -68,35 +68,35 @@ lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.defa
 -- This compiles the LSP using the exact Elixir + Erlang version, while giving us some extra functionality.
 -- NOTE maybe replace this with lexical?
 -- FIXME credo isn't found
--- require("elixir").setup({
---   nextls = {
---     enable = false,
---     init_options = {
---       mix_env = "test",
---       experimental = {
---         completions = {
---           enable = true,
---         },
---       },
---     },
---     capabilities = capabilities,
---   },
---   credo = {
---     enable = true,
---     capabilities = capabilities,
---     cmd = vim.fn.expand("~/.local/share/nvim/rocks/bin/credo-language-server"),
---   },
---   elixirls = {
---     enable = true,
---     settings = require("elixir.elixirls").settings({
---       dialyzerEnabled = true,
---       enableTestLenses = true,
---       suggestSpecs = true,
---       fetchDeps = true,
---     }),
---     capabilities = capabilities,
---   },
--- })
+require("elixir").setup({
+  nextls = {
+    enable = false,
+    init_options = {
+      mix_env = "test",
+      experimental = {
+        completions = {
+          enable = true,
+        },
+      },
+    },
+    capabilities = capabilities,
+  },
+  credo = {
+    enable = true,
+    capabilities = capabilities,
+    cmd = vim.fn.expand("~/.local/share/nvim/rocks/bin/credo-language-server"),
+  },
+  elixirls = {
+    enable = true,
+    settings = require("elixir.elixirls").settings({
+      dialyzerEnabled = true,
+      enableTestLenses = true,
+      suggestSpecs = true,
+      fetchDeps = true,
+    }),
+    capabilities = capabilities,
+  },
+})
 
 vim.g.rustaceanvim = {
   -- Plugin configuration
