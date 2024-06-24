@@ -76,6 +76,23 @@ local overrides = {
   { name = "NeotestBorder", val = { link = "WinSeparator" } },
   -- { name = "NeotestWinSelect", val = { link = "Normal" } },
 
+  -- nvim-notify
+  { name = "NotifyDEBUGBorder", val = { link = "Constant" } }, -- guifg=#8B8B8B
+  { name = "NotifyDEBUGIcon", val = { link = "Constant" } }, -- guifg=#8B8B8B
+  { name = "NotifyDEBUGTitle", val = { link = "Constant" } }, --  guifg=#8B8B8B
+  { name = "NotifyERRORBorder", val = { link = "DiagnosticError" } }, -- guifg=#8A1F1F
+  { name = "NotifyERRORIcon", val = { link = "DiagnosticError" } }, -- guifg=#F70067
+  { name = "NotifyERRORTitle", val = { link = "DiagnosticError" } }, --  guifg=#F70067
+  { name = "NotifyINFOBorder", val = { link = "DiagnosticHint" } }, -- guifg=#4F6752
+  { name = "NotifyINFOIcon", val = { link = "DiagnosticHint" } }, -- guifg=#A9FF68
+  { name = "NotifyINFOTitle", val = { link = "DiagnosticHint" } }, -- guifg=#A9FF68
+  { name = "NotifyTRACEBorder", val = { link = "DiagnosticInfo" } }, -- guifg=#4F3552
+  { name = "NotifyTRACEIcon", val = { link = "DiagnosticInfo" } }, -- guifg=#D484FF
+  { name = "NotifyTRACETitle", val = { link = "DiagnosticInfo" } }, --  guifg=#D484FF
+  { name = "NotifyWARNBorder", val = { link = "DiagnosticWarn" } }, -- guifg=#79491D
+  { name = "NotifyWARNIcon", val = { link = "DiagnosticWarn" } }, -- guifg=#F79000
+  { name = "NotifyWARNTitle", val = { link = "DiagnosticWarn" } }, -- guifg=#F79000
+
   -- lsp semantic tokens `:help lsp-semantic-highlight`
   { name = "@lsp.typemod.decorator", val = { link = "Function" } }, --        Types and member functions that are abstract
   { name = "@lsp.type.enumMember", val = { link = "Constant" } }, --        Types and member functions that are abstract
