@@ -25,6 +25,7 @@ local overrides = {
   { name = "NeoTreeFadeText2", val = { link = "LineNr" } },
   { name = "NeoTreeDimText", val = { link = "WinSeparator" } },
 
+  -- Modify cmp LSP kinds
   { name = "CmpItemAbbrMatch", val = { link = "Function" } },
   { name = "CmpItemKindText", val = { link = "Conceal" } },
   { name = "CmpItemKindMethod", val = { link = "@lsp.type.meThod" } },
@@ -52,6 +53,28 @@ local overrides = {
   { name = "CmpItemKindOperator", val = { link = "@lsp.type.operator" } },
   { name = "CmpItemKindTypeParameter", val = { link = "@lsp.type.typeParameter" } },
   { name = "CmpItemMenu", val = { link = "Conceal" } },
+
+  -- Neotest colors
+  { name = "NeotestAdapterName", val = { link = "Conceal" } },
+  { name = "NeoTestIndent", val = { link = "Conceal" } },
+  { name = "NeoTestExpandMarker", val = { link = "Conceal" } },
+  -- Test hierarchy
+  { name = "NeoTestDir", val = { link = "Directory" } },
+  { name = "NeotestFile", val = { link = "Character" } },
+  { name = "NeotestNamespace", val = { link = "Statement" } },
+  { name = "NeotestTest", val = { link = "Identifier" } },
+  -- Test status
+  { name = "NeotestFailed", val = { link = "DiagnosticError" } },
+  { name = "NeotestSkipped", val = { link = "Ignore" } },
+  { name = "NeotestPassed", val = { link = "DiagnosticOk" } },
+  { name = "NeotestUnknown", val = { link = "DiagnosticHint" } },
+  { name = "NeotestRunning", val = { link = "Title" } },
+  { name = "NeotestMarked", val = { link = "Underlined" } },
+  { name = "NeotestFocused", val = { link = "Special" } },
+  { name = "NeotestWatching", val = { link = "Number" } },
+  { name = "NeotestTarget", val = { link = "Type" } },
+  { name = "NeotestBorder", val = { link = "WinSeparator" } },
+  -- { name = "NeotestWinSelect", val = { link = "Normal" } },
 
   -- lsp semantic tokens `:help lsp-semantic-highlight`
   { name = "@lsp.typemod.decorator", val = { link = "Function" } }, --        Types and member functions that are abstract

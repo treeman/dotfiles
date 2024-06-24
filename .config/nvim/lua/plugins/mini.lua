@@ -30,4 +30,5 @@ return {
   version = false,
   config = config,
   event = { "BufReadPost", "BufNewFile" },
+  cmd = "Git",
 }
