@@ -43,6 +43,7 @@ return {
         build = "make",
       },
       "nvim-treesitter/nvim-treesitter",
+      "rachartier/tiny-devicons-auto-colors.nvim",
     },
     config = config,
     lazy = false,

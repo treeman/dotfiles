@@ -1,5 +1,7 @@
 return {
   "roobert/search-replace.nvim",
-  ops = {},
+  config = function()
+    require("search-replace").setup({})
+  end,
   event = { "BufReadPost", "BufNewFile" },
 }
