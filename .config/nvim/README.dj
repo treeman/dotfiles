@@ -14,3 +14,4 @@
 - libcurl-devel
 - hurl
 - jq
+- luarocks

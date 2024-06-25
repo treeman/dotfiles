@@ -99,12 +99,9 @@ M.init = function()
   map("n", "gs", ":Neogit<CR>", { desc = "Git status" })
   map("n", "gt", ":Tardis git<CR>", { desc = "Git timemachine (Tardis)" })
   map("n", "g<space>", ":Git ", { desc = "Git" })
-  map(
-    "n",
-    "gb",
-    require("telescope.builtin").git_branches,
-    { silent = true, desc = "Git branches" }
-  )
+  map("n", "gb", function()
+    require("telescope.builtin").git_branches()
+  end, { silent = true, desc = "Git branches" })
   map("n", "gB", ":BlameToggle<CR>", { silent = true, desc = "Git blame" })
 
   -- Blogging
@@ -115,40 +112,25 @@ M.init = function()
     require("blog.telescope").find_post()
   end, { desc = "Find blog post" })
 
-  map(
-    "n",
-    "z=",
-    require("telescope.builtin").spell_suggest,
-    { silent = true, desc = "Spell suggest" }
-  )
-  map(
-    "n",
-    "<leader>f",
-    require("telescope.builtin").find_files,
-    { silent = true, desc = "Find files" }
-  )
+  map("n", "z=", function()
+    require("telescope.builtin").spell_suggest()
+  end, { silent = true, desc = "Spell suggest" })
+  map("n", "<leader>f", function()
+    require("telescope.builtin").find_files()
+  end, { silent = true, desc = "Find files" })
   map("n", "<leader>F", function()
     require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })
   end, { silent = true, desc = "Find relative file" })
 
-  map(
-    "n",
-    "<leader>/",
-    require("telescope.builtin").live_grep,
-    { silent = true, desc = "Find in files" }
-  )
-  map(
-    "n",
-    "<leader>b",
-    require("custom.telescope").open_buffer,
-    { silent = true, desc = "Buffers" }
-  )
-  map(
-    "n",
-    "<leader>o",
-    require("telescope.builtin").oldfiles,
-    { silent = true, desc = "Old files" }
-  )
+  map("n", "<leader>/", function()
+    require("telescope.builtin").live_grep()
+  end, { silent = true, desc = "Find in files" })
+  map("n", "<leader>b", function()
+    require("custom.telescope").open_buffer()
+  end, { silent = true, desc = "Buffers" })
+  map("n", "<leader>o", function()
+    require("telescope.builtin").oldfiles()
+  end, { silent = true, desc = "Old files" })
 
   --  Telescoping into a personal knowledge base is really pleasant,
   map("n", "<leader><leader>", function()
@@ -177,12 +159,9 @@ M.init = function()
     desc = "Org archive",
   })
 
-  map(
-    "n",
-    "<leader>hh",
-    require("telescope.builtin").help_tags,
-    { silent = true, desc = "Help tags" }
-  )
+  map("n", "<leader>hh", function()
+    require("telescope.builtin").help_tags()
+  end, { silent = true, desc = "Help tags" })
 
   -- Ideas
   --require('telescope.builtin').git_commits()

@@ -46,6 +46,5 @@ return {
       "rachartier/tiny-devicons-auto-colors.nvim",
     },
     config = config,
-    lazy = false,
   },
 }
