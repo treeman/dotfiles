@@ -109,16 +109,17 @@ return {
     lazy = false,
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
-      "nvim-treesitter/nvim-treesitter-context",
+      -- "nvim-treesitter/nvim-treesitter-context",
       "windwp/nvim-ts-autotag",
       "JoosepAlviste/nvim-ts-context-commentstring",
       "RRethy/nvim-treesitter-endwise",
     },
   },
-  {
-    "nvim-treesitter/nvim-treesitter-context",
-    opts = {
-      max_lines = 1,
-    },
-  },
+  -- Bugging
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-context",
+  --   opts = {
+  --     max_lines = 1,
+  --   },
+  -- },
 }

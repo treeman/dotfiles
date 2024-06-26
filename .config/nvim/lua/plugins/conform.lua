@@ -35,6 +35,9 @@ return {
       if bufname:match("/euronetics/schedule/") or bufname:match("/euronetics/vbanken/") then
         return
       end
+      if bufname:match("/code/jonashietala/templates") then
+        return
+      end
       if vim.bo[bufnr].filetype == "elixir" then
         return { timeout_ms = 500, lsp_fallback = false }
       end
