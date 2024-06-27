@@ -163,6 +163,8 @@ local function handle_reply(data)
     return
   end
 
+  -- vim.notify(vim.inspect(reply), vim.log.levels.ERROR)
+
   if reply["message_id"] then
     local message_id = tostring(reply["message_id"])
     local messages = vim.g.blog_messages or {}

@@ -200,6 +200,8 @@ local function config()
     },
   })
 
+  require("blog.cmp")
+
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "mysql,plsql",
     callback = function()
