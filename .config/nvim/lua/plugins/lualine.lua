@@ -43,6 +43,8 @@ local location = "%c:%l/%L"
 
 -- Theme is hard.
 -- I dumped the "auto" theme and tried to adjust some things that bothered me a little.
+-- NOTE there's a lualine theme in melange-nvim now, but I couldn't figure out
+-- how to load it.
 local colors = {
   a = {
     bg = "#292522",
@@ -134,6 +136,8 @@ local function config()
   lualine.setup({
     options = {
       theme = custom_theme,
+      -- TODO
+      -- theme = require("melange-nvim/lualine/themes/melange"),
       -- component_separators = { left = "", right = "" },
     },
     sections = {
@@ -173,6 +177,7 @@ return {
   dependencies = {
     "nvim-tree/nvim-web-devicons",
     "nvim-lua/lsp-status.nvim",
+    "savq/melange-nvim",
   },
   config = config,
   lazy = false,

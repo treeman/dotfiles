@@ -39,6 +39,7 @@ local function config()
     Constant = { rank = 7, symbol = "" },
     Img = { rank = 8, symbol = "" },
     DivClass = { rank = 9, symbol = "" },
+    Symbol = { rank = 10, symbol = "󱔁" },
   }
 
   local function blog_compare(entry1, entry2)
@@ -80,7 +81,7 @@ local function config()
 
   local function make_format()
     local lspkind_format = require("lspkind").cmp_format({
-      mode = "symbol_text",
+      mode = "symbol",
       ellipsis_char = "…",
       menu = {
         -- luasnip = "[SNIP]",
