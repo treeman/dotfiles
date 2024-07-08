@@ -39,7 +39,7 @@ local function config()
   -- NOTE maybe replace this with lexical when newer Elixir version exists?
   require("elixir").setup({
     nextls = {
-      enable = false,
+      enable = true,
       init_options = {
         mix_env = "test",
         experimental = {
@@ -56,7 +56,7 @@ local function config()
       cmd = vim.fn.expand("~/.local/share/nvim/lazy/elixir-tools.nvim/bin/credo-language-server"),
     },
     elixirls = {
-      enable = true,
+      enable = false,
       settings = require("elixir.elixirls").settings({
         dialyzerEnabled = true,
         enableTestLenses = false,
@@ -111,17 +111,17 @@ local function config()
       })
     end,
     -- Doesn't support latest Elixir yet!
-    -- ["lexical"] = function()
-    --   lspconfig.lexical.setup({
-    --     filetypes = { "elixir", "eelixir", "heex" },
-    --     cmd = {
-    --       vim.fn.expand(
-    --         "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
-    --       ),
-    --     },
-    --     settings = {},
-    --   })
-    -- end,
+    ["lexical"] = function()
+      lspconfig.lexical.setup({
+        filetypes = { "elixir", "eelixir", "heex" },
+        cmd = {
+          vim.fn.expand(
+            "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
+          ),
+        },
+        settings = {},
+      })
+    end,
     ["tsserver"] = function()
       require("typescript-tools").setup({
         capabilities = capabilities,
