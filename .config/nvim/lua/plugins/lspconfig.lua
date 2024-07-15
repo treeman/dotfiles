@@ -37,35 +37,35 @@ local function config()
 
   -- This compiles the LSP using the exact Elixir + Erlang version, while giving us some extra functionality.
   -- NOTE maybe replace this with lexical when newer Elixir version exists?
-  require("elixir").setup({
-    nextls = {
-      enable = true,
-      init_options = {
-        mix_env = "test",
-        experimental = {
-          completions = {
-            enable = true,
-          },
-        },
-      },
-      capabilities = capabilities,
-    },
-    credo = {
-      enable = true,
-      capabilities = capabilities,
-      cmd = vim.fn.expand("~/.local/share/nvim/lazy/elixir-tools.nvim/bin/credo-language-server"),
-    },
-    elixirls = {
-      enable = false,
-      settings = require("elixir.elixirls").settings({
-        dialyzerEnabled = true,
-        enableTestLenses = false,
-        suggestSpecs = true,
-        fetchDeps = true,
-      }),
-      capabilities = capabilities,
-    },
-  })
+  -- require("elixir").setup({
+  --   nextls = {
+  --     enable = true,
+  --     init_options = {
+  --       mix_env = "test",
+  --       experimental = {
+  --         completions = {
+  --           enable = true,
+  --         },
+  --       },
+  --     },
+  --     capabilities = capabilities,
+  --   },
+  --   credo = {
+  --     enable = true,
+  --     capabilities = capabilities,
+  --     cmd = vim.fn.expand("~/.local/share/nvim/lazy/elixir-tools.nvim/bin/credo-language-server"),
+  --   },
+  --   elixirls = {
+  --     enable = false,
+  --     settings = require("elixir.elixirls").settings({
+  --       dialyzerEnabled = true,
+  --       enableTestLenses = false,
+  --       suggestSpecs = true,
+  --       fetchDeps = true,
+  --     }),
+  --     capabilities = capabilities,
+  --   },
+  -- })
 
   vim.g.rustaceanvim = {
     -- Plugin configuration
@@ -110,13 +110,14 @@ local function config()
         filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
       })
     end,
-    -- Doesn't support latest Elixir yet!
     ["lexical"] = function()
       lspconfig.lexical.setup({
         filetypes = { "elixir", "eelixir", "heex" },
         cmd = {
           vim.fn.expand(
-            "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
+            -- Doesn't support latest!
+            -- "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
+            "~/src/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
           ),
         },
         settings = {},
