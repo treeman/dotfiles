@@ -103,6 +103,10 @@ M.init = function()
     require("telescope.builtin").git_branches()
   end, { silent = true, desc = "Git branches" })
   map("n", "gB", ":BlameToggle<CR>", { silent = true, desc = "Git blame" })
+  -- Jujutsu
+  map("n", "<leader>j", function()
+    require("jj").execute("log")
+  end, { desc = "Jujutsu log" })
 
   -- Blogging
   map("n", "gd", function()
