@@ -105,7 +105,7 @@ M.init = function()
   map("n", "gB", ":BlameToggle<CR>", { silent = true, desc = "Git blame" })
   -- Jujutsu
   map("n", "<leader>j", function()
-    require("jj.log").execute("-r all()")
+    require("jj").execute("log -r all()")
   end, { desc = "Jujutsu log" })
 
   -- Blogging
