@@ -6,12 +6,14 @@ return {
       adapters = {
         require("rustaceanvim.neotest"),
         require("neotest-elixir"),
+        require("neotest-plenary"),
       },
     })
   end,
   dependencies = {
     "jfpedroza/neotest-elixir",
     "mrcjkb/rustaceanvim",
+    "nvim-neotest/neotest-plenary",
   },
   event = { "BufReadPre", "BufNewFile" },
 }

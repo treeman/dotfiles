@@ -12,7 +12,7 @@ require("blog")
 require("util.helpers")
 
 -- Easy print function...
-P = function(v)
-  print(vim.inspect(v))
-  return v
+P = function(...)
+  print(vim.inspect(...))
+  return ...
 end
