@@ -8,7 +8,7 @@ conky.config = {
 }
 
 conky.text = [[
-^fg()battery ^fg(\#ebdbb2)${battery} ^fg()| \
+^fg()battery ^fg(\#ebdbb2)${battery BAT1} \ ${battery_time BAT1} ^fg()| \
 ^fg()CPU ^fg(\#ebdbb2)${cpu cpu0}% ^fg()| \
 MEM ^fg(\#ebdbb2)${memperc}% ^fg()| \
 NET ^fg(\#ebdbb2)${downspeedf wlan0}K ^fg(\#ebdbb2)${upspeedf wlan0}K ^fg()| \

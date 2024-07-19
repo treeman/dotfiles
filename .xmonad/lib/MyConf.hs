@@ -25,7 +25,7 @@ fg_ui = "#867462"
 fg_sel = "#403A36"
 
 myWorkspaces = ["6", "4", "0", "2", "8", "9", "3", "1", "5", "7"]
-myFont = "Consolasi:size=9"
+myFont = "Consolasi:size=11"
 myIconDir = "/home/tree/dotfiles/icons/"
 
 term = "alacritty"

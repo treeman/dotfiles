@@ -111,7 +111,7 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
       -- "nvim-treesitter/nvim-treesitter-context",
       "windwp/nvim-ts-autotag",
-      "JoosepAlviste/nvim-ts-context-commentstring",
+      -- "JoosepAlviste/nvim-ts-context-commentstring",
       "RRethy/nvim-treesitter-endwise",
     },
   },

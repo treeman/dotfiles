@@ -24,7 +24,7 @@ background = "#292522"
 foreground = "#ECE1D7"
 
 [font]
-size = 11.0
+size = 8.0
 
 [font.bold]
 family = "IosevkaTree Nerd Font Medium"
