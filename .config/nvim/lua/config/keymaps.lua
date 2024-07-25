@@ -104,9 +104,10 @@ M.init = function()
   end, { silent = true, desc = "Git branches" })
   map("n", "gB", ":BlameToggle<CR>", { silent = true, desc = "Git blame" })
   -- Jujutsu
-  map("n", "<leader>j", function()
-    require("jj").execute("log -r all()")
-  end, { desc = "Jujutsu log" })
+  -- map("n", "<leader>j", function()
+  --   require("jj.subcmds.log").open()
+  -- end, { desc = "Jujutsu log" })
+  map("n", "<leader>j", ":JJ ", { desc = "Jujutsu" })
 
   -- Blogging
   map("n", "gd", function()
