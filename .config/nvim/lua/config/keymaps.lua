@@ -96,7 +96,8 @@ M.init = function()
   map("n", "<leader>eh", ":e ~/org/habits.dj<CR>", { desc = "Habits" })
 
   -- Git
-  map("n", "gs", ":Neogit<CR>", { desc = "Git status" })
+  -- map("n", "gs", ":Neogit<CR>", { desc = "Git status" })
+  map("n", "<leader>g", ":Neogit<CR>", { desc = "Git status" })
   map("n", "gt", ":Tardis git<CR>", { desc = "Git timemachine (Tardis)" })
   map("n", "g<space>", ":Git ", { desc = "Git" })
   map("n", "gb", function()
@@ -104,13 +105,15 @@ M.init = function()
   end, { silent = true, desc = "Git branches" })
   map("n", "gB", ":BlameToggle<CR>", { silent = true, desc = "Git blame" })
   -- Jujutsu
-  -- map("n", "<leader>j", function()
-  --   require("jj.subcmds.log").open()
-  -- end, { desc = "Jujutsu log" })
   map("n", "<leader>j", ":JJ ", { desc = "Jujutsu" })
+  map("n", "gl", function() require("jj.subcmds.log").open() end, { desc = "Jujutsu log" })
+
+  map("n", "gs", function() require("jj").execute("status") end, { desc = "Jujutsu status" })
+  map("n", "gd", function() require("jj").execute("diff") end, { desc = "Jujutsu diff" })
+  map("n", "gL", function() require("jj").execute("op log") end, { desc = "Jujutsu op log" })
 
   -- Blogging
-  map("n", "gd", function()
+  map("n", "gw", function()
     require("blog.telescope").find_draft()
   end, { desc = "Find blog draft" })
   map("n", "gp", function()

@@ -110,13 +110,14 @@ local function config()
         filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
       })
     end,
+    -- NOTE this only works if we've installed lexical via Mason
     ["lexical"] = function()
       lspconfig.lexical.setup({
         filetypes = { "elixir", "eelixir", "heex" },
         cmd = {
           vim.fn.expand(
-            -- Doesn't support latest!
-            -- "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
+          -- Doesn't support latest!
+          -- "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
             "~/src/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
           ),
         },
