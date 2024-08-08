@@ -106,11 +106,18 @@ M.init = function()
   map("n", "gB", ":BlameToggle<CR>", { silent = true, desc = "Git blame" })
   -- Jujutsu
   map("n", "<leader>j", ":JJ ", { desc = "Jujutsu" })
-  map("n", "gl", function() require("jj.subcmds.log").open() end, { desc = "Jujutsu log" })
-
-  map("n", "gs", function() require("jj").execute("status") end, { desc = "Jujutsu status" })
-  map("n", "gd", function() require("jj").execute("diff") end, { desc = "Jujutsu diff" })
-  map("n", "gL", function() require("jj").execute("op log") end, { desc = "Jujutsu op log" })
+  map("n", "gl", function()
+    require("jj.views.log").open()
+  end, { desc = "Jujutsu log" })
+  map("n", "gs", function()
+    require("jj").execute("status")
+  end, { desc = "Jujutsu status" })
+  map("n", "gd", function()
+    require("jj").execute("diff")
+  end, { desc = "Jujutsu diff" })
+  map("n", "gL", function()
+    require("jj").execute("op log")
+  end, { desc = "Jujutsu op log" })
 
   -- Blogging
   map("n", "gw", function()
