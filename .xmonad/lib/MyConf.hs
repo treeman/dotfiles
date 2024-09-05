@@ -56,6 +56,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Do not leave useless conky, dzen and after restart
     , ((modm,                   xK_q), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
 
+    , ((modm .|. shiftMask,     xK_l), spawn "xsecurelock")
+
     -- Move focus with arrows, for split keyboard
     , ((modm,                   xK_Down), windows W.focusDown)
     , ((modm,                   xK_Up), windows W.focusUp)
