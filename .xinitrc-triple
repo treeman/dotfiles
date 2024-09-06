@@ -24,6 +24,9 @@ xsetwacom --set "Wacom Intuos PT S Pen eraser" Mode "relative"
 gpg-agent --daemon
 keychain --gpg2
 
+# Auto mount devices
+devmon &
+
 # Start xmonad yay!
 exec xmonad
 

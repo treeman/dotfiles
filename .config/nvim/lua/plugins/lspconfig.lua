@@ -4,6 +4,7 @@ local function config()
   local lsp_status = require("lsp-status")
   local lspconfig = require("lspconfig")
   local mason_lspconfig = require("mason-lspconfig")
+  local create_cmd = require("util.helpers").create_cmd
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
@@ -30,6 +31,10 @@ local function config()
   keymaps.global_lsp()
 
   vim.lsp.inlay_hint.enable(true)
+
+  create_cmd("ToggleInlayHints", function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+  end)
 
   lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, {
     capabilities = capabilities,
@@ -116,8 +121,8 @@ local function config()
         filetypes = { "elixir", "eelixir", "heex" },
         cmd = {
           vim.fn.expand(
-          -- Doesn't support latest!
-          -- "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
+            -- Doesn't support latest!
+            -- "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
             "~/src/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
           ),
         },
