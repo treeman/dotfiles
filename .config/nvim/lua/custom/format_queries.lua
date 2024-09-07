@@ -126,7 +126,7 @@ local format_queries = [[
 ;; Append newlines for nodes inside the list
 (list
   (_) @format.append-newline
-  (#not-has-type? @format.append-newline capture quantifier))
+  (#not-kind-eq? @format.append-newline "capture" "quantifier"))
 
 ;; (_), "_" and _ handler
 ;; Start indents if it's one of these patterns
@@ -188,23 +188,13 @@ local format_queries = [[
   ] @format.cancel-append
   .
   ")"
-  (#not-has-type? @format.cancel-append comment))
+  (#not-kind-eq? @format.cancel-append "comment"))
 
 ;; All captures should be separated with a space
 (capture) @format.prepend-space
 
 ;; Workaround to just use the string's content
-(anonymous_node (identifier) @format.keep)
-(field_definition
-  name: (_)
-  ":" @format.indent.begin @format.append-newline ; suppress trailing whitespaces with forced newlines
-  [
-    (named_node [ (named_node) (list) (grouping) (anonymous_node) (field_definition) ])
-    (list "[" . (_) . (_) "]")
-    (grouping "(" . (_) . (_) ")")
-    (grouping
-      quantifier: (quantifier))
-  ])
+(anonymous_node (string) @format.keep)
 
 ; ( (_) ) handler
 (grouping
@@ -237,7 +227,7 @@ local format_queries = [[
 ;; Collapsing closing parens
 (grouping
   (_) @format.cancel-append . ")"
-  (#not-has-type? @format.cancel-append comment))
+  (#not-kind-eq? @format.cancel-append "comment"))
 (grouping
   (capture) @format.prepend-space)
 ;; Remove unnecessary parens
@@ -252,7 +242,7 @@ local format_queries = [[
   .
   [
     (anonymous_node
-      name: (identifier) .)
+      name: (string) .)
     (named_node
       [
         "_"
@@ -340,7 +330,7 @@ local function iter(bufnr, node, lines, q, level)
       end
       if q["format.ignore"][id] then
         local text =
-          vim.split(get_node_text(child, bufnr):gsub("\r\n?", "\n"), "\n", { trimempty = true })
+            vim.split(get_node_text(child, bufnr):gsub("\r\n?", "\n"), "\n", { trimempty = true })
         append_lines(lines, text)
         break
       elseif q["format.remove"][id] then
@@ -360,8 +350,8 @@ local function iter(bufnr, node, lines, q, level)
             local _, _, byte_start = child:start()
             local _, _, byte_end = node:end_()
             if
-              q["format.prepend-space"][id]["lookahead-newline"]
-              and textwidth - (byte_end - byte_start) - #lines[#lines] < 0
+                q["format.prepend-space"][id]["lookahead-newline"]
+                and textwidth - (byte_end - byte_start) - #lines[#lines] < 0
             then
               lines[#lines + 1] = string.rep(indent_str, level)
             else
@@ -423,26 +413,26 @@ local function format(bufnr, queries)
   local lines = { "" }
   -- stylua: ignore
   local map = {
-    ['format.ignore'] = {},           -- Ignore the node and its children
-    ['format.indent.begin'] = {},     -- +1 shiftwidth for all nodes after this
-    ['format.indent.end'] = {},       -- -1 shiftwidth for all nodes after this
-    ['format.indent.dedent'] = {},    -- -1 shiftwidth for this line only
-    ['format.prepend-space'] = {},    -- Prepend a space before inserting the node
-    ['format.prepend-newline'] = {},  -- Prepend a \n before inserting the node
-    ['format.append-space'] = {},     -- Append a space after inserting the node
-    ['format.append-newline'] = {},   -- Append a newline after inserting the node
-    ['format.cancel-append'] = {},    -- Cancel any `@format.append-*` applied to the node
-    ['format.cancel-prepend'] = {},   -- Cancel any `@format.prepend-*` applied to the node
-    ['format.keep'] = {},             -- String content is not exposed as a syntax node. This is a workaround for it
-    ['format.replace'] = {},          -- Dedicated capture used to store results of `(#gsub!)`
-    ['format.remove'] = {},           -- Do not add the syntax node to the result, i.e. brackets [], parens ()
+    ['format.ignore'] = {},          -- Ignore the node and its children
+    ['format.indent.begin'] = {},    -- +1 shiftwidth for all nodes after this
+    ['format.indent.end'] = {},      -- -1 shiftwidth for all nodes after this
+    ['format.indent.dedent'] = {},   -- -1 shiftwidth for this line only
+    ['format.prepend-space'] = {},   -- Prepend a space before inserting the node
+    ['format.prepend-newline'] = {}, -- Prepend a \n before inserting the node
+    ['format.append-space'] = {},    -- Append a space after inserting the node
+    ['format.append-newline'] = {},  -- Append a newline after inserting the node
+    ['format.cancel-append'] = {},   -- Cancel any `@format.append-*` applied to the node
+    ['format.cancel-prepend'] = {},  -- Cancel any `@format.prepend-*` applied to the node
+    ['format.keep'] = {},            -- String content is not exposed as a syntax node. This is a workaround for it
+    ['format.replace'] = {},         -- Dedicated capture used to store results of `(#gsub!)`
+    ['format.remove'] = {},          -- Do not add the syntax node to the result, i.e. brackets [], parens ()
   }
   local root = ts.get_parser(bufnr, "query"):parse(true)[1]:root()
   local query = ts.query.parse("query", queries)
   for id, node, metadata in query:iter_captures(root, bufnr) do
     if query.captures[id]:sub(1, 1) ~= "_" then
       map[query.captures[id]][node:id()] = metadata and (metadata[id] and metadata[id] or metadata)
-        or {}
+          or {}
     end
   end
 
