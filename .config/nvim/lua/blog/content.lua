@@ -27,6 +27,26 @@ M.extract_title = function(file_path)
   return title:match('title = "([^%"]+)"')
 end
 
+M.list_markup_content = function(cb)
+  nio.run(function()
+    local output = helpers.run_cmd({
+      cmd = "cargo",
+      args = {
+        "run",
+        "-q",
+        "--",
+        "-q",
+        "list-markup-content",
+      },
+      cwd = "/home/tree/code/jonashietala",
+    })
+
+    nio.scheduler()
+    local posts = vim.fn.json_decode(output)
+    cb(posts)
+  end)
+end
+
 M.list_posts = function(draft, cb)
   nio.run(function()
     local subcmd

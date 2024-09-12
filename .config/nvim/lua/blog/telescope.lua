@@ -216,4 +216,76 @@ M.find_draft = function()
   return _find_post({ draft = true })
 end
 
+-- New world order!
+M.find_markup = function(opts)
+  opts = opts or {}
+  local make_display = function(entry)
+    -- No djot icon, just pick something that looks neat
+    local ext = telescope_utils.file_extension(entry.value.path)
+    if ext == "dj" then
+      ext = "tcl"
+    end
+    local icon, _ = devicons.get_icon_by_filetype(ext)
+
+    local tags
+    if type(entry.value.tags) == "string" then
+      tags = entry.value.tags
+    elseif type(entry.value.tags) == "table" then
+      tags = vim.fn.join(entry.value.tags, ", ")
+    end
+
+    local series = entry.value.series or ""
+
+    local displayer = entry_display.create({
+      separator = " ",
+      items = {
+        { width = 1 },
+        { width = string.len(entry.value.title) },
+        { width = string.len(entry.value.created) },
+        { width = string.len(tags) },
+        { remaining = true },
+      },
+    })
+
+    return displayer({
+      { icon, "TelescopeResultsComment" },
+      entry.value.title,
+      { entry.value.created, "TelescopeResultsComment" },
+      { tags, "TelescopeResultsConstant" },
+      { series, "TelescopeResultsOperator" },
+    })
+  end
+
+  content.list_markup_content(function(files)
+    pickers
+      .new(opts, {
+        finder = finders.new_table({
+          results = files,
+          entry_maker = function(entry)
+            return {
+              display = make_display,
+              ordinal = entry,
+              value = entry,
+              -- Make standard action open `path` on <CR>
+              filename = entry.path,
+            }
+          end,
+        }),
+        sorter = posts_sorter(opts),
+        previewer = previewers.new_buffer_previewer({
+          title = "Post Preview",
+          define_preview = function(self, entry)
+            conf.buffer_previewer_maker(entry.value.path, self.state.bufnr, {
+              bufname = self.state.bufname,
+              winid = self.state.winid,
+              preview = opts.preview,
+              file_encoding = opts.file_encoding,
+            })
+          end,
+        }),
+      })
+      :find()
+  end)
+end
+
 return M

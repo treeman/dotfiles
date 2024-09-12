@@ -121,7 +121,8 @@ M.init = function()
 
   -- Blogging
   map("n", "gw", function()
-    require("blog.telescope").find_draft()
+    -- require("blog.telescope").find_draft()
+    require("blog.telescope").find_markup()
   end, { desc = "Find blog draft" })
   map("n", "gp", function()
     require("blog.telescope").find_post()
