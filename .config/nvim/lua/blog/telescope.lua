@@ -1,4 +1,3 @@
-local devicons = require("nvim-web-devicons")
 local entry_display = require("telescope.pickers.entry_display")
 local conf = require("telescope.config").values
 local content = require("blog.content")
@@ -52,6 +51,10 @@ end
 -- In the case of multiple prompt elements, each individual element
 -- is worth 1 / count prompt_elements.
 local function score_element(prompt_elements, entry_element, sorter)
+  if prompt_elements == nil then
+    return 0
+  end
+
   -- We didn't prompt for this type, ignore it.
   if next(prompt_elements) == nil then
     return 0
@@ -86,7 +89,63 @@ local function score_element(prompt_elements, entry_element, sorter)
   return total / #prompt_elements
 end
 
-local function posts_sorter(opts)
+local function score_item_type(item)
+  local function item_score()
+    if item.type == "Post" then
+      if item.is_draft then
+        return 0
+      else
+        return 0.1
+      end
+    elseif item.type == "Project" then
+      return 0.1
+    elseif item.type == "Game" then
+      return 0.1
+    elseif item.type == "Standalone" then
+      if item.is_draft then
+        return 0.01
+      else
+        return 0.11
+      end
+    elseif item.type == "Series" then
+      return 0.12
+    elseif item.type == "Projects" then
+      return 0.13
+    else
+      vim.notify("Unknown item type: " .. item.type, vim.log.levels.ERROR)
+      return 0
+    end
+  end
+
+  return item_score()
+end
+
+local function score_date(entry)
+  local entry_date
+  if entry.created then
+    -- Remove `-` from entry date, so it's like a number.
+    entry_date = string.gsub(entry.created, "-", "")
+  elseif entry.published then
+    -- Remove `-` from entry date, so it's like a number.
+    entry_date = string.gsub(entry.published, "-", "")
+  elseif entry.year then
+    entry_date = tostring(entry.year) .. "0000"
+  end
+
+  if not entry_date then
+    return 1
+  end
+
+  -- Date of my first blog post as a number.
+  local beginning_of_time = 20090621
+  -- Today's date as a number.
+  local today = os.date("%Y%m%d")
+  -- Place the number on a 0..1 scale, where 1 is today (`1 -` reverses, otherwise 1
+  -- would be the beginning of time).
+  return 1 - (entry_date - beginning_of_time) / (today - beginning_of_time)
+end
+
+local function content_sorter(opts)
   opts = opts or {}
   local fzy_sorter = sorters.get_fzy_sorter(opts)
 
@@ -100,6 +159,11 @@ local function posts_sorter(opts)
       -- If any element returns a 0, it means nothing matched but we shouldn't filter.
       -- If it returns < 0, it means it did not match and should remove the entry.
       local series_score = score_element(prompt.series, entry.series, fzy_sorter)
+      if entry.series then
+        series_score = score_element(prompt.series, entry.series, fzy_sorter)
+      elseif entry.type == "Series" then
+        series_score = score_element(prompt.series, entry.id, fzy_sorter)
+      end
       if series_score < 0 then
         return -1
       end
@@ -119,142 +183,177 @@ local function posts_sorter(opts)
         return -1
       end
 
-      -- Date of my first blog post as a number.
-      local beginning_of_time = 20090621
-      -- Today's date as a number.
-      local today = os.date("%Y%m%d")
-      -- Remove `-` from entry date, so it's like a number.
-      local entry_date = string.gsub(entry.created, "-", "")
-      -- Place the number on a 0..1 scale, where 1 is today (`1 -` reverses, otherwise 1
-      -- would be the beginning of time).
-      local date_score = 1 - (entry_date - beginning_of_time) / (today - beginning_of_time)
+      local type_score = score_item_type(entry)
+      local date_score = score_date(entry)
 
       -- Date sorting is only worth 1/10 of the fuzzy scores.
       -- Why? I dunno, it felt like 1 was too much and 1/10 felt good.
-      return series_score + tags_score + title_score + date_score / 10
+      return series_score + tags_score + title_score + date_score / 10 + type_score
     end,
   })
 end
 
-local function _find_post(opts)
-  local draft = opts.draft
+local function make_series_display(item)
+  local icon = "󰉋"
+  local displayer = entry_display.create({
+    separator = " ",
+    items = {
+      { width = 2 },
+      { width = string.len(item.title) },
+      { remaining = true },
+    },
+  })
 
-  local make_display = function(entry)
-    -- No djot icon, just pick something that looks neat
-    local ext = telescope_utils.file_extension(entry.value.path)
-    if ext == "dj" then
-      ext = "tcl"
-    end
-    local icon, _ = devicons.get_icon_by_filetype(ext)
+  return displayer({
+    { icon, "TelescopeResultsComment" },
+    item.title,
+    { item.id, "TelescopeResultsOperator" },
+  })
+end
 
-    local tags
-    if type(entry.value.tags) == "string" then
-      tags = entry.value.tags
-    elseif type(entry.value.tags) == "table" then
-      tags = vim.fn.join(entry.value.tags, ", ")
-    end
-
-    local series = entry.value.series or ""
-
-    local displayer = entry_display.create({
-      separator = " ",
-      items = {
-        { width = 1 },
-        { width = string.len(entry.value.title) },
-        { width = string.len(entry.value.created) },
-        { width = string.len(tags) },
-        { remaining = true },
-      },
-    })
-
-    return displayer({
-      { icon, "TelescopeResultsComment" },
-      entry.value.title,
-      { entry.value.created, "TelescopeResultsComment" },
-      { tags, "TelescopeResultsConstant" },
-      { series, "TelescopeResultsOperator" },
-    })
+local function make_post_display(item)
+  local icon
+  local icon_color = "TelescopeResultsComment"
+  local ext = telescope_utils.file_extension(item.path)
+  if item.is_draft then
+    icon = "󰽉"
+    icon_color = "Function"
+  elseif ext == "dj" then
+    icon = "󰛓"
+  else
+    icon = ""
   end
 
-  content.list_posts(draft, function(posts)
-    pickers
-      .new(opts, {
-        finder = finders.new_table({
-          results = posts,
-          entry_maker = function(entry)
-            return {
-              display = make_display,
-              ordinal = entry,
-              value = entry,
-              -- Make standard action open `path` on <CR>
-              filename = entry.path,
-            }
-          end,
-        }),
-        sorter = posts_sorter(opts),
-        previewer = previewers.new_buffer_previewer({
-          title = "Post Preview",
-          define_preview = function(self, entry)
-            conf.buffer_previewer_maker(entry.value.path, self.state.bufnr, {
-              bufname = self.state.bufname,
-              winid = self.state.winid,
-              preview = opts.preview,
-              file_encoding = opts.file_encoding,
-            })
-          end,
-        }),
-      })
-      :find()
-  end)
+  local tags
+  if type(item.tags) == "string" then
+    tags = item.tags
+  elseif type(item.tags) == "table" then
+    tags = vim.fn.join(item.tags, ", ")
+  end
+
+  local series = item.series or ""
+
+  local displayer = entry_display.create({
+    separator = " ",
+    items = {
+      { width = 1 },
+      { width = string.len(item.title) },
+      { width = string.len(item.created) },
+      { width = string.len(tags) },
+      { remaining = true },
+    },
+  })
+
+  return displayer({
+    { icon, icon_color },
+    item.title,
+    { item.created, "TelescopeResultsComment" },
+    { tags, "TelescopeResultsConstant" },
+    { series, "TelescopeResultsOperator" },
+  })
 end
 
-M.find_post = function()
-  return _find_post({ draft = false })
+local function make_projects_display(item)
+  local icon = "󰾁"
+
+  local displayer = entry_display.create({
+    separator = " ",
+    items = {
+      { width = 2 },
+      { remaining = true },
+    },
+  })
+
+  return displayer({
+    { icon, "TelescopeResultsComment" },
+    item.title,
+  })
 end
 
-M.find_draft = function()
-  return _find_post({ draft = true })
+local function make_project_display(item)
+  local icon = "󰙨"
+
+  local displayer = entry_display.create({
+    separator = " ",
+    items = {
+      { width = 1 },
+      { width = string.len(item.title) },
+      { remaining = true },
+    },
+  })
+
+  return displayer({
+    { icon, "TelescopeResultsComment" },
+    item.title,
+    { tostring(item.year), "TelescopeResultsComment" },
+  })
+end
+
+local function make_game_display(item)
+  local icon = ""
+
+  local displayer = entry_display.create({
+    separator = " ",
+    items = {
+      { width = 2 },
+      { width = string.len(item.title) },
+      { width = string.len(item.published) },
+      { remaining = true },
+    },
+  })
+
+  return displayer({
+    { icon, "TelescopeResultsComment" },
+    item.title,
+    { item.published, "TelescopeResultsComment" },
+    { item.event, "Character" },
+  })
+end
+
+local function make_standalone_display(item)
+  local icon = "󰾁"
+  local icon_color = "TelescopeResultsComment"
+
+  if item.is_draft then
+    icon_color = "Function"
+  end
+
+  local displayer = entry_display.create({
+    separator = " ",
+    items = {
+      { width = 2 },
+      { remaining = true },
+    },
+  })
+
+  return displayer({
+    { icon, icon_color },
+    item.title,
+  })
+end
+
+local function make_display(entry)
+  local item = entry.value
+  if item.type == "Series" then
+    return make_series_display(item)
+  elseif item.type == "Post" then
+    return make_post_display(item)
+  elseif item.type == "Projects" then
+    return make_projects_display(item)
+  elseif item.type == "Game" then
+    return make_game_display(item)
+  elseif item.type == "Project" then
+    return make_project_display(item)
+  elseif item.type == "Standalone" then
+    return make_standalone_display(item)
+  else
+    vim.notify("Unknown item type: " .. item.type, vim.log.levels.ERROR)
+  end
 end
 
 -- New world order!
 M.find_markup = function(opts)
   opts = opts or {}
-  local make_display = function(entry)
-    -- No djot icon, just pick something that looks neat
-    local ext = telescope_utils.file_extension(entry.value.path)
-    if ext == "dj" then
-      ext = "tcl"
-    end
-    local icon, _ = devicons.get_icon_by_filetype(ext)
-
-    local tags
-    if type(entry.value.tags) == "string" then
-      tags = entry.value.tags
-    elseif type(entry.value.tags) == "table" then
-      tags = vim.fn.join(entry.value.tags, ", ")
-    end
-
-    local series = entry.value.series or ""
-
-    local displayer = entry_display.create({
-      separator = " ",
-      items = {
-        { width = 1 },
-        { width = string.len(entry.value.title) },
-        { width = string.len(entry.value.created) },
-        { width = string.len(tags) },
-        { remaining = true },
-      },
-    })
-
-    return displayer({
-      { icon, "TelescopeResultsComment" },
-      entry.value.title,
-      { entry.value.created, "TelescopeResultsComment" },
-      { tags, "TelescopeResultsConstant" },
-      { series, "TelescopeResultsOperator" },
-    })
-  end
 
   content.list_markup_content(function(files)
     pickers
@@ -271,9 +370,9 @@ M.find_markup = function(opts)
             }
           end,
         }),
-        sorter = posts_sorter(opts),
+        sorter = content_sorter(opts),
         previewer = previewers.new_buffer_previewer({
-          title = "Post Preview",
+          title = "Content Preview",
           define_preview = function(self, entry)
             conf.buffer_previewer_maker(entry.value.path, self.state.bufnr, {
               bufname = self.state.bufname,
