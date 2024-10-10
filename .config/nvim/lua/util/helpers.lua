@@ -22,6 +22,7 @@ end
 
 M.run_cmd = function(args)
   local nio = require("nio")
+  P(args)
   local proc = nio.process.run(args)
 
   if not proc then

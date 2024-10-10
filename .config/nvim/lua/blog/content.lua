@@ -35,7 +35,6 @@ M.list_markup_content = function(cb)
         "run",
         "-q",
         "--",
-        "-q",
         "list-markup-content",
       },
       cwd = "/home/tree/code/jonashietala",
