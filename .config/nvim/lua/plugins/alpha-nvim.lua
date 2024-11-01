@@ -92,4 +92,5 @@ return {
   "goolord/alpha-nvim",
   lazy = false,
   config = config,
+  enabled = false,
 }
