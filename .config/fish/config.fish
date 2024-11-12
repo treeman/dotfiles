@@ -12,6 +12,7 @@ set -x PATH ~/.fly/bin $PATH
 set -x PATH ~/src/bitcoin-cash-node/build/src $PATH
 set -x PATH /usr/lib/psql15/bin $PATH
 set -x PATH ~/.nvim $PATH
+set -x PATH ~/.rye/shims $PATH
 
 set -gx PNPM_HOME ~/.local/share/pnpm
 set -gx PATH "$PNPM_HOME" $PATH
@@ -36,6 +37,7 @@ set -x BROWSER firefox
 set -e PORT
 
 alias vim nvim
+# alias v "nvim ~/org/plan.dj"
 alias v nvim
 alias g git
 
@@ -63,8 +65,6 @@ end
 
 # Colorscheme
 gruvbox
-
-alias ww 'nvim ~/vimwiki/index.markdown'
 
 set secret_file ~/.env.secrets.fish
 if test -e $secret_file

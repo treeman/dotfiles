@@ -32,3 +32,14 @@ autocmd("WinLeave", {
     vim.opt_local.cursorline = false
   end,
 })
+
+-- This opens the plan.dj every time we open Neovim
+-- unless we start Neovim with an argument
+autocmd("VimEnter", {
+  callback = function()
+    if vim.fn.argc() == 0 then
+      vim.cmd(":e ~/org/plan.dj")
+      vim.bo.filetype = "djot"
+    end
+  end,
+})

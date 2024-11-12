@@ -129,31 +129,31 @@ local function config()
         settings = {},
       })
     end,
-    ["tsserver"] = function()
-      require("typescript-tools").setup({
-        capabilities = capabilities,
-        settings = {
-          expose_as_code_action = "all",
-          tsserver_file_preferences = {
-            includeCompletionsForModuleExports = true,
-            includeCompletionsForImportStatements = true,
-            includeCompletionsWithObjectLiteralMethodSnippets = true,
-
-            includeInlayParameterNameHints = "all",
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayVariableTypeHints = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayEnumMemberValueHints = true,
-
-            importModuleSpecifierPreference = "non-relative",
-            quotePreference = "auto",
-          },
-        },
-      })
-    end,
+    -- ["tsserver"] = function()
+    --   require("typescript-tools").setup({
+    --     capabilities = capabilities,
+    --     settings = {
+    --       expose_as_code_action = "all",
+    --       tsserver_file_preferences = {
+    --         includeCompletionsForModuleExports = true,
+    --         includeCompletionsForImportStatements = true,
+    --         includeCompletionsWithObjectLiteralMethodSnippets = true,
+    --
+    --         includeInlayParameterNameHints = "all",
+    --         includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+    --         includeInlayFunctionParameterTypeHints = true,
+    --         includeInlayVariableTypeHints = true,
+    --         includeInlayPropertyDeclarationTypeHints = true,
+    --         includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+    --         includeInlayFunctionLikeReturnTypeHints = true,
+    --         includeInlayEnumMemberValueHints = true,
+    --
+    --         importModuleSpecifierPreference = "non-relative",
+    --         quotePreference = "auto",
+    --       },
+    --     },
+    --   })
+    -- end,
   })
 end
 

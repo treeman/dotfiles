@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for f in *.mp4; do
+    duration=$(ffprobe -v error -select_streams v:0 -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$f")
+    echo "$duration $f"
+done | sort -n
