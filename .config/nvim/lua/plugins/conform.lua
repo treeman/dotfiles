@@ -1,24 +1,25 @@
 return {
   "stevearc/conform.nvim",
-  event = { "BufWritePre" },
-  cmd = { "ConformInfo", "Format", "FormatDisable", "FormatEnable" },
+  -- I got some problems lazy loading this where it couldn't find `Format` sometimes.
+  lazy = false,
   opts = {
     formatters_by_ft = {
       lua = { "stylua" },
-      javascript = { { "prettierd", "prettier" } },
-      typescript = { { "prettierd", "prettier" } },
-      css = { { "prettierd", "prettier" } },
-      scss = { { "prettierd", "prettier" } },
-      less = { { "prettierd", "prettier" } },
-      html = { { "prettierd", "prettier" } },
-      json = { { "prettierd", "prettier" } },
-      yaml = { { "prettierd", "prettier" } },
-      toml = { { "prettierd", "prettier" } },
+      javascript = { "prettierd" },
+      typescript = { "prettierd" },
+      css = { "prettierd" },
+      scss = { "prettierd" },
+      less = { "prettierd" },
+      html = { "prettierd" },
+      json = { "prettierd" },
+      yaml = { "prettierd" },
+      toml = { "prettierd" },
       rust = { "rustfmt" },
       sql = { "pg_format" },
       mysql = { "pg_format" },
       plsql = { "pg_format" },
       elixir = { "mix" },
+      java = { "astyle" },
     },
     format_on_save = function(bufnr)
       -- Disable autoformat on certain filetypes

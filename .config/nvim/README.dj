@@ -1,12 +1,5 @@
 # External dependencies
 
-- prettierd (could move to mason...?
-
-  ```bash
-  npm install --save-dev --save-exact prettier
-  npm install -g @fsouza/prettierd
-  ```
-
 - ripgrep
 - fd
 - git
@@ -15,3 +8,17 @@
 - hurl
 - jq
 - luarocks
+
+## Formatters
+
+- prettierd (could move to mason...?
+
+  ```bash
+  npm install --save-dev --save-exact prettier
+  npm install -g @fsouza/prettierd
+  ```
+- astyle (Java)
+
+- pgformat (SQL)
+
+- stylua
