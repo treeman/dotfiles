@@ -1,0 +1,8 @@
+#!/bin/sh
+cd ~/code/layout_gen
+cargo run -- --qmk-root ~/code/qmk_firmware\
+             --keyboard ferris/0_2\
+             --keymap treeman\
+             --render-opts ~/code/jonashietala/keyboard_layouts/t34.json\
+             --output ~/code/jonashietala/images/t-34-layout
+

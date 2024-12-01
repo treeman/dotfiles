@@ -1,0 +1,8 @@
+#!/bin/sh
+cd ~/code/layout_gen
+cargo run -- --qmk-root ~/code/qmk_firmware\
+             --keyboard cybershard\
+             --keymap left\
+             --render-opts ~/code/jonashietala/keyboard_layouts/leftie.json\
+             --output ~/code/jonashietala/images/leftie-layout
+

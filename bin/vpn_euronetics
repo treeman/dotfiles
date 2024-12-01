@@ -1,0 +1,2 @@
+#!/bin/sh
+sudo openvpn --config ~/org/projects/euronetics/advantops_vpn/profile-290.ovpn --auth-user-pass ~/org/projects/euronetics/advantops_vpn/pass --auth-retry interact
