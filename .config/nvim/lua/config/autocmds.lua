@@ -33,13 +33,25 @@ autocmd("WinLeave", {
   end,
 })
 
+local function open_org_display()
+  -- TODO what info do I want to see?
+  -- 1. A tree view with all the files or a list of the most recently opened files
+  -- 2. Focus items
+  -- 3. List active projects (should prune them regularly)
+  -- 4. Goals
+  -- 5. maybe.dj
+  vim.cmd(":e ~/org/reviews.dj")
+  vim.bo.filetype = "djot"
+end
+
 -- This opens the plan.dj every time we open Neovim
 -- unless we start Neovim with an argument
 autocmd("VimEnter", {
   callback = function()
-    if vim.fn.argc() == 0 then
-      vim.cmd(":e ~/org/plan.dj")
-      vim.bo.filetype = "djot"
+    for i, arg in ipairs(vim.fn.argv()) do
+      if arg == "--org" then
+        open_org_display()
+      end
     end
   end,
 })

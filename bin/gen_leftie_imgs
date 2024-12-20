@@ -4,5 +4,6 @@ cargo run -- --qmk-root ~/code/qmk_firmware\
              --keyboard cybershard\
              --keymap left\
              --render-opts ~/code/jonashietala/keyboard_layouts/leftie.json\
+             render\
              --output ~/code/jonashietala/images/leftie-layout
 

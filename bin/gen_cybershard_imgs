@@ -3,5 +3,6 @@ cd ~/code/layout_gen
 cargo run -- --qmk-root ~/code/qmk_firmware\
              --keyboard cybershard\
              --render-opts ~/code/jonashietala/keyboard_layouts/cybershard.json\
+             render\
              --output ~/code/jonashietala/images/cybershard-layout
 
