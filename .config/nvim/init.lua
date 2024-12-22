@@ -9,6 +9,7 @@ require("config.keymaps").init()
 require("config.colorscheme")
 require("config.neovide")
 require("blog")
+require("org")
 
 require("util.helpers")
 

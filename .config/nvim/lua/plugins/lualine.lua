@@ -17,11 +17,12 @@ end
 
 local function lsp_info()
   -- TODO this can sometimes be very wordy
-  if vim.lsp.get_clients() == nil then
-    return ""
-  else
-    return require("lsp-status").status()
-  end
+  -- if vim.lsp.get_clients() == nil then
+  --   return ""
+  -- else
+  --   return require("lsp-status").status()
+  -- end
+  return ""
 end
 
 local function server_info()
@@ -148,7 +149,7 @@ local function config()
       -- third: 71
       lualine_a = { "mode" },
       lualine_b = {
-        { "branch", fmt = trunc(80, 80, 80, true) },
+        { "branch", fmt = trunc(200, 20, 80, true) },
         { "diff", fmt = trunc(80, 80, 80, true) },
         { "diagnostics", fmt = trunc(80, 80, 80, true) },
       },
