@@ -121,8 +121,8 @@ local function config()
         filetypes = { "elixir", "eelixir", "heex" },
         cmd = {
           vim.fn.expand(
-            -- Doesn't support latest!
-            -- "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
+          -- Doesn't support latest!
+          -- "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
             "~/src/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
           ),
         },
@@ -166,7 +166,11 @@ return {
     "ahmedkhalf/lsp-rooter.nvim",
     "hrsh7th/cmp-nvim-lsp",
     "elixir-tools/elixir-tools.nvim",
-    "mrcjkb/rustaceanvim",
+    {
+      "mrcjkb/rustaceanvim",
+      version = '^5', -- Recommended
+      lazy = false, -- This plugin is already lazy
+    },
     "kosayoda/nvim-lightbulb",
     "nvim-lua/lsp-status.nvim",
     {

@@ -16,13 +16,14 @@ local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
 end
 
 local function lsp_info()
-  -- TODO this can sometimes be very wordy
-  -- if vim.lsp.get_clients() == nil then
-  --   return ""
-  -- else
-  --   return require("lsp-status").status()
-  -- end
-  return ""
+  if vim.lsp.get_clients() == nil then
+    return ""
+  else
+    local t = trunc(240, 80, 0, false)
+    -- Remove `%` to workaround `illegal character` error
+    local s = require("lsp-status").status():gsub("%%", "")
+    return t(s)
+  end
 end
 
 local function server_info()
@@ -149,14 +150,14 @@ local function config()
       -- third: 71
       lualine_a = { "mode" },
       lualine_b = {
-        { "branch", fmt = trunc(200, 20, 80, true) },
-        { "diff", fmt = trunc(80, 80, 80, true) },
+        { "branch",      fmt = trunc(200, 20, 80, true) },
+        { "diff",        fmt = trunc(80, 80, 80, true) },
         { "diagnostics", fmt = trunc(80, 80, 80, true) },
       },
       lualine_c = { filename },
       lualine_x = { { server_info, fmt = trunc(120, 10, 60, true) } },
       lualine_y = {
-        { spell, fmt = trunc(120, 120, 120, true) },
+        { spell,      fmt = trunc(120, 120, 120, true) },
         { "encoding", fmt = trunc(120, 120, 120, true) },
         { "filetype", fmt = trunc(80, 80, 80, true) },
       },
