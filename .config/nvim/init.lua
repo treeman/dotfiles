@@ -18,3 +18,9 @@ P = function(...)
   print(vim.inspect(...))
   return ...
 end
+
+-- TODO we should use this during development for keymaps etc
+R = function(pkg)
+  package.loaded[pkg] = nil
+  return require(pkg)
+end

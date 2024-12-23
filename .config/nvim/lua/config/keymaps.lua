@@ -278,6 +278,13 @@ M.djot = function()
     ":Trouble ts_headings toggle<CR>",
     { buffer = 0, desc = "Display headings" }
   )
+  -- FIXME this has stopped working
+  map("n", "<Tab>", function()
+    require("org.task_marker").toggle_task_marker()
+  end, { buffer = 0, desc = "Toggle list marker" })
+  map("n", "<CR>", function()
+    R("org.links").visit_nearest_link()
+  end, { buffer = 0, desc = "Visit closest link" })
 end
 
 -- Maps four pairs:

@@ -138,7 +138,7 @@ M.open_post_in_browser = function(file_path)
     return
   end
 
-  vim.cmd("!firefox " .. url)
+  vim.fn.system("xdg-open " .. url)
 end
 
 M.open_curr_post_in_browser = function()
