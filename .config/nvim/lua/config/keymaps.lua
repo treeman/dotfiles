@@ -272,19 +272,24 @@ M.buf_blog = function(buffer)
 end
 
 M.djot = function()
+  -- FIXME this has stopped working
   map(
     "n",
     "<localleader>w",
     ":Trouble ts_headings toggle<CR>",
     { buffer = 0, desc = "Display headings" }
   )
-  -- FIXME this has stopped working
   map("n", "<Tab>", function()
     require("org.task_marker").toggle_task_marker()
   end, { buffer = 0, desc = "Toggle list marker" })
   map("n", "<CR>", function()
     R("org.links").visit_nearest_link()
   end, { buffer = 0, desc = "Visit closest link" })
+  -- TODO features to implement:
+  -- 1. Create link of visual selection to url in paste register
+  -- 2. Reorder order markers for lists
+  -- 3. Reformat table
+  -- 4. Move between table cells
 end
 
 -- Maps four pairs:
