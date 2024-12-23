@@ -126,6 +126,12 @@ local function visit_url(url)
     return
   end
 
+  -- TODO what if we're in the blog context? I'd like to
+  -- convert the url paths to their respective files here.
+  -- 1. Use `blog.content list_markup_content()`
+  -- 2. Send command to connected blog backend (Almost like `_d` today, but visit link directly)
+  -- 3. Send a new "url to path" command to the backend and edit that one
+
   local file_path
 
   if vim.startswith(url, "/") then
@@ -161,7 +167,7 @@ end
 
 local function get_link_destination(link)
   if link:type() == "inline_link" then
-    return link:child(1)
+    return get_text(link:child(1), 1, 1)
   end
 
   if link:type() == "full_reference_link" then
