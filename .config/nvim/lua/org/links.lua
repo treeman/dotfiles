@@ -1,5 +1,3 @@
-local cmd = require("util.helpers").create_cmd
-
 local M = {}
 
 local function collect_captures(query, language)
@@ -117,9 +115,9 @@ end
 local function visit_url(url)
   -- If starts with localhost or http:// try to open it in the browser
   if
-    vim.startswith(url, "http://")
-    or vim.startswith(url, "https://")
-    or vim.startswith(url, "localhost")
+      vim.startswith(url, "http://")
+      or vim.startswith(url, "https://")
+      or vim.startswith(url, "localhost")
   then
     vim.notify("Opening " .. url, vim.log.levels.INFO)
     vim.fn.system("xdg-open " .. url)
@@ -199,86 +197,86 @@ M.visit_nearest_link = function()
 end
 
 local function get_visual_range()
+  -- Need to send escape to update visual selection
+  local esc = vim.api.nvim_replace_termcodes("<Esc>", true, false, true)
+  vim.api.nvim_feedkeys(esc, "x", false)
+
   local start_pos = vim.api.nvim_buf_get_mark(0, "<")
   local end_pos = vim.api.nvim_buf_get_mark(0, ">")
 
+  local last_col = vim.fn.col({ end_pos[1], "$" }) - 1
+
+  -- Convert from 1- to 0-indexes
   start_pos[1] = start_pos[1] - 1
   end_pos[1] = end_pos[1] - 1
 
-  start_pos[2] = math.min(start_pos[2], vim.fn.col({ end_pos[1], "$" }) - 1)
+  -- Need to select past the end
+  end_pos[2] = end_pos[2] + 1
 
-  return { start_pos[1], start_pos[2], end_pos[1], start_pos[2] }
+  -- Sometimes end pos is a very large number way past the ending of the line
+  end_pos[2] = math.min(end_pos[2], last_col)
+
+  return { start_pos[1], start_pos[2], end_pos[1], end_pos[2] }
 end
 
----@see vim.paste
-function M.set_paste_handler()
-  vim.paste = (function(overridden)
-    return function(lines, phase)
-
+local function find_node(node_type)
+  local curr = vim.treesitter.get_node({ lang = "djot_inline" })
+  while curr do
+    if curr:type() == node_type then
+      return curr
     end
+    curr = curr:parent()
   end
+
+  return nil
 end
 
-M.create_link = function()
-  vim.notify("Create link", vim.log.levels.INFO)
+function M.create_link()
+  local paste_content = vim.fn.getreg("*", true, true)
 
-  -- local start_pos = vim.api.nvim_buf_get_mark(0, "<")
-  -- local end_pos = vim.api.nvim_buf_get_mark(0, ">")
-  -- local start_row = start_pos[1] - 1
-  -- local end_row = end_pos[1] - 1
-  -- local start_col = start_pos[2]
-  -- local end_col = end_pos[2]
+  -- Only paste a single line
+  if #paste_content ~= 1 then
+    return
+  end
 
-  -- local start_pos = vim.fn.getpos("'<")
-  -- local end_pos = vim.fn.getpos("'>")
-  -- local start_row = start_pos[2] - 1
-  -- local end_row = end_pos[2] - 1
-  -- local start_col = start_pos[3]
-  -- local end_col = end_pos[3]
+  local link = paste_content[1]
 
-  -- vim.notify(start_col, vim.log.levels.INFO)
+  -- Only paste in visual selection
+  local mode = vim.api.nvim_get_mode().mode
+  local is_visual = mode == "v" or mode == "V"
+  if not is_visual then
+    return
+  end
 
-  -- P({ start_pos, end_pos })
-  --
-  -- local mode = vim.fn.mode()
-  -- local selection = vim.fn.getregion(start_pos, end_pos, { type = mode })
-  -- local selected_text = table.concat(selection, "\n")
+  local selection = get_visual_range()
 
-  local range = get_visual_range()
-  local selection = vim.api.nvim_buf_get_text(0, range[1], range[2], range[3], range[4], {})
+  local inline = find_node("inline")
+  if not (inline and vim.treesitter.node_contains(inline, selection)) then
+    return
+  end
 
-  P(selection)
+  local lines = vim.api.nvim_buf_get_text(0,
+    selection[1],
+    selection[2],
+    selection[3],
+    selection[4],
+    {})
 
-  local paste_content = vim.fn.getreg("+")
-  P(paste_content)
+  lines[1] = "[" .. lines[1]
+  lines[#lines] = lines[#lines] .. "](" .. link .. ")"
 
+  vim.api.nvim_buf_set_text(0,
+    selection[1],
+    selection[2],
+    selection[3],
+    selection[4],
+    lines)
 
-  selection[1] = "[" .. selection[1]
-  selection[#selection] = selection[#selection] .. "](" .. paste_content .. ")"
-
-  -- vim.paste()
-
-  -- if mode == "v" then
-  --   vim.api.nvim_buf_set_text(
-  --     0,
-  --     start_pos[2] - 1,
-  --     start_pos[3],
-  --     end_pos[2] - 1,
-  --     end_pos[3],
-  --     selection
-  --   )
-  -- elseif mode == "V" then
-  -- end
-
-  -- local new_text = "[" .. selected_text .. "](" .. paste_content .. ")"
-  --
-  -- vim.api.nvim_buf_set_text(0, row_start, col_start + 1, row_end, col_end - 1, { marker })
-
-  -- local selection =
-  --   -- vim.api.nvim_buf_get_text(0, start_pos[1] - 1, start_pos[2], end_pos[1] - 1, end_pos[2], {})[1]
-  --   vim.api.nvim_buf_get_text(0, start_row, start_col, end_row, end_col, {})[1]
-
-  -- vim.notify(selection, vim.log.levels.INFO)
+  -- Set cursor at `)`, so we can easily start editing the pasted text if we want to.
+  local end_row = selection[3] + 1
+  -- End of selection + ]( + link + )
+  local end_col = selection[4] + 2 + #link + 1
+  vim.api.nvim_win_set_cursor(0, { end_row, end_col })
 end
 
 return M
