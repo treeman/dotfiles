@@ -16,21 +16,6 @@ local function collect_captures(query, language)
   return res
 end
 
-local function get_text(node, start_offset, end_offset)
-  start_offset = start_offset or 0
-  end_offset = end_offset or 0
-
-  local row_start, col_start, row_end, col_end = vim.treesitter.get_node_range(node)
-  return vim.api.nvim_buf_get_text(
-    0,
-    row_start,
-    col_start + start_offset,
-    row_end,
-    col_end - end_offset,
-    {}
-  )[1]
-end
-
 local function find_links()
   local task_link_query = [[
   (inline_link) @link
@@ -155,10 +140,10 @@ local function find_link_def(link_label)
 
   local defs = collect_captures(link_def_query, "djot")
   for _, def in ipairs(defs) do
-    local label = get_text(def:named_child(0))
+    local label = ts.get_text(def:named_child(0))
 
     if label == link_label then
-      local dest = get_text(def:named_child(1))
+      local dest = ts.get_text(def:named_child(1))
       vim.notify(dest, vim.log.levels.WARN)
       return dest
     end
@@ -167,16 +152,16 @@ end
 
 local function get_link_destination(link)
   if link:type() == "inline_link" then
-    return get_text(link:child(1), 1, 1)
+    return ts.get_text(link:child(1), 1, 1)
   end
 
   if link:type() == "full_reference_link" then
-    local label = get_text(link:named_child(1))
+    local label = ts.get_text(link:named_child(1))
     return find_link_def(label)
   end
 
   if link:type() == "collapsed_reference_link" then
-    local label = get_text(link:named_child(0), 1, 1)
+    local label = ts.get_text(link:named_child(0), 1, 1)
     return find_link_def(label)
   end
 

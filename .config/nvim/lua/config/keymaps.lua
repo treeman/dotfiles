@@ -295,11 +295,6 @@ M.djot = function()
 
   -- map("n", "<up>", "gk")
   -- map("n", "<down>", "gj")
-
-  -- TODO features to implement:
-  -- 2. Reorder order markers for lists
-  -- 3. Reformat table
-  -- 4. Move between table cells
 end
 
 -- Maps four pairs:

@@ -1,1 +1,12 @@
-
+-- TODO
+-- 1. Raise/lower heading levels on cursor/selection
+-- 2. Reformat table
+-- 3. Move between table cell (text objects)
+-- 4. Edit table cell (text object)
+-- 5. Rewrite jump to next heading (and jump between sections)
+--
+-- Format on save
+-- + Format table
+-- + Spacing before sections
+-- + Reorder lists
+-- (configurable)
