@@ -289,6 +289,10 @@ M.djot = function()
     require("org.links").create_link()
   end, { buffer = 0, desc = "Create link" })
 
+  map("n", "<leader>l", function()
+    R("org.lists").reset_list_numbering()
+  end, { buffer = 0, desc = "Reset list numbering" })
+
   -- map("n", "<up>", "gk")
   -- map("n", "<down>", "gj")
 

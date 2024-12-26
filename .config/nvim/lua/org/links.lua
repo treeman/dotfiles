@@ -1,3 +1,5 @@
+local ts = require("ord.treesitter")
+
 local M = {}
 
 local function collect_captures(query, language)
@@ -219,18 +221,6 @@ local function get_visual_range()
   return { start_pos[1], start_pos[2], end_pos[1], end_pos[2] }
 end
 
-local function find_node(node_type)
-  local curr = vim.treesitter.get_node({ lang = "djot_inline" })
-  while curr do
-    if curr:type() == node_type then
-      return curr
-    end
-    curr = curr:parent()
-  end
-
-  return nil
-end
-
 function M.create_link()
   local paste_content = vim.fn.getreg("*", true, true)
 
@@ -250,7 +240,7 @@ function M.create_link()
 
   local selection = get_visual_range()
 
-  local inline = find_node("inline")
+  local inline = ts.find_node("inline", "djot_inline")
   if not (inline and vim.treesitter.node_contains(inline, selection)) then
     return
   end
