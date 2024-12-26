@@ -285,6 +285,13 @@ M.djot = function()
   map("n", "<CR>", function()
     R("org.links").visit_nearest_link()
   end, { buffer = 0, desc = "Visit closest link" })
+  map("v", "<CR>", function()
+    R("org.links").create_link()
+  end, { buffer = 0, desc = "Create link" })
+
+  -- map("n", "<up>", "gk")
+  -- map("n", "<down>", "gj")
+
   -- TODO features to implement:
   -- 1. Create link of visual selection to url in paste register
   -- 2. Reorder order markers for lists

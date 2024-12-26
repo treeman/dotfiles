@@ -198,4 +198,87 @@ M.visit_nearest_link = function()
   visit_url(dest)
 end
 
+local function get_visual_range()
+  local start_pos = vim.api.nvim_buf_get_mark(0, "<")
+  local end_pos = vim.api.nvim_buf_get_mark(0, ">")
+
+  start_pos[1] = start_pos[1] - 1
+  end_pos[1] = end_pos[1] - 1
+
+  start_pos[2] = math.min(start_pos[2], vim.fn.col({ end_pos[1], "$" }) - 1)
+
+  return { start_pos[1], start_pos[2], end_pos[1], start_pos[2] }
+end
+
+---@see vim.paste
+function M.set_paste_handler()
+  vim.paste = (function(overridden)
+    return function(lines, phase)
+
+    end
+  end
+end
+
+M.create_link = function()
+  vim.notify("Create link", vim.log.levels.INFO)
+
+  -- local start_pos = vim.api.nvim_buf_get_mark(0, "<")
+  -- local end_pos = vim.api.nvim_buf_get_mark(0, ">")
+  -- local start_row = start_pos[1] - 1
+  -- local end_row = end_pos[1] - 1
+  -- local start_col = start_pos[2]
+  -- local end_col = end_pos[2]
+
+  -- local start_pos = vim.fn.getpos("'<")
+  -- local end_pos = vim.fn.getpos("'>")
+  -- local start_row = start_pos[2] - 1
+  -- local end_row = end_pos[2] - 1
+  -- local start_col = start_pos[3]
+  -- local end_col = end_pos[3]
+
+  -- vim.notify(start_col, vim.log.levels.INFO)
+
+  -- P({ start_pos, end_pos })
+  --
+  -- local mode = vim.fn.mode()
+  -- local selection = vim.fn.getregion(start_pos, end_pos, { type = mode })
+  -- local selected_text = table.concat(selection, "\n")
+
+  local range = get_visual_range()
+  local selection = vim.api.nvim_buf_get_text(0, range[1], range[2], range[3], range[4], {})
+
+  P(selection)
+
+  local paste_content = vim.fn.getreg("+")
+  P(paste_content)
+
+
+  selection[1] = "[" .. selection[1]
+  selection[#selection] = selection[#selection] .. "](" .. paste_content .. ")"
+
+  -- vim.paste()
+
+  -- if mode == "v" then
+  --   vim.api.nvim_buf_set_text(
+  --     0,
+  --     start_pos[2] - 1,
+  --     start_pos[3],
+  --     end_pos[2] - 1,
+  --     end_pos[3],
+  --     selection
+  --   )
+  -- elseif mode == "V" then
+  -- end
+
+  -- local new_text = "[" .. selected_text .. "](" .. paste_content .. ")"
+  --
+  -- vim.api.nvim_buf_set_text(0, row_start, col_start + 1, row_end, col_end - 1, { marker })
+
+  -- local selection =
+  --   -- vim.api.nvim_buf_get_text(0, start_pos[1] - 1, start_pos[2], end_pos[1] - 1, end_pos[2], {})[1]
+  --   vim.api.nvim_buf_get_text(0, start_row, start_col, end_row, end_col, {})[1]
+
+  -- vim.notify(selection, vim.log.levels.INFO)
+end
+
 return M
