@@ -10,3 +10,10 @@
 -- + Spacing before sections
 -- + Reorder lists
 -- (configurable)
+--
+-- Textobjects:
+-- Prev/Next heading
+-- Prev/Next section
+-- Left/Right/Above/Below table cells
+-- Current table cell
+-- Attributes?
