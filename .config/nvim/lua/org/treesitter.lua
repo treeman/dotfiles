@@ -1,5 +1,8 @@
 local M = {}
 
+---@param node_type string
+---@param lang string
+---@return TSNode | nil
 function M.find_node(node_type, lang)
   lang = lang or "djot"
 
@@ -14,6 +17,9 @@ function M.find_node(node_type, lang)
   return nil
 end
 
+---@param node TSNode
+---@param start_offset? integer
+---@param end_offset? integer
 function M.get_text(node, start_offset, end_offset)
   start_offset = start_offset or 0
   end_offset = end_offset or 0
