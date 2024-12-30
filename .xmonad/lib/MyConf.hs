@@ -28,14 +28,14 @@ myWorkspaces = ["6", "4", "0", "2", "8", "9", "3", "1", "5", "7"]
 myFont = "Consolasi:size=11"
 myIconDir = "/home/tree/dotfiles/icons/"
 
-term = "alacritty"
+term = "ghostty"
 
 -- See default keybindings here: 
 -- https://github.com/xmonad/xmonad/blob/master/src/XMonad/Config.hs
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [
       ((modm,                   xK_Return), spawn $ term)
-    , ((modm .|. controlMask,   xK_t), spawn "urxvt")
+    , ((modm,                   xK_t), spawn "alacritty")
 
     , ((modm,                   xK_f), spawn "firefox")
     , ((modm,                   xK_m), spawn "spotify")
