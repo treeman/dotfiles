@@ -1,4 +1,4 @@
-local ts = require("ord.treesitter")
+local ts = require("org.treesitter")
 
 local M = {}
 
@@ -102,9 +102,9 @@ end
 local function visit_url(url)
   -- If starts with localhost or http:// try to open it in the browser
   if
-      vim.startswith(url, "http://")
-      or vim.startswith(url, "https://")
-      or vim.startswith(url, "localhost")
+    vim.startswith(url, "http://")
+    or vim.startswith(url, "https://")
+    or vim.startswith(url, "localhost")
   then
     vim.notify("Opening " .. url, vim.log.levels.INFO)
     vim.fn.system("xdg-open " .. url)
@@ -206,15 +206,44 @@ local function get_visual_range()
   return { start_pos[1], start_pos[2], end_pos[1], end_pos[2] }
 end
 
-function M.create_link()
+---@param link string
+local function is_url(link)
+  if link:find("^https?://") then
+    return true
+  end
+
+  return false
+end
+
+---@param url string
+local function transform_url(url)
+  url = url:gsub("^https?://localhost:%d+", "", 1)
+  return url
+end
+
+--- Returns an url if one is found in `*` registry,
+--- otherwise returns "".
+local function link_url_to_paste()
   local paste_content = vim.fn.getreg("*", true, true)
 
-  -- Only paste a single line
+  -- If there's more line
   if #paste_content ~= 1 then
-    return
+    return ""
   end
 
   local link = paste_content[1]
+
+  --- Only paste the link if it's an url,
+  --- otherwise open an empty url for editing.
+  if is_url(link) then
+    return transform_url(link)
+  else
+    return ""
+  end
+end
+
+function M.create_link()
+  local link = link_url_to_paste()
 
   -- Only paste in visual selection
   local mode = vim.api.nvim_get_mode().mode
@@ -230,28 +259,23 @@ function M.create_link()
     return
   end
 
-  local lines = vim.api.nvim_buf_get_text(0,
-    selection[1],
-    selection[2],
-    selection[3],
-    selection[4],
-    {})
+  local lines =
+    vim.api.nvim_buf_get_text(0, selection[1], selection[2], selection[3], selection[4], {})
 
   lines[1] = "[" .. lines[1]
   lines[#lines] = lines[#lines] .. "](" .. link .. ")"
 
-  vim.api.nvim_buf_set_text(0,
-    selection[1],
-    selection[2],
-    selection[3],
-    selection[4],
-    lines)
+  vim.api.nvim_buf_set_text(0, selection[1], selection[2], selection[3], selection[4], lines)
 
   -- Set cursor at `)`, so we can easily start editing the pasted text if we want to.
   local end_row = selection[3] + 1
   -- End of selection + ]( + link + )
   local end_col = selection[4] + 2 + #link + 1
   vim.api.nvim_win_set_cursor(0, { end_row, end_col })
+
+  if link == "" then
+    vim.cmd("startinsert")
+  end
 end
 
 return M

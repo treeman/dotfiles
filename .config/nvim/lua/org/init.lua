@@ -1,9 +1,16 @@
--- TODO
+-- Table handling
+-- 1. Reformat table
+-- 1. Move between table cell (text objects)
+-- 1. Edit table cell (text object)
+--
+-- Links
+-- 1. Convert inline_link to collapsed reference link
+-- 1. Rewrite all reference link labels (of either link def or at the link itself)
+-- 1. Update task link markers above
+--
+-- Headings
 -- 1. Raise/lower heading levels on cursor/selection
--- 2. Reformat table
--- 3. Move between table cell (text objects)
--- 4. Edit table cell (text object)
--- 5. Rewrite jump to next heading (and jump between sections)
+-- 1. Rewrite jump to next heading (and jump between sections)
 --
 -- Format on save
 -- + Format table
