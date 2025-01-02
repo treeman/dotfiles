@@ -3,7 +3,8 @@ window-decoration = false
 # This is needed to remove the borders
 # https://github.com/ghostty-org/ghostty/issues/2023
 gtk-titlebar = false
-theme = gruvbox-material
+# https://github.com/ghostty-org/ghostty/discussions/4224
+gtk-adwaita = false
 
 # See `ghostty +list-fonts`
 font-family = IosevkaTreeLig Nerd Font
@@ -16,9 +17,10 @@ font-size = 16
 # Don't annoy me
 confirm-close-surface = false
 
+shell-integration-features = sudo
+
 # Avoids weird shit being unreadable
-# TODO this breaks indent-blankline on hover
-# minimum-contrast = 1.05
+minimum-contrast = 1.05
 
 # Inverting hides the cursor in some places (spaces before text in Neovim)
 # cursor-invert-fg-bg = true
