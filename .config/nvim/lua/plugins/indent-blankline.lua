@@ -3,4 +3,5 @@ return {
   main = "ibl",
   opts = {},
   event = { "BufReadPost", "BufNewFile" },
+  enabled = false,
 }

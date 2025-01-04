@@ -11,7 +11,7 @@ local M = {}
 -- Wrap it in a function to prevent requiring this file evaluates
 -- global keymaps multiple times.
 M.init = function()
-  local normal_keyboard = require("util.keyboard").has_normal_keyboard()
+  local custom_keyboard = require("util.keyboard").has_custom_keyboard_layout()
 
   -- Copy/paste to mouse clipboard quickly
   map("n", "<leader>p", '"*p', { silent = true, desc = "Paste from mouse" })
@@ -21,14 +21,16 @@ M.init = function()
   -- Don't overwrite register when pasting in visual selection
   map("x", "p", '"_dP')
 
-  -- Use ( as [ everywhere for T-34 that has ()
+  -- Use ( as [ everywhere for custom layouts that has ()
   -- on the base layer, but [] are hidden.
-  map("n", "(", "[", { remap = true })
-  map("n", ")", "]", { remap = true })
-  map("o", "(", "[", { remap = true })
-  map("o", ")", "]", { remap = true })
-  map("x", "(", "[", { remap = true })
-  map("x", ")", "]", { remap = true })
+  if custom_keyboard then
+    map("n", "(", "[", { remap = true })
+    map("n", ")", "]", { remap = true })
+    map("o", "(", "[", { remap = true })
+    map("o", ")", "]", { remap = true })
+    map("x", "(", "[", { remap = true })
+    map("x", ")", "]", { remap = true })
+  end
 
   map("n", "]q", ":cnext<cr>", { desc = "Next quickfix" })
   map("n", "[q", ":cprevious<cr>", { desc = "Prev quickfix" })
@@ -41,17 +43,7 @@ M.init = function()
   map("n", "[L", ":lfirst<cr>", { desc = "First loclist" })
 
   -- Happy windows switching
-  if normal_keyboard then
-    map("n", "<C-h>", "<c-w>h")
-    map("n", "<C-j>", "<c-w>j")
-    map("n", "<C-k>", "<c-w>k")
-    map("n", "<C-l>", "<c-w>l")
-
-    map("t", "<C-h>", "<c-w>h")
-    map("t", "<C-j>", "<c-w>j")
-    map("t", "<C-k>", "<c-w>k")
-    map("t", "<C-l>", "<c-w>l")
-  else
+  if custom_keyboard then
     map("n", "<C-left>", "<c-w>h")
     map("n", "<C-down>", "<c-w>j")
     map("n", "<C-up>", "<c-w>k")
@@ -61,6 +53,16 @@ M.init = function()
     map("t", "<C-down>", "<c-w>j")
     map("t", "<C-up>", "<c-w>k")
     map("t", "<C-right>", "<c-w>l")
+  else
+    map("n", "<C-h>", "<c-w>h")
+    map("n", "<C-j>", "<c-w>j")
+    map("n", "<C-k>", "<c-w>k")
+    map("n", "<C-l>", "<c-w>l")
+
+    map("t", "<C-h>", "<c-w>h")
+    map("t", "<C-j>", "<c-w>j")
+    map("t", "<C-k>", "<c-w>k")
+    map("t", "<C-l>", "<c-w>l")
   end
 
   -- Don't get caught in terminal

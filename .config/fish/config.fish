@@ -44,8 +44,13 @@ alias g git
 # Always use neovide multigrid mode
 set -x NEOVIDE_MULTIGRID
 
-if test $hostname != "winterfell"
-    set -x NORMAL_KEYBOARD 1
+function has_custom_keyboard_layout
+    set usb_devices (lsusb)
+    return (string match -q "*Jonas Hietala cybershard*" $usb_devices)
+end
+
+if has_custom_keyboard_layout
+    set -x CUSTOM_KEYBOARD 1
 end
 
 # zlip decompress

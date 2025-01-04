@@ -1,8 +1,7 @@
 local M = {}
 
-M.has_normal_keyboard = function()
-  return os.getenv("NORMAL_KEYBOARD")
+function M.has_custom_keyboard_layout()
+  return os.getenv("CUSTOM_KEYBOARD")
 end
 
 return M
-

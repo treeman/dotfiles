@@ -23,8 +23,7 @@ shell-integration-features = sudo
 minimum-contrast = 1.05
 
 # Inverting hides the cursor in some places (spaces before text in Neovim)
-# cursor-invert-fg-bg = true
-# cursor-opacity = 0.6
+cursor-invert-fg-bg = true
 
 cursor-color = #ebc06d
 cursor-text = #292522

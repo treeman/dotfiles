@@ -13,7 +13,7 @@ return {
       html = { "prettierd" },
       json = { "prettierd" },
       yaml = { "prettierd" },
-      toml = { "prettierd" },
+      -- toml = { "prettierd" },
       rust = { "rustfmt" },
       sql = { "pg_format" },
       mysql = { "pg_format" },

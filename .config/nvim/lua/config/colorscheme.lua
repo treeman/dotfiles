@@ -76,6 +76,11 @@ local overrides = {
   { name = "NeotestBorder", val = { link = "WinSeparator" } },
   -- { name = "NeotestWinSelect", val = { link = "Normal" } },
 
+  -- snacks.nvim
+  { name = "SnacksIndent", val = { link = "IblIndent" } },
+  { name = "SnacksIndentScope", val = { link = "WinSeparator" } },
+  { name = "SnacksIndentChunk", val = { link = "WinSeparator" } },
+
   -- nvim-notify
   { name = "NotifyDEBUGBorder", val = { link = "Constant" } }, -- guifg=#8B8B8B
   { name = "NotifyDEBUGIcon", val = { link = "Constant" } }, -- guifg=#8B8B8B

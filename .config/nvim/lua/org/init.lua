@@ -1,5 +1,4 @@
 -- Table handling
--- 1. Reformat table
 -- 1. Move between table cell (text objects)
 -- 1. Edit table cell (text object)
 --
@@ -17,6 +16,8 @@
 -- + Spacing before sections
 -- + Reorder lists
 -- (configurable)
+-- + Fix code block indents
+-- + Could we format code inside the code blocks too?
 --
 -- Textobjects:
 -- Prev/Next heading

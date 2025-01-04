@@ -35,6 +35,15 @@ local config = function()
     },
     filetype = "fish-shell",
   }
+  parser_config.ghostty = {
+    install_info = {
+      url = "~/code/tree-sitter-ghostty",
+      files = { "src/parser.c" },
+      generate_reqires_npm = false,
+      requires_generate_from_grammar = false,
+    },
+    filetype = "ghostty",
+  }
 
   local keymaps = require("config.keymaps")
 
