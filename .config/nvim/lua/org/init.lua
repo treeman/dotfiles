@@ -5,7 +5,11 @@
 -- Links
 -- 1. Convert inline_link to collapsed reference link
 -- 1. Rewrite all reference link labels (of either link def or at the link itself)
--- 1. Update task link markers above
+--
+-- Lists
+-- 1. Update task list markers above
+-- 1. Quick way to add a task link (or add a new list item, at the end of current list)
+--    (On enter in insert mode, or o or O?)
 --
 -- Headings
 -- 1. Raise/lower heading levels on cursor/selection

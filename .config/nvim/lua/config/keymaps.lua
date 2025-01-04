@@ -21,6 +21,26 @@ M.init = function()
   -- Don't overwrite register when pasting in visual selection
   map("x", "p", '"_dP')
 
+  if custom_keyboard then
+    -- Should use arrow keys on home-row instead of jk,
+    -- but it's fine to use jk when jumping to relative lines
+    -- because they're on the number layer.
+    local function block_jk(key)
+      return function()
+        if vim.v.count == 0 then
+          vim.notify("stop mashing " .. key .. " you animal", vim.log.levels.ERROR)
+        else
+          vim.api.nvim_feedkeys(vim.v.count .. key, "n", true)
+        end
+      end
+    end
+
+    map("n", "j", block_jk("j"))
+    map("n", "k", block_jk("k"))
+    map("v", "j", block_jk("j"))
+    map("v", "k", block_jk("k"))
+  end
+
   -- Use ( as [ everywhere for custom layouts that has ()
   -- on the base layer, but [] are hidden.
   if custom_keyboard then
