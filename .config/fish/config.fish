@@ -49,9 +49,20 @@ function has_custom_keyboard_layout
     return (string match -q "*Jonas Hietala cybershard*" $usb_devices)
 end
 
-if test "$CUSTOM_KEYBOARD" != 0 && has_custom_keyboard_layout
-    echo "setting custom keyboard"
-    set -x CUSTOM_KEYBOARD 1
+function set_custom_keyboard_from_lsusb
+    if has_custom_keyboard_layout
+        echo "setting custom keyboard"
+        set -x CUSTOM_KEYBOARD 1
+    end
+end
+
+if status --is-interactive
+    # If we're connecting from winterfell
+    if string match -r "192.168.1.16*" -- $SSH_CLIENT
+        set_custom_keyboard_from_lsusb
+    end
+else
+    set_custom_keyboard_from_lsusb
 end
 
 # zlip decompress
