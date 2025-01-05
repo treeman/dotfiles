@@ -49,7 +49,8 @@ function has_custom_keyboard_layout
     return (string match -q "*Jonas Hietala cybershard*" $usb_devices)
 end
 
-if has_custom_keyboard_layout
+if test "$CUSTOM_KEYBOARD" != 0 && has_custom_keyboard_layout
+    echo "setting custom keyboard"
     set -x CUSTOM_KEYBOARD 1
 end
 
