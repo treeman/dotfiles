@@ -7,6 +7,7 @@ do
     ln -s $dir ~/.config/
 done
 
+ln -s ~/dotfiles/.commitlintrc.json ~/
 ln -s ~/dotfiles/.conky ~/
 ln -s ~/dotfiles/.dir_colors ~/
 ln -s ~/dotfiles/.ghci ~/
