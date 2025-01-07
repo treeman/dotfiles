@@ -1,8 +1,6 @@
 #!/usr/bin/fish
 
 function melange --description 'Apply melange theme'
-    echo "set melange colorscheme"
-
     set a_bg        292522
     set a_float     34302C
     set a_sel       403A36

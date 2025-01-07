@@ -6,9 +6,9 @@ local function config()
     return context.in_treesitter_capture("comment") or context.in_syntax_group("Comment")
   end
 
-  local function in_string()
-    return context.in_treesitter_capture("string") or context.in_syntax_group("String")
-  end
+  -- local function in_string()
+  --   return context.in_treesitter_capture("string") or context.in_syntax_group("String")
+  -- end
 
   local function in_spell()
     return context.in_treesitter_capture("spell")
@@ -93,6 +93,7 @@ local function config()
         async_path = "[PATH]",
         buffer = "[BUF]",
         calc = "[CALC]",
+        commitlint = "[COMMIT]",
         ["vim-dadbod-completion"] = "[DB]",
       },
     })
@@ -122,11 +123,11 @@ local function config()
       }),
       ["<Tab>"] = cmp.mapping.confirm({ select = true }),
     },
-    snippet = {
-      expand = function(args)
-        vim.snippet.expand(args.body)
-      end,
-    },
+    -- snippet = {
+    --   expand = function(args)
+    --     vim.snippet.expand(args.body)
+    --   end,
+    -- },
     sources = {
       { name = "blog", group_index = 0, max_item_count = 10000 },
       { name = "nvim_lsp", group_index = 0 },
