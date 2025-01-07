@@ -14,6 +14,10 @@ function fish_prompt --description 'Write out the prompt'
         set suffix '#'
     end
 
+    if test $CUSTOM_KEYBOARD = "1"
+        set color_cwd $fish_pager_color_completion
+    end
+
     # If we're running via SSH, change the host color.
     set -l color_host $fish_color_host
     if set -q SSH_TTY

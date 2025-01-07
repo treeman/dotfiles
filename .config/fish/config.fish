@@ -4,6 +4,7 @@ set -x PATH ~/.cabal/bin $PATH
 set -x PATH ~/.cargo/bin ~/.cargo/env $PATH
 set -x PATH ~/.local/bin $PATH
 set -x PATH ~/bin ~/dotfiles/bin $PATH
+# set -x PATH ~/.local/share/nvim/mason/bin $PATH
 set -x PATH ~/.linuxbrew/bin $PATH
 set -x PATH ~/go/bin $PATH
 set -x PATH ~/.yarn/bin $PATH
@@ -51,14 +52,14 @@ end
 
 function set_custom_keyboard_from_lsusb
     if has_custom_keyboard_layout
-        echo "setting custom keyboard"
-        set -x CUSTOM_KEYBOARD 1
+        set -xg CUSTOM_KEYBOARD 1
     end
 end
 
+set -x HOSTNAME (hostname)
+
 if status --is-interactive
-    # If we're connecting from winterfell
-    if string match -r "192.168.1.16*" -- $SSH_CLIENT
+    if test -z "$SSH_CLIENT"; or string match -r "192.168.1.16*" -- $SSH_CLIENT
         set_custom_keyboard_from_lsusb
     end
 else
@@ -81,7 +82,7 @@ function reload
 end
 
 # Colorscheme
-gruvbox
+melange
 
 set secret_file ~/.env.secrets.fish
 if test -e $secret_file
