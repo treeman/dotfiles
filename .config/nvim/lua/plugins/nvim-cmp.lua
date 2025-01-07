@@ -128,52 +128,17 @@ local function config()
       end,
     },
     sources = {
-      {
-        name = "blog",
-        group_index = 0,
-        max_item_count = 10000,
-      },
-      {
-        name = "nvim_lsp",
-        group_index = 0,
-      },
-      {
-        name = "nvim_lua",
-        group_index = 0,
-      },
-      {
-        name = "vim-dadbod-completion",
-        group_index = 0,
-      },
-      {
-        name = "lazydev",
-        group_index = 0,
-      },
-      {
-        name = "spell",
-        option = {
-          enable_in_context = in_spell,
-        },
-        group_index = 3,
-      },
-      {
-        name = "treesitter",
-        keyword_length = 3,
-        group_index = 4,
-      },
-      {
-        name = "async_path",
-        group_index = 4,
-      },
-      {
-        name = "calc",
-        group_index = 4,
-      },
-      {
-        name = "buffer",
-        keyword_length = 3,
-        group_index = 5,
-      },
+      { name = "blog", group_index = 0, max_item_count = 10000 },
+      { name = "nvim_lsp", group_index = 0 },
+      { name = "nvim_lua", group_index = 0 },
+      { name = "vim-dadbod-completion", group_index = 0 },
+      { name = "lazydev", group_index = 0 },
+      { name = "conventionalcommits", group_index = 0 },
+      { name = "spell", option = { enable_in_context = in_spell }, group_index = 3 },
+      { name = "treesitter", keyword_length = 3, group_index = 4 },
+      { name = "async_path", group_index = 4 },
+      { name = "calc", group_index = 4 },
+      { name = "buffer", keyword_length = 3, group_index = 5 },
     },
     formatting = {
       format = make_format(),
@@ -226,6 +191,7 @@ return {
     "onsails/lspkind.nvim",
     "nvim-treesitter/nvim-treesitter",
     "ray-x/cmp-treesitter",
+    "davidsierradz/cmp-conventionalcommits",
     -- "saadparwaiz1/cmp_luasnip",
   },
   event = "InsertEnter",

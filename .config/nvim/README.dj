@@ -22,3 +22,11 @@
 - pgformat (SQL)
 
 - stylua
+
+## Linters
+
+- commitlint
+
+  ```bash
+  npm install -g --save-dev @commitlint/{cli,config-conventional}
+  ```
