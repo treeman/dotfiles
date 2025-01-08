@@ -312,9 +312,12 @@ M.djot = function()
   end, { buffer = 0, desc = "Create link" })
   map({ "o", "x" }, "u", function()
     R("org.links").select_link_url()
-  end, { buffer = 0, desc = "Select link url", silent = true, noremap = true })
-
+  end, { buffer = 0, desc = "Select link url" })
   map("n", "<leader>l", function()
+    R("org.links").convert_link()
+  end, { buffer = 0, desc = "Convert link type" })
+
+  map("n", "<leader>r", function()
     R("org.lists").reset_list_numbering()
   end, { buffer = 0, desc = "Reset list numbering" })
 

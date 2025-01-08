@@ -391,4 +391,75 @@ function M.select_link_url()
   vim.cmd("normal! gv")
 end
 
+---@param def TSNode
+local function remove_link_def(def)
+  local def_start, _, def_end, _ = vim.treesitter.get_node_range(def)
+  vim.api.nvim_buf_set_lines(0, def_start, def_end, false, {})
+end
+
+---@param opts? { reference_type?: "collapsed_reference" | "full_reference" }
+function M.convert_link(opts)
+  opts = vim.tbl_extend("force", { reference_type = "collapsed_reference" }, opts or {})
+
+  local link = M.get_nearest_link()
+  if not link then
+    return
+  end
+
+  if link:type() == "inline_link" then
+    local destination = link:named_child(1)
+    local row_start, col_start, row_end, col_end = ts.get_range(destination, 1, 1)
+    local dest = vim.api.nvim_buf_get_text(0, row_start, col_start, row_end, col_end, {})[1]
+
+    local link_text = ts.get_text(link:named_child(0), 1, 1)
+
+    local label
+    if opts.reference_type == "collapsed_reference" then
+      label = link_text
+      vim.api.nvim_buf_set_text(0, row_start, col_start - 1, row_end, col_end + 1, { "[]" })
+    else
+      label = slugify(link_text)
+      vim.api.nvim_buf_set_text(0, row_start, col_start - 1, row_end, col_end + 1, {
+        "[" .. label .. "]",
+      })
+    end
+
+    insert_link_def(label, dest)
+  else
+    local label, label_text
+    if link:type() == "collapsed_reference_link" then
+      label = link:named_child(0)
+      label_text = ts.get_text(label, 1, 1)
+    else
+      label = link:named_child(1)
+      label_text = ts.get_text(label)
+    end
+
+    local def = find_link_def(label_text)
+    if not def then
+      vim.notify("No definition for label: " .. label_text, vim.log.levels.WARN)
+      return
+    end
+
+    local url = ts.get_text(def:named_child(1))
+
+    -- First remove the link reference definition.
+    remove_link_def(def)
+
+    -- Then convert to inline link.
+    local row_start, col_start, row_end, col_end
+    if link:type() == "collapsed_reference_link" then
+      row_start, _, row_end, col_end = ts.get_range(link)
+      col_start = col_end - 2
+    else
+      row_start, col_start, row_end, col_end = ts.get_range(label, -1, -1)
+    end
+
+    vim.api.nvim_buf_set_text(0, row_start, col_start, row_end, col_end, {
+      "(" .. url .. ")",
+    })
+    vim.cmd("undojoin")
+  end
+end
+
 return M

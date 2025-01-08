@@ -2,9 +2,6 @@
 -- 1. Move between table cell (text objects)
 -- 1. Edit table cell (text object)
 --
--- Links
--- 1. Convert inline_link to collapsed reference link (or back)
---
 -- Lists
 -- 1. Update task list markers above
 -- 1. Quick way to add a task link (or add a new list item, at the end of current list)
@@ -20,6 +17,7 @@
 -- Left/Right/Above/Below table cells
 -- Current table cell
 -- Attributes?
+--
 --
 -- In LSP server:
 -- Goto
