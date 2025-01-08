@@ -301,9 +301,19 @@ M.djot = function()
     ":Trouble ts_headings toggle<CR>",
     { buffer = 0, desc = "Display headings" }
   )
+
+  -- Indent list
+  -- De-indent list
+  -- o O <CR> (i) auto next list item
+  -- Cycle list types?
+  -- Recalculate list numbers
   map("n", "<Tab>", function()
     R("org.task_marker").toggle_task_marker()
   end, { buffer = 0, desc = "Toggle list marker" })
+  map("n", "<leader>r", function()
+    R("org.lists").reset_list_numbering()
+  end, { buffer = 0, desc = "Reset list numbering" })
+
   map("n", "<CR>", function()
     R("org.links").visit_nearest_link()
   end, { buffer = 0, desc = "Visit closest link" })
@@ -316,10 +326,6 @@ M.djot = function()
   map("n", "<leader>l", function()
     R("org.links").convert_link()
   end, { buffer = 0, desc = "Convert link type" })
-
-  map("n", "<leader>r", function()
-    R("org.lists").reset_list_numbering()
-  end, { buffer = 0, desc = "Reset list numbering" })
 
   -- map("n", "<up>", "gk")
   -- map("n", "<down>", "gj")

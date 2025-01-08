@@ -3,9 +3,12 @@
 -- 1. Edit table cell (text object)
 --
 -- Lists
--- 1. Update task list markers above
 -- 1. Quick way to add a task link (or add a new list item, at the end of current list)
 --    (On enter in insert mode, or o or O?)
+-- 1. Cycle between list types
+-- 1. Indent/de-indent lists
+--
+-- https://github.com/gaoDean/autolist.nvim
 --
 -- Headings
 -- 1. Raise/lower heading levels on cursor/selection
