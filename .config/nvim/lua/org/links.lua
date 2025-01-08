@@ -377,7 +377,6 @@ function M.select_link_url()
     row_start, col_start, row_end, col_end = get_link_destination_range(link)
   else
     local def = M.get_nearest_link_def()
-    P(def)
     if def then
       row_start, col_start, row_end, col_end = get_link_destination_range(def)
     end
@@ -387,10 +386,9 @@ function M.select_link_url()
     return
   end
 
-  -- FIXME for some reason this doesn't work when used as a textobject for visual mode.
-  vim.fn.setpos(".", { 0, row_start + 1, col_start + 1, 0 })
-  vim.cmd("normal! v")
-  vim.fn.setpos(".", { 0, row_end + 1, col_end, 0 })
+  vim.api.nvim_buf_set_mark(0, "<", row_start + 1, col_start, {})
+  vim.api.nvim_buf_set_mark(0, ">", row_end + 1, col_end - 1, {})
+  vim.cmd("normal! gv")
 end
 
 return M
