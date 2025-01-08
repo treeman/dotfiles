@@ -1,3 +1,5 @@
+local ts = require("org.treesitter")
+
 local function find_list_marker_line()
   local task_link_query = [[
 (list_item (list_marker_task (unchecked)) @unchecked) @list
@@ -66,22 +68,35 @@ local function set_marker(node, marker)
   vim.api.nvim_buf_set_text(0, row_start, col_start + 1, row_end, col_end - 1, { marker })
 end
 
-local function toggle_marker(node)
+local function get_marker_checkmark(node)
   if node:type() ~= "list_marker_task" then
     vim.notify("Bad marker! " .. node:type(), vim.log.levels.ERROR)
     return
   end
 
   local check = node:child(0)
-  local row_start, col_start, row_end, col_end = vim.treesitter.get_node_range(check)
-  local replacement = " "
   if check:type() == "unchecked" then
-    replacement = "x"
+    return " "
+  else
+    return "x"
+  end
+end
+
+local function toggle_marker(node)
+  if node:type() ~= "list_marker_task" then
+    vim.notify("Bad marker! " .. node:type(), vim.log.levels.ERROR)
+    return
   end
 
-  vim.api.nvim_buf_set_text(0, row_start, col_start + 1, row_end, col_end - 1, { replacement })
+  local mark
+  if get_marker_checkmark(node) == "x" then
+    mark = " "
+  else
+    mark = "x"
+  end
 
-  return replacement
+  set_marker(node, mark)
+  return mark
 end
 
 local function toggle_markers_inside(node, content)
@@ -92,6 +107,51 @@ local function toggle_markers_inside(node, content)
       toggle_markers_inside(child, content)
     end
   end
+end
+
+local function collect_child_markers(list)
+  local res = {}
+  for list_item in list:iter_children() do
+    local list_type = list_item:named_child(0)
+    if list_type and list_type:type() == "list_marker_task" then
+      local mark = get_marker_checkmark(list_type)
+      table.insert(res, mark)
+    end
+  end
+  return res
+end
+
+local function all_checked(list)
+  for _, val in ipairs(list) do
+    if val ~= "x" and val ~= "X" then
+      return false
+    end
+  end
+  return true
+end
+
+local function update_parent_marker(child_marker)
+  local list = ts.find_node(child_marker, "list")
+  if not list then
+    vim.notify("Couldn't find list", vim.log.levels.WARN)
+    return
+  end
+
+  local marker = find_list_marker_up(list)
+  if not marker then
+    return
+  end
+
+  -- Collect the status of all tasks in the main list
+  local markers = collect_child_markers(list)
+  if all_checked(markers) then
+    set_marker(marker, "x")
+  else
+    set_marker(marker, " ")
+  end
+
+  marker = ts.reparse_and_get_node(marker)
+  update_parent_marker(marker)
 end
 
 local M = {}
@@ -112,12 +172,19 @@ M.toggle_task_marker = function()
   -- Toggle the marker
   local checked_value = toggle_marker(marker)
 
-  -- Set all the markers inside this lists content to the same value as we just set.
-  local content = marker:next_sibling()
-  if not content or content:type() ~= "list_item_content" then
+  -- Force treesitter update because the AST has changed.
+  marker = ts.reparse_and_get_node(marker)
+  if not marker then
     return
   end
-  toggle_markers_inside(content, checked_value)
+
+  -- Set all the markers inside this lists content to the same value as we just set.
+  local content = marker:next_sibling()
+  if content and content:type() == "list_item_content" then
+    toggle_markers_inside(content, checked_value)
+  end
+
+  update_parent_marker(marker)
 end
 
 return M

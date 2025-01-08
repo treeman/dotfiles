@@ -1,12 +1,18 @@
 local M = {}
 
----@param node_type string
----@param opts vim.treesitter.get_node.Opts?
+---@param node TSNode
 ---@return TSNode | nil
-function M.find_node(node_type, opts)
-  opts = opts or { lang = "djot" }
+function M.reparse_and_get_node(node)
+  local row_start, col_start, row_end, _ = vim.treesitter.get_node_range(node)
+  local parser = vim.treesitter.get_parser()
+  parser:parse({ row_start, row_end })
+  return vim.treesitter.get_node({ pos = { row_start, col_start } })
+end
 
-  local curr = vim.treesitter.get_node(opts)
+---@param node_type string
+---@return TSNode | nil
+function M.find_node(node, node_type)
+  local curr = node
   while curr do
     if curr:type() == node_type then
       return curr
@@ -15,6 +21,16 @@ function M.find_node(node_type, opts)
   end
 
   return nil
+end
+
+---@param node_type string
+---@param opts vim.treesitter.get_node.Opts?
+---@return TSNode | nil
+function M.find_node_from_cursor(node_type, opts)
+  opts = opts or { lang = "djot" }
+
+  local curr = vim.treesitter.get_node(opts)
+  return M.find_node(curr, node_type)
 end
 
 ---@param node TSNode
