@@ -1,6 +1,5 @@
 2D
 3D
-<<<<<<< HEAD
 AES
 AES
 APScheduler
@@ -533,3 +532,4 @@ patcher
 untyped
 Ghostty
 recency
+wezterm

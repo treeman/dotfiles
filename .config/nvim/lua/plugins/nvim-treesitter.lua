@@ -37,7 +37,7 @@ local config = function()
   }
   parser_config.ghostty = {
     install_info = {
-      url = "~/code/tree-sitter-ghostty",
+      url = "https://github.com/treeman/tree-sitter-ghostty",
       files = { "src/parser.c" },
       generate_reqires_npm = false,
       requires_generate_from_grammar = false,

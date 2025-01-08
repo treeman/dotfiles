@@ -27,26 +27,26 @@ local function find_links()
 end
 
 -- This finds the closest link
-local function filter_links_by_nearest_row(links, target_row)
-  local curr_row_dist
-  local curr_links = {}
-
-  for _, link in ipairs(links) do
-    local row_start, _, row_end, _ = vim.treesitter.get_node_range(link)
-
-    local target_dist = math.min(math.abs(target_row - row_start), math.abs(target_row - row_end))
-
-    if not curr_row_dist or target_dist < curr_row_dist then
-      curr_row_dist = target_dist
-      curr_links = {}
-      table.insert(curr_links, link)
-    elseif target_dist == curr_row_dist then
-      table.insert(curr_links, link)
-    end
-  end
-
-  return curr_links
-end
+-- local function filter_links_by_nearest_row(links, target_row)
+--   local curr_row_dist
+--   local curr_links = {}
+--
+--   for _, link in ipairs(links) do
+--     local row_start, _, row_end, _ = vim.treesitter.get_node_range(link)
+--
+--     local target_dist = math.min(math.abs(target_row - row_start), math.abs(target_row - row_end))
+--
+--     if not curr_row_dist or target_dist < curr_row_dist then
+--       curr_row_dist = target_dist
+--       curr_links = {}
+--       table.insert(curr_links, link)
+--     elseif target_dist == curr_row_dist then
+--       table.insert(curr_links, link)
+--     end
+--   end
+--
+--   return curr_links
+-- end
 
 -- This filters rows on the same row as the target
 local function filter_links_by_row(links, target_row)
@@ -102,9 +102,9 @@ end
 local function visit_url(url)
   -- If starts with localhost or http:// try to open it in the browser
   if
-    vim.startswith(url, "http://")
-    or vim.startswith(url, "https://")
-    or vim.startswith(url, "localhost")
+      vim.startswith(url, "http://")
+      or vim.startswith(url, "https://")
+      or vim.startswith(url, "localhost")
   then
     vim.notify("Opening " .. url, vim.log.levels.INFO)
     vim.fn.system("xdg-open " .. url)
@@ -132,8 +132,6 @@ local function visit_url(url)
 end
 
 local function find_link_def(link_label)
-  vim.notify(link_label, vim.log.levels.WARN)
-
   local link_def_query = [[
     (link_reference_definition) @def
   ]]
@@ -144,7 +142,6 @@ local function find_link_def(link_label)
 
     if label == link_label then
       local dest = ts.get_text(def:named_child(1))
-      vim.notify(dest, vim.log.levels.WARN)
       return dest
     end
   end
@@ -242,7 +239,150 @@ local function link_url_to_paste()
   end
 end
 
-function M.create_link()
+local function change_selection(selection, cb)
+  local lines =
+      vim.api.nvim_buf_get_text(0, selection[1], selection[2], selection[3], selection[4], {})
+
+  local res = cb(lines)
+
+  vim.api.nvim_buf_set_text(0, selection[1], selection[2], selection[3], selection[4], lines)
+
+  return res
+end
+
+local function create_inline_link(link, selection)
+  change_selection(selection, function(lines)
+    local res = vim.fn.join(lines, "\n")
+    lines[1] = "[" .. lines[1]
+    lines[#lines] = lines[#lines] .. "](" .. link .. ")"
+    return res
+  end)
+
+  -- Set cursor at `)`, so we can easily start editing the pasted text if we want to.
+  local end_row = selection[3] + 1
+  -- End of selection + ]( + link + )
+  local end_col = selection[4] + 2 + #link + 1
+  vim.api.nvim_win_set_cursor(0, { end_row, end_col })
+
+  if link == "" then
+    vim.cmd("startinsert")
+  end
+end
+
+local function find_row_to_insert_link_def()
+  local line_count = vim.api.nvim_buf_line_count(0)
+
+  local has_new_line = false
+  for i = line_count, 1, -1 do
+    local line = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
+    if line and line ~= "" then
+      local def = ts.find_node("link_reference_definition", { lang = "djot", pos = { i - 1, 0 } })
+      if def then
+        -- If the last non-empty line is a link definition, we should insert it directly below
+        return i + 1
+      else
+        -- Otherwise add an empty space if needed
+        if has_new_line then
+          return i + 1
+        else
+          return i + 2
+        end
+      end
+    else
+      -- We go from the bottom up and will return as soon as we find a non-empty line.
+      has_new_line = true
+    end
+  end
+
+  return line_count
+end
+
+local function insert_link_def(label, link)
+  local link_def_row = find_row_to_insert_link_def()
+  local line_count = vim.api.nvim_buf_line_count(0)
+
+  local replacement = { "[" .. label .. "]: " .. link }
+  local end_row = link_def_row
+  if link_def_row >= line_count + 2 then
+    table.insert(replacement, 1, "")
+    end_row = end_row + 1
+  end
+
+  vim.api.nvim_buf_set_lines(0, link_def_row, link_def_row, false, replacement)
+end
+
+local function set_cursor_at_last_content()
+  local line_count = vim.api.nvim_buf_line_count(0)
+  for i = line_count, 1, -1 do
+    local line = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
+    if line and line ~= "" then
+      vim.api.nvim_win_set_cursor(0, { i, 0 })
+      break
+    end
+  end
+  vim.cmd("startinsert!")
+end
+
+local function create_collapsed_reference_link(link, selection)
+  local label = change_selection(selection, function(lines)
+    local res = vim.fn.join(lines, "\n")
+    lines[1] = "[" .. lines[1]
+    lines[#lines] = lines[#lines] .. "][]"
+    return res
+  end)
+
+  insert_link_def(label, link)
+
+  if link == "" then
+    -- If link is empty place cursor at definition and start inserting
+    set_cursor_at_last_content()
+  else
+    -- Set cursor at the end of `][]`.
+    local end_row = selection[3] + 1
+    -- End of selection + `][]
+    local end_col = selection[4] + 3
+    vim.api.nvim_win_set_cursor(0, { end_row, end_col })
+  end
+end
+
+-- Create a slug from a title.
+local function slugify(title)
+  title = title:lower()
+  title = title:gsub("[^ a-zA-Z0-9_-]+", "")
+  title = title:gsub("[ _]+", "-")
+  title = title:gsub("^[ _-]+", "")
+  title = title:gsub("[ _-]+$", "")
+  return title
+end
+
+local function create_full_reference_link(link, selection)
+  local label = change_selection(selection, function(lines)
+    local label = slugify(vim.fn.join(lines, "\n"))
+
+    lines[1] = "[" .. lines[1]
+    lines[#lines] = lines[#lines] .. "][" .. label .. "]"
+
+    return label
+  end)
+
+  insert_link_def(label, link)
+
+  if link == "" then
+    -- If link is empty place cursor at definition and start inserting
+    set_cursor_at_last_content()
+  else
+    -- Set cursor at the end of `][]`.
+    local end_row = selection[3] + 1
+    -- End of selection + `][]
+    local end_col = selection[4] + 3
+    vim.api.nvim_win_set_cursor(0, { end_row, end_col })
+  end
+end
+
+---@param opts { link_style?: "inline" | "collapsed_reference" | "full_reference" }
+function M.create_link(opts)
+  opts = vim.tbl_extend("force", { link_style = "inline" }, opts or {})
+
   local link = link_url_to_paste()
 
   -- Only paste in visual selection
@@ -254,27 +394,18 @@ function M.create_link()
 
   local selection = get_visual_range()
 
-  local inline = ts.find_node("inline", "djot_inline")
+  -- Only paste if we're fully inside an inline node
+  local inline = ts.find_node("inline", { lang = "djot_inline" })
   if not (inline and vim.treesitter.node_contains(inline, selection)) then
     return
   end
 
-  local lines =
-    vim.api.nvim_buf_get_text(0, selection[1], selection[2], selection[3], selection[4], {})
-
-  lines[1] = "[" .. lines[1]
-  lines[#lines] = lines[#lines] .. "](" .. link .. ")"
-
-  vim.api.nvim_buf_set_text(0, selection[1], selection[2], selection[3], selection[4], lines)
-
-  -- Set cursor at `)`, so we can easily start editing the pasted text if we want to.
-  local end_row = selection[3] + 1
-  -- End of selection + ]( + link + )
-  local end_col = selection[4] + 2 + #link + 1
-  vim.api.nvim_win_set_cursor(0, { end_row, end_col })
-
-  if link == "" then
-    vim.cmd("startinsert")
+  if opts.link_style == "inline" then
+    create_inline_link(link, selection)
+  elseif opts.link_style == "collapsed_reference" then
+    create_collapsed_reference_link(link, selection)
+  elseif opts.link_style == "full_reference" then
+    create_full_reference_link(link, selection)
   end
 end
 

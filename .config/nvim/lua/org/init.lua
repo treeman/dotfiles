@@ -3,8 +3,10 @@
 -- 1. Edit table cell (text object)
 --
 -- Links
--- 1. Convert inline_link to collapsed reference link
+-- 1. Convert inline_link to collapsed reference link (or back)
 -- 1. Rewrite all reference link labels (of either link def or at the link itself)
+-- 1. Change link url (either inline or reference)
+-- 1. Jump to link reference (?)
 --
 -- Lists
 -- 1. Update task list markers above

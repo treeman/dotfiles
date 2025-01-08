@@ -1,12 +1,12 @@
 local M = {}
 
 ---@param node_type string
----@param lang string
+---@param opts vim.treesitter.get_node.Opts?
 ---@return TSNode | nil
-function M.find_node(node_type, lang)
-  lang = lang or "djot"
+function M.find_node(node_type, opts)
+  opts = opts or { lang = "djot" }
 
-  local curr = vim.treesitter.get_node({ lang = lang })
+  local curr = vim.treesitter.get_node(opts)
   while curr do
     if curr:type() == node_type then
       return curr

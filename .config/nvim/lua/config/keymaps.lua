@@ -308,7 +308,7 @@ M.djot = function()
     require("org.links").visit_nearest_link()
   end, { buffer = 0, desc = "Visit closest link" })
   map("v", "<CR>", function()
-    require("org.links").create_link()
+    R("org.links").create_link({ link_style = "full_reference" })
   end, { buffer = 0, desc = "Create link" })
 
   map("n", "<leader>l", function()
