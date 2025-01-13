@@ -177,13 +177,8 @@ M.init = function()
   end, {
     desc = "Org projects",
   })
-  map("n", "<leader>ea", function()
-    require("config.org").open_org_file_telescope("areas")
-  end, {
-    desc = "Org areas",
-  })
-  map("n", "<leader>er", function()
-    require("config.org").open_org_file_telescope("resources")
+  map("n", "<leader>en", function()
+    require("config.org").open_org_file_telescope("notes")
   end, {
     desc = "Org resources",
   })
@@ -310,7 +305,8 @@ M.djot = function()
   map("n", "<Tab>", function()
     R("org.task_marker").toggle_task_marker()
   end, { buffer = 0, desc = "Toggle list marker" })
-  map("n", "<leader>r", function()
+  map("n", "<leader>rl", function()
+    -- TODO this is broken
     R("org.lists").reset_list_numbering()
   end, { buffer = 0, desc = "Reset list numbering" })
 
