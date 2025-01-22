@@ -2,20 +2,32 @@
 -- 1. Move between table cell (text objects)
 -- 1. Edit table cell (text object)
 --
--- Links
--- 1. Convert inline_link to collapsed reference link (or back)
--- 1. Rewrite all reference link labels (of either link def or at the link itself)
--- 1. Change link url (either inline or reference)
--- 1. Jump to link reference (?)
---
 -- Lists
--- 1. Update task list markers above
 -- 1. Quick way to add a task link (or add a new list item, at the end of current list)
 --    (On enter in insert mode, or o or O?)
+-- 1. Cycle between list types
+-- 1. Indent/de-indent lists
+--
+-- https://github.com/gaoDean/autolist.nvim
 --
 -- Headings
 -- 1. Raise/lower heading levels on cursor/selection
 -- 1. Rewrite jump to next heading (and jump between sections)
+--
+-- Textobjects:
+-- Prev/Next heading
+-- Prev/Next section
+-- Left/Right/Above/Below table cells
+-- Current table cell
+-- Attributes?
+--
+--
+-- In LSP server:
+-- Goto
+-- 1. Link reference
+-- 1. Image reference
+-- 1. Footnote reference
+-- 1. Heading reference
 --
 -- Format on save
 -- + Format table
@@ -25,9 +37,4 @@
 -- + Fix code block indents
 -- + Could we format code inside the code blocks too?
 --
--- Textobjects:
--- Prev/Next heading
--- Prev/Next section
--- Left/Right/Above/Below table cells
--- Current table cell
--- Attributes?
+-- 1. Rewrite all reference link labels (of either link def or at the link itself)

@@ -17,94 +17,37 @@ local function collect_captures(query, language)
 end
 
 local function find_links()
-  local task_link_query = [[
+  local query = [[
   (inline_link) @link
   (full_reference_link) @link
   (collapsed_reference_link) @link
   ]]
 
-  return collect_captures(task_link_query, "djot_inline")
+  return collect_captures(query, "djot_inline")
 end
 
--- This finds the closest link
--- local function filter_links_by_nearest_row(links, target_row)
---   local curr_row_dist
---   local curr_links = {}
---
---   for _, link in ipairs(links) do
---     local row_start, _, row_end, _ = vim.treesitter.get_node_range(link)
---
---     local target_dist = math.min(math.abs(target_row - row_start), math.abs(target_row - row_end))
---
---     if not curr_row_dist or target_dist < curr_row_dist then
---       curr_row_dist = target_dist
---       curr_links = {}
---       table.insert(curr_links, link)
---     elseif target_dist == curr_row_dist then
---       table.insert(curr_links, link)
---     end
---   end
---
---   return curr_links
--- end
+local function find_link_defs()
+  local query = [[
+  (link_reference_definition) @def
+  ]]
 
--- This filters rows on the same row as the target
-local function filter_links_by_row(links, target_row)
-  local curr_links = {}
-
-  for _, link in ipairs(links) do
-    local row_start, _, row_end, _ = vim.treesitter.get_node_range(link)
-
-    if row_start <= target_row and row_end >= target_row then
-      table.insert(curr_links, link)
-    end
-  end
-
-  return curr_links
-end
-
-local function filter_links_by_col(links, target_col)
-  local curr_col_dist
-  local curr_link
-
-  for _, link in ipairs(links) do
-    local _, col_start, _, col_end = vim.treesitter.get_node_range(link)
-
-    -- Yeah this isn't maybe exact when links wrap multiple lines
-    local target_dist = math.min(math.abs(target_col - col_start), math.abs(target_col - col_end))
-
-    if not curr_col_dist or target_dist <= curr_col_dist then
-      curr_link = link
-      curr_col_dist = target_dist
-    end
-  end
-
-  return curr_link
+  return collect_captures(query, "djot")
 end
 
 M.get_nearest_link = function()
-  local links = find_links()
+  return ts.get_nearest_node(find_links())
+end
 
-  -- (1, 0)-indexed
-  local cursor = vim.api.nvim_win_get_cursor(0)
-  local cursor_row = cursor[1] - 1
-  local cursor_col = cursor[2]
-
-  local by_row = filter_links_by_row(links, cursor_row)
-
-  if #by_row == 1 then
-    return by_row[1]
-  end
-
-  return filter_links_by_col(by_row, cursor_col)
+M.get_nearest_link_def = function()
+  return ts.get_nearest_node(find_link_defs())
 end
 
 local function visit_url(url)
   -- If starts with localhost or http:// try to open it in the browser
   if
-      vim.startswith(url, "http://")
-      or vim.startswith(url, "https://")
-      or vim.startswith(url, "localhost")
+    vim.startswith(url, "http://")
+    or vim.startswith(url, "https://")
+    or vim.startswith(url, "localhost")
   then
     vim.notify("Opening " .. url, vim.log.levels.INFO)
     vim.fn.system("xdg-open " .. url)
@@ -141,28 +84,44 @@ local function find_link_def(link_label)
     local label = ts.get_text(def:named_child(0))
 
     if label == link_label then
-      local dest = ts.get_text(def:named_child(1))
-      return dest
+      return def
     end
   end
 end
 
-local function get_link_destination(link)
+local function get_link_def_url_range(link_label)
+  local def = find_link_def(link_label)
+
+  if def then
+    return ts.get_range(def:named_child(1))
+  end
+end
+
+local function get_link_destination_range(link)
   if link:type() == "inline_link" then
-    return ts.get_text(link:child(1), 1, 1)
+    return ts.get_range(link:child(1), 1, 1)
   end
 
   if link:type() == "full_reference_link" then
     local label = ts.get_text(link:named_child(1))
-    return find_link_def(label)
+    return get_link_def_url_range(label)
   end
 
   if link:type() == "collapsed_reference_link" then
     local label = ts.get_text(link:named_child(0), 1, 1)
-    return find_link_def(label)
+    return get_link_def_url_range(label)
   end
 
-  vim.notify("Couldn't handle link type: " .. link:type(), vim.log.levels.ERROR)
+  if link:type() == "link_reference_definition" then
+    return ts.get_range(link:named_child(1))
+  end
+end
+
+local function get_link_destination(link)
+  local row_start, col_start, row_end, col_end = get_link_destination_range(link)
+  if row_start then
+    return vim.api.nvim_buf_get_text(0, row_start, col_start, row_end, col_end, {})[1]
+  end
 end
 
 M.visit_nearest_link = function()
@@ -177,6 +136,7 @@ M.visit_nearest_link = function()
     vim.notify("Couldn't find link destination " .. link:type(), vim.log.levels.ERROR)
     return
   end
+
   visit_url(dest)
 end
 
@@ -241,7 +201,7 @@ end
 
 local function change_selection(selection, cb)
   local lines =
-      vim.api.nvim_buf_get_text(0, selection[1], selection[2], selection[3], selection[4], {})
+    vim.api.nvim_buf_get_text(0, selection[1], selection[2], selection[3], selection[4], {})
 
   local res = cb(lines)
 
@@ -276,7 +236,8 @@ local function find_row_to_insert_link_def()
   for i = line_count, 1, -1 do
     local line = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
     if line and line ~= "" then
-      local def = ts.find_node("link_reference_definition", { lang = "djot", pos = { i - 1, 0 } })
+      local def =
+        ts.find_node_from_cursor("link_reference_definition", { lang = "djot", pos = { i - 1, 0 } })
       if def then
         -- If the last non-empty line is a link definition, we should insert it directly below
         return i + 1
@@ -395,7 +356,7 @@ function M.create_link(opts)
   local selection = get_visual_range()
 
   -- Only paste if we're fully inside an inline node
-  local inline = ts.find_node("inline", { lang = "djot_inline" })
+  local inline = ts.find_node_from_cursor("inline", { lang = "djot_inline" })
   if not (inline and vim.treesitter.node_contains(inline, selection)) then
     return
   end
@@ -406,6 +367,99 @@ function M.create_link(opts)
     create_collapsed_reference_link(link, selection)
   elseif opts.link_style == "full_reference" then
     create_full_reference_link(link, selection)
+  end
+end
+
+function M.select_link_url()
+  local link = M.get_nearest_link()
+
+  local row_start, col_start, row_end, col_end
+  if link then
+    row_start, col_start, row_end, col_end = get_link_destination_range(link)
+  else
+    local def = M.get_nearest_link_def()
+    if def then
+      row_start, col_start, row_end, col_end = get_link_destination_range(def)
+    end
+  end
+
+  if not row_start then
+    return
+  end
+
+  vim.api.nvim_buf_set_mark(0, "<", row_start + 1, col_start, {})
+  vim.api.nvim_buf_set_mark(0, ">", row_end + 1, col_end - 1, {})
+  vim.cmd("normal! gv")
+end
+
+---@param def TSNode
+local function remove_link_def(def)
+  local def_start, _, def_end, _ = vim.treesitter.get_node_range(def)
+  vim.api.nvim_buf_set_lines(0, def_start, def_end, false, {})
+end
+
+---@param opts? { reference_type?: "collapsed_reference" | "full_reference" }
+function M.convert_link(opts)
+  opts = vim.tbl_extend("force", { reference_type = "collapsed_reference" }, opts or {})
+
+  local link = M.get_nearest_link()
+  if not link then
+    return
+  end
+
+  if link:type() == "inline_link" then
+    local destination = link:named_child(1)
+    local row_start, col_start, row_end, col_end = ts.get_range(destination, 1, 1)
+    local dest = vim.api.nvim_buf_get_text(0, row_start, col_start, row_end, col_end, {})[1]
+
+    local link_text = ts.get_text(link:named_child(0), 1, 1)
+
+    local label
+    if opts.reference_type == "collapsed_reference" then
+      label = link_text
+      vim.api.nvim_buf_set_text(0, row_start, col_start - 1, row_end, col_end + 1, { "[]" })
+    else
+      label = slugify(link_text)
+      vim.api.nvim_buf_set_text(0, row_start, col_start - 1, row_end, col_end + 1, {
+        "[" .. label .. "]",
+      })
+    end
+
+    insert_link_def(label, dest)
+  else
+    local label, label_text
+    if link:type() == "collapsed_reference_link" then
+      label = link:named_child(0)
+      label_text = ts.get_text(label, 1, 1)
+    else
+      label = link:named_child(1)
+      label_text = ts.get_text(label)
+    end
+
+    local def = find_link_def(label_text)
+    if not def then
+      vim.notify("No definition for label: " .. label_text, vim.log.levels.WARN)
+      return
+    end
+
+    local url = ts.get_text(def:named_child(1))
+
+    -- First remove the link reference definition.
+    remove_link_def(def)
+
+    -- Then convert to inline link.
+    local row_start, col_start, row_end, col_end
+    if link:type() == "collapsed_reference_link" then
+      row_start, _, row_end, col_end = ts.get_range(link)
+      col_start = col_end - 2
+    else
+      row_start, col_start, row_end, col_end = ts.get_range(label, -1, -1)
+    end
+
+    vim.api.nvim_buf_set_text(0, row_start, col_start, row_end, col_end, {
+      "(" .. url .. ")",
+    })
+    vim.cmd("undojoin")
   end
 end
 

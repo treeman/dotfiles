@@ -177,13 +177,8 @@ M.init = function()
   end, {
     desc = "Org projects",
   })
-  map("n", "<leader>ea", function()
-    require("config.org").open_org_file_telescope("areas")
-  end, {
-    desc = "Org areas",
-  })
-  map("n", "<leader>er", function()
-    require("config.org").open_org_file_telescope("resources")
+  map("n", "<leader>en", function()
+    require("config.org").open_org_file_telescope("notes")
   end, {
     desc = "Org resources",
   })
@@ -301,19 +296,32 @@ M.djot = function()
     ":Trouble ts_headings toggle<CR>",
     { buffer = 0, desc = "Display headings" }
   )
-  map("n", "<Tab>", function()
-    require("org.task_marker").toggle_task_marker()
-  end, { buffer = 0, desc = "Toggle list marker" })
-  map("n", "<CR>", function()
-    require("org.links").visit_nearest_link()
-  end, { buffer = 0, desc = "Visit closest link" })
-  map("v", "<CR>", function()
-    R("org.links").create_link({ link_style = "full_reference" })
-  end, { buffer = 0, desc = "Create link" })
 
-  map("n", "<leader>l", function()
+  -- Indent list
+  -- De-indent list
+  -- o O <CR> (i) auto next list item
+  -- Cycle list types?
+  -- Recalculate list numbers
+  map("n", "<Tab>", function()
+    R("org.task_marker").toggle_task_marker()
+  end, { buffer = 0, desc = "Toggle list marker" })
+  map("n", "<leader>rl", function()
+    -- TODO this is broken
     R("org.lists").reset_list_numbering()
   end, { buffer = 0, desc = "Reset list numbering" })
+
+  map("n", "<CR>", function()
+    R("org.links").visit_nearest_link()
+  end, { buffer = 0, desc = "Visit closest link" })
+  map("v", "<CR>", function()
+    R("org.links").create_link({ link_style = "collapsed_reference" })
+  end, { buffer = 0, desc = "Create link" })
+  map({ "o", "x" }, "u", function()
+    R("org.links").select_link_url()
+  end, { buffer = 0, desc = "Select link url" })
+  map("n", "<leader>l", function()
+    R("org.links").convert_link()
+  end, { buffer = 0, desc = "Convert link type" })
 
   -- map("n", "<up>", "gk")
   -- map("n", "<down>", "gj")

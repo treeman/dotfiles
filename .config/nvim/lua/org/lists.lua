@@ -19,18 +19,18 @@ end
 local function to_roman(num)
   local numerals = {
     { 1000, "M" },
-    { 900,  "CM" },
-    { 500,  "D" },
-    { 400,  "CD" },
-    { 100,  "C" },
-    { 90,   "XC" },
-    { 50,   "L" },
-    { 40,   "XL" },
-    { 10,   "X" },
-    { 9,    "IX" },
-    { 5,    "V" },
-    { 4,    "IV" },
-    { 1,    "I" }
+    { 900, "CM" },
+    { 500, "D" },
+    { 400, "CD" },
+    { 100, "C" },
+    { 90, "XC" },
+    { 50, "L" },
+    { 40, "XL" },
+    { 10, "X" },
+    { 9, "IX" },
+    { 5, "V" },
+    { 4, "IV" },
+    { 1, "I" },
   }
 
   local res = ""
@@ -48,7 +48,7 @@ local function to_base26(num)
   while num > 0 do
     num = num - 1 -- Adjust for zero-based index
     local remainder = num % 26
-    res = string.char(remainder + string.byte('A')) .. res
+    res = string.char(remainder + string.byte("A")) .. res
     num = math.floor(num / 26)
   end
   return res
@@ -75,14 +75,7 @@ local function set_list_item_marker(list_item, i, order_type)
   -- Skip ending `. ` or `) `
   col_end = col_end - 2
 
-  local marker_text = vim.api.nvim_buf_get_text(
-    0,
-    row_start,
-    col_start,
-    row_end,
-    col_end,
-    {}
-  )[1]
+  local marker_text = vim.api.nvim_buf_get_text(0, row_start, col_start, row_end, col_end, {})[1]
 
   local new_marker = get_marker_replacement(i, order_type)
 
@@ -94,7 +87,7 @@ local function set_list_item_marker(list_item, i, order_type)
 end
 
 function M.reset_list_numbering()
-  local list = ts.find_node("list")
+  local list = ts.find_node_from_cursor("list")
   if not list then
     return
   end
