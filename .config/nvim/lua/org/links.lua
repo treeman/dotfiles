@@ -236,7 +236,8 @@ local function find_row_to_insert_link_def()
   for i = line_count, 1, -1 do
     local line = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
     if line and line ~= "" then
-      local def = ts.find_node("link_reference_definition", { lang = "djot", pos = { i - 1, 0 } })
+      local def =
+        ts.find_node_from_cursor("link_reference_definition", { lang = "djot", pos = { i - 1, 0 } })
       if def then
         -- If the last non-empty line is a link definition, we should insert it directly below
         return i + 1
@@ -355,7 +356,7 @@ function M.create_link(opts)
   local selection = get_visual_range()
 
   -- Only paste if we're fully inside an inline node
-  local inline = ts.find_node("inline", { lang = "djot_inline" })
+  local inline = ts.find_node_from_cursor("inline", { lang = "djot_inline" })
   if not (inline and vim.treesitter.node_contains(inline, selection)) then
     return
   end
