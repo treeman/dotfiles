@@ -11,20 +11,12 @@ local config = function()
   }
   parser_config.djot = {
     install_info = {
-      url = "~/code/tree-sitter-djot/tree-sitter-djot",
+      url = "~/code/tree-sitter-djot",
       files = { "src/parser.c", "src/scanner.c" },
       generate_reqires_npm = false,
       requires_generate_from_grammar = false,
     },
     filetype = "djot",
-  }
-  parser_config.djot_inline = {
-    install_info = {
-      url = "~/code/tree-sitter-djot/tree-sitter-djot-inline",
-      files = { "src/parser.c", "src/scanner.c" },
-      generate_reqires_npm = false,
-      requires_generate_from_grammar = false,
-    },
   }
   parser_config.fishshell = {
     install_info = {

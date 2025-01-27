@@ -35,7 +35,7 @@ term = "ghostty"
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [
       ((modm,                   xK_Return), spawn $ term)
-    , ((modm,                   xK_t), spawn "alacritty")
+    -- , ((modm,                   xK_t), spawn "alacritty")
 
     , ((modm,                   xK_f), spawn "firefox")
     , ((modm,                   xK_m), spawn "spotify")
@@ -75,14 +75,15 @@ resizeAndMove w =  withDisplay $ \d -> do
                windows W.shiftMaster
 
 myManageHook = composeAll
-    [ className =? "Steam"  --> doFloat
-    , className =? "steam"  --> doFullFloat
-    , className =? "MainThrd"  --> doFloat
-    , title =? "SmallCity"  --> doFloat
+    [
+    -- className =? "Steam"  --> doFloat
+    -- , className =? "steam"  --> doFullFloat
+    className =? "MainThrd"  --> doFloat
+    -- , title =? "SmallCity"  --> doFloat
     {-, title =? "ld33"  --> doFloat-}
     -- Hack workaround trololol
-    , title =? "ld33"  --> doRectFloat (W.RationalRect 0.2 0.1 (800/1914) (600/1076))
-    , title =? "plasma-desktop"  --> doIgnore
+    -- , title =? "ld33"  --> doRectFloat (W.RationalRect 0.2 0.1 (800/1914) (600/1076))
+    -- , title =? "plasma-desktop"  --> doIgnore
     , manageDocks]
 
 myDzenPP h = def

@@ -27,6 +27,9 @@ keychain --gpg2
 # Auto mount devices
 devmon &
 
+# Start squeezebox
+./src/squeezelite/squeezelite -n winterfell -z
+
 # Start xmonad yay!
 exec xmonad
 
