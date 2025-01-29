@@ -52,7 +52,7 @@ vim.opt.conceallevel = 2 -- Hide "concealed" syntax, for example in Djot and mar
 vim.opt.laststatus = 2 -- always show the status line
 
 vim.opt.spell = true
-vim.opt.spelllang = { "en_us" }
+vim.opt.spelllang = { "en_us", "sv" }
 
 vim.opt.lazyredraw = true -- speed up macros
 

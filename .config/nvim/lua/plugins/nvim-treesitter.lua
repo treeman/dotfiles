@@ -112,6 +112,7 @@ end
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    -- dir = "~/code/nvim-treesitter/",
     config = config,
     build = ":TSUpdate",
     cmd = { "TSInstall", "TSUpdate" },
