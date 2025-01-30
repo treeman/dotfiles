@@ -171,6 +171,16 @@ M.init = function()
     vim.opt.spell = not (vim.opt.spell:get())
   end, { silent = true, desc = "Toggle spell" })
 
+  -- Conceal
+  map("n", "<leader>c", function()
+    local current_level = vim.wo.conceallevel
+    if current_level == 0 then
+      vim.wo.conceallevel = 2
+    else
+      vim.wo.conceallevel = 0
+    end
+  end, { silent = true, desc = "Toggle conceal" })
+
   --  Telescoping into a personal knowledge base is really pleasant,
   map("n", "<leader><leader>", function()
     require("config.org").open_org_file_telescope("")
