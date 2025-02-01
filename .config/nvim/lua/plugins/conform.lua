@@ -19,7 +19,6 @@ return {
       mysql = { "pg_format" },
       plsql = { "pg_format" },
       elixir = { "mix" },
-      java = { "astyle" },
     },
     format_on_save = function(bufnr)
       -- Disable autoformat on certain filetypes
@@ -37,6 +36,9 @@ return {
         return
       end
       if bufname:match("/code/jonashietala/templates") then
+        return
+      end
+      if vim.bo[bufnr].filetype == "java" then
         return
       end
       if vim.bo[bufnr].filetype == "elixir" then
