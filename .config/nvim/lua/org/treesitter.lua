@@ -1,5 +1,21 @@
 local M = {}
 
+---@param query string
+---@return
+function M.collect_captures(query)
+  query = vim.treesitter.query.parse("djot", query)
+  local parser = vim.treesitter.get_parser(0, "djot")
+
+  local res = {}
+  for _, tree in ipairs(parser:trees()) do
+    local root = tree:root()
+    for _, node, _ in query:iter_captures(root, 0) do
+      table.insert(res, node)
+    end
+  end
+  return res
+end
+
 ---@param node TSNode
 ---@return TSNode | nil
 function M.reparse_and_get_node(node)
@@ -90,6 +106,9 @@ local function filter_nodes_by_row(nodes, target_row)
   return curr_nodes
 end
 
+---@param nodes TSNode[]
+---@param target_col integer
+---@return TSNode | nil
 local function filter_nodes_by_col(nodes, target_col)
   local curr_col_dist
   local curr_node
@@ -109,6 +128,8 @@ local function filter_nodes_by_col(nodes, target_col)
   return curr_node
 end
 
+---@param nodes TSNode[]
+---@return TSNode | nil
 function M.get_nearest_node(nodes)
   -- (1, 0)-indexed
   local cursor = vim.api.nvim_win_get_cursor(0)

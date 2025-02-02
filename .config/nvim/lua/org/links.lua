@@ -2,20 +2,6 @@ local ts = require("org.treesitter")
 
 local M = {}
 
-local function collect_captures(query)
-  query = vim.treesitter.query.parse("djot", query)
-  local parser = vim.treesitter.get_parser(0, "djot")
-
-  local res = {}
-  for _, tree in ipairs(parser:trees()) do
-    local root = tree:root()
-    for _, node, _ in query:iter_captures(root, 0) do
-      table.insert(res, node)
-    end
-  end
-  return res
-end
-
 local function find_links()
   local query = [[
   (inline_link) @link
@@ -24,7 +10,7 @@ local function find_links()
   (autolink) @link
   ]]
 
-  return collect_captures(query)
+  return ts.collect_captures(query)
 end
 
 local function find_link_defs()
@@ -32,14 +18,15 @@ local function find_link_defs()
   (link_reference_definition) @def
   ]]
 
-  return collect_captures(query)
+  return ts.collect_captures(query)
 end
 
-M.get_nearest_link = function()
+---@return TSNode | nil
+function M.get_nearest_link()
   return ts.get_nearest_node(find_links())
 end
 
-M.get_nearest_link_def = function()
+function M.get_nearest_link_def()
   return ts.get_nearest_node(find_link_defs())
 end
 
@@ -80,7 +67,7 @@ local function find_link_def(link_label)
     (link_reference_definition) @def
   ]]
 
-  local defs = collect_captures(link_def_query)
+  local defs = ts.collect_captures(link_def_query)
   for _, def in ipairs(defs) do
     local label = ts.get_text(def:named_child(0))
 
