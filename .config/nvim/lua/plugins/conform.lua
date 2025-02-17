@@ -38,9 +38,6 @@ return {
       if bufname:match("/code/jonashietala/templates") then
         return
       end
-      if vim.bo[bufnr].filetype == "java" then
-        return
-      end
       if vim.bo[bufnr].filetype == "elixir" then
         return { timeout_ms = 500, lsp_fallback = false }
       end
