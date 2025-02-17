@@ -1,5 +1,21 @@
 local M = {}
 
+---@param query string
+---@return
+function M.collect_captures(query)
+  query = vim.treesitter.query.parse("djot", query)
+  local parser = vim.treesitter.get_parser(0, "djot")
+
+  local res = {}
+  for _, tree in ipairs(parser:trees()) do
+    local root = tree:root()
+    for _, node, _ in query:iter_captures(root, 0) do
+      table.insert(res, node)
+    end
+  end
+  return res
+end
+
 ---@param node TSNode
 ---@return TSNode | nil
 function M.reparse_and_get_node(node)
@@ -9,27 +25,33 @@ function M.reparse_and_get_node(node)
   return vim.treesitter.get_node({ pos = { row_start, col_start } })
 end
 
----@param node_type string
+---@param node_type string | table
 ---@return TSNode | nil
 function M.find_node(node, node_type)
   local curr = node
+  P(node_type)
   while curr do
-    if curr:type() == node_type then
-      return curr
+    P(curr:type())
+    if type(node_type) == "string" then
+      if curr:type() == node_type then
+        return curr
+      end
+    elseif type(node_type) == "table" then
+      if node_type[curr:type()] then
+        return curr
+      end
     end
+
     curr = curr:parent()
   end
 
   return nil
 end
 
----@param node_type string
----@param opts vim.treesitter.get_node.Opts?
+---@param node_type string | table
 ---@return TSNode | nil
-function M.find_node_from_cursor(node_type, opts)
-  opts = opts or { lang = "djot" }
-
-  local curr = vim.treesitter.get_node(opts)
+function M.find_node_from_cursor(node_type)
+  local curr = vim.treesitter.get_node({ lang = "djot" })
   return M.find_node(curr, node_type)
 end
 
@@ -52,6 +74,23 @@ function M.get_text(node, start_offset, end_offset)
   return vim.api.nvim_buf_get_text(0, row_start, col_start, row_end, col_end, {})[1]
 end
 
+---@return TSNode | nil
+function M.find_block_element_from_cursor()
+  return M.find_node_from_cursor({
+    table_caption = true,
+    table_cell = true,
+    heading_content = true,
+    paragraph = true
+  })
+end
+
+---@param selection table
+---@return boolean
+function M.inside_block_element(selection)
+  local block = M.find_block_element_from_cursor()
+  return block ~= nil and vim.treesitter.node_contains(block, selection)
+end
+
 -- This filters rows on the same row as the target
 local function filter_nodes_by_row(nodes, target_row)
   local curr_nodes = {}
@@ -67,6 +106,9 @@ local function filter_nodes_by_row(nodes, target_row)
   return curr_nodes
 end
 
+---@param nodes TSNode[]
+---@param target_col integer
+---@return TSNode | nil
 local function filter_nodes_by_col(nodes, target_col)
   local curr_col_dist
   local curr_node
@@ -86,6 +128,8 @@ local function filter_nodes_by_col(nodes, target_col)
   return curr_node
 end
 
+---@param nodes TSNode[]
+---@return TSNode | nil
 function M.get_nearest_node(nodes)
   -- (1, 0)-indexed
   local cursor = vim.api.nvim_win_get_cursor(0)
