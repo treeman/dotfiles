@@ -29,9 +29,7 @@ end
 ---@return TSNode | nil
 function M.find_node(node, node_type)
   local curr = node
-  P(node_type)
   while curr do
-    P(curr:type())
     if type(node_type) == "string" then
       if curr:type() == node_type then
         return curr
@@ -49,9 +47,13 @@ function M.find_node(node, node_type)
 end
 
 ---@param node_type string | table
+---@param args? table
 ---@return TSNode | nil
-function M.find_node_from_cursor(node_type)
-  local curr = vim.treesitter.get_node({ lang = "djot" })
+function M.find_node_from_cursor(node_type, args)
+  args = args or {}
+  args["lang"] = "djot"
+
+  local curr = vim.treesitter.get_node(args)
   return M.find_node(curr, node_type)
 end
 
@@ -80,7 +82,7 @@ function M.find_block_element_from_cursor()
     table_caption = true,
     table_cell = true,
     heading_content = true,
-    paragraph = true
+    paragraph = true,
   })
 end
 
