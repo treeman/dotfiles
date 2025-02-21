@@ -18,6 +18,9 @@ return {
         duration = { step = 15, total = 150 },
       },
     },
+    explorer = {
+
+    },
     -- This highlights words using LSP instead of the other plugin I have that highlights text.
     -- words = {},
   },

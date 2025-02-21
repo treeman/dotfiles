@@ -27,15 +27,6 @@ local config = function()
     },
     filetype = "fish-shell",
   }
-  parser_config.ghostty = {
-    install_info = {
-      url = "https://github.com/treeman/tree-sitter-ghostty",
-      files = { "src/parser.c" },
-      generate_reqires_npm = false,
-      requires_generate_from_grammar = false,
-    },
-    filetype = "ghostty",
-  }
 
   local keymaps = require("config.keymaps")
 
@@ -124,6 +115,10 @@ return {
       "windwp/nvim-ts-autotag",
       -- "JoosepAlviste/nvim-ts-context-commentstring",
       "RRethy/nvim-treesitter-endwise",
+      {
+        "bezhermoso/tree-sitter-ghostty",
+        build = "make nvim_install",
+      }
     },
   },
   -- Bugging
