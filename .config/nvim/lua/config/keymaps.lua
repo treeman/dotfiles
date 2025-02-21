@@ -321,7 +321,6 @@ M.djot = function()
     R("org.task_marker").toggle_task_marker()
   end, { buffer = 0, desc = "Toggle list marker" })
   map("n", "<leader>rl", function()
-    -- TODO this is broken
     R("org.lists").reset_list_numbering()
   end, { buffer = 0, desc = "Reset list numbering" })
 
@@ -338,7 +337,7 @@ M.djot = function()
     R("org.links").convert_link()
   end, { buffer = 0, desc = "Convert link type" })
 
-  map({ "o", "x" }, "c", function()
+  map({ "o", "x" }, "ic", function()
     R("org.table").select_table_cell()
   end, { buffer = 0, desc = "Select table cell" })
 

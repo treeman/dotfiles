@@ -33,9 +33,9 @@ end
 local function visit_url(url)
   -- If starts with localhost or http:// try to open it in the browser
   if
-      vim.startswith(url, "http://")
-      or vim.startswith(url, "https://")
-      or vim.startswith(url, "localhost")
+    vim.startswith(url, "http://")
+    or vim.startswith(url, "https://")
+    or vim.startswith(url, "localhost")
   then
     vim.notify("Opening " .. url, vim.log.levels.INFO)
     vim.fn.system("xdg-open " .. url)
@@ -193,7 +193,7 @@ end
 
 local function change_selection(selection, cb)
   local lines =
-      vim.api.nvim_buf_get_text(0, selection[1], selection[2], selection[3], selection[4], {})
+    vim.api.nvim_buf_get_text(0, selection[1], selection[2], selection[3], selection[4], {})
 
   local res = cb(lines)
 
@@ -230,7 +230,7 @@ local function find_row_to_insert_link_def()
     if line and line ~= "" then
       -- FIXME no longer accepts a position...
       local def =
-          ts.find_node_from_cursor("link_reference_definition", { lang = "djot", pos = { i - 1, 0 } })
+        ts.find_node_from_cursor("link_reference_definition", { lang = "djot", pos = { i - 1, 0 } })
       if def then
         -- If the last non-empty line is a link definition, we should insert it directly below
         return i + 1
@@ -391,7 +391,7 @@ local function remove_link_def(def)
 end
 
 function M.try_create_autolink()
-  local url = vim.fn.expand('<cfile>')
+  local url = vim.fn.expand("<cfile>")
   if not is_url(url) then
     return
   end
@@ -405,7 +405,7 @@ function M.try_create_autolink()
   local curr_line = vim.api.nvim_win_get_cursor(0)[1] - 1
 
   vim.api.nvim_buf_set_text(0, curr_line, start - 1, curr_line, start + #url - 1, {
-    "<" .. url .. ">"
+    "<" .. url .. ">",
   })
 end
 
@@ -424,7 +424,7 @@ function M.convert_link(opts)
     local row_start, col_start, row_end, col_end = ts.get_range(link)
 
     vim.api.nvim_buf_set_text(0, row_start, col_start, row_end, col_end, {
-      "[](" .. destination .. ")"
+      "[](" .. destination .. ")",
     })
     vim.api.nvim_win_set_cursor(0, { row_start + 1, col_start + 1 })
     vim.cmd("startinsert")
