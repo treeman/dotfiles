@@ -228,12 +228,11 @@ local function find_row_to_insert_link_def()
   for i = line_count, 1, -1 do
     local line = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
     if line and line ~= "" then
-      -- FIXME no longer accepts a position...
-      local def =
-        ts.find_node_from_cursor("link_reference_definition", { lang = "djot", pos = { i - 1, 0 } })
+      local def = ts.find_node_from_cursor("link_reference_definition", { pos = { i - 1, 0 } })
+      vim.notify(vim.inspect(def))
       if def then
         -- If the last non-empty line is a link definition, we should insert it directly below
-        return i + 1
+        return i
       else
         -- Otherwise add an empty space if needed
         if has_new_line then
