@@ -559,3 +559,14 @@ A4T-toolhead
 Nighthawk36
 XOL
 toolheads
+thermistor
+MCU
+TFT
+GPIO
+hotend
+thermistors
+8/!
+SPI1
+MOSI
+runout
+SKR mini E3 v2
