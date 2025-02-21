@@ -397,7 +397,7 @@ function M.try_create_autolink()
   end
 
   local line = vim.api.nvim_get_current_line()
-  local start = line:find(url)
+  local start = line:find(url, 0, true)
   if not start then
     return
   end

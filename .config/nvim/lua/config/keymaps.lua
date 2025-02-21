@@ -338,7 +338,7 @@ M.djot = function()
     R("org.links").convert_link()
   end, { buffer = 0, desc = "Convert link type" })
 
-  map({ "o", "x" }, "c", function()
+  map({ "o", "x" }, "iC", function()
     R("org.table").select_table_cell()
   end, { buffer = 0, desc = "Select table cell" })
 
