@@ -1,3 +1,10 @@
+---@return boolean
+local function use_lsp(bufnr)
+  local filetype = vim.bo[bufnr].filetype
+  -- return not (filetype == "elixir" or filetype == "java")
+  return not (filetype == "elixir")
+end
+
 return {
   "stevearc/conform.nvim",
   -- I got some problems lazy loading this where it couldn't find `Format` sometimes.
@@ -13,12 +20,19 @@ return {
       html = { "prettierd" },
       json = { "prettierd" },
       yaml = { "prettierd" },
+      -- java = { "java_style" },
       -- toml = { "prettierd" },
       rust = { "rustfmt" },
       sql = { "pg_format" },
       mysql = { "pg_format" },
       plsql = { "pg_format" },
       elixir = { "mix" },
+    },
+    formatters = {
+      java_style = {
+        command = "astyle",
+        args = { "--quiet", "--style=google", "--mode=java" },
+      },
     },
     format_on_save = function(bufnr)
       -- Disable autoformat on certain filetypes
@@ -38,10 +52,8 @@ return {
       if bufname:match("/code/jonashietala/templates") then
         return
       end
-      if vim.bo[bufnr].filetype == "elixir" then
-        return { timeout_ms = 500, lsp_fallback = false }
-      end
-      return { timeout_ms = 500, lsp_fallback = true }
+
+      return { timeout_ms = 500, lsp_fallback = use_lsp(bufnr) }
     end,
   },
   init = function()
@@ -58,7 +70,7 @@ return {
           ["end"] = { args.line2, end_line:len() },
         }
       end
-      require("conform").format({ async = true, lsp_fallback = true, range = range })
+      require("conform").format({ async = true, lsp_fallback = use_lsp(0), range = range })
     end, { range = true })
 
     cmd("FormatDisable", function(args)
