@@ -106,10 +106,38 @@ local function config()
     function(server)
       -- Depend on rustaceanvim to setup `rust_analyzer`.
       -- We're not allowed to call `setup` ourselves.
-      if server ~= "rust_analyzer" then
+      if server ~= "rust_analyzer" and server ~= "jdtls" then
         lspconfig[server].setup({})
       end
     end,
+    -- ["jdtls"] = function()
+    -- vim.notify("CALLED")
+    -- local config = {
+    --   -- cmd = { "/path/to/jdt-language-server/bin/jdtls" },
+    --   -- root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
+    --
+    --   settings = {
+    --     java = {
+    --       format = false,
+    --       -- format = {
+    --       --   settings = { url = vim.fn.expand("~/.config/nvim/ext/jldts-settings.xml") },
+    --       --   -- settings = { url = vim.fn.expand("x") },
+    --       -- },
+    --     },
+    --   },
+    -- }
+    -- require("jdtls").start_or_attach(config)
+    -- lspconfig.jdtls.setup({
+    --   settings = {
+    --     java = {
+    --       format = {
+    --         settings = { url = vim.fn.expand("~/.config/nvim/ext/jldts-settings.xml") },
+    --         -- settings = { url = vim.fn.expand("x") },
+    --       },
+    --     },
+    --   },
+    -- })
+    -- end,
     ["clangd"] = function()
       lspconfig.clangd.setup({
         filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
