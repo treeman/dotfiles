@@ -16,3 +16,4 @@
 *.old
 *.bak
 *.back
+.lexical

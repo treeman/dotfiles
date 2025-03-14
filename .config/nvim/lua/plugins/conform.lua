@@ -19,6 +19,7 @@ return {
       mysql = { "pg_format" },
       plsql = { "pg_format" },
       elixir = { "mix" },
+      heex = { "mix" },
     },
     format_on_save = function(bufnr)
       -- Disable autoformat on certain filetypes
@@ -38,7 +39,7 @@ return {
       if bufname:match("/code/jonashietala/templates") then
         return
       end
-      if vim.bo[bufnr].filetype == "elixir" then
+      if vim.bo[bufnr].filetype == "elixir" or vim.bo[bufnr].filetype == "heex" then
         return { timeout_ms = 500, lsp_fallback = false }
       end
       return { timeout_ms = 500, lsp_fallback = true }

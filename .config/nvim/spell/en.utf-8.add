@@ -596,3 +596,7 @@ SPI1
 MOSI
 runout
 SKR mini E3 v2
+HA
+Zigbee
+mqtt
+zigbee2mqtt
