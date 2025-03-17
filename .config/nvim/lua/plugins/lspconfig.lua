@@ -42,35 +42,35 @@ local function config()
 
   -- This compiles the LSP using the exact Elixir + Erlang version, while giving us some extra functionality.
   -- NOTE maybe replace this with lexical when newer Elixir version exists?
-  require("elixir").setup({
-    nextls = {
-      enable = false,
-      init_options = {
-        mix_env = "test",
-        experimental = {
-          completions = {
-            enable = true,
-          },
-        },
-      },
-      capabilities = capabilities,
-    },
-    credo = {
-      enable = true,
-      capabilities = capabilities,
-      cmd = vim.fn.expand("~/.local/share/nvim/lazy/elixir-tools.nvim/bin/credo-language-server"),
-    },
-    elixirls = {
-      enable = true,
-      settings = require("elixir.elixirls").settings({
-        dialyzerEnabled = true,
-        enableTestLenses = false,
-        suggestSpecs = true,
-        fetchDeps = true,
-      }),
-      capabilities = capabilities,
-    },
-  })
+  -- require("elixir").setup({
+  --   nextls = {
+  --     enable = false,
+  --     init_options = {
+  --       mix_env = "test",
+  --       experimental = {
+  --         completions = {
+  --           enable = true,
+  --         },
+  --       },
+  --     },
+  --     capabilities = capabilities,
+  --   },
+  --   credo = {
+  --     enable = true,
+  --     capabilities = capabilities,
+  --     cmd = vim.fn.expand("~/.local/share/nvim/lazy/elixir-tools.nvim/bin/credo-language-server"),
+  --   },
+  --   elixirls = {
+  --     enable = true,
+  --     settings = require("elixir.elixirls").settings({
+  --       dialyzerEnabled = true,
+  --       enableTestLenses = false,
+  --       suggestSpecs = true,
+  --       fetchDeps = true,
+  --     }),
+  --     capabilities = capabilities,
+  --   },
+  -- })
 
   vim.g.rustaceanvim = {
     -- Plugin configuration
@@ -110,53 +110,25 @@ local function config()
         lspconfig[server].setup({})
       end
     end,
-    -- ["jdtls"] = function()
-    -- vim.notify("CALLED")
-    -- local config = {
-    --   -- cmd = { "/path/to/jdt-language-server/bin/jdtls" },
-    --   -- root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
-    --
-    --   settings = {
-    --     java = {
-    --       format = false,
-    --       -- format = {
-    --       --   settings = { url = vim.fn.expand("~/.config/nvim/ext/jldts-settings.xml") },
-    --       --   -- settings = { url = vim.fn.expand("x") },
-    --       -- },
-    --     },
-    --   },
-    -- }
-    -- require("jdtls").start_or_attach(config)
-    -- lspconfig.jdtls.setup({
-    --   settings = {
-    --     java = {
-    --       format = {
-    --         settings = { url = vim.fn.expand("~/.config/nvim/ext/jldts-settings.xml") },
-    --         -- settings = { url = vim.fn.expand("x") },
-    --       },
-    --     },
-    --   },
-    -- })
-    -- end,
     ["clangd"] = function()
       lspconfig.clangd.setup({
         filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
       })
     end,
     -- NOTE this only works if we've installed lexical via Mason
-    -- ["lexical"] = function()
-    --   lspconfig.lexical.setup({
-    --     filetypes = { "elixir", "eelixir", "heex" },
-    --     cmd = {
-    --       vim.fn.expand(
-    --         -- Doesn't support latest!
-    --         -- "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
-    --         "~/src/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
-    --       ),
-    --     },
-    --     settings = {},
-    --   })
-    -- end,
+    ["lexical"] = function()
+      lspconfig.lexical.setup({
+        filetypes = { "elixir", "eelixir", "heex" },
+        cmd = {
+          vim.fn.expand(
+            -- Doesn't support latest!
+            "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
+            -- "~/src/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
+          ),
+        },
+        settings = {},
+      })
+    end,
     -- ["tsserver"] = function()
     --   require("typescript-tools").setup({
     --     capabilities = capabilities,
