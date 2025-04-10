@@ -22,10 +22,18 @@ end
 
 M.run_cmd = function(args)
   local nio = require("nio")
-  P(args)
   local proc = nio.process.run(args)
 
   if not proc then
+    return nil
+  end
+
+  local err = proc.stderr.read()
+  if err and string.len(err) ~= 0 then
+    vim.notify(
+      "error while running command " .. vim.inspect(args) .. ": " .. err,
+      vim.log.levels.ERROR
+    )
     return nil
   end
 
