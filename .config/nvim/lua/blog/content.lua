@@ -40,9 +40,11 @@ M.list_markup_content = function(cb)
       cwd = "/home/tree/code/jonashietala",
     })
 
-    nio.scheduler()
-    local posts = vim.fn.json_decode(output)
-    cb(posts)
+    if output then
+      nio.scheduler()
+      local posts = vim.fn.json_decode(output)
+      cb(posts)
+    end
   end)
 end
 
