@@ -1,3 +1,5 @@
+*G*rade
+*M*edical
 2D
 3D
 8/!
@@ -23,6 +25,7 @@ Avtal
 BCH
 BCash
 BEAKL
+BJJ
 BSV
 BTC
 Backend
@@ -55,8 +58,10 @@ Ctrl
 DAA
 DDOS
 DHCP
+DHCP
 DL
 DW
+DateTime
 DateTime
 Datetimes
 DeVries
@@ -78,7 +83,10 @@ Fairphone
 Faketoshi
 Fastmail
 Finger::Pinky/!
+Fitbit
+Fitbit
 Flipstarter
+Flygtaxi
 Flygtaxi
 Freja
 Fridagar
@@ -86,6 +94,10 @@ Frontend
 GPIO
 GTD
 Gameplay
+Garmin
+Garmin
+Garmin's
+Garmin's
 GenServer
 GenServers
 Ghostty
@@ -96,6 +108,7 @@ Grasberg
 Gunicorn
 HA
 HEPA
+HSV
 HSV
 Hakyll
 Haskell
@@ -111,13 +124,17 @@ IFP
 InDesign
 Incerto
 IoT
+IoT
 Iosevka
 Isidor
 Isidor's
+Isidor's
 JS
+JetKVM
 JetKVM
 Jiu-Jitsu
 Jiu-jitsu
+Journaling
 Jujutsu
 KYC
 Kaizen
@@ -127,6 +144,7 @@ Keycaps
 Kickstarter
 Klubb
 Kristian
+Kubernetes
 Kubernetes
 LDO
 LDO's
@@ -150,6 +168,7 @@ Monero's
 Multiselection
 N:th
 NUMWORD
+NVMe
 Nani
 Nassim
 Necro
@@ -166,12 +185,14 @@ Ordernummer
 Oura
 PLA
 PTFE
+PTFE
 Pandoc
 Patreon
 Pokémon
 PolyTerra
 PostgreSQL
 Preloading
+Proxmox
 Proxmox
 Prusa
 PubSub
@@ -186,6 +207,7 @@ Reddit
 RepoSupervisor
 Repos
 Reselect
+Rhytm
 Rythm
 SEK
 SKR Mini E3 V2
@@ -209,6 +231,7 @@ StarCraft
 Stealthburner
 Sunderbyn
 SuperSlicer
+SuperSlicer
 TFT
 TJ
 TODO
@@ -227,6 +250,7 @@ U.S.
 UI
 USART2
 Uncategorized
+Uncategorized
 Unordered
 Url
 V3
@@ -239,6 +263,8 @@ WIP
 Warmup
 WearOS
 Websocket
+Withing's
+Withings
 WooCommerce
 XMR
 XOL
@@ -255,6 +281,7 @@ antifragility
 args
 async
 atm
+atm
 attractor
 auth
 autocommand
@@ -269,7 +296,10 @@ awemany
 axum
 backend
 backlight
+backlight
 backlighting
+backlighting
+balancer
 beancount
 behaviour
 behaviours
@@ -324,6 +354,7 @@ eBook
 endstop
 eof
 eoy
+eoy
 ergonomical
 extruder
 extruders
@@ -355,8 +386,10 @@ highgarden
 hl
 hocuspocus
 homelab
+homelabbing
 hotend
 hotwatch
+hs
 hs
 html
 https
@@ -379,9 +412,11 @@ keymaps
 keypress
 kickstarter
 kubernetes
+kubernetes
 kung-fu
 lannisport
 libp2p
+loadbalancer
 localhost
 localleader
 lockpick
@@ -395,6 +430,7 @@ lualine
 luarocks
 magit
 mainboard
+mainboard
 maximalist
 metadata
 microG
@@ -402,8 +438,10 @@ microcontroller
 microcontrollers
 microfeatures
 midsommarkrans
+midsommarkrans
 minecraft
 minimalistic
+moddable
 moddable
 modularity
 mqtt
@@ -428,11 +466,13 @@ olds
 optaplanner
 params
 parsers
+passthrough
 patcher
 permissionless
 pinky
 plugin
 podcasting
+pomodoro
 pomodoro
 pos
 postgres
@@ -449,6 +489,7 @@ regexes
 religouns
 repo
 rgb
+rgb
 ripgrep
 runout
 runtime
@@ -460,8 +501,10 @@ scriptability
 scrollable
 semver
 sensorless
+sensorless
 sidenote
 sidenotes
+smartband
 standalones
 statsd
 statusline
@@ -480,6 +523,7 @@ sybil
 syntect
 syskonrabatt
 sysselsättningsgrad
+sysselsättningsgrad
 tacticts
 textobject
 textobjects
@@ -487,6 +531,7 @@ themself
 thermistor
 thermistors
 timestamp
+timestamps
 timestamps
 todoist
 todos
@@ -537,12 +582,3 @@ yaml
 yjs
 zigbee2mqtt
 Övertorneå
-Garmin
-Garmin's
-Withings
-Fitbit
-Withing's
-*G*rade
-*M*edical
-Rhytm
-balancer
