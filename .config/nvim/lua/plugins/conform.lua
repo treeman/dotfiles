@@ -52,7 +52,7 @@ return {
       if bufname:match("/code/jonashietala/templates") then
         return
       end
-      return { timeout_ms = 500, lsp_fallback = use_lsp(bufnr) }
+      return { timeout_ms = 2500, lsp_fallback = use_lsp(bufnr) }
     end,
   },
   init = function()
