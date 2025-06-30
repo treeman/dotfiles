@@ -99,62 +99,65 @@ local function config()
   -- The Gleam LSP is integrated into the gleam cli and isn't installed via mason.
   lspconfig.gleam.setup({})
 
+  -- TODO no longer supported by mason_lspconfig
+  -- Need to migrate to something else
+
   -- Dynamic server setup, so we don't have to explicitly list every single server
   -- and can just list the ones we want to override configuration for.
   -- See :help mason-lspconfig-dynamic-server-setup
-  mason_lspconfig.setup_handlers({
-    function(server)
-      -- Depend on rustaceanvim to setup `rust_analyzer`.
-      -- We're not allowed to call `setup` ourselves.
-      if server ~= "rust_analyzer" and server ~= "jdtls" then
-        lspconfig[server].setup({})
-      end
-    end,
-    ["clangd"] = function()
-      lspconfig.clangd.setup({
-        filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
-      })
-    end,
-    -- NOTE this only works if we've installed lexical via Mason
-    ["lexical"] = function()
-      lspconfig.lexical.setup({
-        filetypes = { "elixir", "eelixir", "heex" },
-        cmd = {
-          vim.fn.expand(
-            -- Doesn't support latest!
-            "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
-            -- "~/src/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
-          ),
-        },
-        settings = {},
-      })
-    end,
-    -- ["tsserver"] = function()
-    --   require("typescript-tools").setup({
-    --     capabilities = capabilities,
-    --     settings = {
-    --       expose_as_code_action = "all",
-    --       tsserver_file_preferences = {
-    --         includeCompletionsForModuleExports = true,
-    --         includeCompletionsForImportStatements = true,
-    --         includeCompletionsWithObjectLiteralMethodSnippets = true,
-    --
-    --         includeInlayParameterNameHints = "all",
-    --         includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-    --         includeInlayFunctionParameterTypeHints = true,
-    --         includeInlayVariableTypeHints = true,
-    --         includeInlayPropertyDeclarationTypeHints = true,
-    --         includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-    --         includeInlayFunctionLikeReturnTypeHints = true,
-    --         includeInlayEnumMemberValueHints = true,
-    --
-    --         importModuleSpecifierPreference = "non-relative",
-    --         quotePreference = "auto",
-    --       },
-    --     },
-    --   })
-    -- end,
-  })
+  -- mason_lspconfig.setup_handlers({
+  --   function(server)
+  --     -- Depend on rustaceanvim to setup `rust_analyzer`.
+  --     -- We're not allowed to call `setup` ourselves.
+  --     if server ~= "rust_analyzer" and server ~= "jdtls" then
+  --       lspconfig[server].setup({})
+  --     end
+  --   end,
+  --   ["clangd"] = function()
+  --     lspconfig.clangd.setup({
+  --       filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
+  --     })
+  --   end,
+  --   -- NOTE this only works if we've installed lexical via Mason
+  --   ["lexical"] = function()
+  --     lspconfig.lexical.setup({
+  --       filetypes = { "elixir", "eelixir", "heex" },
+  --       cmd = {
+  --         vim.fn.expand(
+  --           -- Doesn't support latest!
+  --           "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
+  --           -- "~/src/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
+  --         ),
+  --       },
+  --       settings = {},
+  --     })
+  --   end,
+  --   -- ["tsserver"] = function()
+  --   --   require("typescript-tools").setup({
+  --   --     capabilities = capabilities,
+  --   --     settings = {
+  --   --       expose_as_code_action = "all",
+  --   --       tsserver_file_preferences = {
+  --   --         includeCompletionsForModuleExports = true,
+  --   --         includeCompletionsForImportStatements = true,
+  --   --         includeCompletionsWithObjectLiteralMethodSnippets = true,
+  --   --
+  --   --         includeInlayParameterNameHints = "all",
+  --   --         includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+  --   --         includeInlayFunctionParameterTypeHints = true,
+  --   --         includeInlayVariableTypeHints = true,
+  --   --         includeInlayPropertyDeclarationTypeHints = true,
+  --   --         includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+  --   --         includeInlayFunctionLikeReturnTypeHints = true,
+  --   --         includeInlayEnumMemberValueHints = true,
+  --   --
+  --   --         importModuleSpecifierPreference = "non-relative",
+  --   --         quotePreference = "auto",
+  --   --       },
+  --   --     },
+  --   --   })
+  --   -- end,
+  -- })
 end
 
 return {

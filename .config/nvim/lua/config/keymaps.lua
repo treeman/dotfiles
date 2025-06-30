@@ -217,6 +217,18 @@ M.init = function()
     silent = true,
     desc = "Make quickfix editable for replacing in",
   })
+  map("n", "<leader>sw", function()
+    require("spectre").open_visual({ select_word = true })
+  end, {
+    silent = true,
+    desc = "Search current word",
+  })
+  map("v", "<leader>sw", function()
+    require("spectre").open_visual()
+  end, {
+    silent = true,
+    desc = "Search selection",
+  })
 
   -- Replace word under cursor
   map("n", "<leader>rw", "<cmd>SearchReplaceSingleBufferCWord<cr>", {
