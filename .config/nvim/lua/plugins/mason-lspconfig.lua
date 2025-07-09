@@ -26,6 +26,12 @@ local opts = {
     -- "yamlls",
   },
   automatic_installation = true,
+  automatic_enable = {
+    exclude = {
+      "rust_analyzer",
+      "jdtls",
+    },
+  },
 }
 
 return {

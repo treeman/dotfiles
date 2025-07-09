@@ -85,10 +85,10 @@ local function config()
             -- https://github.com/rust-analyzer/rust-analyzer/pull/6645
             disabled = { "unresolved-proc-macro" },
           },
-          checkOnSave = {
-            extraArgs = { "--target-dir", "/tmp/rust-analyzer-check" },
-            command = "clippy",
-          },
+          -- checkOnSave = {
+          --   extraArgs = { "--target-dir", "/tmp/rust-analyzer-check" },
+          --   command = "clippy",
+          -- },
         },
       },
     },
@@ -101,6 +101,10 @@ local function config()
 
   -- TODO no longer supported by mason_lspconfig
   -- Need to migrate to something else
+
+  vim.lsp.config("clangd", {
+    filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
+  })
 
   -- Dynamic server setup, so we don't have to explicitly list every single server
   -- and can just list the ones we want to override configuration for.
