@@ -1,10 +1,7 @@
 # Remove decorations and borders
+# https://github.com/ghostty-org/ghostty/issues/2023#issuecomment-2676156529
 window-decoration = false
-# This is needed to remove the borders
-# https://github.com/ghostty-org/ghostty/issues/2023
-gtk-titlebar = false
-# https://github.com/ghostty-org/ghostty/discussions/4224
-gtk-adwaita = false
+gtk-custom-css = ./custom.css
 
 # See `ghostty +list-fonts`
 font-family = IosevkaTreeLig Nerd Font
