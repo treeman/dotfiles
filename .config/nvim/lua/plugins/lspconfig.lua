@@ -41,36 +41,35 @@ local function config()
   })
 
   -- This compiles the LSP using the exact Elixir + Erlang version, while giving us some extra functionality.
-  -- NOTE maybe replace this with lexical when newer Elixir version exists?
-  -- require("elixir").setup({
-  --   nextls = {
-  --     enable = false,
-  --     init_options = {
-  --       mix_env = "test",
-  --       experimental = {
-  --         completions = {
-  --           enable = true,
-  --         },
-  --       },
-  --     },
-  --     capabilities = capabilities,
-  --   },
-  --   credo = {
-  --     enable = true,
-  --     capabilities = capabilities,
-  --     cmd = vim.fn.expand("~/.local/share/nvim/lazy/elixir-tools.nvim/bin/credo-language-server"),
-  --   },
-  --   elixirls = {
-  --     enable = true,
-  --     settings = require("elixir.elixirls").settings({
-  --       dialyzerEnabled = true,
-  --       enableTestLenses = false,
-  --       suggestSpecs = true,
-  --       fetchDeps = true,
-  --     }),
-  --     capabilities = capabilities,
-  --   },
-  -- })
+  require("elixir").setup({
+    nextls = {
+      enable = false,
+      init_options = {
+        mix_env = "test",
+        experimental = {
+          completions = {
+            enable = true,
+          },
+        },
+      },
+      capabilities = capabilities,
+    },
+    credo = {
+      enable = true,
+      capabilities = capabilities,
+      cmd = vim.fn.expand("~/.local/share/nvim/lazy/elixir-tools.nvim/bin/credo-language-server"),
+    },
+    elixirls = {
+      enable = true,
+      settings = require("elixir.elixirls").settings({
+        dialyzerEnabled = true,
+        enableTestLenses = false,
+        suggestSpecs = true,
+        fetchDeps = true,
+      }),
+      capabilities = capabilities,
+    },
+  })
 
   vim.g.rustaceanvim = {
     -- Plugin configuration
