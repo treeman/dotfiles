@@ -14,6 +14,7 @@
   "dial.nvim": { "branch": "master", "commit": "78bd73aaf2b9c8f80715a878feaf56f7ffa8b6ff" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
   "elixir-tools.nvim": { "branch": "main", "commit": "b13c67398ee62531e1a4a53b95347a80eacefe6b" },
+  "fyler.nvim": { "branch": "main", "commit": "c85661d0b7a848baabf2926076e35a43b01e00ec" },
   "gitsigns.nvim": { "branch": "main", "commit": "7bbc674278f22376850576dfdddf43bbc17e62b5" },
   "hurl.nvim": { "branch": "main", "commit": "33ff81c0027c1d0071174eb40257010c7ce61e62" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },

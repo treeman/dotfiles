@@ -104,10 +104,15 @@ M.init = function()
   -- Goto previous buffer
   map("n", "<leader>B", ":edit #<CR>", { desc = "Previous buffer" })
 
-  -- Edit files in a buffer
+  -- Edit files in workspace
   map("n", "<leader>ed", ":Oil .<CR>", { desc = "Edit workspace" })
   -- Edit files in within the current directory
-  map("n", "<leader>eD", ":Oil <C-R>=expand('%:p:h')<CR><CR>", { desc = "Edit relative workspace" })
+  map(
+    "n",
+    "<leader>e.",
+    ":Oil <C-R>=expand('%:p:h')<CR><CR>",
+    { desc = "Edit directory of buffer" }
+  )
 
   map("n", "<leader>d", ":Neotree toggle=true<CR>", { desc = "Neotree" })
   map("n", "<leader>t", ":Trouble cascade toggle<cr>", { desc = "Diagnostics" })
