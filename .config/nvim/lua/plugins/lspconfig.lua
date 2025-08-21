@@ -55,7 +55,7 @@ local function config()
       capabilities = capabilities,
     },
     credo = {
-      enable = true,
+      enable = false,
       capabilities = capabilities,
       cmd = vim.fn.expand("~/.local/share/nvim/lazy/elixir-tools.nvim/bin/credo-language-server"),
     },
