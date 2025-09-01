@@ -3,7 +3,6 @@ local function config()
   local keymaps = require("config.keymaps")
   local lsp_status = require("lsp-status")
   local lspconfig = require("lspconfig")
-  local mason_lspconfig = require("mason-lspconfig")
   local create_cmd = require("util.helpers").create_cmd
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -40,37 +39,6 @@ local function config()
     capabilities = capabilities,
   })
 
-  -- This compiles the LSP using the exact Elixir + Erlang version, while giving us some extra functionality.
-  require("elixir").setup({
-    nextls = {
-      enable = false,
-      init_options = {
-        mix_env = "test",
-        experimental = {
-          completions = {
-            enable = true,
-          },
-        },
-      },
-      capabilities = capabilities,
-    },
-    credo = {
-      enable = false,
-      capabilities = capabilities,
-      cmd = vim.fn.expand("~/.local/share/nvim/lazy/elixir-tools.nvim/bin/credo-language-server"),
-    },
-    elixirls = {
-      enable = true,
-      settings = require("elixir.elixirls").settings({
-        dialyzerEnabled = true,
-        enableTestLenses = false,
-        suggestSpecs = true,
-        fetchDeps = true,
-      }),
-      capabilities = capabilities,
-    },
-  })
-
   vim.g.rustaceanvim = {
     -- Plugin configuration
     tools = {},
@@ -98,42 +66,22 @@ local function config()
   -- The Gleam LSP is integrated into the gleam cli and isn't installed via mason.
   lspconfig.gleam.setup({})
 
-  -- TODO no longer supported by mason_lspconfig
-  -- Need to migrate to something else
-
   vim.lsp.config("clangd", {
     filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
   })
+
+  vim.lsp.config("expert", {
+    cmd = { "expert" },
+    root_markers = { "mix.exs", ".git" },
+    filetypes = { "elixir", "eelixir", "heex" },
+  })
+
+  vim.lsp.enable("expert")
 
   -- Dynamic server setup, so we don't have to explicitly list every single server
   -- and can just list the ones we want to override configuration for.
   -- See :help mason-lspconfig-dynamic-server-setup
   -- mason_lspconfig.setup_handlers({
-  --   function(server)
-  --     -- Depend on rustaceanvim to setup `rust_analyzer`.
-  --     -- We're not allowed to call `setup` ourselves.
-  --     if server ~= "rust_analyzer" and server ~= "jdtls" then
-  --       lspconfig[server].setup({})
-  --     end
-  --   end,
-  --   ["clangd"] = function()
-  --     lspconfig.clangd.setup({
-  --       filetypes = { "c", "cpp" }, -- we don't want objective-c and objective-cpp!
-  --     })
-  --   end,
-  --   -- NOTE this only works if we've installed lexical via Mason
-  --   ["lexical"] = function()
-  --     lspconfig.lexical.setup({
-  --       filetypes = { "elixir", "eelixir", "heex" },
-  --       cmd = {
-  --         vim.fn.expand(
-  --           -- Doesn't support latest!
-  --           "~/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh"
-  --           -- "~/src/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
-  --         ),
-  --       },
-  --       settings = {},
-  --     })
   --   end,
   --   -- ["tsserver"] = function()
   --   --   require("typescript-tools").setup({
@@ -171,7 +119,6 @@ return {
     -- "onsails/lspkind-nvim",
     "ahmedkhalf/lsp-rooter.nvim",
     "hrsh7th/cmp-nvim-lsp",
-    "elixir-tools/elixir-tools.nvim",
     {
       "mrcjkb/rustaceanvim",
       version = "^5", -- Recommended

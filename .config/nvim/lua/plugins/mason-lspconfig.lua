@@ -1,9 +1,5 @@
 local opts = {
   ensure_installed = {
-    -- Install managed by elixir-tools instead.
-    -- "elixirls",
-    -- "nextls",
-
     -- Only "necessary"
     "lua_ls",
     -- Can ask for everything else
