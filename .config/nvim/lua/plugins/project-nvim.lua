@@ -2,7 +2,8 @@ return {
   "ahmedkhalf/project.nvim",
   config = function()
     require("project_nvim").setup({
-      ignore_lsp = { "ts_ls", "cssls" },
+      -- Workaround for some LSPs using ~ as root
+      ignore_lsp = { "ts_ls", "cssls", "html" },
       patterns = {
         ".git",
         "_darcs",

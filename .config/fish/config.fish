@@ -21,7 +21,6 @@ set -gx PATH "$PNPM_HOME" $PATH
 set -x PERL5LIB ~/perl5/lib/perl5 $PERL5LIB
 # Beancount module finding for importers
 set -x PYTHONPATH $PYTHONPATH ~/vimwiki/money/accounting/
-set -x ELIXIR_LS_LANGUAGE_SERVER $HOME/src/elixir-ls/release/language_server.sh
 
 # Some things requires this
 set -x XDG_RUNTIME_DIR /tmp/(id -u)
@@ -41,6 +40,8 @@ alias vim nvim
 # alias v "nvim ~/org/plan.dj"
 alias v nvim
 alias g git
+
+set -u DATABASE_URL
 
 # Always use neovide multigrid mode
 set -x NEOVIDE_MULTIGRID
