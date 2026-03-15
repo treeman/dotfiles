@@ -40,6 +40,7 @@ alias vim nvim
 # alias v "nvim ~/org/plan.dj"
 alias v nvim
 alias g git
+alias k kubectl
 
 set -u DATABASE_URL
 
