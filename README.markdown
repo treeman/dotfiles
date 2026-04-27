@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> **This repository is archived and no longer maintained.**
+
 My config files for stuff. Here be dragons.
 
 Run `bootstrap.sh` or setup symlinks manually.
